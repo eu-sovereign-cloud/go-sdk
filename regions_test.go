@@ -2,8 +2,6 @@ package gosdk
 
 import (
 	"context"
-	"errors"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -78,15 +76,11 @@ func TestRegions(t *testing.T) {
 	regionIter, err := client.Regions(ctx)
 	require.NoError(t, err)
 
-	for {
-		region, err := regionIter.Next(ctx)
-		if errors.Is(err, io.EOF) {
-			break
-		}
-		require.NoError(t, err)
-		require.NotNil(t, region)
+	region, err := regionIter.All(ctx)
+	require.NoError(t, err)
+	require.Len(t, region, 1)
 
-		assert.Len(t, region.Spec.Providers, 1)
-		assert.Equal(t, "seca.network", region.Spec.Providers[0].Name)
-	}
+	assert.Len(t, region[0].Spec.Providers, 1)
+	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
+
 }

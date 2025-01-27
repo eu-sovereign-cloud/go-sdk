@@ -2,6 +2,7 @@ package gosdk
 
 import (
 	"context"
+	"errors"
 	"io"
 )
 
@@ -55,4 +56,20 @@ func (i *Iterator[T]) Next(ctx context.Context) (*T, error) {
 	}
 
 	return nil, io.EOF
+}
+
+// All returns all items in the iterator.
+func (i *Iterator[T]) All(ctx context.Context) ([]*T, error) {
+	var items []*T
+	for {
+		item, err := i.Next(context.Background())
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, nil
 }
