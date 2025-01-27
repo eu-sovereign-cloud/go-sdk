@@ -4,8 +4,6 @@ import (
 	regions "github.com/eu-sovereign-cloud/go-sdk/pkg/regions.v1"
 )
 
-type TenantID string
-
 type Client struct {
 	regions regions.ClientWithResponsesInterface
 }

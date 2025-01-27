@@ -73,6 +73,8 @@ func TestRegions(t *testing.T) {
 	client, err := NewClient(server.URL)
 	require.NoError(t, err)
 
+	ctx = WithTenantID(ctx, "test")
+
 	regionIter, err := client.Regions(ctx)
 	require.NoError(t, err)
 
@@ -82,5 +84,67 @@ func TestRegions(t *testing.T) {
 
 	assert.Len(t, region[0].Spec.Providers, 1)
 	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
+}
 
+func TestRegion(t *testing.T) {
+	sim := mockregions.NewMockServerInterface(t)
+	ctx := context.Background()
+
+	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, name string) {
+		assert.Equal(t, "test", name)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`
+			{
+				"apiVersion": "v1",
+				"kind": "region",
+				"metadata": {
+					"name": "primary-load-balancer",
+					"deletionTimestamp": "2019-08-24T14:15:22Z",
+					"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
+					"description": "string",
+					"labels": {
+						"language": "en",
+						"billing.cost-center": "platform-eng",
+						"env": "production"
+					}
+				},
+				"spec": {
+					"availableZones": [ "A", "B" ],
+					"providers": [
+						{
+							"name": "seca.network",
+							"version": "v1",
+							"url": "https://demo.secapi.cloud/providers/seca.network"
+						}
+					]
+				},
+				"status": {
+					"conditions": [
+						{
+							"type": "power-mgmt",
+							"status": "True, false, unknown",
+							"lastTransitionTime": "2019-08-24T14:15:22Z",
+							"reason": "^A(A)?$",
+							"message": "string"
+						}
+					]
+				}
+			}
+		`))
+	})
+
+	server := httptest.NewServer(regions.HandlerWithOptions(sim, regions.StdHTTPServerOptions{}))
+	defer server.Close()
+
+	client, err := NewClient(server.URL)
+	require.NoError(t, err)
+
+	ctx = WithTenantID(ctx, "test")
+
+	region, err := client.Region(ctx, "test")
+	require.NoError(t, err)
+
+	assert.Len(t, region.Spec.Providers, 1)
+	assert.Equal(t, "seca.network", region.Spec.Providers[0].Name)
 }
