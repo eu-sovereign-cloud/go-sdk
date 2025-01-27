@@ -8,10 +8,10 @@ type Client struct {
 	regions regions.ClientWithResponsesInterface
 }
 
-func NewClient(url string) (*Client, error) {
+func NewClient(regionsUrl string) (*Client, error) {
 	client := &Client{}
 
-	regionsClient, err := regions.NewClientWithResponses(url)
+	regionsClient, err := regions.NewClientWithResponses(regionsUrl)
 	if err != nil {
 		return nil, err
 	}

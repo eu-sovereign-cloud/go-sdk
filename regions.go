@@ -37,3 +37,12 @@ func (c *Client) Region(ctx context.Context, name string) (*regions.Region, erro
 
 	return resp.JSON200, nil
 }
+
+func (c *Client) RegionClient(ctx context.Context, name string) (*RegionClient, error) {
+	region, err := c.Region(ctx, name)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewRegionClient(region), nil
+}

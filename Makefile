@@ -25,6 +25,9 @@ update:
 	git pull --recurse-submodules
 	git submodule update --remote --recursive
 
+.PHONY: test
+test:
+	$(GO) test -count=1 -cover -v ./...
 
 .PHONY: mock
 mock:
