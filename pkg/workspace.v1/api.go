@@ -209,6 +209,12 @@ type Workspace struct {
 // WorkspaceKind Type of the resource
 type WorkspaceKind string
 
+// WorkspaceIterator defines model for WorkspaceIterator.
+type WorkspaceIterator struct {
+	Items    []Workspace      `json:"items"`
+	Metadata ResponseMetadata `json:"metadata"`
+}
+
 // WorkspaceSpec Desired state of the workspace
 type WorkspaceSpec struct {
 	// Description Optional description of the workspace
@@ -772,14 +778,11 @@ type ClientWithResponsesInterface interface {
 type ListWorkspacesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]Workspace      `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON500 *Error500
+	JSON200      *WorkspaceIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -939,10 +942,7 @@ func ParseListWorkspacesResponse(rsp *http.Response) (*ListWorkspacesResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]Workspace      `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
-		}
+		var dest WorkspaceIterator
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

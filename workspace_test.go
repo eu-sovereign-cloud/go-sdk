@@ -6,16 +6,19 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregions.v1"
-	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/mockworkspace.v1"
-	regions "github.com/eu-sovereign-cloud/go-sdk/pkg/regions.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/fake"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/mockworkspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"k8s.io/utils/ptr"
 )
 
-func TestWorkspaces(t *testing.T) {
+func TestMockedWorkspaces(t *testing.T) {
 	ctx := context.Background()
 	wsSim := mockworkspace.NewMockServerInterface(t)
 
@@ -65,7 +68,7 @@ func TestWorkspaces(t *testing.T) {
 		`))
 	})
 
-	reSim := mockregions.NewMockServerInterface(t)
+	reSim := mockregion.NewMockServerInterface(t)
 
 	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, name string) {
 		assert.Equal(t, "eu-central-1", name)
@@ -116,12 +119,46 @@ func TestWorkspaces(t *testing.T) {
 		BaseURL:    "/providers/seca.workspace",
 		BaseRouter: sm,
 	})
-	regions.HandlerWithOptions(reSim, regions.StdHTTPServerOptions{
+	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
 		BaseRouter: sm,
 	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
+
+	client, err := NewClient(server.URL + "/providers/seca.regions")
+	require.NoError(t, err)
+
+	ctx = WithTenantID(ctx, "test")
+
+	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	require.NoError(t, err)
+
+	wsIter, err := regionClient.Workspaces(ctx)
+	require.NoError(t, err)
+
+	ws, err := wsIter.All(ctx)
+	require.NoError(t, err)
+	require.Len(t, ws, 1)
+
+	assert.Equal(t, "some-workspace", ws[0].Spec.Name)
+	assert.EqualValues(t, "Pending", *ws[0].Status.Phase)
+}
+
+func TestFakedWorkspaces(t *testing.T) {
+	ctx := context.Background()
+
+	fakeServer := fake.NewServer("eu-central-1")
+	server := fakeServer.Start()
+	defer server.Close()
+	fakeServer.Workspaces["some-workspace"] = &workspace.Workspace{
+		Spec: &workspace.WorkspaceSpec{
+			Name: "some-workspace",
+		},
+		Status: &workspace.WorkspaceStatus{
+			Phase: ptr.To(workspace.WorkspaceStatusPhase("Pending")),
+		},
+	}
 
 	client, err := NewClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)

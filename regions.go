@@ -5,16 +5,16 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	regions "github.com/eu-sovereign-cloud/go-sdk/pkg/regions.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
 )
 
-func (c *Client) Regions(ctx context.Context) (*Iterator[regions.Region], error) {
-	tid := regions.TenantID(MustTenantIDFromContext(ctx))
+func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) {
+	tid := region.TenantID(MustTenantIDFromContext(ctx))
 
-	iter := Iterator[regions.Region]{
-		fn: func(ctx context.Context, skipToken *string) ([]regions.Region, *string, error) {
-			resp, err := c.regions.ListRegionsWithResponse(ctx, tid, &regions.ListRegionsParams{
-				Accept: ptr.To(regions.ListRegionsParamsAcceptApplicationjson),
+	iter := Iterator[region.Region]{
+		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
+			resp, err := c.regions.ListRegionsWithResponse(ctx, tid, &region.ListRegionsParams{
+				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
 			})
 			if err != nil {
 				return nil, nil, err
@@ -27,8 +27,8 @@ func (c *Client) Regions(ctx context.Context) (*Iterator[regions.Region], error)
 	return &iter, nil
 }
 
-func (c *Client) Region(ctx context.Context, name string) (*regions.Region, error) {
-	tid := regions.TenantID(MustTenantIDFromContext(ctx))
+func (c *Client) Region(ctx context.Context, name string) (*region.Region, error) {
+	tid := region.TenantID(MustTenantIDFromContext(ctx))
 
 	resp, err := c.regions.GetRegionWithResponse(ctx, tid, name)
 	if err != nil {

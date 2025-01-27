@@ -25,7 +25,7 @@ func (client *RegionClient) Workspaces(ctx context.Context) (*Iterator[workspace
 				return nil, nil, err
 			}
 
-			return *resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 		},
 	}
 

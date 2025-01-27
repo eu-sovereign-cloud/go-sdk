@@ -6,18 +6,18 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregions.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/regions.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
 func TestRegions(t *testing.T) {
-	sim := mockregions.NewMockServerInterface(t)
+	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
-	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lrp regions.ListRegionsParams) {
+	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lrp region.ListRegionsParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`
@@ -67,7 +67,7 @@ func TestRegions(t *testing.T) {
 		`))
 	})
 
-	server := httptest.NewServer(regions.HandlerWithOptions(sim, regions.StdHTTPServerOptions{}))
+	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
 	client, err := NewClient(server.URL)
@@ -87,7 +87,7 @@ func TestRegions(t *testing.T) {
 }
 
 func TestRegion(t *testing.T) {
-	sim := mockregions.NewMockServerInterface(t)
+	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
 	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, name string) {
@@ -134,7 +134,7 @@ func TestRegion(t *testing.T) {
 		`))
 	})
 
-	server := httptest.NewServer(regions.HandlerWithOptions(sim, regions.StdHTTPServerOptions{}))
+	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
 	client, err := NewClient(server.URL)

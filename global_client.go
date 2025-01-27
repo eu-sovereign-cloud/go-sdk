@@ -1,17 +1,17 @@
 package gosdk
 
 import (
-	regions "github.com/eu-sovereign-cloud/go-sdk/pkg/regions.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
 )
 
 type Client struct {
-	regions regions.ClientWithResponsesInterface
+	regions region.ClientWithResponsesInterface
 }
 
 func NewClient(regionsUrl string) (*Client, error) {
 	client := &Client{}
 
-	regionsClient, err := regions.NewClientWithResponses(regionsUrl)
+	regionsClient, err := region.NewClientWithResponses(regionsUrl)
 	if err != nil {
 		return nil, err
 	}
