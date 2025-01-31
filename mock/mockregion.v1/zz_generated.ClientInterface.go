@@ -24,14 +24,14 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 	return &MockClientInterface_Expecter{mock: &_m.Mock}
 }
 
-// GetRegion provides a mock function with given fields: ctx, id, name, reqEditors
-func (_m *MockClientInterface) GetRegion(ctx context.Context, id string, name string, reqEditors ...region.RequestEditorFn) (*http.Response, error) {
+// GetRegion provides a mock function with given fields: ctx, name, reqEditors
+func (_m *MockClientInterface) GetRegion(ctx context.Context, name string, reqEditors ...region.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name)
+	_ca = append(_ca, ctx, name)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -41,19 +41,19 @@ func (_m *MockClientInterface) GetRegion(ctx context.Context, id string, name st
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...region.RequestEditorFn) (*http.Response, error)); ok {
-		return rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...region.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...region.RequestEditorFn) *http.Response); ok {
-		r0 = rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...region.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*http.Response)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, string, ...region.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, string, ...region.RequestEditorFn) error); ok {
+		r1 = rf(ctx, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -68,23 +68,22 @@ type MockClientInterface_GetRegion_Call struct {
 
 // GetRegion is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
 //   - name string
 //   - reqEditors ...region.RequestEditorFn
-func (_e *MockClientInterface_Expecter) GetRegion(ctx interface{}, id interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetRegion_Call {
+func (_e *MockClientInterface_Expecter) GetRegion(ctx interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetRegion_Call {
 	return &MockClientInterface_GetRegion_Call{Call: _e.mock.On("GetRegion",
-		append([]interface{}{ctx, id, name}, reqEditors...)...)}
+		append([]interface{}{ctx, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetRegion_Call) Run(run func(ctx context.Context, id string, name string, reqEditors ...region.RequestEditorFn)) *MockClientInterface_GetRegion_Call {
+func (_c *MockClientInterface_GetRegion_Call) Run(run func(ctx context.Context, name string, reqEditors ...region.RequestEditorFn)) *MockClientInterface_GetRegion_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]region.RequestEditorFn, len(args)-3)
-		for i, a := range args[3:] {
+		variadicArgs := make([]region.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(region.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(string), args[2].(string), variadicArgs...)
+		run(args[0].(context.Context), args[1].(string), variadicArgs...)
 	})
 	return _c
 }
@@ -94,19 +93,19 @@ func (_c *MockClientInterface_GetRegion_Call) Return(_a0 *http.Response, _a1 err
 	return _c
 }
 
-func (_c *MockClientInterface_GetRegion_Call) RunAndReturn(run func(context.Context, string, string, ...region.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetRegion_Call {
+func (_c *MockClientInterface_GetRegion_Call) RunAndReturn(run func(context.Context, string, ...region.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetRegion_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// ListRegions provides a mock function with given fields: ctx, id, params, reqEditors
-func (_m *MockClientInterface) ListRegions(ctx context.Context, id string, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn) (*http.Response, error) {
+// ListRegions provides a mock function with given fields: ctx, params, reqEditors
+func (_m *MockClientInterface) ListRegions(ctx context.Context, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, params)
+	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -116,19 +115,19 @@ func (_m *MockClientInterface) ListRegions(ctx context.Context, id string, param
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) (*http.Response, error)); ok {
-		return rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) *http.Response); ok {
-		r0 = rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*http.Response)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) error); ok {
+		r1 = rf(ctx, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -143,23 +142,22 @@ type MockClientInterface_ListRegions_Call struct {
 
 // ListRegions is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
 //   - params *region.ListRegionsParams
 //   - reqEditors ...region.RequestEditorFn
-func (_e *MockClientInterface_Expecter) ListRegions(ctx interface{}, id interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListRegions_Call {
+func (_e *MockClientInterface_Expecter) ListRegions(ctx interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListRegions_Call {
 	return &MockClientInterface_ListRegions_Call{Call: _e.mock.On("ListRegions",
-		append([]interface{}{ctx, id, params}, reqEditors...)...)}
+		append([]interface{}{ctx, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListRegions_Call) Run(run func(ctx context.Context, id string, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn)) *MockClientInterface_ListRegions_Call {
+func (_c *MockClientInterface_ListRegions_Call) Run(run func(ctx context.Context, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn)) *MockClientInterface_ListRegions_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]region.RequestEditorFn, len(args)-3)
-		for i, a := range args[3:] {
+		variadicArgs := make([]region.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(region.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(string), args[2].(*region.ListRegionsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(*region.ListRegionsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -169,7 +167,7 @@ func (_c *MockClientInterface_ListRegions_Call) Return(_a0 *http.Response, _a1 e
 	return _c
 }
 
-func (_c *MockClientInterface_ListRegions_Call) RunAndReturn(run func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListRegions_Call {
+func (_c *MockClientInterface_ListRegions_Call) RunAndReturn(run func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListRegions_Call {
 	_c.Call.Return(run)
 	return _c
 }

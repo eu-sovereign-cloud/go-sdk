@@ -9,11 +9,9 @@ import (
 )
 
 func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) {
-	tid := region.TenantID(MustTenantIDFromContext(ctx))
-
 	iter := Iterator[region.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
-			resp, err := c.regions.ListRegionsWithResponse(ctx, tid, &region.ListRegionsParams{
+			resp, err := c.regions.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -28,9 +26,7 @@ func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) 
 }
 
 func (c *Client) Region(ctx context.Context, name string) (*region.Region, error) {
-	tid := region.TenantID(MustTenantIDFromContext(ctx))
-
-	resp, err := c.regions.GetRegionWithResponse(ctx, tid, name)
+	resp, err := c.regions.GetRegionWithResponse(ctx, name)
 	if err != nil {
 		return nil, err
 	}

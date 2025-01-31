@@ -273,9 +273,6 @@ type LimitParam = int
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// TenantID defines model for tenantID.
-type TenantID = string
-
 // ListObjectStoragesParams defines parameters for ListObjectStorages.
 type ListObjectStoragesParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
@@ -394,22 +391,22 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListObjectStorages request
-	ListObjectStorages(ctx context.Context, id TenantID, workspace string, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorage request
-	DeleteObjectStorage(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorage(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorage request
-	GetObjectStorage(ctx context.Context, id TenantID, workspace string, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorage(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateObjectStorageWithBody request with any body
-	CreateOrUpdateObjectStorageWithBody(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateObjectStorageWithBody(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateObjectStorage(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateObjectStorage(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListObjectStorages(ctx context.Context, id TenantID, workspace string, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListObjectStoragesRequest(c.Server, id, workspace, params)
+func (c *Client) ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListObjectStoragesRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -420,8 +417,8 @@ func (c *Client) ListObjectStorages(ctx context.Context, id TenantID, workspace 
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorage(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteObjectStorageRequest(c.Server, id, workspace, name)
+func (c *Client) DeleteObjectStorage(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteObjectStorageRequest(c.Server, name)
 	if err != nil {
 		return nil, err
 	}
@@ -432,8 +429,8 @@ func (c *Client) DeleteObjectStorage(ctx context.Context, id TenantID, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorage(ctx context.Context, id TenantID, workspace string, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetObjectStorageRequest(c.Server, id, workspace, name, params)
+func (c *Client) GetObjectStorage(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetObjectStorageRequest(c.Server, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -444,8 +441,8 @@ func (c *Client) GetObjectStorage(ctx context.Context, id TenantID, workspace st
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorageWithBody(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageRequestWithBody(c.Server, id, workspace, name, params, contentType, body)
+func (c *Client) CreateOrUpdateObjectStorageWithBody(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateObjectStorageRequestWithBody(c.Server, name, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -456,8 +453,8 @@ func (c *Client) CreateOrUpdateObjectStorageWithBody(ctx context.Context, id Ten
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorage(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageRequest(c.Server, id, workspace, name, params, body)
+func (c *Client) CreateOrUpdateObjectStorage(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateObjectStorageRequest(c.Server, name, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -469,29 +466,15 @@ func (c *Client) CreateOrUpdateObjectStorage(ctx context.Context, id TenantID, w
 }
 
 // NewListObjectStoragesRequest generates requests for ListObjectStorages
-func NewListObjectStoragesRequest(server string, id TenantID, workspace string, params *ListObjectStoragesParams) (*http.Request, error) {
+func NewListObjectStoragesRequest(server string, params *ListObjectStoragesParams) (*http.Request, error) {
 	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
 
 	serverURL, err := url.Parse(server)
 	if err != nil {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/object-storages", pathParam0, pathParam1)
+	operationPath := fmt.Sprintf("/v1/object-storages")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -579,26 +562,12 @@ func NewListObjectStoragesRequest(server string, id TenantID, workspace string, 
 }
 
 // NewDeleteObjectStorageRequest generates requests for DeleteObjectStorage
-func NewDeleteObjectStorageRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewDeleteObjectStorageRequest(server string, name string) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -608,7 +577,7 @@ func NewDeleteObjectStorageRequest(server string, id TenantID, workspace string,
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/object-storages/%s", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -627,26 +596,12 @@ func NewDeleteObjectStorageRequest(server string, id TenantID, workspace string,
 }
 
 // NewGetObjectStorageRequest generates requests for GetObjectStorage
-func NewGetObjectStorageRequest(server string, id TenantID, workspace string, name string, params *GetObjectStorageParams) (*http.Request, error) {
+func NewGetObjectStorageRequest(server string, name string, params *GetObjectStorageParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -656,7 +611,7 @@ func NewGetObjectStorageRequest(server string, id TenantID, workspace string, na
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/object-storages/%s", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -690,37 +645,23 @@ func NewGetObjectStorageRequest(server string, id TenantID, workspace string, na
 }
 
 // NewCreateOrUpdateObjectStorageRequest calls the generic CreateOrUpdateObjectStorage builder with application/json body
-func NewCreateOrUpdateObjectStorageRequest(server string, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateObjectStorageRequest(server string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateObjectStorageRequestWithBody(server, id, workspace, name, params, "application/json", bodyReader)
+	return NewCreateOrUpdateObjectStorageRequestWithBody(server, name, params, "application/json", bodyReader)
 }
 
 // NewCreateOrUpdateObjectStorageRequestWithBody generates requests for CreateOrUpdateObjectStorage with any type of body
-func NewCreateOrUpdateObjectStorageRequestWithBody(server string, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateObjectStorageRequestWithBody(server string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -730,7 +671,7 @@ func NewCreateOrUpdateObjectStorageRequestWithBody(server string, id TenantID, w
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/object-storages/%s", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -809,18 +750,18 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListObjectStoragesWithResponse request
-	ListObjectStoragesWithResponse(ctx context.Context, id TenantID, workspace string, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error)
+	ListObjectStoragesWithResponse(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error)
 
 	// DeleteObjectStorageWithResponse request
-	DeleteObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error)
+	DeleteObjectStorageWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error)
 
 	// GetObjectStorageWithResponse request
-	GetObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error)
+	GetObjectStorageWithResponse(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error)
 
 	// CreateOrUpdateObjectStorageWithBodyWithResponse request with any body
-	CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
+	CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
 
-	CreateOrUpdateObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
+	CreateOrUpdateObjectStorageWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
 }
 
 type ListObjectStoragesResponse struct {
@@ -935,8 +876,8 @@ func (r CreateOrUpdateObjectStorageResponse) StatusCode() int {
 }
 
 // ListObjectStoragesWithResponse request returning *ListObjectStoragesResponse
-func (c *ClientWithResponses) ListObjectStoragesWithResponse(ctx context.Context, id TenantID, workspace string, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error) {
-	rsp, err := c.ListObjectStorages(ctx, id, workspace, params, reqEditors...)
+func (c *ClientWithResponses) ListObjectStoragesWithResponse(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error) {
+	rsp, err := c.ListObjectStorages(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -944,8 +885,8 @@ func (c *ClientWithResponses) ListObjectStoragesWithResponse(ctx context.Context
 }
 
 // DeleteObjectStorageWithResponse request returning *DeleteObjectStorageResponse
-func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error) {
-	rsp, err := c.DeleteObjectStorage(ctx, id, workspace, name, reqEditors...)
+func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error) {
+	rsp, err := c.DeleteObjectStorage(ctx, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -953,8 +894,8 @@ func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Contex
 }
 
 // GetObjectStorageWithResponse request returning *GetObjectStorageResponse
-func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error) {
-	rsp, err := c.GetObjectStorage(ctx, id, workspace, name, params, reqEditors...)
+func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error) {
+	rsp, err := c.GetObjectStorage(ctx, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -962,16 +903,16 @@ func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, 
 }
 
 // CreateOrUpdateObjectStorageWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateObjectStorageResponse
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorageWithBody(ctx, id, workspace, name, params, contentType, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
+	rsp, err := c.CreateOrUpdateObjectStorageWithBody(ctx, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateObjectStorageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorage(ctx, id, workspace, name, params, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
+	rsp, err := c.CreateOrUpdateObjectStorage(ctx, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -1228,17 +1169,17 @@ func ParseCreateOrUpdateObjectStorageResponse(rsp *http.Response) (*CreateOrUpda
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// List all object storage volumes
-	// (GET /v1/tenants/{id}/workspaces/{workspace}/object-storages)
-	ListObjectStorages(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListObjectStoragesParams)
+	// (GET /v1/object-storages)
+	ListObjectStorages(w http.ResponseWriter, r *http.Request, params ListObjectStoragesParams)
 	// Delete a specific object storage volume
-	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/object-storages/{name})
-	DeleteObjectStorage(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	// (DELETE /v1/object-storages/{name})
+	DeleteObjectStorage(w http.ResponseWriter, r *http.Request, name string)
 	// Get a specific object storage volume
-	// (GET /v1/tenants/{id}/workspaces/{workspace}/object-storages/{name})
-	GetObjectStorage(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string, params GetObjectStorageParams)
+	// (GET /v1/object-storages/{name})
+	GetObjectStorage(w http.ResponseWriter, r *http.Request, name string, params GetObjectStorageParams)
 	// Create or update a specific object storage volume
-	// (PUT /v1/tenants/{id}/workspaces/{workspace}/object-storages/{name})
-	CreateOrUpdateObjectStorage(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string, params CreateOrUpdateObjectStorageParams)
+	// (PUT /v1/object-storages/{name})
+	CreateOrUpdateObjectStorage(w http.ResponseWriter, r *http.Request, name string, params CreateOrUpdateObjectStorageParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1254,24 +1195,6 @@ type MiddlewareFunc func(http.Handler) http.Handler
 func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace string
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
 
 	ctx := r.Context()
 
@@ -1328,7 +1251,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListObjectStorages(w, r, id, workspace, params)
+		siw.Handler.ListObjectStorages(w, r, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1342,24 +1265,6 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace string
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
 
 	// ------------- Path parameter "name" -------------
 	var name string
@@ -1377,7 +1282,7 @@ func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r 
 	r = r.WithContext(ctx)
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteObjectStorage(w, r, id, workspace, name)
+		siw.Handler.DeleteObjectStorage(w, r, name)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1391,24 +1296,6 @@ func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r 
 func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace string
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
 
 	// ------------- Path parameter "name" -------------
 	var name string
@@ -1450,7 +1337,7 @@ func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *ht
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetObjectStorage(w, r, id, workspace, name, params)
+		siw.Handler.GetObjectStorage(w, r, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1464,24 +1351,6 @@ func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *ht
 func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorage(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace string
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
 
 	// ------------- Path parameter "name" -------------
 	var name string
@@ -1523,7 +1392,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorage(w http.ResponseWr
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateObjectStorage(w, r, id, workspace, name, params)
+		siw.Handler.CreateOrUpdateObjectStorage(w, r, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1653,10 +1522,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/object-storages", wrapper.ListObjectStorages)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/object-storages/{name}", wrapper.DeleteObjectStorage)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/object-storages/{name}", wrapper.GetObjectStorage)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/object-storages/{name}", wrapper.CreateOrUpdateObjectStorage)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/object-storages", wrapper.ListObjectStorages)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1/object-storages/{name}", wrapper.DeleteObjectStorage)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/object-storages/{name}", wrapper.GetObjectStorage)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1/object-storages/{name}", wrapper.CreateOrUpdateObjectStorage)
 
 	return m
 }

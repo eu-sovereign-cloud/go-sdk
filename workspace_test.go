@@ -70,7 +70,7 @@ func TestMockedWorkspaces(t *testing.T) {
 
 	reSim := mockregion.NewMockServerInterface(t)
 
-	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, name string) {
+	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
 		assert.Equal(t, "eu-central-1", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)

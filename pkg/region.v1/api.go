@@ -222,9 +222,6 @@ type LimitParam = int
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// TenantID defines model for tenantID.
-type TenantID = string
-
 // ListRegionsParams defines parameters for ListRegions.
 type ListRegionsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
@@ -326,14 +323,14 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListRegions request
-	ListRegions(ctx context.Context, id TenantID, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListRegions(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRegion request
-	GetRegion(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRegion(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListRegions(ctx context.Context, id TenantID, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListRegionsRequest(c.Server, id, params)
+func (c *Client) ListRegions(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListRegionsRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -344,8 +341,8 @@ func (c *Client) ListRegions(ctx context.Context, id TenantID, params *ListRegio
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRegion(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetRegionRequest(c.Server, id, name)
+func (c *Client) GetRegion(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRegionRequest(c.Server, name)
 	if err != nil {
 		return nil, err
 	}
@@ -357,22 +354,15 @@ func (c *Client) GetRegion(ctx context.Context, id TenantID, name string, reqEdi
 }
 
 // NewListRegionsRequest generates requests for ListRegions
-func NewListRegionsRequest(server string, id TenantID, params *ListRegionsParams) (*http.Request, error) {
+func NewListRegionsRequest(server string, params *ListRegionsParams) (*http.Request, error) {
 	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
 
 	serverURL, err := url.Parse(server)
 	if err != nil {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/regions", pathParam0)
+	operationPath := fmt.Sprintf("/v1/regions")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -460,19 +450,12 @@ func NewListRegionsRequest(server string, id TenantID, params *ListRegionsParams
 }
 
 // NewGetRegionRequest generates requests for GetRegion
-func NewGetRegionRequest(server string, id TenantID, name string) (*http.Request, error) {
+func NewGetRegionRequest(server string, name string) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +465,7 @@ func NewGetRegionRequest(server string, id TenantID, name string) (*http.Request
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/regions/%s", pathParam0, pathParam1)
+	operationPath := fmt.Sprintf("/v1/regions/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -544,10 +527,10 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListRegionsWithResponse request
-	ListRegionsWithResponse(ctx context.Context, id TenantID, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*ListRegionsResponse, error)
+	ListRegionsWithResponse(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*ListRegionsResponse, error)
 
 	// GetRegionWithResponse request
-	GetRegionWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error)
+	GetRegionWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error)
 }
 
 type ListRegionsResponse struct {
@@ -600,8 +583,8 @@ func (r GetRegionResponse) StatusCode() int {
 }
 
 // ListRegionsWithResponse request returning *ListRegionsResponse
-func (c *ClientWithResponses) ListRegionsWithResponse(ctx context.Context, id TenantID, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*ListRegionsResponse, error) {
-	rsp, err := c.ListRegions(ctx, id, params, reqEditors...)
+func (c *ClientWithResponses) ListRegionsWithResponse(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*ListRegionsResponse, error) {
+	rsp, err := c.ListRegions(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -609,8 +592,8 @@ func (c *ClientWithResponses) ListRegionsWithResponse(ctx context.Context, id Te
 }
 
 // GetRegionWithResponse request returning *GetRegionResponse
-func (c *ClientWithResponses) GetRegionWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error) {
-	rsp, err := c.GetRegion(ctx, id, name, reqEditors...)
+func (c *ClientWithResponses) GetRegionWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error) {
+	rsp, err := c.GetRegion(ctx, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -707,11 +690,11 @@ func ParseGetRegionResponse(rsp *http.Response) (*GetRegionResponse, error) {
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// List all regions
-	// (GET /v1/tenants/{id}/regions)
-	ListRegions(w http.ResponseWriter, r *http.Request, id TenantID, params ListRegionsParams)
+	// (GET /v1/regions)
+	ListRegions(w http.ResponseWriter, r *http.Request, params ListRegionsParams)
 	// Get a specific region by name
-	// (GET /v1/tenants/{id}/regions/{name})
-	GetRegion(w http.ResponseWriter, r *http.Request, id TenantID, name string)
+	// (GET /v1/regions/{name})
+	GetRegion(w http.ResponseWriter, r *http.Request, name string)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -727,15 +710,6 @@ type MiddlewareFunc func(http.Handler) http.Handler
 func (siw *ServerInterfaceWrapper) ListRegions(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
 
 	ctx := r.Context()
 
@@ -792,7 +766,7 @@ func (siw *ServerInterfaceWrapper) ListRegions(w http.ResponseWriter, r *http.Re
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListRegions(w, r, id, params)
+		siw.Handler.ListRegions(w, r, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -806,15 +780,6 @@ func (siw *ServerInterfaceWrapper) ListRegions(w http.ResponseWriter, r *http.Re
 func (siw *ServerInterfaceWrapper) GetRegion(w http.ResponseWriter, r *http.Request) {
 
 	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
 
 	// ------------- Path parameter "name" -------------
 	var name string
@@ -832,7 +797,7 @@ func (siw *ServerInterfaceWrapper) GetRegion(w http.ResponseWriter, r *http.Requ
 	r = r.WithContext(ctx)
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetRegion(w, r, id, name)
+		siw.Handler.GetRegion(w, r, name)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -962,8 +927,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/regions", wrapper.ListRegions)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/regions/{name}", wrapper.GetRegion)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/regions", wrapper.ListRegions)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/regions/{name}", wrapper.GetRegion)
 
 	return m
 }

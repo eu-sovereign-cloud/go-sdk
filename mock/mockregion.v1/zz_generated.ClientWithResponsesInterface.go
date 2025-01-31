@@ -22,14 +22,14 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 	return &MockClientWithResponsesInterface_Expecter{mock: &_m.Mock}
 }
 
-// GetRegionWithResponse provides a mock function with given fields: ctx, id, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetRegionWithResponse(ctx context.Context, id string, name string, reqEditors ...region.RequestEditorFn) (*region.GetRegionResponse, error) {
+// GetRegionWithResponse provides a mock function with given fields: ctx, name, reqEditors
+func (_m *MockClientWithResponsesInterface) GetRegionWithResponse(ctx context.Context, name string, reqEditors ...region.RequestEditorFn) (*region.GetRegionResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name)
+	_ca = append(_ca, ctx, name)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -39,19 +39,19 @@ func (_m *MockClientWithResponsesInterface) GetRegionWithResponse(ctx context.Co
 
 	var r0 *region.GetRegionResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...region.RequestEditorFn) (*region.GetRegionResponse, error)); ok {
-		return rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...region.RequestEditorFn) (*region.GetRegionResponse, error)); ok {
+		return rf(ctx, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...region.RequestEditorFn) *region.GetRegionResponse); ok {
-		r0 = rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...region.RequestEditorFn) *region.GetRegionResponse); ok {
+		r0 = rf(ctx, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*region.GetRegionResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, string, ...region.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, string, ...region.RequestEditorFn) error); ok {
+		r1 = rf(ctx, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -66,23 +66,22 @@ type MockClientWithResponsesInterface_GetRegionWithResponse_Call struct {
 
 // GetRegionWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
 //   - name string
 //   - reqEditors ...region.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) GetRegionWithResponse(ctx interface{}, id interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) GetRegionWithResponse(ctx interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetRegionWithResponse_Call{Call: _e.mock.On("GetRegionWithResponse",
-		append([]interface{}{ctx, id, name}, reqEditors...)...)}
+		append([]interface{}{ctx, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetRegionWithResponse_Call) Run(run func(ctx context.Context, id string, name string, reqEditors ...region.RequestEditorFn)) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRegionWithResponse_Call) Run(run func(ctx context.Context, name string, reqEditors ...region.RequestEditorFn)) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]region.RequestEditorFn, len(args)-3)
-		for i, a := range args[3:] {
+		variadicArgs := make([]region.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(region.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(string), args[2].(string), variadicArgs...)
+		run(args[0].(context.Context), args[1].(string), variadicArgs...)
 	})
 	return _c
 }
@@ -92,19 +91,19 @@ func (_c *MockClientWithResponsesInterface_GetRegionWithResponse_Call) Return(_a
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetRegionWithResponse_Call) RunAndReturn(run func(context.Context, string, string, ...region.RequestEditorFn) (*region.GetRegionResponse, error)) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRegionWithResponse_Call) RunAndReturn(run func(context.Context, string, ...region.RequestEditorFn) (*region.GetRegionResponse, error)) *MockClientWithResponsesInterface_GetRegionWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// ListRegionsWithResponse provides a mock function with given fields: ctx, id, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListRegionsWithResponse(ctx context.Context, id string, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn) (*region.ListRegionsResponse, error) {
+// ListRegionsWithResponse provides a mock function with given fields: ctx, params, reqEditors
+func (_m *MockClientWithResponsesInterface) ListRegionsWithResponse(ctx context.Context, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn) (*region.ListRegionsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, params)
+	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -114,19 +113,19 @@ func (_m *MockClientWithResponsesInterface) ListRegionsWithResponse(ctx context.
 
 	var r0 *region.ListRegionsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) (*region.ListRegionsResponse, error)); ok {
-		return rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) (*region.ListRegionsResponse, error)); ok {
+		return rf(ctx, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) *region.ListRegionsResponse); ok {
-		r0 = rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) *region.ListRegionsResponse); ok {
+		r0 = rf(ctx, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*region.ListRegionsResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) error); ok {
+		r1 = rf(ctx, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -141,23 +140,22 @@ type MockClientWithResponsesInterface_ListRegionsWithResponse_Call struct {
 
 // ListRegionsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
 //   - params *region.ListRegionsParams
 //   - reqEditors ...region.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) ListRegionsWithResponse(ctx interface{}, id interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) ListRegionsWithResponse(ctx interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
 	return &MockClientWithResponsesInterface_ListRegionsWithResponse_Call{Call: _e.mock.On("ListRegionsWithResponse",
-		append([]interface{}{ctx, id, params}, reqEditors...)...)}
+		append([]interface{}{ctx, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListRegionsWithResponse_Call) Run(run func(ctx context.Context, id string, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn)) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRegionsWithResponse_Call) Run(run func(ctx context.Context, params *region.ListRegionsParams, reqEditors ...region.RequestEditorFn)) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]region.RequestEditorFn, len(args)-3)
-		for i, a := range args[3:] {
+		variadicArgs := make([]region.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
 			if a != nil {
 				variadicArgs[i] = a.(region.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(string), args[2].(*region.ListRegionsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(*region.ListRegionsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -167,7 +165,7 @@ func (_c *MockClientWithResponsesInterface_ListRegionsWithResponse_Call) Return(
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListRegionsWithResponse_Call) RunAndReturn(run func(context.Context, string, *region.ListRegionsParams, ...region.RequestEditorFn) (*region.ListRegionsResponse, error)) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRegionsWithResponse_Call) RunAndReturn(run func(context.Context, *region.ListRegionsParams, ...region.RequestEditorFn) (*region.ListRegionsResponse, error)) *MockClientWithResponsesInterface_ListRegionsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }

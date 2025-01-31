@@ -17,7 +17,7 @@ func TestRegions(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
-	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lrp region.ListRegionsParams) {
+	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, lrp region.ListRegionsParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`
@@ -90,7 +90,7 @@ func TestRegion(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
-	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, name string) {
+	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
 		assert.Equal(t, "test", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)

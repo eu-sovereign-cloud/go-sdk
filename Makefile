@@ -30,7 +30,7 @@ test:
 	$(GO) test -count=1 -cover -v ./...
 
 .PHONY: mock
-mock:
+mock: all
 	$(GO_TOOL) github.com/vektra/mockery/v2
 
 .PHONY: fmt
@@ -44,3 +44,4 @@ vet:
 .PHONY: clean
 clean:
 	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
+	

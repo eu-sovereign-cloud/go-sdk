@@ -10,7 +10,7 @@ import (
 var _ region.ServerInterface = (*Server)(nil)
 
 // GetRegion implements regions.ServerInterface.
-func (s *Server) GetRegion(w http.ResponseWriter, r *http.Request, id region.TenantID, name string) {
+func (s *Server) GetRegion(w http.ResponseWriter, r *http.Request, name string) {
 	region, ok := s.Regions[name]
 	if !ok {
 		http.Error(w, "region not found", http.StatusNotFound)
@@ -25,7 +25,7 @@ func (s *Server) GetRegion(w http.ResponseWriter, r *http.Request, id region.Ten
 }
 
 // ListRegions implements regions.ServerInterface.
-func (s *Server) ListRegions(w http.ResponseWriter, r *http.Request, id region.TenantID, params region.ListRegionsParams) {
+func (s *Server) ListRegions(w http.ResponseWriter, r *http.Request, params region.ListRegionsParams) {
 	var resp region.ListRegionsResponse
 
 	// TODO: remove this once we have a proper type

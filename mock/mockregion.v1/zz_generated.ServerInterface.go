@@ -22,9 +22,9 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 	return &MockServerInterface_Expecter{mock: &_m.Mock}
 }
 
-// GetRegion provides a mock function with given fields: w, r, id, name
-func (_m *MockServerInterface) GetRegion(w http.ResponseWriter, r *http.Request, id string, name string) {
-	_m.Called(w, r, id, name)
+// GetRegion provides a mock function with given fields: w, r, name
+func (_m *MockServerInterface) GetRegion(w http.ResponseWriter, r *http.Request, name string) {
+	_m.Called(w, r, name)
 }
 
 // MockServerInterface_GetRegion_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetRegion'
@@ -35,15 +35,14 @@ type MockServerInterface_GetRegion_Call struct {
 // GetRegion is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
 //   - name string
-func (_e *MockServerInterface_Expecter) GetRegion(w interface{}, r interface{}, id interface{}, name interface{}) *MockServerInterface_GetRegion_Call {
-	return &MockServerInterface_GetRegion_Call{Call: _e.mock.On("GetRegion", w, r, id, name)}
+func (_e *MockServerInterface_Expecter) GetRegion(w interface{}, r interface{}, name interface{}) *MockServerInterface_GetRegion_Call {
+	return &MockServerInterface_GetRegion_Call{Call: _e.mock.On("GetRegion", w, r, name)}
 }
 
-func (_c *MockServerInterface_GetRegion_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, name string)) *MockServerInterface_GetRegion_Call {
+func (_c *MockServerInterface_GetRegion_Call) Run(run func(w http.ResponseWriter, r *http.Request, name string)) *MockServerInterface_GetRegion_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(string))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string))
 	})
 	return _c
 }
@@ -53,14 +52,14 @@ func (_c *MockServerInterface_GetRegion_Call) Return() *MockServerInterface_GetR
 	return _c
 }
 
-func (_c *MockServerInterface_GetRegion_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, string)) *MockServerInterface_GetRegion_Call {
+func (_c *MockServerInterface_GetRegion_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string)) *MockServerInterface_GetRegion_Call {
 	_c.Run(run)
 	return _c
 }
 
-// ListRegions provides a mock function with given fields: w, r, id, params
-func (_m *MockServerInterface) ListRegions(w http.ResponseWriter, r *http.Request, id string, params region.ListRegionsParams) {
-	_m.Called(w, r, id, params)
+// ListRegions provides a mock function with given fields: w, r, params
+func (_m *MockServerInterface) ListRegions(w http.ResponseWriter, r *http.Request, params region.ListRegionsParams) {
+	_m.Called(w, r, params)
 }
 
 // MockServerInterface_ListRegions_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListRegions'
@@ -71,15 +70,14 @@ type MockServerInterface_ListRegions_Call struct {
 // ListRegions is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
 //   - params region.ListRegionsParams
-func (_e *MockServerInterface_Expecter) ListRegions(w interface{}, r interface{}, id interface{}, params interface{}) *MockServerInterface_ListRegions_Call {
-	return &MockServerInterface_ListRegions_Call{Call: _e.mock.On("ListRegions", w, r, id, params)}
+func (_e *MockServerInterface_Expecter) ListRegions(w interface{}, r interface{}, params interface{}) *MockServerInterface_ListRegions_Call {
+	return &MockServerInterface_ListRegions_Call{Call: _e.mock.On("ListRegions", w, r, params)}
 }
 
-func (_c *MockServerInterface_ListRegions_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, params region.ListRegionsParams)) *MockServerInterface_ListRegions_Call {
+func (_c *MockServerInterface_ListRegions_Call) Run(run func(w http.ResponseWriter, r *http.Request, params region.ListRegionsParams)) *MockServerInterface_ListRegions_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(region.ListRegionsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(region.ListRegionsParams))
 	})
 	return _c
 }
@@ -89,7 +87,7 @@ func (_c *MockServerInterface_ListRegions_Call) Return() *MockServerInterface_Li
 	return _c
 }
 
-func (_c *MockServerInterface_ListRegions_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, region.ListRegionsParams)) *MockServerInterface_ListRegions_Call {
+func (_c *MockServerInterface_ListRegions_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, region.ListRegionsParams)) *MockServerInterface_ListRegions_Call {
 	_c.Run(run)
 	return _c
 }
