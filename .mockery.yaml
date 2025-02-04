@@ -1,0 +1,13 @@
+filename: "zz_generated.{{.InterfaceName}}.go"
+with-expecter: true
+packages:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1:
+    config:
+      all: true
+      dir: mock/mockregion.v1
+      outpkg: mockregion
+  github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1:
+    config:
+      all: true
+      dir: mock/mockworkspace.v1
+      outpkg: mockworkspace
