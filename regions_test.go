@@ -73,8 +73,6 @@ func TestRegions(t *testing.T) {
 	client, err := NewClient(server.URL)
 	require.NoError(t, err)
 
-	ctx = WithTenantID(ctx, "test")
-
 	regionIter, err := client.Regions(ctx)
 	require.NoError(t, err)
 
@@ -139,8 +137,6 @@ func TestRegion(t *testing.T) {
 
 	client, err := NewClient(server.URL)
 	require.NoError(t, err)
-
-	ctx = WithTenantID(ctx, "test")
 
 	region, err := client.Region(ctx, "test")
 	require.NoError(t, err)

@@ -129,20 +129,18 @@ func TestMockedWorkspaces(t *testing.T) {
 	client, err := NewClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	ctx = WithTenantID(ctx, "test")
-
 	regionClient, err := client.RegionClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx)
+	wsIter, err := regionClient.Workspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 
-	assert.Equal(t, "some-workspace", ws[0].Spec.Name)
-	assert.EqualValues(t, "Pending", *ws[0].Status.Phase)
+	assert.Equal(t, "some-workspace", ws[0].Data.Spec.Name)
+	assert.EqualValues(t, "Pending", *ws[0].Data.Status.Phase)
 }
 
 func TestFakedWorkspaces(t *testing.T) {
@@ -152,6 +150,9 @@ func TestFakedWorkspaces(t *testing.T) {
 	server := fakeServer.Start()
 	defer server.Close()
 	fakeServer.Workspaces["some-workspace"] = &workspace.Workspace{
+		Metadata: &workspace.GlobalResourceMetadata{
+			Name: "some-workspace",
+		},
 		Spec: &workspace.WorkspaceSpec{
 			Name: "some-workspace",
 		},
@@ -163,18 +164,16 @@ func TestFakedWorkspaces(t *testing.T) {
 	client, err := NewClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	ctx = WithTenantID(ctx, "test")
-
 	regionClient, err := client.RegionClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx)
+	wsIter, err := regionClient.Workspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 
-	assert.Equal(t, "some-workspace", ws[0].Spec.Name)
-	assert.EqualValues(t, "Pending", *ws[0].Status.Phase)
+	assert.Equal(t, "some-workspace", ws[0].Data.Spec.Name)
+	assert.EqualValues(t, "Pending", *ws[0].Data.Status.Phase)
 }

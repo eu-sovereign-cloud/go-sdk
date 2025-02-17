@@ -4,7 +4,9 @@ import "context"
 
 type TenantID string
 
-var ctxTenantIDKey = struct{}{}
+type ctxTenantIDKeyType struct{}
+
+var ctxTenantIDKey = ctxTenantIDKeyType{}
 
 // WithTenantID returns a new context with the given TenantID.
 func WithTenantID(ctx context.Context, tid TenantID) context.Context {
