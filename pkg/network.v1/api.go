@@ -23,29 +23,9 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for LanKind.
-const (
-	LanKindLan LanKind = "lan"
-)
-
-// Defines values for NetworkSkuKind.
-const (
-	NetworkSkuKindNetworkSku NetworkSkuKind = "network-sku"
-)
-
-// Defines values for NicKind.
-const (
-	NicKindNic NicKind = "nic"
-)
-
 // Defines values for NicPrivateIpAdressType.
 const (
 	NicPrivateIpAdressTypeIPv4 NicPrivateIpAdressType = "IPv4"
-)
-
-// Defines values for PublicIpKind.
-const (
-	PublicIpKindPublicIp PublicIpKind = "public-ip"
 )
 
 // Defines values for PublicIpSpecIpVersion.
@@ -59,9 +39,30 @@ const (
 	Static  PublicIpSpecType = "Static"
 )
 
-// Defines values for ResourceQuotaKind.
+// Defines values for RegionalResourceMetadataKind.
 const (
-	Quota ResourceQuotaKind = "quota"
+	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
+	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
+	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
+	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
+	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
+	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
+	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
+	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
+	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
+	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
+	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
+	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
+	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
+	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
+	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
+	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
+	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
+	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
+	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
+	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
+	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
+	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceStatePhase.
@@ -87,16 +88,6 @@ const (
 	RouteStatusStateBlackhole RouteStatusState = "blackhole"
 )
 
-// Defines values for SecurityGroupKind.
-const (
-	SecurityGroupKindSecurityGroup SecurityGroupKind = "security-group"
-)
-
-// Defines values for SecurityGroupRuleKind.
-const (
-	SecurityGroupRuleKindSecurityGroupRule SecurityGroupRuleKind = "security-group-rule"
-)
-
 // Defines values for SecurityGroupRuleSourceType.
 const (
 	SecurityGroupRuleSourceTypeCidr           SecurityGroupRuleSourceType = "cidr"
@@ -118,11 +109,6 @@ const (
 	Udp  SecurityGroupRuleSpecProtocol = "udp"
 )
 
-// Defines values for SubnetKind.
-const (
-	SubnetKindSubnet SubnetKind = "subnet"
-)
-
 // Defines values for SubnetGatewayType.
 const (
 	SubnetGatewayTypeAuto        SubnetGatewayType = "auto"
@@ -140,6 +126,58 @@ const (
 // Defines values for SubnetSpecDhcpEnabled.
 const (
 	True SubnetSpecDhcpEnabled = true
+)
+
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
+)
+
+// Defines values for ZonalResourceMetadataKind.
+const (
+	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
+	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
+	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
+	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
+	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
+	ZonalResourceMetadataKindLan                  ZonalResourceMetadataKind = "lan"
+	ZonalResourceMetadataKindLocation             ZonalResourceMetadataKind = "location"
+	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
+	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
+	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
+	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
+	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
+	ZonalResourceMetadataKindQuota                ZonalResourceMetadataKind = "quota"
+	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
+	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
+	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
+	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
+	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
+	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
+	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
+	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
+	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -284,21 +322,19 @@ type ErrorSource struct {
 
 // Lan defines model for Lan.
 type Lan struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *LanKind                  `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-	Spec     *LanSpec                  `json:"spec,omitempty"`
+	Spec     LanSpec                   `json:"spec"`
 
 	// Status Conditions type `connectivity` indicates the status of the network connection.
 	// The status can be `connected` or `disconnected`.
 	Status *LanStatus `json:"status,omitempty"`
 }
-
-// LanKind Type of the resource
-type LanKind string
 
 // LanSpec defines model for LanSpec.
 type LanSpec struct {
@@ -319,25 +355,34 @@ type LanStatus struct {
 	State *ResourceState `json:"state,omitempty"`
 }
 
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
+	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+
+	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+}
+
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+}
+
 // NetworkSku Represents a Stock Keeping Unit (SKU) for network resources.
 //
 // Network SKUs define performance tiers for network bandwidth and characteristics.
 // capabilities can be found also in the metadata.labels sections and are searchable.
 type NetworkSku struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *NetworkSkuKind           `json:"kind,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 	Spec     *NetworkSkuSpec           `json:"spec,omitempty"`
 
 	// Status Current status of the resource
 	Status *Status `json:"status,omitempty"`
 }
-
-// NetworkSkuKind Type of the resource
-type NetworkSkuKind string
 
 // NetworkSkuSpec defines model for NetworkSkuSpec.
 type NetworkSkuSpec struct {
@@ -358,22 +403,20 @@ type NetworkSkuSpec struct {
 	Tier *string `json:"tier,omitempty"`
 }
 
-// Nic Network Interface Card (NIC) representing a network interface for a compute resource
+// Nic defines model for Nic.
 type Nic struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *NicKind                 `json:"kind,omitempty"`
-	Metadata RegionalResourceMetadata `json:"metadata"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
+	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the Network Interface Card
-	Spec   NicSpec   `json:"spec"`
-	Status NicStatus `json:"status"`
+	Spec   NicSpec    `json:"spec"`
+	Status *NicStatus `json:"status,omitempty"`
 }
-
-// NicKind Type of the resource
-type NicKind string
 
 // NicPrivateIp defines model for NicPrivateIp.
 type NicPrivateIp struct {
@@ -415,17 +458,18 @@ type PortRange struct {
 	To   *int `json:"to,omitempty"`
 }
 
-// PublicIp Represents a public IP address that can be assigned to network resources
+// PublicIp defines model for PublicIp.
 type PublicIp struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *PublicIpKind             `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the public IP
-	Spec *PublicIpSpec `json:"spec,omitempty"`
+	Spec PublicIpSpec `json:"spec"`
 
 	// Status Current status of the public IP.
 	// Condition type `allocation` indicates the status of the public IP allocation.
@@ -434,9 +478,6 @@ type PublicIp struct {
 	// The status can be `bound` or `unbound`.
 	Status *PublicIpStatus `json:"status,omitempty"`
 }
-
-// PublicIpKind Type of the resource
-type PublicIpKind string
 
 // PublicIpAssignment defines model for PublicIpAssignment.
 type PublicIpAssignment struct {
@@ -481,63 +522,55 @@ type PublicIpStatus struct {
 	State *ResourceState `json:"state,omitempty"`
 }
 
+// RegionalMetadata Metadata for regional resources
+type RegionalMetadata struct {
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+}
+
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
 type RegionalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind RegionalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the region where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
-	Name string `json:"name"`
-}
+// RegionalResourceMetadataKind Type of the resource
+type RegionalResourceMetadataKind string
 
 // ResourceQuota defines model for ResourceQuota.
 type ResourceQuota struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *ResourceQuotaKind        `json:"kind,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Represents the ResourceQuota for the single ResourceType of the Resource Provider
 	Spec   *ResourceQuotaSpec   `json:"spec,omitempty"`
 	Status *ResourceQuotaStatus `json:"status,omitempty"`
 }
-
-// ResourceQuotaKind Type of the resource
-type ResourceQuotaKind string
 
 // ResourceQuotaSpec Represents the ResourceQuota for the single ResourceType of the Resource Provider
 type ResourceQuotaSpec struct {
@@ -562,7 +595,7 @@ type ResourceState struct {
 	// - updating: available for data layer usage
 	// - deleting: maybe still available for data layer user, can fail any moment
 	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	Phase *ResourceStatePhase `json:"phase,omitempty"`
 }
 
@@ -573,7 +606,7 @@ type ResourceState struct {
 // - updating: available for data layer usage
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 type ResourceStatePhase string
 
 // ResponseMetadata defines model for ResponseMetadata.
@@ -616,8 +649,15 @@ type RouteStatusState string
 
 // RoutingTable defines model for RoutingTable.
 type RoutingTable struct {
-	Spec   *RoutingTableSpec   `json:"spec,omitempty"`
-	Status *RoutingTableStatus `json:"status,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
+	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	Spec     RoutingTableSpec          `json:"spec"`
+	Status   *RoutingTableStatus       `json:"status,omitempty"`
 }
 
 // RoutingTableSpec defines model for RoutingTableSpec.
@@ -631,33 +671,18 @@ type RoutingTableStatus struct {
 	Routes     *[]Route          `json:"routes,omitempty"`
 }
 
-// SecurityGroup A Security Group defines network access rules for a group of compute instances.
-//
-// Key Concepts:
-// - Rules define bi-directional or uni-directional network communication
-// - Supports routing between security groups
-// - Enables granular control over public internet access
-// - Implements stateful connection tracking
-//
-// Connection Tracking:
-// When a connection is initiated from an allowed source, return traffic is automatically permitted,
-// even if not explicitly defined in the rules. This ensures seamless, bi-directional communication
-// for established connections.
-//
-// Routing and Communication Patterns:
-// - Group-to-Group Rules: Define explicit communication paths between security groups
-// - PublicInternet Target: Allows precise control over internet-facing traffic
-// - Ingress/Egress Control: Fine-grained rules for incoming and outgoing traffic
+// SecurityGroup defines model for SecurityGroup.
 type SecurityGroup struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *SecurityGroupKind        `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the security group
-	Spec *SecurityGroupSpec `json:"spec,omitempty"`
+	Spec SecurityGroupSpec `json:"spec"`
 
 	// Status Current status of the security group
 	// Condition type `rules` indicates the status of the security group rules.
@@ -665,25 +690,20 @@ type SecurityGroup struct {
 	Status *SecurityGroupStatus `json:"status,omitempty"`
 }
 
-// SecurityGroupKind Type of the resource
-type SecurityGroupKind string
-
-// SecurityGroupRule Represents a security group rule
+// SecurityGroupRule defines model for SecurityGroupRule.
 type SecurityGroupRule struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *SecurityGroupRuleKind    `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-	Spec     *SecurityGroupRuleSpec    `json:"spec,omitempty"`
+	Spec     SecurityGroupRuleSpec     `json:"spec"`
 
 	// Status Current status of the resource
 	Status *Status `json:"status,omitempty"`
 }
-
-// SecurityGroupRuleKind Type of the resource
-type SecurityGroupRuleKind string
 
 // SecurityGroupRuleSource Source of the traffic. Can be a security group, CIDR range, or 'publicInternet'.
 // 'publicInternet' allows explicit control over internet-facing traffic.
@@ -787,39 +807,24 @@ type StatusCondition struct {
 	Type string `json:"type"`
 }
 
-// Subnet A Subnet represents a logical subdivision of a LAN's IP address space.
-//
-// Key Network Routing Concepts:
-// - Defines a range of IP addresses for compute instances
-// - Supports custom default gateway configuration
-// - Enables network segmentation and isolation
-//
-// Default Gateway Behavior:
-// - 'auto': Automatically selects the first usable IP in the subnet range
-// - Custom configuration allows routing through specific instances or IPs
-// - Useful for implementing advanced network topologies like:
-//   - Application-level firewalls
-//   - Custom routing through network appliances
-//   - Multi-tier network architectures
+// Subnet defines model for Subnet.
 type Subnet struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *SubnetKind            `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string     `json:"labels,omitempty"`
 	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the subnet
-	Spec *SubnetSpec `json:"spec,omitempty"`
+	Spec SubnetSpec `json:"spec"`
 
 	// Status Current status of the subnet.
 	// Condition type `gateway` indicates the status of the subnet's default gateway.
 	// The status can be `configured` or `unconfigured`.
 	Status *SubnetStatus `json:"status,omitempty"`
 }
-
-// SubnetKind Type of the resource
-type SubnetKind string
 
 // SubnetGateway Actual default gateway configuration
 type SubnetGateway struct {
@@ -876,29 +881,74 @@ type SubnetStatus struct {
 	Zone  *string        `json:"zone,omitempty"`
 }
 
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+}
+
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// UserResourceMetadata defines model for UserResourceMetadata.
+type UserResourceMetadata struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
+}
+
+// ZonalMetadata Metadata for zonal resources
+type ZonalMetadata struct {
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
+}
+
 // ZonalResourceMetadata defines model for ZonalResourceMetadata.
 type ZonalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind ZonalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the specific location (region/zone) where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-		Zone   string `json:"zone"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
 }
+
+// ZonalResourceMetadataKind Type of the resource
+type ZonalResourceMetadataKind string
 
 // Cidr defines model for cidr.
 type Cidr struct {
@@ -920,11 +970,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
+// ResourceName defines model for resourceName.
+type ResourceName = string
+
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
 // TenantID defines model for tenantID.
 type TenantID = string
+
+// WorkspaceName defines model for workspaceName.
+type WorkspaceName = string
 
 // ListNetworkQuotasParams defines parameters for ListNetworkQuotas.
 type ListNetworkQuotasParams struct {
@@ -1323,7 +1379,7 @@ type ClientInterface interface {
 	ListNetworkSkus(ctx context.Context, id TenantID, params *ListNetworkSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNetworkSku request
-	GetNetworkSku(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNetworkSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListLANs request
 	ListLANs(ctx context.Context, id TenantID, workspace string, params *ListLANsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1348,66 +1404,66 @@ type ClientInterface interface {
 	CreateOrUpdateNic(ctx context.Context, id TenantID, workspace string, lan string, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNic request
-	DeleteNic(ctx context.Context, id TenantID, workspace string, lan string, name string, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNic(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNic request
-	GetNic(ctx context.Context, id TenantID, workspace string, lan string, name string, params *GetNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNic(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *GetNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListRoutingTables request
 	ListRoutingTables(ctx context.Context, id TenantID, workspace string, lan string, params *ListRoutingTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRoutingTable request
-	DeleteRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRoutingTable request
-	GetRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateRoutingTableWithBody request with any body
-	CreateOrUpdateRoutingTableWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRoutingTableWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSecurityGroups request
 	ListSecurityGroups(ctx context.Context, id TenantID, workspace string, lan string, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteSecurityGroup request
-	DeleteSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSecurityGroup request
-	GetSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateSecurityGroupWithBody request with any body
-	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSubnets request
 	ListSubnets(ctx context.Context, id TenantID, workspace string, lan string, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteSubnet request
-	DeleteSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSubnet request
-	GetSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateSubnetWithBody request with any body
-	CreateOrUpdateSubnetWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnetWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPublicIPs request
 	ListPublicIPs(ctx context.Context, id TenantID, workspace string, params *ListPublicIPsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeletePublicIP request
-	DeletePublicIP(ctx context.Context, id TenantID, workspace string, name string, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeletePublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPublicIP request
-	GetPublicIP(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetPublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PutPublicIPWithBody request with any body
-	PutPublicIPWithBody(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PutPublicIPWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	PutPublicIP(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PutPublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) ListNetworkQuotas(ctx context.Context, id TenantID, params *ListNetworkQuotasParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1458,7 +1514,7 @@ func (c *Client) ListNetworkSkus(ctx context.Context, id TenantID, params *ListN
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNetworkSku(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNetworkSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNetworkSkuRequest(c.Server, id, name)
 	if err != nil {
 		return nil, err
@@ -1566,7 +1622,7 @@ func (c *Client) CreateOrUpdateNic(ctx context.Context, id TenantID, workspace s
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNic(ctx context.Context, id TenantID, workspace string, lan string, name string, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNic(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNicRequest(c.Server, id, workspace, lan, name, params)
 	if err != nil {
 		return nil, err
@@ -1578,7 +1634,7 @@ func (c *Client) DeleteNic(ctx context.Context, id TenantID, workspace string, l
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNic(ctx context.Context, id TenantID, workspace string, lan string, name string, params *GetNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNic(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *GetNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNicRequest(c.Server, id, workspace, lan, name, params)
 	if err != nil {
 		return nil, err
@@ -1602,7 +1658,7 @@ func (c *Client) ListRoutingTables(ctx context.Context, id TenantID, workspace s
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteRoutingTableRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1614,7 +1670,7 @@ func (c *Client) DeleteRoutingTable(ctx context.Context, id TenantID, workspace 
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetRoutingTableRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1626,7 +1682,7 @@ func (c *Client) GetRoutingTable(ctx context.Context, id TenantID, workspace str
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRoutingTableWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRoutingTableWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoutingTableRequestWithBody(c.Server, id, workspace, lan, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1638,7 +1694,7 @@ func (c *Client) CreateOrUpdateRoutingTableWithBody(ctx context.Context, id Tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRoutingTable(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRoutingTable(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoutingTableRequest(c.Server, id, workspace, lan, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1662,7 +1718,7 @@ func (c *Client) ListSecurityGroups(ctx context.Context, id TenantID, workspace 
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSecurityGroupRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1674,7 +1730,7 @@ func (c *Client) DeleteSecurityGroup(ctx context.Context, id TenantID, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSecurityGroupRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1686,7 +1742,7 @@ func (c *Client) GetSecurityGroup(ctx context.Context, id TenantID, workspace st
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequestWithBody(c.Server, id, workspace, lan, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1698,7 +1754,7 @@ func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, id Ten
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequest(c.Server, id, workspace, lan, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1722,7 +1778,7 @@ func (c *Client) ListSubnets(ctx context.Context, id TenantID, workspace string,
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSubnetRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1734,7 +1790,7 @@ func (c *Client) DeleteSubnet(ctx context.Context, id TenantID, workspace string
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSubnetRequest(c.Server, id, workspace, lan, name)
 	if err != nil {
 		return nil, err
@@ -1746,7 +1802,7 @@ func (c *Client) GetSubnet(ctx context.Context, id TenantID, workspace string, l
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSubnetRequestWithBody(c.Server, id, workspace, lan, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1758,7 +1814,7 @@ func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, id TenantID, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSubnet(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSubnet(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSubnetRequest(c.Server, id, workspace, lan, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1782,7 +1838,7 @@ func (c *Client) ListPublicIPs(ctx context.Context, id TenantID, workspace strin
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeletePublicIP(ctx context.Context, id TenantID, workspace string, name string, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeletePublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeletePublicIPRequest(c.Server, id, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -1794,7 +1850,7 @@ func (c *Client) DeletePublicIP(ctx context.Context, id TenantID, workspace stri
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPublicIP(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetPublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPublicIPRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1806,7 +1862,7 @@ func (c *Client) GetPublicIP(ctx context.Context, id TenantID, workspace string,
 	return c.Client.Do(req)
 }
 
-func (c *Client) PutPublicIPWithBody(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PutPublicIPWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPutPublicIPRequestWithBody(c.Server, id, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1818,7 +1874,7 @@ func (c *Client) PutPublicIPWithBody(ctx context.Context, id TenantID, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) PutPublicIP(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PutPublicIP(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPutPublicIPRequest(c.Server, id, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2106,7 +2162,7 @@ func NewListNetworkSkusRequest(server string, id TenantID, params *ListNetworkSk
 }
 
 // NewGetNetworkSkuRequest generates requests for GetNetworkSku
-func NewGetNetworkSkuRequest(server string, id TenantID, name string) (*http.Request, error) {
+func NewGetNetworkSkuRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2622,7 +2678,7 @@ func NewCreateOrUpdateNicRequestWithBody(server string, id TenantID, workspace s
 }
 
 // NewDeleteNicRequest generates requests for DeleteNic
-func NewDeleteNicRequest(server string, id TenantID, workspace string, lan string, name string, params *DeleteNicParams) (*http.Request, error) {
+func NewDeleteNicRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *DeleteNicParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2692,7 +2748,7 @@ func NewDeleteNicRequest(server string, id TenantID, workspace string, lan strin
 }
 
 // NewGetNicRequest generates requests for GetNic
-func NewGetNicRequest(server string, id TenantID, workspace string, lan string, name string, params *GetNicParams) (*http.Request, error) {
+func NewGetNicRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *GetNicParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2879,7 +2935,7 @@ func NewListRoutingTablesRequest(server string, id TenantID, workspace string, l
 }
 
 // NewDeleteRoutingTableRequest generates requests for DeleteRoutingTable
-func NewDeleteRoutingTableRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewDeleteRoutingTableRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2934,7 +2990,7 @@ func NewDeleteRoutingTableRequest(server string, id TenantID, workspace string, 
 }
 
 // NewGetRoutingTableRequest generates requests for GetRoutingTable
-func NewGetRoutingTableRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewGetRoutingTableRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2989,7 +3045,7 @@ func NewGetRoutingTableRequest(server string, id TenantID, workspace string, lan
 }
 
 // NewCreateOrUpdateRoutingTableRequest calls the generic CreateOrUpdateRoutingTable builder with application/json body
-func NewCreateOrUpdateRoutingTableRequest(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateRoutingTableRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3000,7 +3056,7 @@ func NewCreateOrUpdateRoutingTableRequest(server string, id TenantID, workspace 
 }
 
 // NewCreateOrUpdateRoutingTableRequestWithBody generates requests for CreateOrUpdateRoutingTable with any type of body
-func NewCreateOrUpdateRoutingTableRequestWithBody(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateRoutingTableRequestWithBody(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3189,7 +3245,7 @@ func NewListSecurityGroupsRequest(server string, id TenantID, workspace string, 
 }
 
 // NewDeleteSecurityGroupRequest generates requests for DeleteSecurityGroup
-func NewDeleteSecurityGroupRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewDeleteSecurityGroupRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3244,7 +3300,7 @@ func NewDeleteSecurityGroupRequest(server string, id TenantID, workspace string,
 }
 
 // NewGetSecurityGroupRequest generates requests for GetSecurityGroup
-func NewGetSecurityGroupRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewGetSecurityGroupRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3299,7 +3355,7 @@ func NewGetSecurityGroupRequest(server string, id TenantID, workspace string, la
 }
 
 // NewCreateOrUpdateSecurityGroupRequest calls the generic CreateOrUpdateSecurityGroup builder with application/json body
-func NewCreateOrUpdateSecurityGroupRequest(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3310,7 +3366,7 @@ func NewCreateOrUpdateSecurityGroupRequest(server string, id TenantID, workspace
 }
 
 // NewCreateOrUpdateSecurityGroupRequestWithBody generates requests for CreateOrUpdateSecurityGroup with any type of body
-func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3499,7 +3555,7 @@ func NewListSubnetsRequest(server string, id TenantID, workspace string, lan str
 }
 
 // NewDeleteSubnetRequest generates requests for DeleteSubnet
-func NewDeleteSubnetRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewDeleteSubnetRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3554,7 +3610,7 @@ func NewDeleteSubnetRequest(server string, id TenantID, workspace string, lan st
 }
 
 // NewGetSubnetRequest generates requests for GetSubnet
-func NewGetSubnetRequest(server string, id TenantID, workspace string, lan string, name string) (*http.Request, error) {
+func NewGetSubnetRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3609,7 +3665,7 @@ func NewGetSubnetRequest(server string, id TenantID, workspace string, lan strin
 }
 
 // NewCreateOrUpdateSubnetRequest calls the generic CreateOrUpdateSubnet builder with application/json body
-func NewCreateOrUpdateSubnetRequest(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateSubnetRequest(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3620,7 +3676,7 @@ func NewCreateOrUpdateSubnetRequest(server string, id TenantID, workspace string
 }
 
 // NewCreateOrUpdateSubnetRequestWithBody generates requests for CreateOrUpdateSubnet with any type of body
-func NewCreateOrUpdateSubnetRequestWithBody(server string, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateSubnetRequestWithBody(server string, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3802,7 +3858,7 @@ func NewListPublicIPsRequest(server string, id TenantID, workspace string, param
 }
 
 // NewDeletePublicIPRequest generates requests for DeletePublicIP
-func NewDeletePublicIPRequest(server string, id TenantID, workspace string, name string, params *DeletePublicIPParams) (*http.Request, error) {
+func NewDeletePublicIPRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *DeletePublicIPParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3865,7 +3921,7 @@ func NewDeletePublicIPRequest(server string, id TenantID, workspace string, name
 }
 
 // NewGetPublicIPRequest generates requests for GetPublicIP
-func NewGetPublicIPRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewGetPublicIPRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3913,7 +3969,7 @@ func NewGetPublicIPRequest(server string, id TenantID, workspace string, name st
 }
 
 // NewPutPublicIPRequest calls the generic PutPublicIP builder with application/json body
-func NewPutPublicIPRequest(server string, id TenantID, workspace string, name string, params *PutPublicIPParams, body PutPublicIPJSONRequestBody) (*http.Request, error) {
+func NewPutPublicIPRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, body PutPublicIPJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3924,7 +3980,7 @@ func NewPutPublicIPRequest(server string, id TenantID, workspace string, name st
 }
 
 // NewPutPublicIPRequestWithBody generates requests for PutPublicIP with any type of body
-func NewPutPublicIPRequestWithBody(server string, id TenantID, workspace string, name string, params *PutPublicIPParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewPutPublicIPRequestWithBody(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4043,7 +4099,7 @@ type ClientWithResponsesInterface interface {
 	ListNetworkSkusWithResponse(ctx context.Context, id TenantID, params *ListNetworkSkusParams, reqEditors ...RequestEditorFn) (*ListNetworkSkusResponse, error)
 
 	// GetNetworkSkuWithResponse request
-	GetNetworkSkuWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetNetworkSkuResponse, error)
+	GetNetworkSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkSkuResponse, error)
 
 	// ListLANsWithResponse request
 	ListLANsWithResponse(ctx context.Context, id TenantID, workspace string, params *ListLANsParams, reqEditors ...RequestEditorFn) (*ListLANsResponse, error)
@@ -4068,66 +4124,66 @@ type ClientWithResponsesInterface interface {
 	CreateOrUpdateNicWithResponse(ctx context.Context, id TenantID, workspace string, lan string, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
 
 	// DeleteNicWithResponse request
-	DeleteNicWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
+	DeleteNicWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
 
 	// GetNicWithResponse request
-	GetNicWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *GetNicParams, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
+	GetNicWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *GetNicParams, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
 
 	// ListRoutingTablesWithResponse request
 	ListRoutingTablesWithResponse(ctx context.Context, id TenantID, workspace string, lan string, params *ListRoutingTablesParams, reqEditors ...RequestEditorFn) (*ListRoutingTablesResponse, error)
 
 	// DeleteRoutingTableWithResponse request
-	DeleteRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteRoutingTableResponse, error)
+	DeleteRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteRoutingTableResponse, error)
 
 	// GetRoutingTableWithResponse request
-	GetRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetRoutingTableResponse, error)
+	GetRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetRoutingTableResponse, error)
 
 	// CreateOrUpdateRoutingTableWithBodyWithResponse request with any body
-	CreateOrUpdateRoutingTableWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error)
+	CreateOrUpdateRoutingTableWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error)
 
-	CreateOrUpdateRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error)
+	CreateOrUpdateRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error)
 
 	// ListSecurityGroupsWithResponse request
 	ListSecurityGroupsWithResponse(ctx context.Context, id TenantID, workspace string, lan string, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error)
 
 	// DeleteSecurityGroupWithResponse request
-	DeleteSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
+	DeleteSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
 
 	// GetSecurityGroupWithResponse request
-	GetSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
+	GetSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
 
 	// CreateOrUpdateSecurityGroupWithBodyWithResponse request with any body
-	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
 
-	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
 
 	// ListSubnetsWithResponse request
 	ListSubnetsWithResponse(ctx context.Context, id TenantID, workspace string, lan string, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error)
 
 	// DeleteSubnetWithResponse request
-	DeleteSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
+	DeleteSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
 
 	// GetSubnetWithResponse request
-	GetSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
+	GetSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
 
 	// CreateOrUpdateSubnetWithBodyWithResponse request with any body
-	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
 
-	CreateOrUpdateSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
 
 	// ListPublicIPsWithResponse request
 	ListPublicIPsWithResponse(ctx context.Context, id TenantID, workspace string, params *ListPublicIPsParams, reqEditors ...RequestEditorFn) (*ListPublicIPsResponse, error)
 
 	// DeletePublicIPWithResponse request
-	DeletePublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*DeletePublicIPResponse, error)
+	DeletePublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*DeletePublicIPResponse, error)
 
 	// GetPublicIPWithResponse request
-	GetPublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*GetPublicIPResponse, error)
+	GetPublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetPublicIPResponse, error)
 
 	// PutPublicIPWithBodyWithResponse request with any body
-	PutPublicIPWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error)
+	PutPublicIPWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error)
 
-	PutPublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error)
+	PutPublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error)
 }
 
 type ListNetworkQuotasResponse struct {
@@ -4946,7 +5002,7 @@ func (c *ClientWithResponses) ListNetworkSkusWithResponse(ctx context.Context, i
 }
 
 // GetNetworkSkuWithResponse request returning *GetNetworkSkuResponse
-func (c *ClientWithResponses) GetNetworkSkuWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetNetworkSkuResponse, error) {
+func (c *ClientWithResponses) GetNetworkSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkSkuResponse, error) {
 	rsp, err := c.GetNetworkSku(ctx, id, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5025,7 +5081,7 @@ func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context,
 }
 
 // DeleteNicWithResponse request returning *DeleteNicResponse
-func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
+func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
 	rsp, err := c.DeleteNic(ctx, id, workspace, lan, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5034,7 +5090,7 @@ func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, id Tena
 }
 
 // GetNicWithResponse request returning *GetNicResponse
-func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *GetNicParams, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
+func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *GetNicParams, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
 	rsp, err := c.GetNic(ctx, id, workspace, lan, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5052,7 +5108,7 @@ func (c *ClientWithResponses) ListRoutingTablesWithResponse(ctx context.Context,
 }
 
 // DeleteRoutingTableWithResponse request returning *DeleteRoutingTableResponse
-func (c *ClientWithResponses) DeleteRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteRoutingTableResponse, error) {
+func (c *ClientWithResponses) DeleteRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteRoutingTableResponse, error) {
 	rsp, err := c.DeleteRoutingTable(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5061,7 +5117,7 @@ func (c *ClientWithResponses) DeleteRoutingTableWithResponse(ctx context.Context
 }
 
 // GetRoutingTableWithResponse request returning *GetRoutingTableResponse
-func (c *ClientWithResponses) GetRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetRoutingTableResponse, error) {
+func (c *ClientWithResponses) GetRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetRoutingTableResponse, error) {
 	rsp, err := c.GetRoutingTable(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5070,7 +5126,7 @@ func (c *ClientWithResponses) GetRoutingTableWithResponse(ctx context.Context, i
 }
 
 // CreateOrUpdateRoutingTableWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRoutingTableResponse
-func (c *ClientWithResponses) CreateOrUpdateRoutingTableWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoutingTableWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error) {
 	rsp, err := c.CreateOrUpdateRoutingTableWithBody(ctx, id, workspace, lan, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5078,7 +5134,7 @@ func (c *ClientWithResponses) CreateOrUpdateRoutingTableWithBodyWithResponse(ctx
 	return ParseCreateOrUpdateRoutingTableResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateRoutingTableWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoutingTableWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateRoutingTableParams, body CreateOrUpdateRoutingTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoutingTableResponse, error) {
 	rsp, err := c.CreateOrUpdateRoutingTable(ctx, id, workspace, lan, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5096,7 +5152,7 @@ func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context
 }
 
 // DeleteSecurityGroupWithResponse request returning *DeleteSecurityGroupResponse
-func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
+func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
 	rsp, err := c.DeleteSecurityGroup(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5105,7 +5161,7 @@ func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Contex
 }
 
 // GetSecurityGroupWithResponse request returning *GetSecurityGroupResponse
-func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
+func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
 	rsp, err := c.GetSecurityGroup(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5114,7 +5170,7 @@ func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, 
 }
 
 // CreateOrUpdateSecurityGroupWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSecurityGroupResponse
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroupWithBody(ctx, id, workspace, lan, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5122,7 +5178,7 @@ func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ct
 	return ParseCreateOrUpdateSecurityGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroup(ctx, id, workspace, lan, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5140,7 +5196,7 @@ func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, id Te
 }
 
 // DeleteSubnetWithResponse request returning *DeleteSubnetResponse
-func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
+func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
 	rsp, err := c.DeleteSubnet(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5149,7 +5205,7 @@ func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, id T
 }
 
 // GetSubnetWithResponse request returning *GetSubnetResponse
-func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
+func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
 	rsp, err := c.GetSubnet(ctx, id, workspace, lan, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5158,7 +5214,7 @@ func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, id Tena
 }
 
 // CreateOrUpdateSubnetWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSubnetResponse
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
 	rsp, err := c.CreateOrUpdateSubnetWithBody(ctx, id, workspace, lan, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5166,7 +5222,7 @@ func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx conte
 	return ParseCreateOrUpdateSubnetResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, id TenantID, workspace string, lan string, name string, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
 	rsp, err := c.CreateOrUpdateSubnet(ctx, id, workspace, lan, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5184,7 +5240,7 @@ func (c *ClientWithResponses) ListPublicIPsWithResponse(ctx context.Context, id 
 }
 
 // DeletePublicIPWithResponse request returning *DeletePublicIPResponse
-func (c *ClientWithResponses) DeletePublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*DeletePublicIPResponse, error) {
+func (c *ClientWithResponses) DeletePublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *DeletePublicIPParams, reqEditors ...RequestEditorFn) (*DeletePublicIPResponse, error) {
 	rsp, err := c.DeletePublicIP(ctx, id, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5193,7 +5249,7 @@ func (c *ClientWithResponses) DeletePublicIPWithResponse(ctx context.Context, id
 }
 
 // GetPublicIPWithResponse request returning *GetPublicIPResponse
-func (c *ClientWithResponses) GetPublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*GetPublicIPResponse, error) {
+func (c *ClientWithResponses) GetPublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetPublicIPResponse, error) {
 	rsp, err := c.GetPublicIP(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5202,7 +5258,7 @@ func (c *ClientWithResponses) GetPublicIPWithResponse(ctx context.Context, id Te
 }
 
 // PutPublicIPWithBodyWithResponse request with arbitrary body returning *PutPublicIPResponse
-func (c *ClientWithResponses) PutPublicIPWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error) {
+func (c *ClientWithResponses) PutPublicIPWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error) {
 	rsp, err := c.PutPublicIPWithBody(ctx, id, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5210,7 +5266,7 @@ func (c *ClientWithResponses) PutPublicIPWithBodyWithResponse(ctx context.Contex
 	return ParsePutPublicIPResponse(rsp)
 }
 
-func (c *ClientWithResponses) PutPublicIPWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error) {
+func (c *ClientWithResponses) PutPublicIPWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *PutPublicIPParams, body PutPublicIPJSONRequestBody, reqEditors ...RequestEditorFn) (*PutPublicIPResponse, error) {
 	rsp, err := c.PutPublicIP(ctx, id, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -6963,7 +7019,7 @@ type ServerInterface interface {
 	ListNetworkSkus(w http.ResponseWriter, r *http.Request, id TenantID, params ListNetworkSkusParams)
 	// Get details of a specific network SKU
 	// (GET /v1/tenants/{id}/skus/{name})
-	GetNetworkSku(w http.ResponseWriter, r *http.Request, id TenantID, name string)
+	GetNetworkSku(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
 	// List all LANs
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans)
 	ListLANs(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListLANsParams)
@@ -6984,58 +7040,58 @@ type ServerInterface interface {
 	CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, params CreateOrUpdateNicParams)
 	// Delete a NIC
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/nics/{name})
-	DeleteNic(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string, params DeleteNicParams)
+	DeleteNic(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params DeleteNicParams)
 	// Get a specific NIC
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/nics/{name})
-	GetNic(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string, params GetNicParams)
+	GetNic(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params GetNicParams)
 	// List all routing tables for a LAN
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/routing-tables)
 	ListRoutingTables(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, params ListRoutingTablesParams)
 	// Delete a routing table
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/routing-tables/{name})
-	DeleteRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	DeleteRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Get a specific routing table
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/routing-tables/{name})
-	GetRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	GetRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Create or update a routing table
 	// (PUT /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/routing-tables/{name})
-	CreateOrUpdateRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string, params CreateOrUpdateRoutingTableParams)
+	CreateOrUpdateRoutingTable(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params CreateOrUpdateRoutingTableParams)
 	// List all security groups in a LAN
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/security-groups)
 	ListSecurityGroups(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, params ListSecurityGroupsParams)
 	// Delete a specific security group in a LAN
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/security-groups/{name})
-	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Get a specific security group in a LAN
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/security-groups/{name})
-	GetSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	GetSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Create or update a specific security group in a LAN
 	// (PUT /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/security-groups/{name})
-	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string, params CreateOrUpdateSecurityGroupParams)
+	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params CreateOrUpdateSecurityGroupParams)
 	// List all subnets in a LAN
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/subnets)
 	ListSubnets(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, params ListSubnetsParams)
 	// Delete a specific subnet in a LAN
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/subnets/{name})
-	DeleteSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	DeleteSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Get a specific subnet in a LAN
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/subnets/{name})
-	GetSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string)
+	GetSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName)
 	// Create or update a specific subnet in a LAN
 	// (PUT /v1/tenants/{id}/workspaces/{workspace}/lans/{lan}/subnets/{name})
-	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, lan string, name string, params CreateOrUpdateSubnetParams)
+	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, lan string, name ResourceName, params CreateOrUpdateSubnetParams)
 	// List Public IPs
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/public-ips)
 	ListPublicIPs(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListPublicIPsParams)
 	// Delete Public IP
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/public-ips/{name})
-	DeletePublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string, params DeletePublicIPParams)
+	DeletePublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName, params DeletePublicIPParams)
 	// Get Public IP
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/public-ips/{name})
-	GetPublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	GetPublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 	// Create or Update Public IP
 	// (PUT /v1/tenants/{id}/workspaces/{workspace}/public-ips/{name})
-	PutPublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string, params PutPublicIPParams)
+	PutPublicIP(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName, params PutPublicIPParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -7284,7 +7340,7 @@ func (siw *ServerInterfaceWrapper) GetNetworkSku(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -7753,7 +7809,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -7771,7 +7827,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -7835,7 +7891,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -7853,7 +7909,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8014,7 +8070,7 @@ func (siw *ServerInterfaceWrapper) DeleteRoutingTable(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8032,7 +8088,7 @@ func (siw *ServerInterfaceWrapper) DeleteRoutingTable(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8072,7 +8128,7 @@ func (siw *ServerInterfaceWrapper) GetRoutingTable(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8090,7 +8146,7 @@ func (siw *ServerInterfaceWrapper) GetRoutingTable(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8130,7 +8186,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRoutingTable(w http.ResponseWri
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8148,7 +8204,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRoutingTable(w http.ResponseWri
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8309,7 +8365,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8327,7 +8383,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8367,7 +8423,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8385,7 +8441,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8425,7 +8481,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8443,7 +8499,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8604,7 +8660,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8622,7 +8678,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8662,7 +8718,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8680,7 +8736,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8720,7 +8776,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8738,7 +8794,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8890,7 +8946,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIP(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8899,7 +8955,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIP(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8963,7 +9019,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIP(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8972,7 +9028,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIP(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9012,7 +9068,7 @@ func (siw *ServerInterfaceWrapper) PutPublicIP(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9021,7 +9077,7 @@ func (siw *ServerInterfaceWrapper) PutPublicIP(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

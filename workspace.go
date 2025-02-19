@@ -10,16 +10,14 @@ import (
 
 type WorkspaceID string
 
-type Workspace ReferencedResource[TenantReference, *workspace.Workspace]
-
-func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iterator[Workspace], error) {
+func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return nil, err
 	}
 
-	iter := Iterator[Workspace]{
-		fn: func(ctx context.Context, skipToken *string) ([]Workspace, *string, error) {
+	iter := Iterator[workspace.Workspace]{
+		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
 			resp, err := wsClient.ListWorkspacesWithResponse(ctx, workspace.TenantID(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
 			})
@@ -27,22 +25,14 @@ func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iter
 				return nil, nil, err
 			}
 
-			items := make([]Workspace, len(resp.JSON200.Items))
-			for i := 0; i < len(resp.JSON200.Items); i++ {
-				items[i] = Workspace{
-					Ref:  TenantReference{Tenant: tid, Name: resp.JSON200.Items[i].Metadata.Name},
-					Data: &resp.JSON200.Items[i],
-				}
-			}
-
-			return items, resp.JSON200.Metadata.SkipToken, nil
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 		},
 	}
 
 	return &iter, nil
 }
 
-func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference) (*Workspace, error) {
+func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return nil, err
@@ -53,21 +43,19 @@ func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference)
 		return nil, err
 	}
 
-	return &Workspace{
-		Ref:  tref,
-		Data: resp.JSON200,
-	}, nil
+	return resp.JSON200, nil
 }
 
-func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *Workspace) error {
+func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+	panicUnlessTenantExists(ws)
 
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return err
 	}
 
-	resp, err := wsClient.DeleteWorkspaceWithResponse(ctx, workspace.TenantID(ws.Ref.Tenant), ws.Ref.Name, &workspace.DeleteWorkspaceParams{
-		IfUnmodifiedSince: ws.Data.Metadata.LastModifiedTimestamp,
+	resp, err := wsClient.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
+		IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
 	})
 	if err != nil {
 		return err
@@ -80,16 +68,18 @@ func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *Workspace) 
 	return nil
 }
 
-func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *Workspace) error {
+func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+	panicUnlessTenantExists(ws)
+
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return err
 	}
 
-	resp, err := wsClient.CreateOrUpdateWorkspaceWithResponse(ctx, workspace.TenantID(ws.Ref.Tenant), ws.Ref.Name,
+	resp, err := wsClient.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
-			IfUnmodifiedSince: ws.Data.Metadata.LastModifiedTimestamp,
-		}, *ws.Data)
+			IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
+		}, *ws)
 	if err != nil {
 		return err
 	}
@@ -99,4 +89,14 @@ func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *Workspace) er
 	}
 
 	return nil
+}
+
+func panicUnlessTenantExists(ws *workspace.Workspace) {
+	if ws.Metadata == nil {
+		panic("Metadata is nil")
+	}
+
+	if ws.Metadata.Tenant == "" {
+		panic("Metadata.Tenant is empty")
+	}
 }

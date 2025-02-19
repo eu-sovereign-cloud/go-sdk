@@ -23,9 +23,56 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for WorkspaceKind.
+// Defines values for GlobalResourceMetadataKind.
 const (
-	WorkspaceKindWorkspace WorkspaceKind = "workspace"
+	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
+	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
+	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
+	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
+	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
+	GlobalResourceMetadataKindLan                  GlobalResourceMetadataKind = "lan"
+	GlobalResourceMetadataKindLocation             GlobalResourceMetadataKind = "location"
+	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
+	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
+	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
+	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
+	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
+	GlobalResourceMetadataKindQuota                GlobalResourceMetadataKind = "quota"
+	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
+	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
+	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
+	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
+	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
+	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
+	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
+	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
+	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
+)
+
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
 // Defines values for WorkspaceStatusPhase.
@@ -121,37 +168,44 @@ type ErrorSource struct {
 
 // GlobalResourceMetadata defines model for GlobalResourceMetadata.
 type GlobalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind GlobalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
+// GlobalResourceMetadataKind Type of the resource
+type GlobalResourceMetadataKind string
+
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+}
 
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
 }
 
@@ -192,22 +246,30 @@ type StatusCondition struct {
 	Type string `json:"type"`
 }
 
-// Workspace Represents a workspace resource in the Sovereign European Cloud API
-type Workspace struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *WorkspaceKind          `json:"kind,omitempty"`
-	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Desired state of the workspace
-	Spec   *WorkspaceSpec   `json:"spec,omitempty"`
-	Status *WorkspaceStatus `json:"status,omitempty"`
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
 }
 
-// WorkspaceKind Type of the resource
-type WorkspaceKind string
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// Workspace Represents a workspace resource in the Sovereign European Cloud API
+type Workspace struct {
+	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
+	Spec     WorkspaceSpec           `json:"spec"`
+	Status   *WorkspaceStatus        `json:"status,omitempty"`
+}
 
 // WorkspaceIterator defines model for WorkspaceIterator.
 type WorkspaceIterator struct {
@@ -215,14 +277,8 @@ type WorkspaceIterator struct {
 	Metadata ResponseMetadata `json:"metadata"`
 }
 
-// WorkspaceSpec Desired state of the workspace
-type WorkspaceSpec struct {
-	// Description Optional description of the workspace
-	Description *string `json:"description,omitempty"`
-
-	// Name Unique name of the workspace within the tenant
-	Name string `json:"name"`
-}
+// WorkspaceSpec defines model for WorkspaceSpec.
+type WorkspaceSpec = map[string]interface{}
 
 // WorkspaceStatus defines model for WorkspaceStatus.
 type WorkspaceStatus struct {
@@ -249,6 +305,9 @@ type LabelSelector = string
 
 // LimitParam defines model for limitParam.
 type LimitParam = int
+
+// ResourceName defines model for resourceName.
+type ResourceName = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
@@ -377,15 +436,15 @@ type ClientInterface interface {
 	ListWorkspaces(ctx context.Context, id TenantID, params *ListWorkspacesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteWorkspace request
-	DeleteWorkspace(ctx context.Context, id TenantID, name string, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteWorkspace(ctx context.Context, id TenantID, name ResourceName, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetWorkspace request
-	GetWorkspace(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetWorkspace(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateWorkspaceWithBody request with any body
-	CreateOrUpdateWorkspaceWithBody(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateWorkspaceWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateWorkspace(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateWorkspace(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) ListWorkspaces(ctx context.Context, id TenantID, params *ListWorkspacesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -400,7 +459,7 @@ func (c *Client) ListWorkspaces(ctx context.Context, id TenantID, params *ListWo
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteWorkspace(ctx context.Context, id TenantID, name string, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteWorkspace(ctx context.Context, id TenantID, name ResourceName, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteWorkspaceRequest(c.Server, id, name, params)
 	if err != nil {
 		return nil, err
@@ -412,7 +471,7 @@ func (c *Client) DeleteWorkspace(ctx context.Context, id TenantID, name string, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetWorkspace(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetWorkspace(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetWorkspaceRequest(c.Server, id, name)
 	if err != nil {
 		return nil, err
@@ -424,7 +483,7 @@ func (c *Client) GetWorkspace(ctx context.Context, id TenantID, name string, req
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateWorkspaceWithBody(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateWorkspaceWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateWorkspaceRequestWithBody(c.Server, id, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -436,7 +495,7 @@ func (c *Client) CreateOrUpdateWorkspaceWithBody(ctx context.Context, id TenantI
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateWorkspace(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateWorkspace(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateWorkspaceRequest(c.Server, id, name, params, body)
 	if err != nil {
 		return nil, err
@@ -552,7 +611,7 @@ func NewListWorkspacesRequest(server string, id TenantID, params *ListWorkspaces
 }
 
 // NewDeleteWorkspaceRequest generates requests for DeleteWorkspace
-func NewDeleteWorkspaceRequest(server string, id TenantID, name string, params *DeleteWorkspaceParams) (*http.Request, error) {
+func NewDeleteWorkspaceRequest(server string, id TenantID, name ResourceName, params *DeleteWorkspaceParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -608,7 +667,7 @@ func NewDeleteWorkspaceRequest(server string, id TenantID, name string, params *
 }
 
 // NewGetWorkspaceRequest generates requests for GetWorkspace
-func NewGetWorkspaceRequest(server string, id TenantID, name string) (*http.Request, error) {
+func NewGetWorkspaceRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -649,7 +708,7 @@ func NewGetWorkspaceRequest(server string, id TenantID, name string) (*http.Requ
 }
 
 // NewCreateOrUpdateWorkspaceRequest calls the generic CreateOrUpdateWorkspace builder with application/json body
-func NewCreateOrUpdateWorkspaceRequest(server string, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateWorkspaceRequest(server string, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -660,7 +719,7 @@ func NewCreateOrUpdateWorkspaceRequest(server string, id TenantID, name string, 
 }
 
 // NewCreateOrUpdateWorkspaceRequestWithBody generates requests for CreateOrUpdateWorkspace with any type of body
-func NewCreateOrUpdateWorkspaceRequestWithBody(server string, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateWorkspaceRequestWithBody(server string, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -764,15 +823,15 @@ type ClientWithResponsesInterface interface {
 	ListWorkspacesWithResponse(ctx context.Context, id TenantID, params *ListWorkspacesParams, reqEditors ...RequestEditorFn) (*ListWorkspacesResponse, error)
 
 	// DeleteWorkspaceWithResponse request
-	DeleteWorkspaceWithResponse(ctx context.Context, id TenantID, name string, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*DeleteWorkspaceResponse, error)
+	DeleteWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*DeleteWorkspaceResponse, error)
 
 	// GetWorkspaceWithResponse request
-	GetWorkspaceWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetWorkspaceResponse, error)
+	GetWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetWorkspaceResponse, error)
 
 	// CreateOrUpdateWorkspaceWithBodyWithResponse request with any body
-	CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error)
+	CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error)
 
-	CreateOrUpdateWorkspaceWithResponse(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error)
+	CreateOrUpdateWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error)
 }
 
 type ListWorkspacesResponse struct {
@@ -893,7 +952,7 @@ func (c *ClientWithResponses) ListWorkspacesWithResponse(ctx context.Context, id
 }
 
 // DeleteWorkspaceWithResponse request returning *DeleteWorkspaceResponse
-func (c *ClientWithResponses) DeleteWorkspaceWithResponse(ctx context.Context, id TenantID, name string, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*DeleteWorkspaceResponse, error) {
+func (c *ClientWithResponses) DeleteWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, params *DeleteWorkspaceParams, reqEditors ...RequestEditorFn) (*DeleteWorkspaceResponse, error) {
 	rsp, err := c.DeleteWorkspace(ctx, id, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -902,7 +961,7 @@ func (c *ClientWithResponses) DeleteWorkspaceWithResponse(ctx context.Context, i
 }
 
 // GetWorkspaceWithResponse request returning *GetWorkspaceResponse
-func (c *ClientWithResponses) GetWorkspaceWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetWorkspaceResponse, error) {
+func (c *ClientWithResponses) GetWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetWorkspaceResponse, error) {
 	rsp, err := c.GetWorkspace(ctx, id, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -911,7 +970,7 @@ func (c *ClientWithResponses) GetWorkspaceWithResponse(ctx context.Context, id T
 }
 
 // CreateOrUpdateWorkspaceWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateWorkspaceResponse
-func (c *ClientWithResponses) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error) {
 	rsp, err := c.CreateOrUpdateWorkspaceWithBody(ctx, id, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -919,7 +978,7 @@ func (c *ClientWithResponses) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx co
 	return ParseCreateOrUpdateWorkspaceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateWorkspaceWithResponse(ctx context.Context, id TenantID, name string, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateWorkspaceWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateWorkspaceParams, body CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateWorkspaceResponse, error) {
 	rsp, err := c.CreateOrUpdateWorkspace(ctx, id, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1178,13 +1237,13 @@ type ServerInterface interface {
 	ListWorkspaces(w http.ResponseWriter, r *http.Request, id TenantID, params ListWorkspacesParams)
 	// Delete a workspace
 	// (DELETE /v1/tenants/{id}/workspaces/{name})
-	DeleteWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name string, params DeleteWorkspaceParams)
+	DeleteWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params DeleteWorkspaceParams)
 	// Get a specific workspace
 	// (GET /v1/tenants/{id}/workspaces/{name})
-	GetWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name string)
+	GetWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
 	// Create or update a workspace
 	// (PUT /v1/tenants/{id}/workspaces/{name})
-	CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name string, params CreateOrUpdateWorkspaceParams)
+	CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params CreateOrUpdateWorkspaceParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1290,7 +1349,7 @@ func (siw *ServerInterfaceWrapper) DeleteWorkspace(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1354,7 +1413,7 @@ func (siw *ServerInterfaceWrapper) GetWorkspace(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1394,7 +1453,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateWorkspace(w http.ResponseWriter
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

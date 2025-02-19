@@ -22,17 +22,38 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for ActivityLogKind.
-const (
-	ActivityLogKindActivityLog ActivityLogKind = "activity-log"
-)
-
 // Defines values for ActivityLogSpecRequestVerb.
 const (
 	DELETE ActivityLogSpecRequestVerb = "DELETE"
 	GET    ActivityLogSpecRequestVerb = "GET"
 	POST   ActivityLogSpecRequestVerb = "POST"
 	PUT    ActivityLogSpecRequestVerb = "PUT"
+)
+
+// Defines values for GlobalResourceMetadataKind.
+const (
+	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
+	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
+	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
+	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
+	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
+	GlobalResourceMetadataKindLan                  GlobalResourceMetadataKind = "lan"
+	GlobalResourceMetadataKindLocation             GlobalResourceMetadataKind = "location"
+	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
+	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
+	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
+	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
+	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
+	GlobalResourceMetadataKindQuota                GlobalResourceMetadataKind = "quota"
+	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
+	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
+	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
+	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
+	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
+	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
+	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
+	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
+	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
 )
 
 // Defines values for LoadBalancerTargetAlgorithm.
@@ -68,9 +89,30 @@ const (
 	Static  PublicIpSpecType = "Static"
 )
 
-// Defines values for SecurityGroupRuleKind.
+// Defines values for RegionalResourceMetadataKind.
 const (
-	SecurityGroupRuleKindSecurityGroupRule SecurityGroupRuleKind = "security-group-rule"
+	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
+	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
+	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
+	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
+	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
+	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
+	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
+	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
+	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
+	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
+	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
+	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
+	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
+	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
+	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
+	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
+	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
+	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
+	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
+	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
+	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
+	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
 )
 
 // Defines values for SecurityGroupRuleSourceType.
@@ -106,6 +148,32 @@ const (
 	True SubnetSpecDhcpEnabled = true
 )
 
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
+)
+
 // Defines values for AcceptHeader.
 const (
 	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
@@ -122,17 +190,9 @@ const (
 
 // ActivityLog defines model for ActivityLog.
 type ActivityLog struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *ActivityLogKind       `json:"kind,omitempty"`
-	Metadata GlobalResourceMetadata `json:"metadata"`
-	Spec     ActivityLogSpec        `json:"spec"`
+	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
+	Spec     ActivityLogSpec         `json:"spec"`
 }
-
-// ActivityLogKind Type of the resource
-type ActivityLogKind string
 
 // ActivityLogSpec defines model for ActivityLogSpec.
 type ActivityLogSpec struct {
@@ -236,21 +296,29 @@ type ErrorSource struct {
 
 // GlobalResourceMetadata defines model for GlobalResourceMetadata.
 type GlobalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind GlobalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
 }
+
+// GlobalResourceMetadataKind Type of the resource
+type GlobalResourceMetadataKind string
 
 // InstanceNetwork defines model for InstanceNetwork.
 type InstanceNetwork struct {
@@ -373,6 +441,23 @@ type LoadBalancerTargetAlgorithm string
 // LoadBalancerTargetProtocol Frontend Protocol to which the load balancer will be listening on
 type LoadBalancerTargetProtocol string
 
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
+	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+
+	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+}
+
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+}
+
 // NetworkLoadBalancerFrontend defines model for NetworkLoadBalancerFrontend.
 type NetworkLoadBalancerFrontend struct {
 	// NicRef NIC reference to the LoadBalancer. If ipAddressType will be ipv4 or dual-stack or if the LoadBalancer will be internal or external depends on the associated NIC
@@ -438,13 +523,8 @@ type NicSpec struct {
 	SubnetRef *string `json:"subnetRef,omitempty"`
 }
 
-// ObjectStorageSpec defines model for ObjectStorageSpec.
-type ObjectStorageSpec struct {
-	Profile *struct {
-		// ObjectStorageSkuRef Reference to the SKU used for this object-storage
-		ObjectStorageSkuRef *string `json:"objectStorageSkuRef,omitempty"`
-	} `json:"profile,omitempty"`
-}
+// ObjectStorageAccountSpec defines model for ObjectStorageAccountSpec.
+type ObjectStorageAccountSpec = map[string]interface{}
 
 // PortRange Specific port or port range for the rule
 type PortRange struct {
@@ -482,46 +562,46 @@ type PublicIpSpecIpVersion string
 // PublicIpSpecType Type of public IP allocation
 type PublicIpSpecType string
 
+// RegionalMetadata Metadata for regional resources
+type RegionalMetadata struct {
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+}
+
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
 type RegionalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind RegionalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the region where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
-	Name string `json:"name"`
-}
+// RegionalResourceMetadataKind Type of the resource
+type RegionalResourceMetadataKind string
 
 // ResourceQuotaSpec Represents the ResourceQuota for the single ResourceType of the Resource Provider
 type ResourceQuotaSpec struct {
@@ -553,22 +633,20 @@ type RoleSpec struct {
 	Permissions *[]string `json:"permissions,omitempty"`
 }
 
-// SecurityGroupRule Represents a security group rule
+// SecurityGroupRule defines model for SecurityGroupRule.
 type SecurityGroupRule struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *SecurityGroupRuleKind    `json:"kind,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string        `json:"labels,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-	Spec     *SecurityGroupRuleSpec    `json:"spec,omitempty"`
+	Spec     SecurityGroupRuleSpec     `json:"spec"`
 
 	// Status Current status of the resource
 	Status *Status `json:"status,omitempty"`
 }
-
-// SecurityGroupRuleKind Type of the resource
-type SecurityGroupRuleKind string
 
 // SecurityGroupRuleSource Source of the traffic. Can be a security group, CIDR range, or 'publicInternet'.
 // 'publicInternet' allows explicit control over internet-facing traffic.
@@ -710,6 +788,34 @@ type SubnetSpecDefaultGatewayType string
 // SubnetSpecDhcpEnabled for now we allow only dhcp enabled
 type SubnetSpecDhcpEnabled bool
 
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+}
+
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// UserResourceMetadata defines model for UserResourceMetadata.
+type UserResourceMetadata struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
+}
+
 // VolumeAttachment Represents a connection between a Block Storage and a device
 type VolumeAttachment struct {
 	ObjectRef  *string                     `json:"objectRef,omitempty"`
@@ -726,14 +832,8 @@ type VolumeAttachmentProperties struct {
 	DeviceRef  *string `json:"deviceRef,omitempty"`
 }
 
-// WorkspaceSpec Desired state of the workspace
-type WorkspaceSpec struct {
-	// Description Optional description of the workspace
-	Description *string `json:"description,omitempty"`
-
-	// Name Unique name of the workspace within the tenant
-	Name string `json:"name"`
-}
+// WorkspaceSpec defines model for WorkspaceSpec.
+type WorkspaceSpec = map[string]interface{}
 
 // Cidr defines model for cidr.
 type Cidr struct {
@@ -1019,22 +1119,22 @@ func (t *ActivityLogSpec_Request_Body) MergeBlockStorageSpec(v BlockStorageSpec)
 	return err
 }
 
-// AsObjectStorageSpec returns the union data inside the ActivityLogSpec_Request_Body as a ObjectStorageSpec
-func (t ActivityLogSpec_Request_Body) AsObjectStorageSpec() (ObjectStorageSpec, error) {
-	var body ObjectStorageSpec
+// AsObjectStorageAccountSpec returns the union data inside the ActivityLogSpec_Request_Body as a ObjectStorageAccountSpec
+func (t ActivityLogSpec_Request_Body) AsObjectStorageAccountSpec() (ObjectStorageAccountSpec, error) {
+	var body ObjectStorageAccountSpec
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromObjectStorageSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ObjectStorageSpec
-func (t *ActivityLogSpec_Request_Body) FromObjectStorageSpec(v ObjectStorageSpec) error {
+// FromObjectStorageAccountSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ObjectStorageAccountSpec
+func (t *ActivityLogSpec_Request_Body) FromObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeObjectStorageSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ObjectStorageSpec
-func (t *ActivityLogSpec_Request_Body) MergeObjectStorageSpec(v ObjectStorageSpec) error {
+// MergeObjectStorageAccountSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ObjectStorageAccountSpec
+func (t *ActivityLogSpec_Request_Body) MergeObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

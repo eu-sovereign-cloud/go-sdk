@@ -23,11 +23,6 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for InstanceKind.
-const (
-	InstanceKindInstance InstanceKind = "instance"
-)
-
 // Defines values for InstancePlacementStrategyStrategy.
 const (
 	AntiAffinity InstancePlacementStrategyStrategy = "anti-affinity"
@@ -35,14 +30,30 @@ const (
 	Zone         InstancePlacementStrategyStrategy = "zone"
 )
 
-// Defines values for InstanceSkuKind.
+// Defines values for RegionalResourceMetadataKind.
 const (
-	InstanceSkuKindInstanceSku InstanceSkuKind = "instance-sku"
-)
-
-// Defines values for ResourceQuotaKind.
-const (
-	Quota ResourceQuotaKind = "quota"
+	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
+	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
+	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
+	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
+	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
+	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
+	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
+	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
+	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
+	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
+	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
+	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
+	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
+	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
+	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
+	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
+	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
+	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
+	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
+	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
+	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
+	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceStatePhase.
@@ -54,6 +65,58 @@ const (
 	ResourceStatePhasePending   ResourceStatePhase = "pending"
 	ResourceStatePhaseSuspended ResourceStatePhase = "suspended"
 	ResourceStatePhaseUpdating  ResourceStatePhase = "updating"
+)
+
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
+)
+
+// Defines values for ZonalResourceMetadataKind.
+const (
+	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
+	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
+	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
+	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
+	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
+	ZonalResourceMetadataKindLan                  ZonalResourceMetadataKind = "lan"
+	ZonalResourceMetadataKindLocation             ZonalResourceMetadataKind = "location"
+	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
+	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
+	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
+	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
+	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
+	ZonalResourceMetadataKindQuota                ZonalResourceMetadataKind = "quota"
+	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
+	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
+	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
+	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
+	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
+	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
+	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
+	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
+	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -156,18 +219,16 @@ type ErrorSource struct {
 
 // Instance defines model for Instance.
 type Instance struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Kind Type of the resource
-	Kind     *InstanceKind         `json:"kind,omitempty"`
-	Metadata ZonalResourceMetadata `json:"metadata"`
-	Spec     InstanceSpec          `json:"spec"`
-	Status   *InstanceStatus       `json:"status,omitempty"`
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string     `json:"labels,omitempty"`
+	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	Spec     InstanceSpec           `json:"spec"`
+	Status   *InstanceStatus        `json:"status,omitempty"`
 }
-
-// InstanceKind Type of the resource
-type InstanceKind string
 
 // InstanceNetwork defines model for InstanceNetwork.
 type InstanceNetwork struct {
@@ -198,20 +259,12 @@ type InstancePlacementStrategyStrategy string
 //
 // Properties, capabilites and extensions can also be found in the metadata.labels sections for filtering.
 type InstanceSku struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *InstanceSkuKind          `json:"kind,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 	Spec     *InstanceSkuSpec          `json:"spec,omitempty"`
 
 	// Status Current status of the resource
 	Status *Status `json:"status,omitempty"`
 }
-
-// InstanceSkuKind Type of the resource
-type InstanceSkuKind string
 
 // InstanceSkuCapability Instance performance capabilities
 type InstanceSkuCapability struct {
@@ -282,63 +335,72 @@ type InstanceStatus struct {
 	State *ResourceState `json:"state,omitempty"`
 }
 
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
+	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+
+	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+}
+
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+}
+
+// RegionalMetadata Metadata for regional resources
+type RegionalMetadata struct {
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+}
+
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
 type RegionalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind RegionalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the region where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
-	Name string `json:"name"`
-}
+// RegionalResourceMetadataKind Type of the resource
+type RegionalResourceMetadataKind string
 
 // ResourceQuota defines model for ResourceQuota.
 type ResourceQuota struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *ResourceQuotaKind        `json:"kind,omitempty"`
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Represents the ResourceQuota for the single ResourceType of the Resource Provider
 	Spec   *ResourceQuotaSpec   `json:"spec,omitempty"`
 	Status *ResourceQuotaStatus `json:"status,omitempty"`
 }
-
-// ResourceQuotaKind Type of the resource
-type ResourceQuotaKind string
 
 // ResourceQuotaSpec Represents the ResourceQuota for the single ResourceType of the Resource Provider
 type ResourceQuotaSpec struct {
@@ -363,7 +425,7 @@ type ResourceState struct {
 	// - updating: available for data layer usage
 	// - deleting: maybe still available for data layer user, can fail any moment
 	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	Phase *ResourceStatePhase `json:"phase,omitempty"`
 }
 
@@ -374,7 +436,7 @@ type ResourceState struct {
 // - updating: available for data layer usage
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 type ResourceStatePhase string
 
 // ResponseMetadata defines model for ResponseMetadata.
@@ -417,6 +479,34 @@ type StatusCondition struct {
 	Type string `json:"type"`
 }
 
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+}
+
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// UserResourceMetadata defines model for UserResourceMetadata.
+type UserResourceMetadata struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
+}
+
 // VolumeAttachment Represents a connection between a Block Storage and a device
 type VolumeAttachment struct {
 	ObjectRef  *string                     `json:"objectRef,omitempty"`
@@ -433,29 +523,46 @@ type VolumeAttachmentProperties struct {
 	DeviceRef  *string `json:"deviceRef,omitempty"`
 }
 
+// ZonalMetadata Metadata for zonal resources
+type ZonalMetadata struct {
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
+}
+
 // ZonalResourceMetadata defines model for ZonalResourceMetadata.
 type ZonalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind ZonalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the specific location (region/zone) where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-		Zone   string `json:"zone"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
 }
+
+// ZonalResourceMetadataKind Type of the resource
+type ZonalResourceMetadataKind string
 
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
@@ -469,11 +576,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
+// ResourceName defines model for resourceName.
+type ResourceName = string
+
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
 // TenantID defines model for tenantID.
 type TenantID = string
+
+// WorkspaceName defines model for workspaceName.
+type WorkspaceName = string
 
 // ListComputeQuotasParams defines parameters for ListComputeQuotas.
 type ListComputeQuotasParams struct {
@@ -661,30 +774,30 @@ type ClientInterface interface {
 	ListSkus(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSku request
-	GetSku(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInstances request
 	ListInstances(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteInstance request
-	DeleteInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetInstance request
-	GetInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateInstanceWithBody request with any body
-	CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PowerCycleInstance request
-	PowerCycleInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PowerCycleInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PowerOffInstance request
-	PowerOffInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PowerOffInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PowerOnInstance request
-	PowerOnInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PowerOnInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) ListComputeQuotas(ctx context.Context, id TenantID, params *ListComputeQuotasParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -735,7 +848,7 @@ func (c *Client) ListSkus(ctx context.Context, id TenantID, params *ListSkusPara
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSku(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSkuRequest(c.Server, id, name)
 	if err != nil {
 		return nil, err
@@ -759,7 +872,7 @@ func (c *Client) ListInstances(ctx context.Context, id TenantID, workspace strin
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteInstanceRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -771,7 +884,7 @@ func (c *Client) DeleteInstance(ctx context.Context, id TenantID, workspace stri
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetInstanceRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -783,7 +896,7 @@ func (c *Client) GetInstance(ctx context.Context, id TenantID, workspace string,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInstanceRequestWithBody(c.Server, id, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -795,7 +908,7 @@ func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInstanceRequest(c.Server, id, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -807,7 +920,7 @@ func (c *Client) CreateOrUpdateInstance(ctx context.Context, id TenantID, worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) PowerCycleInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PowerCycleInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPowerCycleInstanceRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -819,7 +932,7 @@ func (c *Client) PowerCycleInstance(ctx context.Context, id TenantID, workspace 
 	return c.Client.Do(req)
 }
 
-func (c *Client) PowerOffInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PowerOffInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPowerOffInstanceRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -831,7 +944,7 @@ func (c *Client) PowerOffInstance(ctx context.Context, id TenantID, workspace st
 	return c.Client.Do(req)
 }
 
-func (c *Client) PowerOnInstance(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PowerOnInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPowerOnInstanceRequest(c.Server, id, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1119,7 +1232,7 @@ func NewListSkusRequest(server string, id TenantID, params *ListSkusParams) (*ht
 }
 
 // NewGetSkuRequest generates requests for GetSku
-func NewGetSkuRequest(server string, id TenantID, name string) (*http.Request, error) {
+func NewGetSkuRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1270,7 +1383,7 @@ func NewListInstancesRequest(server string, id TenantID, workspace string, param
 }
 
 // NewDeleteInstanceRequest generates requests for DeleteInstance
-func NewDeleteInstanceRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewDeleteInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1318,7 +1431,7 @@ func NewDeleteInstanceRequest(server string, id TenantID, workspace string, name
 }
 
 // NewGetInstanceRequest generates requests for GetInstance
-func NewGetInstanceRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewGetInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1366,7 +1479,7 @@ func NewGetInstanceRequest(server string, id TenantID, workspace string, name st
 }
 
 // NewCreateOrUpdateInstanceRequest calls the generic CreateOrUpdateInstance builder with application/json body
-func NewCreateOrUpdateInstanceRequest(server string, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1377,7 +1490,7 @@ func NewCreateOrUpdateInstanceRequest(server string, id TenantID, workspace stri
 }
 
 // NewCreateOrUpdateInstanceRequestWithBody generates requests for CreateOrUpdateInstance with any type of body
-func NewCreateOrUpdateInstanceRequestWithBody(server string, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateInstanceRequestWithBody(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1442,7 +1555,7 @@ func NewCreateOrUpdateInstanceRequestWithBody(server string, id TenantID, worksp
 }
 
 // NewPowerCycleInstanceRequest generates requests for PowerCycleInstance
-func NewPowerCycleInstanceRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewPowerCycleInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1490,7 +1603,7 @@ func NewPowerCycleInstanceRequest(server string, id TenantID, workspace string, 
 }
 
 // NewPowerOffInstanceRequest generates requests for PowerOffInstance
-func NewPowerOffInstanceRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewPowerOffInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1538,7 +1651,7 @@ func NewPowerOffInstanceRequest(server string, id TenantID, workspace string, na
 }
 
 // NewPowerOnInstanceRequest generates requests for PowerOnInstance
-func NewPowerOnInstanceRequest(server string, id TenantID, workspace string, name string) (*http.Request, error) {
+func NewPowerOnInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1640,30 +1753,30 @@ type ClientWithResponsesInterface interface {
 	ListSkusWithResponse(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
 
 	// GetSkuWithResponse request
-	GetSkuWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
+	GetSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
 
 	// ListInstancesWithResponse request
 	ListInstancesWithResponse(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*ListInstancesResponse, error)
 
 	// DeleteInstanceWithResponse request
-	DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error)
+	DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error)
 
 	// GetInstanceWithResponse request
-	GetInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error)
+	GetInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error)
 
 	// CreateOrUpdateInstanceWithBodyWithResponse request with any body
-	CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
+	CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
 
-	CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
+	CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
 
 	// PowerCycleInstanceWithResponse request
-	PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error)
+	PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error)
 
 	// PowerOffInstanceWithResponse request
-	PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error)
+	PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error)
 
 	// PowerOnInstanceWithResponse request
-	PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error)
+	PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error)
 }
 
 type ListComputeQuotasResponse struct {
@@ -2006,7 +2119,7 @@ func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, id Tenan
 }
 
 // GetSkuWithResponse request returning *GetSkuResponse
-func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, id TenantID, name string, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
+func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
 	rsp, err := c.GetSku(ctx, id, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2024,7 +2137,7 @@ func (c *ClientWithResponses) ListInstancesWithResponse(ctx context.Context, id 
 }
 
 // DeleteInstanceWithResponse request returning *DeleteInstanceResponse
-func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error) {
+func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error) {
 	rsp, err := c.DeleteInstance(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2033,7 +2146,7 @@ func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, id
 }
 
 // GetInstanceWithResponse request returning *GetInstanceResponse
-func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error) {
+func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error) {
 	rsp, err := c.GetInstance(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2042,7 +2155,7 @@ func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, id Te
 }
 
 // CreateOrUpdateInstanceWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateInstanceResponse
-func (c *ClientWithResponses) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
 	rsp, err := c.CreateOrUpdateInstanceWithBody(ctx, id, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2050,7 +2163,7 @@ func (c *ClientWithResponses) CreateOrUpdateInstanceWithBodyWithResponse(ctx con
 	return ParseCreateOrUpdateInstanceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
 	rsp, err := c.CreateOrUpdateInstance(ctx, id, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2059,7 +2172,7 @@ func (c *ClientWithResponses) CreateOrUpdateInstanceWithResponse(ctx context.Con
 }
 
 // PowerCycleInstanceWithResponse request returning *PowerCycleInstanceResponse
-func (c *ClientWithResponses) PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error) {
+func (c *ClientWithResponses) PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error) {
 	rsp, err := c.PowerCycleInstance(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2068,7 +2181,7 @@ func (c *ClientWithResponses) PowerCycleInstanceWithResponse(ctx context.Context
 }
 
 // PowerOffInstanceWithResponse request returning *PowerOffInstanceResponse
-func (c *ClientWithResponses) PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error) {
+func (c *ClientWithResponses) PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error) {
 	rsp, err := c.PowerOffInstance(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2077,7 +2190,7 @@ func (c *ClientWithResponses) PowerOffInstanceWithResponse(ctx context.Context, 
 }
 
 // PowerOnInstanceWithResponse request returning *PowerOnInstanceResponse
-func (c *ClientWithResponses) PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace string, name string, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error) {
+func (c *ClientWithResponses) PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error) {
 	rsp, err := c.PowerOnInstance(ctx, id, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2764,28 +2877,28 @@ type ServerInterface interface {
 	ListSkus(w http.ResponseWriter, r *http.Request, id TenantID, params ListSkusParams)
 	// Get details of a specific SKU
 	// (GET /v1/tenants/{id}/skus/{name})
-	GetSku(w http.ResponseWriter, r *http.Request, id TenantID, name string)
+	GetSku(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
 	// List all instances
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/instances)
 	ListInstances(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListInstancesParams)
 	// Delete a specific instance
 	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	DeleteInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	DeleteInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 	// Get a specific instance
 	// (GET /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	GetInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	GetInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 	// Create or update a specific instance
 	// (PUT /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string, params CreateOrUpdateInstanceParams)
+	CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName, params CreateOrUpdateInstanceParams)
 	// Power cycle a specific instance
 	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-cycle)
-	PowerCycleInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	PowerCycleInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 	// Power off a specific instance
 	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-off)
-	PowerOffInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	PowerOffInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 	// Power on a specific instance
 	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-on)
-	PowerOnInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, name string)
+	PowerOnInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -3034,7 +3147,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3162,7 +3275,7 @@ func (siw *ServerInterfaceWrapper) DeleteInstance(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3171,7 +3284,7 @@ func (siw *ServerInterfaceWrapper) DeleteInstance(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3211,7 +3324,7 @@ func (siw *ServerInterfaceWrapper) GetInstance(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3220,7 +3333,7 @@ func (siw *ServerInterfaceWrapper) GetInstance(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3260,7 +3373,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInstance(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3269,7 +3382,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInstance(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3333,7 +3446,7 @@ func (siw *ServerInterfaceWrapper) PowerCycleInstance(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3342,7 +3455,7 @@ func (siw *ServerInterfaceWrapper) PowerCycleInstance(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3382,7 +3495,7 @@ func (siw *ServerInterfaceWrapper) PowerOffInstance(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3391,7 +3504,7 @@ func (siw *ServerInterfaceWrapper) PowerOffInstance(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3431,7 +3544,7 @@ func (siw *ServerInterfaceWrapper) PowerOnInstance(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace WorkspaceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3440,7 +3553,7 @@ func (siw *ServerInterfaceWrapper) PowerOnInstance(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

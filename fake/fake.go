@@ -6,7 +6,6 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
-	"k8s.io/utils/ptr"
 )
 
 type Server struct {
@@ -18,10 +17,10 @@ func NewServer(regionNames ...string) *Server {
 	regionsMap := make(map[string]*region.Region)
 	for _, name := range regionNames {
 		regionsMap[name] = &region.Region{
-			ApiVersion: ptr.To("v1"),                    // TODO: should not be ptr
-			Kind:       ptr.To(region.RegionKindRegion), // TODO: should not be ptr
-			Metadata: region.GlobalResourceMetadata{
-				Name: name,
+			Metadata: &region.ResourceMetadata{
+				Name:       name,
+				ApiVersion: "v1",
+				Kind:       region.ResourceMetadataKindRegion,
 			},
 			Spec: region.RegionSpec{
 				AvailableZones: []string{"A", "B"},

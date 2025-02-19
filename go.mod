@@ -1,6 +1,6 @@
 module github.com/eu-sovereign-cloud/go-sdk
 
-go 1.23.4
+go 1.24
 
 require (
 	github.com/labstack/echo/v4 v4.13.3

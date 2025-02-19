@@ -32,32 +32,20 @@ func TestMockedWorkspaces(t *testing.T) {
 						"apiVersion": "v1",
 						"kind": "workspace",
 						"metadata": {
-							"name": "primary-load-balancer",
+							"name": "some-workspace",
+							"tenant": "test",
 							"deletionTimestamp": "2019-08-24T14:15:22Z",
 							"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
 							"description": "string",
 							"labels": {
-							"language": "en",
-							"billing.cost-center": "platform-eng",
-							"env": "production"
+								"language": "en",
+								"billing.cost-center": "platform-eng",
+								"env": "production"
 							}
 						},
-						"spec": {
-							"name": "some-workspace",
-							"description": "string"
-						},
+						"spec": {},
 						"status": {
-							"conditions": [
-								{
-									"type": "power-mgmt",
-									"status": "True, false, unknown",
-									"lastTransitionTime": "2019-08-24T14:15:22Z",
-									"reason": "^A(A)?$",
-									"message": "string"
-								}
-							],
-							"phase": "Pending",
-							"resourceCount": 0
+							"conditions": [ { "status": "Ready" } ]
 						}
 					}
 				],
@@ -79,15 +67,7 @@ func TestMockedWorkspaces(t *testing.T) {
 				"apiVersion": "v1",
 				"kind": "region",
 				"metadata": {
-					"name": "eu-central-1",
-					"deletionTimestamp": "2019-08-24T14:15:22Z",
-					"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
-					"description": "string",
-					"labels": {
-						"language": "en",
-						"billing.cost-center": "platform-eng",
-						"env": "production"
-					}
+					"name": "eu-central-1"
 				},
 				"spec": {
 					"availableZones": [ "A", "B" ],
@@ -100,15 +80,7 @@ func TestMockedWorkspaces(t *testing.T) {
 					]
 				},
 				"status": {
-					"conditions": [
-						{
-							"type": "power-mgmt",
-							"status": "True, false, unknown",
-							"lastTransitionTime": "2019-08-24T14:15:22Z",
-							"reason": "^A(A)?$",
-							"message": "string"
-						}
-					]
+					"conditions": [ { "status": "Ready" } ]
 				}
 			}
 		`))
@@ -139,8 +111,7 @@ func TestMockedWorkspaces(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 
-	assert.Equal(t, "some-workspace", ws[0].Data.Spec.Name)
-	assert.EqualValues(t, "Pending", *ws[0].Data.Status.Phase)
+	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 }
 
 func TestFakedWorkspaces(t *testing.T) {
@@ -151,11 +122,10 @@ func TestFakedWorkspaces(t *testing.T) {
 	defer server.Close()
 	fakeServer.Workspaces["some-workspace"] = &workspace.Workspace{
 		Metadata: &workspace.GlobalResourceMetadata{
-			Name: "some-workspace",
+			Tenant: "test",
+			Name:   "some-workspace",
 		},
-		Spec: &workspace.WorkspaceSpec{
-			Name: "some-workspace",
-		},
+		Spec: workspace.WorkspaceSpec{},
 		Status: &workspace.WorkspaceStatus{
 			Phase: ptr.To(workspace.WorkspaceStatusPhase("Pending")),
 		},
@@ -174,6 +144,7 @@ func TestFakedWorkspaces(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 
-	assert.Equal(t, "some-workspace", ws[0].Data.Spec.Name)
-	assert.EqualValues(t, "Pending", *ws[0].Data.Status.Phase)
+	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
+	assert.Equal(t, "test", ws[0].Metadata.Tenant)
+	assert.EqualValues(t, "Pending", *ws[0].Status.Phase)
 }
