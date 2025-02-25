@@ -37,9 +37,15 @@ mock: all
 fmt:
 	$(GO_TOOL) mvdan.cc/gofumpt -w .
 
+lint: vet golint
+
 .PHONY: vet
 vet:
 	$(GO) vet ./...
+
+.PHONY: golint
+golint:
+	$(GO_TOOL) github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout 5m -c .golangci.yml
 
 .PHONY: clean
 clean:

@@ -25,7 +25,7 @@ func TestMockedWorkspaces(t *testing.T) {
 	wsSim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`
+		_, _ = w.Write([]byte(`
 			{
 				"items": [
 					{
@@ -62,7 +62,7 @@ func TestMockedWorkspaces(t *testing.T) {
 		assert.Equal(t, "eu-central-1", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`
+		_, _ = w.Write([]byte(`
 			{
 				"apiVersion": "v1",
 				"kind": "region",
