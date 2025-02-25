@@ -1,0 +1,6 @@
+run:
+  timeout: 6m
+
+issues:
+  exclude-files:
+  - "zz_generated\\..+\\.go$"

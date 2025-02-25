@@ -20,7 +20,7 @@ func TestRegions(t *testing.T) {
 	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, lrp region.ListRegionsParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`
+		_, _ = w.Write([]byte(` 
 			{
 				"items": [
 					{
@@ -76,7 +76,7 @@ func TestRegion(t *testing.T) {
 		assert.Equal(t, "test", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`
+		_, _ = w.Write([]byte(`
 			{
 				"metadata": {
 					"apiVersion": "v1",
