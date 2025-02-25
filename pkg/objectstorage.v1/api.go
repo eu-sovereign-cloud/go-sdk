@@ -23,11 +23,6 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for ObjectStorageKind.
-const (
-	ObjectStorageKindObjectStorage ObjectStorageKind = "object-storage"
-)
-
 // Defines values for ResourceStatePhase.
 const (
 	ResourceStatePhaseActive    ResourceStatePhase = "active"
@@ -39,6 +34,58 @@ const (
 	ResourceStatePhaseUpdating  ResourceStatePhase = "updating"
 )
 
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
+)
+
+// Defines values for ZonalResourceMetadataKind.
+const (
+	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
+	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
+	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
+	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
+	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
+	ZonalResourceMetadataKindLan                  ZonalResourceMetadataKind = "lan"
+	ZonalResourceMetadataKindLocation             ZonalResourceMetadataKind = "location"
+	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
+	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
+	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
+	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
+	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
+	ZonalResourceMetadataKindQuota                ZonalResourceMetadataKind = "quota"
+	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
+	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
+	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
+	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
+	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
+	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
+	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
+	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
+	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
+)
+
 // Defines values for AcceptHeader.
 const (
 	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
@@ -46,11 +93,11 @@ const (
 	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
 )
 
-// Defines values for ListObjectStoragesParamsAccept.
+// Defines values for ListObjectStorageAccountsParamsAccept.
 const (
-	ListObjectStoragesParamsAcceptApplicationjson            ListObjectStoragesParamsAccept = "application/json"
-	ListObjectStoragesParamsAcceptApplicationjsonDeletedOnly ListObjectStoragesParamsAccept = "application/json; deleted=only"
-	ListObjectStoragesParamsAcceptApplicationjsonDeletedTrue ListObjectStoragesParamsAccept = "application/json; deleted=true"
+	ListObjectStorageAccountsParamsAcceptApplicationjson            ListObjectStorageAccountsParamsAccept = "application/json"
+	ListObjectStorageAccountsParamsAcceptApplicationjsonDeletedOnly ListObjectStorageAccountsParamsAccept = "application/json; deleted=only"
+	ListObjectStorageAccountsParamsAcceptApplicationjsonDeletedTrue ListObjectStorageAccountsParamsAccept = "application/json; deleted=true"
 )
 
 // Error A generic error response
@@ -123,54 +170,63 @@ type ErrorSource struct {
 	Pointer string `json:"pointer"`
 }
 
-// ObjectStorage defines model for ObjectStorage.
-type ObjectStorage struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
+	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Kind Type of the resource
-	Kind     *ObjectStorageKind     `json:"kind,omitempty"`
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
-	Spec     *ObjectStorageSpec     `json:"spec,omitempty"`
-	Status   *ObjectStorageStatus   `json:"status,omitempty"`
+	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 }
 
-// ObjectStorageKind Type of the resource
-type ObjectStorageKind string
-
-// ObjectStorageSpec defines model for ObjectStorageSpec.
-type ObjectStorageSpec struct {
-	Profile *struct {
-		// ObjectStorageSkuRef Reference to the SKU used for this object-storage
-		ObjectStorageSkuRef *string `json:"objectStorageSkuRef,omitempty"`
-	} `json:"profile,omitempty"`
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
 }
 
-// ObjectStorageStatus defines model for ObjectStorageStatus.
-type ObjectStorageStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
+// ObjectStorageAccount defines model for ObjectStorageAccount.
+type ObjectStorageAccount struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string          `json:"labels,omitempty"`
+	Metadata *ZonalResourceMetadata      `json:"metadata,omitempty"`
+	Spec     ObjectStorageAccountSpec    `json:"spec"`
+	Status   *ObjectStorageAccountStatus `json:"status,omitempty"`
+}
+
+// ObjectStorageAccountSpec defines model for ObjectStorageAccountSpec.
+type ObjectStorageAccountSpec = map[string]interface{}
+
+// ObjectStorageAccountStatus defines model for ObjectStorageAccountStatus.
+type ObjectStorageAccountStatus struct {
+	// AccessKey Access key for the object storage account
+	AccessKey *string `json:"accessKey,omitempty"`
+
+	// CanonicalUserId Canonical user ID for the object storage account
+	CanonicalUserId *string           `json:"canonicalUserId,omitempty"`
+	Conditions      []StatusCondition `json:"conditions"`
+
+	// SecretKey Secret key for the object storage account
+	SecretKey *string `json:"secretKey,omitempty"`
 
 	// State Generic state definition for all resources. All states are optional, but must not have more states.
 	// If a provider wants to present fine granular states, please use conditions.
 	State *ResourceState `json:"state,omitempty"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+// RegionalMetadata Metadata for regional resources
+type RegionalMetadata struct {
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
-	Name string `json:"name"`
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
 }
 
 // ResourceState Generic state definition for all resources. All states are optional, but must not have more states.
@@ -183,7 +239,7 @@ type ResourceState struct {
 	// - updating: available for data layer usage
 	// - deleting: maybe still available for data layer user, can fail any moment
 	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	Phase *ResourceStatePhase `json:"phase,omitempty"`
 }
 
@@ -194,7 +250,7 @@ type ResourceState struct {
 // - updating: available for data layer usage
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 type ResourceStatePhase string
 
 // ResponseMetadata defines model for ResponseMetadata.
@@ -234,29 +290,74 @@ type StatusCondition struct {
 	Type string `json:"type"`
 }
 
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+}
+
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// UserResourceMetadata defines model for UserResourceMetadata.
+type UserResourceMetadata struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
+}
+
+// ZonalMetadata Metadata for zonal resources
+type ZonalMetadata struct {
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
+}
+
 // ZonalResourceMetadata defines model for ZonalResourceMetadata.
 type ZonalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind ZonalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the specific location (region/zone) where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-		Zone   string `json:"zone"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+
+	// Zone Reference to the specific zone where the resource is located
+	Zone string `json:"zone"`
 }
+
+// ZonalResourceMetadataKind Type of the resource
+type ZonalResourceMetadataKind string
 
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
@@ -270,11 +371,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
+// ResourceName defines model for resourceName.
+type ResourceName = string
+
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// ListObjectStoragesParams defines parameters for ListObjectStorages.
-type ListObjectStoragesParams struct {
+// TenantID defines model for tenantID.
+type TenantID = string
+
+// ListObjectStorageAccountsParams defines parameters for ListObjectStorageAccounts.
+type ListObjectStorageAccountsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
 	// Filter syntax:
 	//   - Equals: key=value
@@ -294,28 +401,28 @@ type ListObjectStoragesParams struct {
 	// - `"application/json"`: Returns only non-deleted resources
 	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
 	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListObjectStoragesParamsAccept `json:"Accept,omitempty"`
+	Accept *ListObjectStorageAccountsParamsAccept `json:"Accept,omitempty"`
 }
 
-// ListObjectStoragesParamsAccept defines parameters for ListObjectStorages.
-type ListObjectStoragesParamsAccept string
+// ListObjectStorageAccountsParamsAccept defines parameters for ListObjectStorageAccounts.
+type ListObjectStorageAccountsParamsAccept string
 
-// GetObjectStorageParams defines parameters for GetObjectStorage.
-type GetObjectStorageParams struct {
+// GetObjectStorageAccountParams defines parameters for GetObjectStorageAccount.
+type GetObjectStorageAccountParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
 	// Uses metadata.lastUpdatedTimestamp for comparison.
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// CreateOrUpdateObjectStorageParams defines parameters for CreateOrUpdateObjectStorage.
-type CreateOrUpdateObjectStorageParams struct {
+// CreateOrUpdateObjectStorageAccountParams defines parameters for CreateOrUpdateObjectStorageAccount.
+type CreateOrUpdateObjectStorageAccountParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
 	// Uses metadata.lastUpdatedTimestamp for comparison.
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// CreateOrUpdateObjectStorageJSONRequestBody defines body for CreateOrUpdateObjectStorage for application/json ContentType.
-type CreateOrUpdateObjectStorageJSONRequestBody = ObjectStorage
+// CreateOrUpdateObjectStorageAccountJSONRequestBody defines body for CreateOrUpdateObjectStorageAccount for application/json ContentType.
+type CreateOrUpdateObjectStorageAccountJSONRequestBody = ObjectStorageAccount
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -390,23 +497,23 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// ListObjectStorages request
-	ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListObjectStorageAccounts request
+	ListObjectStorageAccounts(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteObjectStorage request
-	DeleteObjectStorage(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteObjectStorageAccount request
+	DeleteObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetObjectStorage request
-	GetObjectStorage(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetObjectStorageAccount request
+	GetObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateOrUpdateObjectStorageWithBody request with any body
-	CreateOrUpdateObjectStorageWithBody(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateOrUpdateObjectStorageAccountWithBody request with any body
+	CreateOrUpdateObjectStorageAccountWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateObjectStorage(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListObjectStoragesRequest(c.Server, params)
+func (c *Client) ListObjectStorageAccounts(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListObjectStorageAccountsRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -417,8 +524,8 @@ func (c *Client) ListObjectStorages(ctx context.Context, params *ListObjectStora
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorage(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteObjectStorageRequest(c.Server, name)
+func (c *Client) DeleteObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteObjectStorageAccountRequest(c.Server, id, name)
 	if err != nil {
 		return nil, err
 	}
@@ -429,8 +536,8 @@ func (c *Client) DeleteObjectStorage(ctx context.Context, name string, reqEditor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorage(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetObjectStorageRequest(c.Server, name, params)
+func (c *Client) GetObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetObjectStorageAccountRequest(c.Server, id, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -441,8 +548,8 @@ func (c *Client) GetObjectStorage(ctx context.Context, name string, params *GetO
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorageWithBody(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageRequestWithBody(c.Server, name, params, contentType, body)
+func (c *Client) CreateOrUpdateObjectStorageAccountWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateObjectStorageAccountRequestWithBody(c.Server, id, name, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -453,8 +560,8 @@ func (c *Client) CreateOrUpdateObjectStorageWithBody(ctx context.Context, name s
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorage(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageRequest(c.Server, name, params, body)
+func (c *Client) CreateOrUpdateObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateObjectStorageAccountRequest(c.Server, id, name, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -465,16 +572,23 @@ func (c *Client) CreateOrUpdateObjectStorage(ctx context.Context, name string, p
 	return c.Client.Do(req)
 }
 
-// NewListObjectStoragesRequest generates requests for ListObjectStorages
-func NewListObjectStoragesRequest(server string, params *ListObjectStoragesParams) (*http.Request, error) {
+// NewListObjectStorageAccountsRequest generates requests for ListObjectStorageAccounts
+func NewListObjectStorageAccountsRequest(server string, id TenantID, params *ListObjectStorageAccountsParams) (*http.Request, error) {
 	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
 
 	serverURL, err := url.Parse(server)
 	if err != nil {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/object-storages")
+	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -561,13 +675,20 @@ func NewListObjectStoragesRequest(server string, params *ListObjectStoragesParam
 	return req, nil
 }
 
-// NewDeleteObjectStorageRequest generates requests for DeleteObjectStorage
-func NewDeleteObjectStorageRequest(server string, name string) (*http.Request, error) {
+// NewDeleteObjectStorageAccountRequest generates requests for DeleteObjectStorageAccount
+func NewDeleteObjectStorageAccountRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +698,7 @@ func NewDeleteObjectStorageRequest(server string, name string) (*http.Request, e
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -595,13 +716,20 @@ func NewDeleteObjectStorageRequest(server string, name string) (*http.Request, e
 	return req, nil
 }
 
-// NewGetObjectStorageRequest generates requests for GetObjectStorage
-func NewGetObjectStorageRequest(server string, name string, params *GetObjectStorageParams) (*http.Request, error) {
+// NewGetObjectStorageAccountRequest generates requests for GetObjectStorageAccount
+func NewGetObjectStorageAccountRequest(server string, id TenantID, name ResourceName, params *GetObjectStorageAccountParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +739,7 @@ func NewGetObjectStorageRequest(server string, name string, params *GetObjectSto
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -644,24 +772,31 @@ func NewGetObjectStorageRequest(server string, name string, params *GetObjectSto
 	return req, nil
 }
 
-// NewCreateOrUpdateObjectStorageRequest calls the generic CreateOrUpdateObjectStorage builder with application/json body
-func NewCreateOrUpdateObjectStorageRequest(server string, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody) (*http.Request, error) {
+// NewCreateOrUpdateObjectStorageAccountRequest calls the generic CreateOrUpdateObjectStorageAccount builder with application/json body
+func NewCreateOrUpdateObjectStorageAccountRequest(server string, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateObjectStorageRequestWithBody(server, name, params, "application/json", bodyReader)
+	return NewCreateOrUpdateObjectStorageAccountRequestWithBody(server, id, name, params, "application/json", bodyReader)
 }
 
-// NewCreateOrUpdateObjectStorageRequestWithBody generates requests for CreateOrUpdateObjectStorage with any type of body
-func NewCreateOrUpdateObjectStorageRequestWithBody(server string, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateOrUpdateObjectStorageAccountRequestWithBody generates requests for CreateOrUpdateObjectStorageAccount with any type of body
+func NewCreateOrUpdateObjectStorageAccountRequestWithBody(server string, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -671,7 +806,7 @@ func NewCreateOrUpdateObjectStorageRequestWithBody(server string, name string, p
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/object-storages/%s", pathParam0)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -749,27 +884,27 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// ListObjectStoragesWithResponse request
-	ListObjectStoragesWithResponse(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error)
+	// ListObjectStorageAccountsWithResponse request
+	ListObjectStorageAccountsWithResponse(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageAccountsResponse, error)
 
-	// DeleteObjectStorageWithResponse request
-	DeleteObjectStorageWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error)
+	// DeleteObjectStorageAccountWithResponse request
+	DeleteObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccountResponse, error)
 
-	// GetObjectStorageWithResponse request
-	GetObjectStorageWithResponse(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error)
+	// GetObjectStorageAccountWithResponse request
+	GetObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*GetObjectStorageAccountResponse, error)
 
-	// CreateOrUpdateObjectStorageWithBodyWithResponse request with any body
-	CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
+	// CreateOrUpdateObjectStorageAccountWithBodyWithResponse request with any body
+	CreateOrUpdateObjectStorageAccountWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error)
 
-	CreateOrUpdateObjectStorageWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error)
+	CreateOrUpdateObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error)
 }
 
-type ListObjectStoragesResponse struct {
+type ListObjectStorageAccountsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		Items    *[]ObjectStorage  `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
+		Items    *[]ObjectStorageAccount `json:"items,omitempty"`
+		Metadata *ResponseMetadata       `json:"metadata,omitempty"`
 	}
 	JSON400 *Error400
 	JSON401 *Error401
@@ -779,7 +914,7 @@ type ListObjectStoragesResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r ListObjectStoragesResponse) Status() string {
+func (r ListObjectStorageAccountsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -787,14 +922,14 @@ func (r ListObjectStoragesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListObjectStoragesResponse) StatusCode() int {
+func (r ListObjectStorageAccountsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteObjectStorageResponse struct {
+type DeleteObjectStorageAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
@@ -805,7 +940,7 @@ type DeleteObjectStorageResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteObjectStorageResponse) Status() string {
+func (r DeleteObjectStorageAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -813,17 +948,17 @@ func (r DeleteObjectStorageResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteObjectStorageResponse) StatusCode() int {
+func (r DeleteObjectStorageAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetObjectStorageResponse struct {
+type GetObjectStorageAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ObjectStorage
+	JSON200      *ObjectStorageAccount
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
@@ -832,7 +967,7 @@ type GetObjectStorageResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetObjectStorageResponse) Status() string {
+func (r GetObjectStorageAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -840,14 +975,14 @@ func (r GetObjectStorageResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetObjectStorageResponse) StatusCode() int {
+func (r GetObjectStorageAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateOrUpdateObjectStorageResponse struct {
+type CreateOrUpdateObjectStorageAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
@@ -860,7 +995,7 @@ type CreateOrUpdateObjectStorageResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateOrUpdateObjectStorageResponse) Status() string {
+func (r CreateOrUpdateObjectStorageAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -868,66 +1003,66 @@ func (r CreateOrUpdateObjectStorageResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateOrUpdateObjectStorageResponse) StatusCode() int {
+func (r CreateOrUpdateObjectStorageAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// ListObjectStoragesWithResponse request returning *ListObjectStoragesResponse
-func (c *ClientWithResponses) ListObjectStoragesWithResponse(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error) {
-	rsp, err := c.ListObjectStorages(ctx, params, reqEditors...)
+// ListObjectStorageAccountsWithResponse request returning *ListObjectStorageAccountsResponse
+func (c *ClientWithResponses) ListObjectStorageAccountsWithResponse(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageAccountsResponse, error) {
+	rsp, err := c.ListObjectStorageAccounts(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListObjectStoragesResponse(rsp)
+	return ParseListObjectStorageAccountsResponse(rsp)
 }
 
-// DeleteObjectStorageWithResponse request returning *DeleteObjectStorageResponse
-func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error) {
-	rsp, err := c.DeleteObjectStorage(ctx, name, reqEditors...)
+// DeleteObjectStorageAccountWithResponse request returning *DeleteObjectStorageAccountResponse
+func (c *ClientWithResponses) DeleteObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccountResponse, error) {
+	rsp, err := c.DeleteObjectStorageAccount(ctx, id, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteObjectStorageResponse(rsp)
+	return ParseDeleteObjectStorageAccountResponse(rsp)
 }
 
-// GetObjectStorageWithResponse request returning *GetObjectStorageResponse
-func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, name string, params *GetObjectStorageParams, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error) {
-	rsp, err := c.GetObjectStorage(ctx, name, params, reqEditors...)
+// GetObjectStorageAccountWithResponse request returning *GetObjectStorageAccountResponse
+func (c *ClientWithResponses) GetObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*GetObjectStorageAccountResponse, error) {
+	rsp, err := c.GetObjectStorageAccount(ctx, id, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetObjectStorageResponse(rsp)
+	return ParseGetObjectStorageAccountResponse(rsp)
 }
 
-// CreateOrUpdateObjectStorageWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateObjectStorageResponse
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithBodyWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorageWithBody(ctx, name, params, contentType, body, reqEditors...)
+// CreateOrUpdateObjectStorageAccountWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateObjectStorageAccountResponse
+func (c *ClientWithResponses) CreateOrUpdateObjectStorageAccountWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error) {
+	rsp, err := c.CreateOrUpdateObjectStorageAccountWithBody(ctx, id, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateOrUpdateObjectStorageResponse(rsp)
+	return ParseCreateOrUpdateObjectStorageAccountResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageWithResponse(ctx context.Context, name string, params *CreateOrUpdateObjectStorageParams, body CreateOrUpdateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorage(ctx, name, params, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error) {
+	rsp, err := c.CreateOrUpdateObjectStorageAccount(ctx, id, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateOrUpdateObjectStorageResponse(rsp)
+	return ParseCreateOrUpdateObjectStorageAccountResponse(rsp)
 }
 
-// ParseListObjectStoragesResponse parses an HTTP response from a ListObjectStoragesWithResponse call
-func ParseListObjectStoragesResponse(rsp *http.Response) (*ListObjectStoragesResponse, error) {
+// ParseListObjectStorageAccountsResponse parses an HTTP response from a ListObjectStorageAccountsWithResponse call
+func ParseListObjectStorageAccountsResponse(rsp *http.Response) (*ListObjectStorageAccountsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListObjectStoragesResponse{
+	response := &ListObjectStorageAccountsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -935,8 +1070,8 @@ func ParseListObjectStoragesResponse(rsp *http.Response) (*ListObjectStoragesRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Items    *[]ObjectStorage  `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
+			Items    *[]ObjectStorageAccount `json:"items,omitempty"`
+			Metadata *ResponseMetadata       `json:"metadata,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -983,15 +1118,15 @@ func ParseListObjectStoragesResponse(rsp *http.Response) (*ListObjectStoragesRes
 	return response, nil
 }
 
-// ParseDeleteObjectStorageResponse parses an HTTP response from a DeleteObjectStorageWithResponse call
-func ParseDeleteObjectStorageResponse(rsp *http.Response) (*DeleteObjectStorageResponse, error) {
+// ParseDeleteObjectStorageAccountResponse parses an HTTP response from a DeleteObjectStorageAccountWithResponse call
+func ParseDeleteObjectStorageAccountResponse(rsp *http.Response) (*DeleteObjectStorageAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteObjectStorageResponse{
+	response := &DeleteObjectStorageAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1037,22 +1172,22 @@ func ParseDeleteObjectStorageResponse(rsp *http.Response) (*DeleteObjectStorageR
 	return response, nil
 }
 
-// ParseGetObjectStorageResponse parses an HTTP response from a GetObjectStorageWithResponse call
-func ParseGetObjectStorageResponse(rsp *http.Response) (*GetObjectStorageResponse, error) {
+// ParseGetObjectStorageAccountResponse parses an HTTP response from a GetObjectStorageAccountWithResponse call
+func ParseGetObjectStorageAccountResponse(rsp *http.Response) (*GetObjectStorageAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetObjectStorageResponse{
+	response := &GetObjectStorageAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage
+		var dest ObjectStorageAccount
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1098,15 +1233,15 @@ func ParseGetObjectStorageResponse(rsp *http.Response) (*GetObjectStorageRespons
 	return response, nil
 }
 
-// ParseCreateOrUpdateObjectStorageResponse parses an HTTP response from a CreateOrUpdateObjectStorageWithResponse call
-func ParseCreateOrUpdateObjectStorageResponse(rsp *http.Response) (*CreateOrUpdateObjectStorageResponse, error) {
+// ParseCreateOrUpdateObjectStorageAccountResponse parses an HTTP response from a CreateOrUpdateObjectStorageAccountWithResponse call
+func ParseCreateOrUpdateObjectStorageAccountResponse(rsp *http.Response) (*CreateOrUpdateObjectStorageAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateOrUpdateObjectStorageResponse{
+	response := &CreateOrUpdateObjectStorageAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1168,18 +1303,18 @@ func ParseCreateOrUpdateObjectStorageResponse(rsp *http.Response) (*CreateOrUpda
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// List all object storage volumes
-	// (GET /v1/object-storages)
-	ListObjectStorages(w http.ResponseWriter, r *http.Request, params ListObjectStoragesParams)
-	// Delete a specific object storage volume
-	// (DELETE /v1/object-storages/{name})
-	DeleteObjectStorage(w http.ResponseWriter, r *http.Request, name string)
-	// Get a specific object storage volume
-	// (GET /v1/object-storages/{name})
-	GetObjectStorage(w http.ResponseWriter, r *http.Request, name string, params GetObjectStorageParams)
-	// Create or update a specific object storage volume
-	// (PUT /v1/object-storages/{name})
-	CreateOrUpdateObjectStorage(w http.ResponseWriter, r *http.Request, name string, params CreateOrUpdateObjectStorageParams)
+	// List all object storage accounts
+	// (GET /v1/tenants/{id}/accounts)
+	ListObjectStorageAccounts(w http.ResponseWriter, r *http.Request, id TenantID, params ListObjectStorageAccountsParams)
+	// Delete a specific object storage account
+	// (DELETE /v1/tenants/{id}/accounts/{name})
+	DeleteObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
+	// Get a specific object storage account
+	// (GET /v1/tenants/{id}/accounts/{name})
+	GetObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params GetObjectStorageAccountParams)
+	// Create or update a specific object storage account
+	// (PUT /v1/tenants/{id}/accounts/{name})
+	CreateOrUpdateObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params CreateOrUpdateObjectStorageAccountParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1191,10 +1326,19 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-// ListObjectStorages operation middleware
-func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *http.Request) {
+// ListObjectStorageAccounts operation middleware
+func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWriter, r *http.Request) {
 
 	var err error
+
+	// ------------- Path parameter "id" -------------
+	var id TenantID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		return
+	}
 
 	ctx := r.Context()
 
@@ -1203,7 +1347,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params ListObjectStoragesParams
+	var params ListObjectStorageAccountsParams
 
 	// ------------- Optional query parameter "labels" -------------
 
@@ -1233,7 +1377,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 
 	// ------------- Optional header parameter "Accept" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListObjectStoragesParamsAccept
+		var Accept ListObjectStorageAccountsParamsAccept
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
@@ -1251,7 +1395,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListObjectStorages(w, r, params)
+		siw.Handler.ListObjectStorageAccounts(w, r, id, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1261,13 +1405,22 @@ func (siw *ServerInterfaceWrapper) ListObjectStorages(w http.ResponseWriter, r *
 	handler.ServeHTTP(w, r)
 }
 
-// DeleteObjectStorage operation middleware
-func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r *http.Request) {
+// DeleteObjectStorageAccount operation middleware
+func (siw *ServerInterfaceWrapper) DeleteObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
+	// ------------- Path parameter "id" -------------
+	var id TenantID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		return
+	}
+
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1282,7 +1435,7 @@ func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r 
 	r = r.WithContext(ctx)
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteObjectStorage(w, r, name)
+		siw.Handler.DeleteObjectStorageAccount(w, r, id, name)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1292,13 +1445,22 @@ func (siw *ServerInterfaceWrapper) DeleteObjectStorage(w http.ResponseWriter, r 
 	handler.ServeHTTP(w, r)
 }
 
-// GetObjectStorage operation middleware
-func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *http.Request) {
+// GetObjectStorageAccount operation middleware
+func (siw *ServerInterfaceWrapper) GetObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
+	// ------------- Path parameter "id" -------------
+	var id TenantID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		return
+	}
+
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1313,7 +1475,7 @@ func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *ht
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetObjectStorageParams
+	var params GetObjectStorageAccountParams
 
 	headers := r.Header
 
@@ -1337,7 +1499,7 @@ func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *ht
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetObjectStorage(w, r, name, params)
+		siw.Handler.GetObjectStorageAccount(w, r, id, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1347,13 +1509,22 @@ func (siw *ServerInterfaceWrapper) GetObjectStorage(w http.ResponseWriter, r *ht
 	handler.ServeHTTP(w, r)
 }
 
-// CreateOrUpdateObjectStorage operation middleware
-func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorage(w http.ResponseWriter, r *http.Request) {
+// CreateOrUpdateObjectStorageAccount operation middleware
+func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
+	// ------------- Path parameter "id" -------------
+	var id TenantID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		return
+	}
+
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1368,7 +1539,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorage(w http.ResponseWr
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateOrUpdateObjectStorageParams
+	var params CreateOrUpdateObjectStorageAccountParams
 
 	headers := r.Header
 
@@ -1392,7 +1563,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorage(w http.ResponseWr
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateObjectStorage(w, r, name, params)
+		siw.Handler.CreateOrUpdateObjectStorageAccount(w, r, id, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1522,10 +1693,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/object-storages", wrapper.ListObjectStorages)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/object-storages/{name}", wrapper.DeleteObjectStorage)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/object-storages/{name}", wrapper.GetObjectStorage)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/object-storages/{name}", wrapper.CreateOrUpdateObjectStorage)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/accounts", wrapper.ListObjectStorageAccounts)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.DeleteObjectStorageAccount)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.GetObjectStorageAccount)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.CreateOrUpdateObjectStorageAccount)
 
 	return m
 }

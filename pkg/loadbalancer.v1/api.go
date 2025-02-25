@@ -34,15 +34,36 @@ const (
 	LoadBalancerTargetProtocolUDP LoadBalancerTargetProtocol = "UDP"
 )
 
-// Defines values for NetworkLoadBalancerKind.
-const (
-	NetworkLoadBalancerKindNetworkLoadBalancer NetworkLoadBalancerKind = "network-load-balancer"
-)
-
 // Defines values for NetworkLoadBalancerFrontendProtocol.
 const (
 	NetworkLoadBalancerFrontendProtocolTCP NetworkLoadBalancerFrontendProtocol = "TCP"
 	NetworkLoadBalancerFrontendProtocolUDP NetworkLoadBalancerFrontendProtocol = "UDP"
+)
+
+// Defines values for RegionalResourceMetadataKind.
+const (
+	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
+	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
+	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
+	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
+	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
+	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
+	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
+	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
+	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
+	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
+	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
+	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
+	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
+	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
+	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
+	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
+	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
+	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
+	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
+	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
+	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
+	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceStatePhase.
@@ -54,6 +75,32 @@ const (
 	ResourceStatePhasePending   ResourceStatePhase = "pending"
 	ResourceStatePhaseSuspended ResourceStatePhase = "suspended"
 	ResourceStatePhaseUpdating  ResourceStatePhase = "updating"
+)
+
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -180,20 +227,35 @@ type LoadBalancerTargetAlgorithm string
 // LoadBalancerTargetProtocol Frontend Protocol to which the load balancer will be listening on
 type LoadBalancerTargetProtocol string
 
-// NetworkLoadBalancer defines model for NetworkLoadBalancer.
-type NetworkLoadBalancer struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
+// ModificationMetadata Base metadata for all resources with optional location references
+type ModificationMetadata struct {
+	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Kind Type of the resource
-	Kind     *NetworkLoadBalancerKind   `json:"kind,omitempty"`
-	Metadata *RegionalResourceMetadata  `json:"metadata,omitempty"`
-	Spec     *NetworkLoadBalancerSpec   `json:"spec,omitempty"`
-	Status   *NetworkLoadBalancerStatus `json:"status,omitempty"`
+	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 }
 
-// NetworkLoadBalancerKind Type of the resource
-type NetworkLoadBalancerKind string
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+}
+
+// NetworkLoadBalancer defines model for NetworkLoadBalancer.
+type NetworkLoadBalancer struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels   *map[string]string         `json:"labels,omitempty"`
+	Metadata *RegionalResourceMetadata  `json:"metadata,omitempty"`
+	Spec     NetworkLoadBalancerSpec    `json:"spec"`
+	Status   *NetworkLoadBalancerStatus `json:"status,omitempty"`
+}
 
 // NetworkLoadBalancerFrontend defines model for NetworkLoadBalancerFrontend.
 type NetworkLoadBalancerFrontend struct {
@@ -231,46 +293,46 @@ type NetworkLoadBalancerStatus struct {
 	State *ResourceState `json:"state,omitempty"`
 }
 
+// RegionalMetadata Metadata for regional resources
+type RegionalMetadata struct {
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+}
+
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
 type RegionalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
 	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp time.Time `json:"deletionTimestamp"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
+	// Kind Type of the resource
+	Kind RegionalResourceMetadataKind `json:"kind"`
 
 	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
+	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
 
-	// Location Reference to the region where the resource is located
-	Location *struct {
-		Region string `json:"region"`
-	} `json:"location,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
+
+	// Region Reference to the region where the resource is located
+	Region string `json:"region"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
-type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
-	Name string `json:"name"`
-}
+// RegionalResourceMetadataKind Type of the resource
+type RegionalResourceMetadataKind string
 
 // ResourceState Generic state definition for all resources. All states are optional, but must not have more states.
 // If a provider wants to present fine granular states, please use conditions.
@@ -282,7 +344,7 @@ type ResourceState struct {
 	// - updating: available for data layer usage
 	// - deleting: maybe still available for data layer user, can fail any moment
 	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	Phase *ResourceStatePhase `json:"phase,omitempty"`
 }
 
@@ -293,7 +355,7 @@ type ResourceState struct {
 // - updating: available for data layer usage
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fullfill the request; would be related to provider issue or customer related input.
+// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 type ResourceStatePhase string
 
 // ResponseMetadata defines model for ResponseMetadata.
@@ -331,6 +393,34 @@ type StatusCondition struct {
 	// Type Type of condition. The condition type is provider-specific and should
 	// reflect the specific states relevant to your resource.
 	Type string `json:"type"`
+}
+
+// TenantMetadata Metadata for global resources with tenant constraints
+type TenantMetadata struct {
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+}
+
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
+// UserResourceMetadata defines model for UserResourceMetadata.
+type UserResourceMetadata struct {
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Labels User-defined key/value pairs that are mutable and can be used to
+	// organize and categorize resources. They can be used to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
 }
 
 // AcceptHeader defines model for acceptHeader.

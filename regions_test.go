@@ -24,18 +24,10 @@ func TestRegions(t *testing.T) {
 			{
 				"items": [
 					{
-						"apiVersion": "v1",
-						"kind": "region",
 						"metadata": {
-							"name": "primary-load-balancer",
-							"deletionTimestamp": "2019-08-24T14:15:22Z",
-							"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
-							"description": "string",
-							"labels": {
-								"language": "en",
-								"billing.cost-center": "platform-eng",
-								"env": "production"
-							}
+							"apiVersion": "v1",
+							"kind": "region",
+							"name": "eu-central-1"
 						},
 						"spec": {
 							"availableZones": [ "A", "B" ],
@@ -48,15 +40,7 @@ func TestRegions(t *testing.T) {
 							]
 						},
 						"status": {
-							"conditions": [
-								{
-									"type": "power-mgmt",
-									"status": "True, false, unknown",
-									"lastTransitionTime": "2019-08-24T14:15:22Z",
-									"reason": "^A(A)?$",
-									"message": "string"
-								}
-							]
+							"conditions": [ { "status": "Ready" } ]
 						}
 					}
 				],
@@ -72,8 +56,6 @@ func TestRegions(t *testing.T) {
 
 	client, err := NewClient(server.URL)
 	require.NoError(t, err)
-
-	ctx = WithTenantID(ctx, "test")
 
 	regionIter, err := client.Regions(ctx)
 	require.NoError(t, err)
@@ -96,18 +78,10 @@ func TestRegion(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`
 			{
-				"apiVersion": "v1",
-				"kind": "region",
 				"metadata": {
-					"name": "primary-load-balancer",
-					"deletionTimestamp": "2019-08-24T14:15:22Z",
-					"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
-					"description": "string",
-					"labels": {
-						"language": "en",
-						"billing.cost-center": "platform-eng",
-						"env": "production"
-					}
+					"apiVersion": "v1",
+					"kind": "region",
+					"name": "eu-central-1"
 				},
 				"spec": {
 					"availableZones": [ "A", "B" ],
@@ -120,15 +94,7 @@ func TestRegion(t *testing.T) {
 					]
 				},
 				"status": {
-					"conditions": [
-						{
-							"type": "power-mgmt",
-							"status": "True, false, unknown",
-							"lastTransitionTime": "2019-08-24T14:15:22Z",
-							"reason": "^A(A)?$",
-							"message": "string"
-						}
-					]
+					"conditions": [ { "status": "Ready" } ]
 				}
 			}
 		`))
@@ -139,8 +105,6 @@ func TestRegion(t *testing.T) {
 
 	client, err := NewClient(server.URL)
 	require.NoError(t, err)
-
-	ctx = WithTenantID(ctx, "test")
 
 	region, err := client.Region(ctx, "test")
 	require.NoError(t, err)

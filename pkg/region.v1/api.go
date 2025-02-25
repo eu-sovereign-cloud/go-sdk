@@ -22,9 +22,56 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for RegionKind.
+// Defines values for ResourceMetadataKind.
 const (
-	RegionKindRegion RegionKind = "region"
+	ResourceMetadataKindActivityLog          ResourceMetadataKind = "activity-log"
+	ResourceMetadataKindBlockStorage         ResourceMetadataKind = "block-storage"
+	ResourceMetadataKindImage                ResourceMetadataKind = "image"
+	ResourceMetadataKindInstance             ResourceMetadataKind = "instance"
+	ResourceMetadataKindInstanceSku          ResourceMetadataKind = "instance-sku"
+	ResourceMetadataKindLan                  ResourceMetadataKind = "lan"
+	ResourceMetadataKindLocation             ResourceMetadataKind = "location"
+	ResourceMetadataKindNetworkLoadBalancer  ResourceMetadataKind = "network-load-balancer"
+	ResourceMetadataKindNetworkSku           ResourceMetadataKind = "network-sku"
+	ResourceMetadataKindNic                  ResourceMetadataKind = "nic"
+	ResourceMetadataKindObjectStorageAccount ResourceMetadataKind = "object-storage-account"
+	ResourceMetadataKindPublicIp             ResourceMetadataKind = "public-ip"
+	ResourceMetadataKindQuota                ResourceMetadataKind = "quota"
+	ResourceMetadataKindRegion               ResourceMetadataKind = "region"
+	ResourceMetadataKindRole                 ResourceMetadataKind = "role"
+	ResourceMetadataKindRoleAssignment       ResourceMetadataKind = "role-assignment"
+	ResourceMetadataKindRoutingTable         ResourceMetadataKind = "routing-table"
+	ResourceMetadataKindSecurityGroup        ResourceMetadataKind = "security-group"
+	ResourceMetadataKindSecurityGroupRule    ResourceMetadataKind = "security-group-rule"
+	ResourceMetadataKindStorageSku           ResourceMetadataKind = "storage-sku"
+	ResourceMetadataKindSubnet               ResourceMetadataKind = "subnet"
+	ResourceMetadataKindWorkspace            ResourceMetadataKind = "workspace"
+)
+
+// Defines values for TypeMetadataKind.
+const (
+	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
+	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
+	TypeMetadataKindImage                TypeMetadataKind = "image"
+	TypeMetadataKindInstance             TypeMetadataKind = "instance"
+	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindLan                  TypeMetadataKind = "lan"
+	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
+	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
+	TypeMetadataKindNic                  TypeMetadataKind = "nic"
+	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
+	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
+	TypeMetadataKindQuota                TypeMetadataKind = "quota"
+	TypeMetadataKindRegion               TypeMetadataKind = "region"
+	TypeMetadataKindRole                 TypeMetadataKind = "role"
+	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
+	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
+	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
+	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
+	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
+	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
+	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -101,21 +148,11 @@ type ErrorSource struct {
 	Pointer string `json:"pointer"`
 }
 
-// GlobalResourceMetadata defines model for GlobalResourceMetadata.
-type GlobalResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
-
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+// NameMetadata defines model for NameMetadata.
+type NameMetadata struct {
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
 }
 
@@ -128,20 +165,12 @@ type Provider struct {
 
 // Region defines model for Region.
 type Region struct {
-	// ApiVersion API version of the resource
-	ApiVersion *string `json:"apiVersion,omitempty"`
-
-	// Kind Type of the resource
-	Kind     *RegionKind            `json:"kind,omitempty"`
-	Metadata GlobalResourceMetadata `json:"metadata"`
-	Spec     RegionSpec             `json:"spec"`
+	Metadata *ResourceMetadata `json:"metadata,omitempty"`
+	Spec     RegionSpec        `json:"spec"`
 
 	// Status Current status of the resource
 	Status *Status `json:"status,omitempty"`
 }
-
-// RegionKind Type of the resource
-type RegionKind string
 
 // RegionIterator defines model for RegionIterator.
 type RegionIterator struct {
@@ -155,23 +184,22 @@ type RegionSpec struct {
 	Providers      []Provider `json:"providers"`
 }
 
-// ResourceMetadata Base metadata for all resources, with optional location references
+// ResourceMetadata defines model for ResourceMetadata.
 type ResourceMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp *time.Time `json:"deletionTimestamp,omitempty"`
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
 
-	// Description user can add a description for other humans to understand why this resource exists
-	Description *string `json:"description,omitempty"`
+	// Kind Type of the resource
+	Kind ResourceMetadataKind `json:"kind"`
 
-	// Labels User-defined key/value pairs that are mutable and can be used to organize and categorize resources.
-	Labels map[string]interface{} `json:"labels"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp *time.Time `json:"lastModifiedTimestamp,omitempty"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character. Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots. Each segment follows the same rules.
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
 	Name string `json:"name"`
 }
+
+// ResourceMetadataKind Type of the resource
+type ResourceMetadataKind string
 
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
@@ -210,6 +238,18 @@ type StatusCondition struct {
 	Type string `json:"type"`
 }
 
+// TypeMetadata defines model for TypeMetadata.
+type TypeMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// Kind Type of the resource
+	Kind TypeMetadataKind `json:"kind"`
+}
+
+// TypeMetadataKind Type of the resource
+type TypeMetadataKind string
+
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
 
@@ -218,6 +258,9 @@ type LabelSelector = string
 
 // LimitParam defines model for limitParam.
 type LimitParam = int
+
+// ResourceName defines model for resourceName.
+type ResourceName = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
@@ -326,7 +369,7 @@ type ClientInterface interface {
 	ListRegions(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRegion request
-	GetRegion(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRegion(ctx context.Context, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) ListRegions(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -341,7 +384,7 @@ func (c *Client) ListRegions(ctx context.Context, params *ListRegionsParams, req
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRegion(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetRegion(ctx context.Context, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetRegionRequest(c.Server, name)
 	if err != nil {
 		return nil, err
@@ -450,7 +493,7 @@ func NewListRegionsRequest(server string, params *ListRegionsParams) (*http.Requ
 }
 
 // NewGetRegionRequest generates requests for GetRegion
-func NewGetRegionRequest(server string, name string) (*http.Request, error) {
+func NewGetRegionRequest(server string, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -530,7 +573,7 @@ type ClientWithResponsesInterface interface {
 	ListRegionsWithResponse(ctx context.Context, params *ListRegionsParams, reqEditors ...RequestEditorFn) (*ListRegionsResponse, error)
 
 	// GetRegionWithResponse request
-	GetRegionWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error)
+	GetRegionWithResponse(ctx context.Context, name ResourceName, reqEditors ...RequestEditorFn) (*GetRegionResponse, error)
 }
 
 type ListRegionsResponse struct {
@@ -592,7 +635,7 @@ func (c *ClientWithResponses) ListRegionsWithResponse(ctx context.Context, param
 }
 
 // GetRegionWithResponse request returning *GetRegionResponse
-func (c *ClientWithResponses) GetRegionWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GetRegionResponse, error) {
+func (c *ClientWithResponses) GetRegionWithResponse(ctx context.Context, name ResourceName, reqEditors ...RequestEditorFn) (*GetRegionResponse, error) {
 	rsp, err := c.GetRegion(ctx, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -694,7 +737,7 @@ type ServerInterface interface {
 	ListRegions(w http.ResponseWriter, r *http.Request, params ListRegionsParams)
 	// Get a specific region by name
 	// (GET /v1/regions/{name})
-	GetRegion(w http.ResponseWriter, r *http.Request, name string)
+	GetRegion(w http.ResponseWriter, r *http.Request, name ResourceName)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -782,7 +825,7 @@ func (siw *ServerInterfaceWrapper) GetRegion(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	// ------------- Path parameter "name" -------------
-	var name string
+	var name ResourceName
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
