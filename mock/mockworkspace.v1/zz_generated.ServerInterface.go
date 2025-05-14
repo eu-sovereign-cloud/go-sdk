@@ -5,7 +5,7 @@ package mockworkspace
 import (
 	http "net/http"
 
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 	mock "github.com/stretchr/testify/mock"
 )
 

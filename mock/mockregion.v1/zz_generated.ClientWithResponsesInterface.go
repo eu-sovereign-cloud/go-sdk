@@ -5,7 +5,7 @@ package mockregion
 import (
 	context "context"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
 	mock "github.com/stretchr/testify/mock"
 )
 

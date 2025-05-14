@@ -1,4 +1,4 @@
-package gosdk_test
+package secapi_test
 
 import (
 	"context"
@@ -6,13 +6,13 @@ import (
 	"io"
 	"testing"
 
-	gosdk "github.com/eu-sovereign-cloud/go-sdk"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi"
 )
 
 func TestIterator_Next(t *testing.T) {
 	tests := []struct {
 		name       string
-		fn         gosdk.IteratorFunc[int]
+		fn         secapi.IteratorFunc[int]
 		wantValues []int
 		wantErr    error
 	}{
@@ -71,6 +71,7 @@ func TestIterator_Next(t *testing.T) {
 				}
 				return []int{5, 6}, nil, nil
 			},
+
 			wantValues: []int{1, 2, 3, 4, 5, 6},
 			wantErr:    io.EOF,
 		},
@@ -78,7 +79,7 @@ func TestIterator_Next(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			iterator := gosdk.NewIterator(tt.fn)
+			iterator := secapi.NewIterator(tt.fn)
 			var gotValues []int
 			for {
 				val, err := iterator.Next(context.Background())

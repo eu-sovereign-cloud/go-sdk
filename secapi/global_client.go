@@ -1,7 +1,7 @@
-package gosdk
+package secapi
 
 import (
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
 )
 
 type Client struct {

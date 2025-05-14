@@ -1,11 +1,11 @@
-package gosdk
+package secapi
 
 import (
 	"context"
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
 )
 
 func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) {

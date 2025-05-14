@@ -1,4 +1,4 @@
-package gosdk
+package secapi
 
 import (
 	"context"
@@ -9,8 +9,8 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/fake"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/mockworkspace.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

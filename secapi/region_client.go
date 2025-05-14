@@ -1,11 +1,11 @@
-package gosdk
+package secapi
 
 import (
 	"fmt"
 	"sync"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/workspace.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 )
 
 type RegionClient struct {

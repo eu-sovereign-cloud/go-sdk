@@ -1,4 +1,4 @@
-package gosdk
+package secapi
 
 type Reference interface {
 	TenantReference | WorkspaceReference
