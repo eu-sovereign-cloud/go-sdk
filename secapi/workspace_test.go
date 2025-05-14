@@ -15,7 +15,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	"k8s.io/utils/ptr"
 )
 
 func TestMockedWorkspaces(t *testing.T) {
@@ -124,10 +123,6 @@ func TestFakedWorkspaces(t *testing.T) {
 		Metadata: &workspace.GlobalResourceMetadata{
 			Tenant: "test",
 			Name:   "some-workspace",
-		},
-		Spec: workspace.WorkspaceSpec{},
-		Status: &workspace.WorkspaceStatus{
-			Phase: ptr.To(workspace.WorkspaceStatusPhase("Pending")),
 		},
 	}
 

@@ -17,10 +17,10 @@ func NewServer(regionNames ...string) *Server {
 	regionsMap := make(map[string]*region.Region)
 	for _, name := range regionNames {
 		regionsMap[name] = &region.Region{
-			Metadata: &region.ResourceMetadata{
+			Metadata: &region.GlobalResourceMetadata{
 				Name:       name,
 				ApiVersion: "v1",
-				Kind:       region.ResourceMetadataKindRegion,
+				Kind:       region.GlobalResourceMetadataKindRegion,
 			},
 			Spec: region.RegionSpec{
 				AvailableZones: []string{"A", "B"},
@@ -28,13 +28,6 @@ func NewServer(regionNames ...string) *Server {
 					{
 						Name:    "seca.workspace",
 						Version: "v1",
-					},
-				},
-			},
-			Status: &region.Status{
-				Conditions: []region.StatusCondition{
-					{
-						Status: "Ready", // TODO: no enum?
 					},
 				},
 			},

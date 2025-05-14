@@ -22,8 +22,9 @@ To get started with the project, follow these steps:
 3. Update all external dependencies:
 
     ```sh
-    cd spec && make build
-    cd .. && make clean update all mock
+    make clean update
+    sh -c "cd spec && make build"
+    make all mock
     ```
 
 ## Testing

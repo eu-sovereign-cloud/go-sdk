@@ -24,14 +24,14 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 	return &MockClientWithResponsesInterface_Expecter{mock: &_m.Mock}
 }
 
-// CreateOrUpdateWorkspaceWithBodyWithResponse provides a mock function with given fields: ctx, id, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, id string, name string, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error) {
+// CreateOrUpdateWorkspaceWithBodyWithResponse provides a mock function with given fields: ctx, tenant, name, params, contentType, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx context.Context, tenant string, name string, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name, params, contentType, body)
+	_ca = append(_ca, ctx, tenant, name, params, contentType, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -42,10 +42,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithBodyWithR
 	var r0 *workspace.CreateOrUpdateWorkspaceResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error)); ok {
-		return rf(ctx, id, name, params, contentType, body, reqEditors...)
+		return rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) *workspace.CreateOrUpdateWorkspaceResponse); ok {
-		r0 = rf(ctx, id, name, params, contentType, body, reqEditors...)
+		r0 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*workspace.CreateOrUpdateWorkspaceResponse)
@@ -53,7 +53,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithBodyWithR
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, params, contentType, body, reqEditors...)
+		r1 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -68,18 +68,18 @@ type MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithRespons
 
 // CreateOrUpdateWorkspaceWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
+//   - tenant string
 //   - name string
 //   - params *workspace.CreateOrUpdateWorkspaceParams
 //   - contentType string
 //   - body io.Reader
 //   - reqEditors ...workspace.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx interface{}, id interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateWorkspaceWithBodyWithResponse(ctx interface{}, tenant interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call{Call: _e.mock.On("CreateOrUpdateWorkspaceWithBodyWithResponse",
-		append([]interface{}{ctx, id, name, params, contentType, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call) Run(run func(ctx context.Context, id string, name string, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant string, name string, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -102,14 +102,14 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithBodyWithRe
 	return _c
 }
 
-// CreateOrUpdateWorkspaceWithResponse provides a mock function with given fields: ctx, id, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithResponse(ctx context.Context, id string, name string, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.Workspace, reqEditors ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error) {
+// CreateOrUpdateWorkspaceWithResponse provides a mock function with given fields: ctx, tenant, name, params, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithResponse(ctx context.Context, tenant string, name string, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.Workspace, reqEditors ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name, params, body)
+	_ca = append(_ca, ctx, tenant, name, params, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -120,10 +120,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithResponse(
 	var r0 *workspace.CreateOrUpdateWorkspaceResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, workspace.Workspace, ...workspace.RequestEditorFn) (*workspace.CreateOrUpdateWorkspaceResponse, error)); ok {
-		return rf(ctx, id, name, params, body, reqEditors...)
+		return rf(ctx, tenant, name, params, body, reqEditors...)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, workspace.Workspace, ...workspace.RequestEditorFn) *workspace.CreateOrUpdateWorkspaceResponse); ok {
-		r0 = rf(ctx, id, name, params, body, reqEditors...)
+		r0 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*workspace.CreateOrUpdateWorkspaceResponse)
@@ -131,7 +131,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateWorkspaceWithResponse(
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, *workspace.CreateOrUpdateWorkspaceParams, workspace.Workspace, ...workspace.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, params, body, reqEditors...)
+		r1 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -146,17 +146,17 @@ type MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call s
 
 // CreateOrUpdateWorkspaceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
+//   - tenant string
 //   - name string
 //   - params *workspace.CreateOrUpdateWorkspaceParams
 //   - body workspace.Workspace
 //   - reqEditors ...workspace.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateWorkspaceWithResponse(ctx interface{}, id interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateWorkspaceWithResponse(ctx interface{}, tenant interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call{Call: _e.mock.On("CreateOrUpdateWorkspaceWithResponse",
-		append([]interface{}{ctx, id, name, params, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call) Run(run func(ctx context.Context, id string, name string, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.Workspace, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call) Run(run func(ctx context.Context, tenant string, name string, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.Workspace, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -179,14 +179,14 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateWorkspaceWithResponse_C
 	return _c
 }
 
-// DeleteWorkspaceWithResponse provides a mock function with given fields: ctx, id, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteWorkspaceWithResponse(ctx context.Context, id string, name string, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn) (*workspace.DeleteWorkspaceResponse, error) {
+// DeleteWorkspaceWithResponse provides a mock function with given fields: ctx, tenant, name, params, reqEditors
+func (_m *MockClientWithResponsesInterface) DeleteWorkspaceWithResponse(ctx context.Context, tenant string, name string, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn) (*workspace.DeleteWorkspaceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name, params)
+	_ca = append(_ca, ctx, tenant, name, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -197,10 +197,10 @@ func (_m *MockClientWithResponsesInterface) DeleteWorkspaceWithResponse(ctx cont
 	var r0 *workspace.DeleteWorkspaceResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) (*workspace.DeleteWorkspaceResponse, error)); ok {
-		return rf(ctx, id, name, params, reqEditors...)
+		return rf(ctx, tenant, name, params, reqEditors...)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) *workspace.DeleteWorkspaceResponse); ok {
-		r0 = rf(ctx, id, name, params, reqEditors...)
+		r0 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*workspace.DeleteWorkspaceResponse)
@@ -208,7 +208,7 @@ func (_m *MockClientWithResponsesInterface) DeleteWorkspaceWithResponse(ctx cont
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, params, reqEditors...)
+		r1 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -223,16 +223,16 @@ type MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call struct {
 
 // DeleteWorkspaceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
+//   - tenant string
 //   - name string
 //   - params *workspace.DeleteWorkspaceParams
 //   - reqEditors ...workspace.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) DeleteWorkspaceWithResponse(ctx interface{}, id interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) DeleteWorkspaceWithResponse(ctx interface{}, tenant interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call {
 	return &MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call{Call: _e.mock.On("DeleteWorkspaceWithResponse",
-		append([]interface{}{ctx, id, name, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call) Run(run func(ctx context.Context, id string, name string, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call) Run(run func(ctx context.Context, tenant string, name string, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -255,14 +255,14 @@ func (_c *MockClientWithResponsesInterface_DeleteWorkspaceWithResponse_Call) Run
 	return _c
 }
 
-// GetWorkspaceWithResponse provides a mock function with given fields: ctx, id, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetWorkspaceWithResponse(ctx context.Context, id string, name string, reqEditors ...workspace.RequestEditorFn) (*workspace.GetWorkspaceResponse, error) {
+// GetWorkspaceWithResponse provides a mock function with given fields: ctx, tenant, name, reqEditors
+func (_m *MockClientWithResponsesInterface) GetWorkspaceWithResponse(ctx context.Context, tenant string, name string, reqEditors ...workspace.RequestEditorFn) (*workspace.GetWorkspaceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, name)
+	_ca = append(_ca, ctx, tenant, name)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -273,10 +273,10 @@ func (_m *MockClientWithResponsesInterface) GetWorkspaceWithResponse(ctx context
 	var r0 *workspace.GetWorkspaceResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...workspace.RequestEditorFn) (*workspace.GetWorkspaceResponse, error)); ok {
-		return rf(ctx, id, name, reqEditors...)
+		return rf(ctx, tenant, name, reqEditors...)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, ...workspace.RequestEditorFn) *workspace.GetWorkspaceResponse); ok {
-		r0 = rf(ctx, id, name, reqEditors...)
+		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*workspace.GetWorkspaceResponse)
@@ -284,7 +284,7 @@ func (_m *MockClientWithResponsesInterface) GetWorkspaceWithResponse(ctx context
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, ...workspace.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, name, reqEditors...)
+		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -299,15 +299,15 @@ type MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call struct {
 
 // GetWorkspaceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
+//   - tenant string
 //   - name string
 //   - reqEditors ...workspace.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) GetWorkspaceWithResponse(ctx interface{}, id interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) GetWorkspaceWithResponse(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call{Call: _e.mock.On("GetWorkspaceWithResponse",
-		append([]interface{}{ctx, id, name}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call) Run(run func(ctx context.Context, id string, name string, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call) Run(run func(ctx context.Context, tenant string, name string, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -330,14 +330,14 @@ func (_c *MockClientWithResponsesInterface_GetWorkspaceWithResponse_Call) RunAnd
 	return _c
 }
 
-// ListWorkspacesWithResponse provides a mock function with given fields: ctx, id, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListWorkspacesWithResponse(ctx context.Context, id string, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn) (*workspace.ListWorkspacesResponse, error) {
+// ListWorkspacesWithResponse provides a mock function with given fields: ctx, tenant, params, reqEditors
+func (_m *MockClientWithResponsesInterface) ListWorkspacesWithResponse(ctx context.Context, tenant string, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn) (*workspace.ListWorkspacesResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, id, params)
+	_ca = append(_ca, ctx, tenant, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -348,10 +348,10 @@ func (_m *MockClientWithResponsesInterface) ListWorkspacesWithResponse(ctx conte
 	var r0 *workspace.ListWorkspacesResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) (*workspace.ListWorkspacesResponse, error)); ok {
-		return rf(ctx, id, params, reqEditors...)
+		return rf(ctx, tenant, params, reqEditors...)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) *workspace.ListWorkspacesResponse); ok {
-		r0 = rf(ctx, id, params, reqEditors...)
+		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*workspace.ListWorkspacesResponse)
@@ -359,7 +359,7 @@ func (_m *MockClientWithResponsesInterface) ListWorkspacesWithResponse(ctx conte
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) error); ok {
-		r1 = rf(ctx, id, params, reqEditors...)
+		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -374,15 +374,15 @@ type MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call struct {
 
 // ListWorkspacesWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - id string
+//   - tenant string
 //   - params *workspace.ListWorkspacesParams
 //   - reqEditors ...workspace.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) ListWorkspacesWithResponse(ctx interface{}, id interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) ListWorkspacesWithResponse(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call {
 	return &MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call{Call: _e.mock.On("ListWorkspacesWithResponse",
-		append([]interface{}{ctx, id, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call) Run(run func(ctx context.Context, id string, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call) Run(run func(ctx context.Context, tenant string, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn)) *MockClientWithResponsesInterface_ListWorkspacesWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {

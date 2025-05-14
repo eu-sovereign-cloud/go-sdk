@@ -22,7 +22,7 @@ func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iter
 
 	iter := Iterator[workspace.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
-			resp, err := wsClient.ListWorkspacesWithResponse(ctx, workspace.TenantID(tid), &workspace.ListWorkspacesParams{
+			resp, err := wsClient.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -42,7 +42,7 @@ func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference)
 		return nil, err
 	}
 
-	resp, err := wsClient.GetWorkspaceWithResponse(ctx, workspace.TenantID(tref.Tenant), string(tref.Name))
+	resp, err := wsClient.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err
 	}

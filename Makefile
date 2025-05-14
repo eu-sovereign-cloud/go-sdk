@@ -18,7 +18,7 @@ $(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
 $(PKG)/%/api.go: $(SPEC_DIST)/%.yaml
 	@-mkdir -p $(shell dirname $@)
 	-$(GO_TOOL) $(OPENAPI_GENERATOR) -alias-types -generate "types,client,std-http" \
-		-package $(patsubst %.v1,%,$(shell basename $(shell dirname $@))) -o $@ $<
+		-package $(shell basename $(shell dirname $@) | cut -d '.' -f 2) -o $@ $<
 
 .PHONY: update	
 update:
