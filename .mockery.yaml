@@ -1,5 +1,7 @@
 filename: "zz_generated.{{.InterfaceName}}.go"
 with-expecter: true
+issue-845-fix: true
+resolve-type-alias: false
 packages:
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1:
     config:
