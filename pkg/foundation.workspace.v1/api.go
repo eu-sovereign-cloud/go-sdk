@@ -606,6 +606,15 @@ type Workspace struct {
 	// organize and categorize resources. They can be used to filter resources.
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec Specification of the workspace, including its capabilities and extensions.
+	Spec WorkspaceSpec `json:"spec"`
+
+	// Status Status of the workspace, including the number of resources in the workspace.
+	Status *WorkspaceStatus `json:"status,omitempty"`
 }
 
 // WorkspaceIterator Iterator for workspaces

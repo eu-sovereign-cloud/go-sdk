@@ -4,12 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	//     "github.com/aws/aws-sdk-go/aws"
-	//     "github.com/aws/aws-sdk-go/aws/session"
-	//     "github.com/aws/aws-sdk-go/service/s3"
+	"k8s.io/utils/ptr"
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
-	"k8s.io/utils/ptr"
 )
 
 type WorkspaceID string
@@ -59,7 +56,7 @@ func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *workspace.W
 	}
 
 	resp, err := wsClient.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
-		IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
+		IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 	})
 	if err != nil {
 		return err
@@ -82,7 +79,7 @@ func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *workspace.Wor
 
 	resp, err := wsClient.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
-			IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
+			IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 		}, *ws)
 	if err != nil {
 		return err
