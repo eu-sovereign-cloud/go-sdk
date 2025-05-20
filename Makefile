@@ -35,7 +35,8 @@ test:
 	$(GO) test -count=1 -cover -v ./...
 
 .PHONY: mock
-mock: $(GO_TOOL) github.com/vektra/mockery/v2
+mock: generate
+	$(GO_TOOL) github.com/vektra/mockery/v2
 
 .PHONY: fmt
 fmt:
