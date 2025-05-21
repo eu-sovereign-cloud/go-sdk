@@ -55,4 +55,3 @@ golint:
 .PHONY: clean
 clean:
 	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
-	

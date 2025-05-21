@@ -6,55 +6,55 @@ packages:
   github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.activitylog.v1beta1:
     config:
       all: true
-      dir: mock/mock.activitylog.v1beta1
+      dir: mock/mockactivitylog.v1beta1
       outpkg: mockactivitylog  
   github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.kubernetes.v1beta1:
     config:
       all: true
-      dir: mock/mock.kubernetes.v1beta1
+      dir: mock/mockkubernetes.v1beta1
       outpkg: mockkubernetes  
   github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.loadbalancer.v1beta1:
     config:
       all: true
-      dir: mock/mock.loadbalancer.v1beta1
+      dir: mock/mockloadbalancer.v1beta1
       outpkg: mockloadbalancer  
   github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.natgateway.v1beta1:
     config:
       all: true
-      dir: mock/mock.natgateway.v1beta1
+      dir: mock/mocknatgateway.v1beta1
       outpkg: mocknatgateway  
   github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.objectstorage.v1beta1:
     config:
       all: true
-      dir: mock/mock.objectstorage.v1beta1
+      dir: mock/mockobjectstorage.v1beta1
       outpkg: mockobjectstorage  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.authorization.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.authorization.v1:make
     config:
       all: true
-      dir: mock/mock.authorization.v1
+      dir: mock/mockauthorization.v1
       outpkg: mockauthorization  
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.compute.v1:
     config:
       all: true
-      dir: mock/mock.compute.v1
+      dir: mock/mockcompute.v1
       outpkg: mockcompute  
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.network.v1:
     config:
       all: true
-      dir: mock/mock.worksnetworkpace.v1
+      dir: mock/mockworksnetworkpace.v1
       outpkg: mocknetwork
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1:
     config:
       all: true
-      dir: mock/mock.region.v1
+      dir: mock/mockregion.v1
       outpkg: mockregion  
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.storage.v1:
     config:
       all: true
-      dir: mock/mock.storage.v1
+      dir: mock/mockstorage.v1
       outpkg: mockstorage  
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1:
     config:
       all: true
-      dir: mock/mock.workspace.v1
+      dir: mock/mockworkspace.v1
       outpkg: mockworkspace  
