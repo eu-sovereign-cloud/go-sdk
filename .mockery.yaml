@@ -28,7 +28,7 @@ packages:
       all: true
       dir: mock/mockobjectstorage.v1beta1
       outpkg: mockobjectstorage  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.authorization.v1:make
+  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.authorization.v1:
     config:
       all: true
       dir: mock/mockauthorization.v1
@@ -57,4 +57,4 @@ packages:
     config:
       all: true
       dir: mock/mockworkspace.v1
-      outpkg: mockworkspace  
+      outpkg: mockworkspace
