@@ -6,7 +6,7 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 )
 
 type WorkspaceID string

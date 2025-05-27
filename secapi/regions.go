@@ -5,7 +5,7 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
 )
 
 func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) {
