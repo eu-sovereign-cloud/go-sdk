@@ -23,6 +23,16 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
+// Defines values for InstanceSpecBootVolumeType.
+const (
+	InstanceSpecBootVolumeTypeVirtio InstanceSpecBootVolumeType = "virtio"
+)
+
+// Defines values for InstanceSpecDataVolumesType.
+const (
+	InstanceSpecDataVolumesTypeVirtio InstanceSpecDataVolumesType = "virtio"
+)
+
 // Defines values for ResourceState.
 const (
 	ResourceStateActive    ResourceState = "active"
@@ -404,6 +414,12 @@ type InstanceSku struct {
 
 	// Labels System-defined key/value pairs to filter resources.
 	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Metadata Metadata for SKU resources.
+	Metadata *SkuResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec Specification of the instance SKU, including its capabilities and extensions.
+	Spec *InstanceSkuSpec `json:"spec,omitempty"`
 }
 
 // InstanceSkuSpec Specification of the instance SKU, including its capabilities and extensions.
@@ -421,28 +437,27 @@ type InstanceSkuSpec struct {
 // InstanceSpec Specification of the instance, including its SKU, network configuration, and storage options.
 type InstanceSpec struct {
 	// AdditionalNicRefs Additional NICs attached to this instance
-	AdditionalNicRefs *[]Reference `json:"additionalNicRefs,omitempty"`
+	AdditionalNicRefs *[]interface{} `json:"additionalNicRefs,omitempty"`
 
 	// AntiAffinityGroup Anti-affinity group to which this instance belongs.
 	// Instances in the same anti-affinity group are placed on different physical hosts.
 	// The number of maximum instances in an anti-affinity group is provider-specific.
 	AntiAffinityGroup *string `json:"antiAffinityGroup,omitempty"`
+	BootVolume        struct {
+		DeviceRef interface{} `json:"deviceRef"`
 
-	// BootVolume Represents a connection between a Block Storage and an a user of the block storage.
-	BootVolume  VolumeReference    `json:"bootVolume"`
-	DataVolumes *[]VolumeReference `json:"dataVolumes,omitempty"`
+		// Type The connection type depends on the type of device and type of block storage.
+		Type *InstanceSpecBootVolumeType `json:"type,omitempty"`
+	} `json:"bootVolume"`
+	DataVolumes *[]struct {
+		DeviceRef interface{} `json:"deviceRef"`
 
-	// PrimaryNicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	PrimaryNicRef *Reference `json:"primaryNicRef,omitempty"`
-
-	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
+		// Type The connection type depends on the type of device and type of block storage.
+		Type *InstanceSpecDataVolumesType `json:"type,omitempty"`
+	} `json:"dataVolumes,omitempty"`
+	PrimaryNicRef    *interface{} `json:"primaryNicRef,omitempty"`
+	SecurityGroupRef *interface{} `json:"securityGroupRef,omitempty"`
+	SkuRef           interface{}  `json:"skuRef"`
 
 	// SshKeys Provider-specific references to SSH keys used in cloud-init vendorData.
 	// These references are used to inject SSH public keys during instance initialization
@@ -456,6 +471,12 @@ type InstanceSpec struct {
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
 }
+
+// InstanceSpecBootVolumeType The connection type depends on the type of device and type of block storage.
+type InstanceSpecBootVolumeType string
+
+// InstanceSpecDataVolumesType The connection type depends on the type of device and type of block storage.
+type InstanceSpecDataVolumesType string
 
 // InstanceStatus Current status of the resource
 type InstanceStatus = Status
@@ -685,9 +706,7 @@ type UserResourceMetadata struct {
 
 // VolumeReference Represents a connection between a Block Storage and an a user of the block storage.
 type VolumeReference struct {
-	// DeviceRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	DeviceRef Reference `json:"deviceRef"`
+	DeviceRef interface{} `json:"deviceRef"`
 
 	// Type The connection type depends on the type of device and type of block storage.
 	Type *VolumeReferenceType `json:"type,omitempty"`
