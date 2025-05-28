@@ -28,6 +28,16 @@ const (
 	IPv6 IPVersion = "IPv6"
 )
 
+// Defines values for InstanceSpecBootVolumeType.
+const (
+	InstanceSpecBootVolumeTypeVirtio InstanceSpecBootVolumeType = "virtio"
+)
+
+// Defines values for InstanceSpecDataVolumesType.
+const (
+	InstanceSpecDataVolumesTypeVirtio InstanceSpecDataVolumesType = "virtio"
+)
+
 // Defines values for LoadBalancerHealthCheckType.
 const (
 	Connect LoadBalancerHealthCheckType = "connect"
@@ -187,15 +197,9 @@ type ActivityLogSpec_Request_Body struct {
 // If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
 	// SizeGB Size of the block storage in GB.
-	SizeGB int `json:"sizeGB"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
-
-	// SourceImageRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
+	SizeGB         int          `json:"sizeGB"`
+	SkuRef         interface{}  `json:"skuRef"`
+	SourceImageRef *interface{} `json:"sourceImageRef,omitempty"`
 }
 
 // Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
@@ -369,28 +373,27 @@ type InstanceSkuSpec struct {
 // InstanceSpec Specification of the instance, including its SKU, network configuration, and storage options.
 type InstanceSpec struct {
 	// AdditionalNicRefs Additional NICs attached to this instance
-	AdditionalNicRefs *[]Reference `json:"additionalNicRefs,omitempty"`
+	AdditionalNicRefs *[]interface{} `json:"additionalNicRefs,omitempty"`
 
 	// AntiAffinityGroup Anti-affinity group to which this instance belongs.
 	// Instances in the same anti-affinity group are placed on different physical hosts.
 	// The number of maximum instances in an anti-affinity group is provider-specific.
 	AntiAffinityGroup *string `json:"antiAffinityGroup,omitempty"`
+	BootVolume        struct {
+		DeviceRef interface{} `json:"deviceRef"`
 
-	// BootVolume Represents a connection between a Block Storage and an a user of the block storage.
-	BootVolume  VolumeReference    `json:"bootVolume"`
-	DataVolumes *[]VolumeReference `json:"dataVolumes,omitempty"`
+		// Type The connection type depends on the type of device and type of block storage.
+		Type *InstanceSpecBootVolumeType `json:"type,omitempty"`
+	} `json:"bootVolume"`
+	DataVolumes *[]struct {
+		DeviceRef interface{} `json:"deviceRef"`
 
-	// PrimaryNicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	PrimaryNicRef *Reference `json:"primaryNicRef,omitempty"`
-
-	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
+		// Type The connection type depends on the type of device and type of block storage.
+		Type *InstanceSpecDataVolumesType `json:"type,omitempty"`
+	} `json:"dataVolumes,omitempty"`
+	PrimaryNicRef    *interface{} `json:"primaryNicRef,omitempty"`
+	SecurityGroupRef *interface{} `json:"securityGroupRef,omitempty"`
+	SkuRef           interface{}  `json:"skuRef"`
 
 	// SshKeys Provider-specific references to SSH keys used in cloud-init vendorData.
 	// These references are used to inject SSH public keys during instance initialization
@@ -404,6 +407,12 @@ type InstanceSpec struct {
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
 }
+
+// InstanceSpecBootVolumeType The connection type depends on the type of device and type of block storage.
+type InstanceSpecBootVolumeType string
+
+// InstanceSpecDataVolumesType The connection type depends on the type of device and type of block storage.
+type InstanceSpecDataVolumesType string
 
 // LoadBalancerHealthCheck Optional port health check. It probes the port with protocol.
 type LoadBalancerHealthCheck struct {
@@ -434,7 +443,7 @@ type LoadBalancerTarget struct {
 	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
 
 	// Members Nic reference to the members as part of the LoadBalancerTarget
-	Members []Reference `json:"members"`
+	Members []interface{} `json:"members"`
 
 	// Port A valid network port number.
 	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
@@ -501,10 +510,7 @@ type NetworkLoadBalancerFrontendProtocol string
 // determines whether the Load Balancer is internal or external.
 type NetworkLoadBalancerSpec struct {
 	Frontends []NetworkLoadBalancerFrontend `json:"frontends"`
-
-	// NicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	NicRef Reference `json:"nicRef"`
+	NicRef    interface{}                   `json:"nicRef"`
 }
 
 // NetworkSkuSpec Specification of the network SKU, including its bandwidth and packets per second.
@@ -568,15 +574,9 @@ type NicSpec struct {
 
 	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
 	// and not directly visible on the server/NIC itself.
-	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef *Reference `json:"skuRef,omitempty"`
-
-	// SubnetRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SubnetRef Reference `json:"subnetRef"`
+	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
+	SkuRef       *interface{}   `json:"skuRef,omitempty"`
+	SubnetRef    interface{}    `json:"subnetRef"`
 }
 
 // ObjectStorageAccountSpec The specification of an object storage account, including the region and zone.
@@ -833,7 +833,7 @@ type SecurityGroupRuleSpec struct {
 	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
 	// with the security group. If a security group is specified, all instances in that group are allowed.
 	// If no sourceRefs are specified, all traffic is allowed.
-	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
+	SourceRefs *[]interface{} `json:"sourceRefs,omitempty"`
 
 	// Version IP version of the address
 	Version *IPVersion `json:"version,omitempty"`
@@ -991,9 +991,7 @@ type TypeMetadataKind string
 
 // VolumeReference Represents a connection between a Block Storage and an a user of the block storage.
 type VolumeReference struct {
-	// DeviceRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	DeviceRef Reference `json:"deviceRef"`
+	DeviceRef interface{} `json:"deviceRef"`
 
 	// Type The connection type depends on the type of device and type of block storage.
 	Type *VolumeReferenceType `json:"type,omitempty"`

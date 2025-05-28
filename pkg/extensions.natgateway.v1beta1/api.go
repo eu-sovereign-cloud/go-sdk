@@ -383,17 +383,9 @@ type InternetNatGatewayInstanceIterator struct {
 // If the NIC has a public IP address, the NAT Gateway instance will
 // report this as an error.
 type InternetNatGatewayInstanceSpec struct {
-	// NicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	NicRef Reference `json:"nicRef"`
-
-	// PublicIpRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	PublicIpRef Reference `json:"publicIpRef"`
-
-	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
+	NicRef           interface{}  `json:"nicRef"`
+	PublicIpRef      interface{}  `json:"publicIpRef"`
+	SecurityGroupRef *interface{} `json:"securityGroupRef,omitempty"`
 
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`

@@ -400,7 +400,7 @@ type LoadBalancerTarget struct {
 	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
 
 	// Members Nic reference to the members as part of the LoadBalancerTarget
-	Members []Reference `json:"members"`
+	Members []interface{} `json:"members"`
 
 	// Port A valid network port number.
 	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
@@ -505,10 +505,7 @@ type NetworkLoadBalancerIterator struct {
 // determines whether the Load Balancer is internal or external.
 type NetworkLoadBalancerSpec struct {
 	Frontends []NetworkLoadBalancerFrontend `json:"frontends"`
-
-	// NicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	NicRef Reference `json:"nicRef"`
+	NicRef    interface{}                   `json:"nicRef"`
 }
 
 // NetworkLoadBalancerStatus defines model for NetworkLoadBalancerStatus.

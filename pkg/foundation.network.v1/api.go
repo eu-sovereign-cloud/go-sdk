@@ -478,7 +478,7 @@ type InternetGatewayIterator struct {
 	Metadata ResponseMetadata `json:"metadata"`
 }
 
-// InternetGatewaySpec The internet gateway will use the reserved IP address allOf:
+// InternetGatewaySpec The internet gateway will use the reserved IP addres.
 // the subnet CIDR block to provide internet access to the subnet.
 type InternetGatewaySpec struct {
 	// EgressOnly If set to true, the internet gateway will only allow outgoing traffic
@@ -633,12 +633,9 @@ type NetworkStatus struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr       Cidr              `json:"cidr"`
-	Conditions []StatusCondition `json:"conditions"`
-
-	// RouteTableRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
+	Cidr          Cidr              `json:"cidr"`
+	Conditions    []StatusCondition `json:"conditions"`
+	RouteTableRef *interface{}      `json:"routeTableRef,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -711,15 +708,9 @@ type NicSpec struct {
 
 	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
 	// and not directly visible on the server/NIC itself.
-	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef *Reference `json:"skuRef,omitempty"`
-
-	// SubnetRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SubnetRef Reference `json:"subnetRef"`
+	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
+	SkuRef       *interface{}   `json:"skuRef,omitempty"`
+	SubnetRef    interface{}    `json:"subnetRef"`
 }
 
 // NicStatus defines model for NicStatus.
@@ -731,7 +722,7 @@ type NicStatus struct {
 	MacAddress *string `json:"macAddress,omitempty"`
 
 	// PublicIpRefs Array of public IP addresses associated with this NIC.
-	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
+	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -821,9 +812,7 @@ type PublicIpSpec struct {
 
 // PublicIpStatus defines model for PublicIpStatus.
 type PublicIpStatus struct {
-	// AttachedTo Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *interface{}      `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// IpAddress The public IP address in case.
@@ -984,11 +973,8 @@ type RouteSpec struct {
 	// DestinationCidrBlock The CIDR block for the destination. The block can be
 	// a specific IP address or a range of addresses. It can be
 	// IPv6 or IPv4.
-	DestinationCidrBlock string `json:"destinationCidrBlock"`
-
-	// TargetRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	TargetRef Reference `json:"targetRef"`
+	DestinationCidrBlock string      `json:"destinationCidrBlock"`
+	TargetRef            interface{} `json:"targetRef"`
 }
 
 // RouteStatus defines model for RouteStatus.
@@ -1037,9 +1023,7 @@ type RouteTable struct {
 // RouteTableSpec The RouteTableSpec defines the routes that are associated with the route table.
 // The `localRef` is a reference to the network it will inherit the routes from.
 type RouteTableSpec struct {
-	// LocalRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	LocalRef Reference   `json:"localRef"`
+	LocalRef interface{} `json:"localRef"`
 	Routes   []RouteSpec `json:"routes"`
 }
 
@@ -1128,7 +1112,7 @@ type SecurityGroupRuleSpec struct {
 	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
 	// with the security group. If a security group is specified, all instances in that group are allowed.
 	// If no sourceRefs are specified, all traffic is allowed.
-	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
+	SourceRefs *[]interface{} `json:"sourceRefs,omitempty"`
 
 	// Version IP version of the address
 	Version *IPVersion `json:"version,omitempty"`

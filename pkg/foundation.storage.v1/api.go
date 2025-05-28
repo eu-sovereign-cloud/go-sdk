@@ -198,22 +198,14 @@ type BlockStorage struct {
 // If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
 	// SizeGB Size of the block storage in GB.
-	SizeGB int `json:"sizeGB"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
-
-	// SourceImageRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
+	SizeGB         int          `json:"sizeGB"`
+	SkuRef         interface{}  `json:"skuRef"`
+	SourceImageRef *interface{} `json:"sourceImageRef,omitempty"`
 }
 
 // BlockStorageStatus defines model for BlockStorageStatus.
 type BlockStorageStatus struct {
-	// AttachedTo Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *interface{}      `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// SizeGB Size of the block storage in GB.
@@ -526,9 +518,7 @@ type ImageIterator struct {
 // compute instances. For additional information, refer to the
 // [Image Handling](/docs/content/Other/image-handling) section.
 type ImageSpec struct {
-	// BlockStorageRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	BlockStorageRef Reference `json:"blockStorageRef"`
+	BlockStorageRef interface{} `json:"blockStorageRef"`
 
 	// Boot Boot type for the Image
 	Boot *ImageSpecBoot `json:"boot,omitempty"`

@@ -401,11 +401,8 @@ type KubernetesClusterSpec struct {
 	// This is a security feature to limit access to the cluster. If not specified,
 	// the Kubernetes API is accessible from any IP address. Nodes that are
 	// part of the cluster are always allowed to access the Kubernetes API.
-	RestrictKubernetesApi *[]string `json:"restrictKubernetesApi,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
+	RestrictKubernetesApi *[]string   `json:"restrictKubernetesApi,omitempty"`
+	SkuRef                interface{} `json:"skuRef"`
 }
 
 // KubernetesClusterStatus defines model for KubernetesClusterStatus.
@@ -476,7 +473,7 @@ type KubernetesNodePoolStatus struct {
 
 	// Nodes List of nodes in the Node Pool. Each node is represented by its
 	// reference to a compute instance.
-	Nodes *[]Reference `json:"nodes,omitempty"`
+	Nodes *[]interface{} `json:"nodes,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -495,11 +492,8 @@ type KubernetesNodePoolStatus struct {
 // The SKU must be one of the available block storage SKUs in the region.
 type KubernetesNodeRootVolume struct {
 	// SizeGB Size of the root volume in GB. The size is recommended to be at least 100GB.
-	SizeGB int `json:"sizeGB"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
+	SizeGB int         `json:"sizeGB"`
+	SkuRef interface{} `json:"skuRef"`
 }
 
 // KubernetesNodeTemplate Template for creating nodes in the node pool. The template includes
@@ -510,19 +504,10 @@ type KubernetesNodeTemplate struct {
 	// system and other software required to run the node.
 	//
 	// The SKU must be one of the available block storage SKUs in the region.
-	RootVolume KubernetesNodeRootVolume `json:"rootVolume"`
-
-	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
-
-	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SkuRef Reference `json:"skuRef"`
-
-	// SubnetRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	SubnetRef Reference `json:"subnetRef"`
+	RootVolume       KubernetesNodeRootVolume `json:"rootVolume"`
+	SecurityGroupRef *interface{}             `json:"securityGroupRef,omitempty"`
+	SkuRef           interface{}              `json:"skuRef"`
+	SubnetRef        interface{}              `json:"subnetRef"`
 
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
