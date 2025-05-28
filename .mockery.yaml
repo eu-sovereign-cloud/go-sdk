@@ -41,7 +41,7 @@ packages:
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.network.v1:
     config:
       all: true
-      dir: mock/mockworksnetworkpace.v1
+      dir: mock/network.v1
       outpkg: mocknetwork
   github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1:
     config:
