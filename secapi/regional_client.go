@@ -8,7 +8,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 )
 
-type RegionClient struct {
+type RegionalClient struct {
 	region *region.Region
 
 	workspace workspace.ClientWithResponsesInterface
@@ -16,13 +16,13 @@ type RegionClient struct {
 	mu sync.Mutex
 }
 
-func NewRegionClient(region *region.Region) *RegionClient {
-	var client RegionClient
+func NewRegionClient(region *region.Region) *RegionalClient {
+	var client RegionalClient
 	client.region = region
 	return &client
 }
 
-func (client *RegionClient) workspaceClient() (workspace.ClientWithResponsesInterface, error) {
+func (client *RegionalClient) workspaceClient() (workspace.ClientWithResponsesInterface, error) {
 	if client.workspace != nil {
 		return client.workspace, nil
 	}
@@ -47,7 +47,7 @@ func (client *RegionClient) workspaceClient() (workspace.ClientWithResponsesInte
 	return workspaceClient, nil
 }
 
-func (client *RegionClient) findProvider(name string) *region.Provider {
+func (client *RegionalClient) findProvider(name string) *region.Provider {
 	for _, provider := range client.region.Spec.Providers {
 		if provider.Name == name {
 			return &provider

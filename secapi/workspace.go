@@ -11,7 +11,7 @@ import (
 
 type WorkspaceID string
 
-func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
+func (client *RegionalClient) Workspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iter
 	return &iter, nil
 }
 
-func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
+func (client *RegionalClient) Workspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
 	wsClient, err := client.workspaceClient()
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference)
 	return resp.JSON200, nil
 }
 
-func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (client *RegionalClient) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	panicUnlessTenantExists(ws)
 
 	wsClient, err := client.workspaceClient()
@@ -69,7 +69,7 @@ func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *workspace.W
 	return nil
 }
 
-func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (client *RegionalClient) SaveWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	panicUnlessTenantExists(ws)
 
 	wsClient, err := client.workspaceClient()
