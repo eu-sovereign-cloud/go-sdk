@@ -10,7 +10,8 @@ SPEC_SOURCES := $(shell ls $(SPEC_SRC)/*.yaml)
 SCHEMAS_SOURCES := $(SPEC_SOURCES:$(SPEC_SRC)/%.yaml=$(SPEC_DIST)/%.yaml)
 SCHEMAS_FINAL = $(SCHEMAS_SOURCES:$(SPEC_DIST)/%.yaml=$(PKG)/%/api.go)
 
-all: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
+.PHONY: generate
+generate: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
 
 $(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
 	make -C spec dist/specs/$(shell basename $@)
@@ -18,7 +19,11 @@ $(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
 $(PKG)/%/api.go: $(SPEC_DIST)/%.yaml
 	@-mkdir -p $(shell dirname $@)
 	-$(GO_TOOL) $(OPENAPI_GENERATOR) -alias-types -generate "types,client,std-http" \
-		-package $(patsubst %.v1,%,$(shell basename $(shell dirname $@))) -o $@ $<
+		-package $(shell basename $(shell dirname $@) | cut -d '.' -f 2) -o $@ $<
+
+.PHONY: spec
+spec:
+	sh -c "cd spec && make build"
 
 .PHONY: update	
 update:
@@ -30,7 +35,7 @@ test:
 	$(GO) test -count=1 -cover -v ./...
 
 .PHONY: mock
-mock: all
+mock: generate
 	$(GO_TOOL) github.com/vektra/mockery/v2
 
 .PHONY: fmt
@@ -50,4 +55,3 @@ golint:
 .PHONY: clean
 clean:
 	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
-	

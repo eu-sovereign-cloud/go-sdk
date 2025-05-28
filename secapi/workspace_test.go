@@ -6,16 +6,17 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"k8s.io/utils/ptr"
+
 	"github.com/eu-sovereign-cloud/go-sdk/fake"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/mockworkspace.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	"k8s.io/utils/ptr"
 )
 
 func TestMockedWorkspaces(t *testing.T) {
@@ -120,14 +121,14 @@ func TestFakedWorkspaces(t *testing.T) {
 	fakeServer := fake.NewServer("eu-central-1")
 	server := fakeServer.Start()
 	defer server.Close()
+
 	fakeServer.Workspaces["some-workspace"] = &workspace.Workspace{
-		Metadata: &workspace.GlobalResourceMetadata{
+		Metadata: &workspace.RegionalResourceMetadata{
 			Tenant: "test",
 			Name:   "some-workspace",
 		},
-		Spec: workspace.WorkspaceSpec{},
 		Status: &workspace.WorkspaceStatus{
-			Phase: ptr.To(workspace.WorkspaceStatusPhase("Pending")),
+			State: ptr.To(workspace.ResourceStatePending),
 		},
 	}
 
@@ -146,5 +147,5 @@ func TestFakedWorkspaces(t *testing.T) {
 
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 	assert.Equal(t, "test", ws[0].Metadata.Tenant)
-	assert.EqualValues(t, "Pending", *ws[0].Status.Phase)
+	assert.EqualValues(t, "pending", *ws[0].Status.State)
 }

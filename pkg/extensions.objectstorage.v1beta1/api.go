@@ -23,15 +23,39 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for ResourceStatePhase.
+// Defines values for GlobalResourceMetadataKind.
 const (
-	ResourceStatePhaseActive    ResourceStatePhase = "active"
-	ResourceStatePhaseCreating  ResourceStatePhase = "creating"
-	ResourceStatePhaseDeleting  ResourceStatePhase = "deleting"
-	ResourceStatePhaseError     ResourceStatePhase = "error"
-	ResourceStatePhasePending   ResourceStatePhase = "pending"
-	ResourceStatePhaseSuspended ResourceStatePhase = "suspended"
-	ResourceStatePhaseUpdating  ResourceStatePhase = "updating"
+	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
+	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
+	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
+	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
+	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
+	GlobalResourceMetadataKindNetwork              GlobalResourceMetadataKind = "network"
+	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
+	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
+	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
+	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
+	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
+	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
+	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
+	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
+	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
+	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
+	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
+	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
+	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
+	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
+)
+
+// Defines values for ResourceState.
+const (
+	ResourceStateActive    ResourceState = "active"
+	ResourceStateCreating  ResourceState = "creating"
+	ResourceStateDeleting  ResourceState = "deleting"
+	ResourceStateError     ResourceState = "error"
+	ResourceStatePending   ResourceState = "pending"
+	ResourceStateSuspended ResourceState = "suspended"
+	ResourceStateUpdating  ResourceState = "updating"
 )
 
 // Defines values for TypeMetadataKind.
@@ -41,14 +65,12 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindLan                  TypeMetadataKind = "lan"
-	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
 	TypeMetadataKindNic                  TypeMetadataKind = "nic"
 	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
 	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindQuota                TypeMetadataKind = "quota"
 	TypeMetadataKindRegion               TypeMetadataKind = "region"
 	TypeMetadataKindRole                 TypeMetadataKind = "role"
 	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
@@ -60,32 +82,6 @@ const (
 	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
-// Defines values for ZonalResourceMetadataKind.
-const (
-	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
-	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
-	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
-	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
-	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
-	ZonalResourceMetadataKindLan                  ZonalResourceMetadataKind = "lan"
-	ZonalResourceMetadataKindLocation             ZonalResourceMetadataKind = "location"
-	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
-	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
-	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
-	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
-	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
-	ZonalResourceMetadataKindQuota                ZonalResourceMetadataKind = "quota"
-	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
-	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
-	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
-	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
-	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
-	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
-	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
-	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
-	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
-)
-
 // Defines values for AcceptHeader.
 const (
 	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
@@ -93,72 +89,263 @@ const (
 	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
 )
 
-// Defines values for ListObjectStorageAccountsParamsAccept.
+// Defines values for ListAccountsParamsAccept.
 const (
-	ListObjectStorageAccountsParamsAcceptApplicationjson            ListObjectStorageAccountsParamsAccept = "application/json"
-	ListObjectStorageAccountsParamsAcceptApplicationjsonDeletedOnly ListObjectStorageAccountsParamsAccept = "application/json; deleted=only"
-	ListObjectStorageAccountsParamsAcceptApplicationjsonDeletedTrue ListObjectStorageAccountsParamsAccept = "application/json; deleted=true"
+	ListAccountsParamsAcceptApplicationjson            ListAccountsParamsAccept = "application/json"
+	ListAccountsParamsAcceptApplicationjsonDeletedOnly ListAccountsParamsAccept = "application/json; deleted=only"
+	ListAccountsParamsAcceptApplicationjsonDeletedTrue ListAccountsParamsAccept = "application/json; deleted=true"
 )
 
-// Error A generic error response
+// AccountIterator Iterator for accounts
+type AccountIterator struct {
+	// Items List of accounts
+	Items []ObjectStorageAccount `json:"items"`
+
+	// Metadata Metadata for response objects.
+	Metadata ResponseMetadata `json:"metadata"`
+}
+
+// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
 type Error struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error400 defines model for Error400.
 type Error400 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error401 defines model for Error401.
 type Error401 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error403 defines model for Error403.
 type Error403 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error404 defines model for Error404.
 type Error404 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
+}
+
+// Error409 defines model for Error409.
+type Error409 struct {
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error412 defines model for Error412.
 type Error412 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error422 defines model for Error422.
 type Error422 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error500 defines model for Error500.
 type Error500 struct {
-	Errors []ErrorDetail `json:"errors"`
-}
-
-// ErrorDetail A detailed error response
-type ErrorDetail struct {
-	// Code An application-specific error code, expressed as a string value.
-	Code string `json:"code"`
-
 	// Detail A human-readable explanation specific to this occurrence of the problem.
 	Detail *string `json:"detail,omitempty"`
 
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
 	// Meta A meta object containing non-standard meta-information about the error.
-	Meta map[string]interface{} `json:"meta"`
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
 
-	// Source An object containing references to the source of the error.
-	Source *ErrorSource `json:"source,omitempty"`
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
 
-	// Status The HTTP status code applicable to this problem, expressed as a string value.
-	Status string `json:"status"`
-
-	// Title A short, human-readable summary of the problem.
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
 	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // ErrorSource An object containing references to the source of the error.
@@ -170,16 +357,61 @@ type ErrorSource struct {
 	Pointer string `json:"pointer"`
 }
 
-// ModificationMetadata Base metadata for all resources with optional location references
-type ModificationMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+// GlobalResourceMetadata defines model for GlobalResourceMetadata.
+type GlobalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
 
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind GlobalResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name     string `json:"name"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref      *Reference `json:"ref,omitempty"`
+	Resource string     `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
 }
 
-// NameMetadata defines model for NameMetadata.
+// GlobalResourceMetadataKind Type of the resource
+type GlobalResourceMetadataKind string
+
+// ModificationMetadata Base metadata for all resources with optional region references
+type ModificationMetadata struct {
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+}
+
+// NameMetadata Metadata for resource names
 type NameMetadata struct {
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
@@ -190,17 +422,29 @@ type NameMetadata struct {
 // ObjectStorageAccount defines model for ObjectStorageAccount.
 type ObjectStorageAccount struct {
 	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
 	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
+	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
+	Extensions *map[string]string `json:"extensions,omitempty"`
 
 	// Labels User-defined key/value pairs that are mutable and can be used to
 	// organize and categorize resources. They can be used to filter resources.
-	Labels   *map[string]string          `json:"labels,omitempty"`
-	Metadata *ZonalResourceMetadata      `json:"metadata,omitempty"`
-	Spec     ObjectStorageAccountSpec    `json:"spec"`
-	Status   *ObjectStorageAccountStatus `json:"status,omitempty"`
+	// The number of labels is eventually limited by the CSP.
+	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Metadata Metadata for global resources with name, permission, modification, type, and tenant information.
+	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec The specification of an object storage account, including the region and zone.
+	Spec ObjectStorageAccountSpec `json:"spec"`
+
+	// Status The status of an object storage account, including the access key, secret key, and canonical user ID.
+	Status *ObjectStorageAccountStatus `json:"status,omitempty"`
 }
 
-// ObjectStorageAccountSpec defines model for ObjectStorageAccountSpec.
+// ObjectStorageAccountSpec The specification of an object storage account, including the region and zone.
 type ObjectStorageAccountSpec = map[string]interface{}
 
 // ObjectStorageAccountStatus defines model for ObjectStorageAccountStatus.
@@ -215,24 +459,7 @@ type ObjectStorageAccountStatus struct {
 	// SecretKey Secret key for the object storage account
 	SecretKey *string `json:"secretKey,omitempty"`
 
-	// State Generic state definition for all resources. All states are optional, but must not have more states.
-	// If a provider wants to present fine granular states, please use conditions.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// RegionalMetadata Metadata for regional resources
-type RegionalMetadata struct {
-	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-}
-
-// ResourceState Generic state definition for all resources. All states are optional, but must not have more states.
-// If a provider wants to present fine granular states, please use conditions.
-type ResourceState struct {
-	// Phase Current phase of the resource:
+	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
 	// - creating: not available, creation started
 	// - active: available for data layer usage
@@ -240,10 +467,71 @@ type ResourceState struct {
 	// - deleting: maybe still available for data layer user, can fail any moment
 	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
 	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	Phase *ResourceStatePhase `json:"phase,omitempty"`
+	State *ResourceState `json:"state,omitempty"`
 }
 
-// ResourceStatePhase Current phase of the resource:
+// PermissionMetadata Metadata for permission management
+type PermissionMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+	Verb     string `json:"verb"`
+}
+
+// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+// The reference can be used to refer to a resource in other resources.
+type Reference struct {
+	union json.RawMessage
+}
+
+// ReferenceObject A reference to a resource using an object. The object contains the
+// same information as the ReferenceURN, but is represented as a structured object.
+// The advantage of this representation is that it can be used to reference
+// resources in different workspaces or regions without the need to specify
+// the full URN.
+type ReferenceObject struct {
+	// Provider Provider of the resource. If not set, the provider is inferred from the context.
+	Provider *string `json:"provider,omitempty"`
+
+	// Region Region of the resource. If not set, the region is inferred from the context.
+	Region *string `json:"region,omitempty"`
+
+	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
+	// The type is the resource type, and the name is the resource name.
+	Resource string `json:"resource"`
+
+	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
+	Tenant *string `json:"tenant,omitempty"`
+
+	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
+	Workspace *string `json:"workspace,omitempty"`
+}
+
+// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
+// is represented as the full URN (Uniform Resource Name) name of the resource.
+//
+// ### Automatic Prefix Inference
+//
+// In most cases, the prefix of the URN can be automatically derived in the given context.
+// To simplify usage, only the resource type and name might be specified as a reference
+// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+// additional segments separated by slashes.
+//
+// The prefix is automatically inferred from the context. For example, if the resource is a
+// block storage in the same workspace the reference can be specified as
+// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+//
+// For automatic prefix inference, the following rules apply:
+// - the version is inferred from the current resource version
+// - the workspace is inferred from the current workspace
+// - the region is inferred from the current region
+// - the provider is inferred from the type and context of the usage
+//
+// The prefix inference is resolved on admission into the full URN format, which makes it
+// mostly suitable for human use.
+type ReferenceURN = string
+
+// ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
 // - creating: not available, creation started
 // - active: available for data layer usage
@@ -251,28 +539,42 @@ type ResourceState struct {
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
 // - error: failed to fulfill the request; would be related to provider issue or customer related input.
-type ResourceStatePhase string
+type ResourceState string
 
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+
 	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
 	SkipToken *string `json:"skipToken,omitempty"`
+	Verb      string  `json:"verb"`
 }
 
 // Status Current status of the resource
 type Status struct {
 	Conditions []StatusCondition `json:"conditions"`
+
+	// State Current phase of the resource:
+	// - pending: not available, waiting for other resources
+	// - creating: not available, creation started
+	// - active: available for data layer usage
+	// - updating: available for data layer usage
+	// - deleting: maybe still available for data layer user, can fail any moment
+	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
+	State *ResourceState `json:"state,omitempty"`
 }
 
 // StatusCondition StatusCondition describes the state of a resource at a certain point.
 // Conditions are provider-specific and can represent different states depending on the
 // resource type and provider implementation.
 type StatusCondition struct {
-	// LastTransitionTime LastTransitionTime is the last time the condition transitioned from one
+	// LastTransitionAt LastTransitionAt is the last time the condition transitioned from one
 	// status to another. This should be when the underlying condition changed.
 	// If that is not known, then using the time when the API field changed is
 	// acceptable.
-	LastTransitionTime time.Time `json:"lastTransitionTime"`
+	LastTransitionAt time.Time `json:"lastTransitionAt"`
 
 	// Message A human-readable message indicating details about the transition.
 	Message *string `json:"message,omitempty"`
@@ -282,12 +584,19 @@ type StatusCondition struct {
 	// documented by the provider.
 	Reason *string `json:"reason,omitempty"`
 
-	// Status Status of the condition.
-	Status string `json:"status"`
+	// State Current phase of the resource:
+	// - pending: not available, waiting for other resources
+	// - creating: not available, creation started
+	// - active: available for data layer usage
+	// - updating: available for data layer usage
+	// - deleting: maybe still available for data layer user, can fail any moment
+	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
+	State ResourceState `json:"state"`
 
 	// Type Type of condition. The condition type is provider-specific and should
 	// reflect the specific states relevant to your resource.
-	Type string `json:"type"`
+	Type *string `json:"type,omitempty"`
 }
 
 // TenantMetadata Metadata for global resources with tenant constraints
@@ -296,74 +605,43 @@ type TenantMetadata struct {
 	Tenant string `json:"tenant"`
 }
 
-// TypeMetadata defines model for TypeMetadata.
+// TypeMetadata Metadata for all resources with type information.
 type TypeMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
 	// Kind Type of the resource
 	Kind TypeMetadataKind `json:"kind"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
 }
 
 // TypeMetadataKind Type of the resource
 type TypeMetadataKind string
 
-// UserResourceMetadata defines model for UserResourceMetadata.
+// UserResourceMetadata Metadata for user-defined resource properties
 type UserResourceMetadata struct {
 	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
 	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
+	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
+	Extensions *map[string]string `json:"extensions,omitempty"`
 
 	// Labels User-defined key/value pairs that are mutable and can be used to
 	// organize and categorize resources. They can be used to filter resources.
+	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 }
-
-// ZonalMetadata Metadata for zonal resources
-type ZonalMetadata struct {
-	// Zone Reference to the specific zone where the resource is located
-	Zone string `json:"zone"`
-}
-
-// ZonalResourceMetadata defines model for ZonalResourceMetadata.
-type ZonalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
-
-	// Kind Type of the resource
-	Kind ZonalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-
-	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-
-	// Zone Reference to the specific zone where the resource is located
-	Zone string `json:"zone"`
-}
-
-// ZonalResourceMetadataKind Type of the resource
-type ZonalResourceMetadataKind string
 
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
 
 // IfUnmodifiedSince defines model for ifUnmodifiedSince.
-type IfUnmodifiedSince = time.Time
+type IfUnmodifiedSince = int
 
 // LabelSelector defines model for labelSelector.
 type LabelSelector = string
@@ -377,11 +655,14 @@ type ResourceName = string
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// TenantID defines model for tenantID.
-type TenantID = string
+// Tenant defines model for tenant.
+type Tenant = string
 
-// ListObjectStorageAccountsParams defines parameters for ListObjectStorageAccounts.
-type ListObjectStorageAccountsParams struct {
+// Workspace defines model for workspace.
+type Workspace = string
+
+// ListAccountsParams defines parameters for ListAccounts.
+type ListAccountsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
 	// Filter syntax:
 	//   - Equals: key=value
@@ -401,28 +682,90 @@ type ListObjectStorageAccountsParams struct {
 	// - `"application/json"`: Returns only non-deleted resources
 	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
 	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListObjectStorageAccountsParamsAccept `json:"Accept,omitempty"`
+	Accept *ListAccountsParamsAccept `json:"Accept,omitempty"`
 }
 
-// ListObjectStorageAccountsParamsAccept defines parameters for ListObjectStorageAccounts.
-type ListObjectStorageAccountsParamsAccept string
+// ListAccountsParamsAccept defines parameters for ListAccounts.
+type ListAccountsParamsAccept string
 
-// GetObjectStorageAccountParams defines parameters for GetObjectStorageAccount.
-type GetObjectStorageAccountParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
-	// Uses metadata.lastUpdatedTimestamp for comparison.
+// DeleteAccountParams defines parameters for DeleteAccount.
+type DeleteAccountParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// CreateOrUpdateObjectStorageAccountParams defines parameters for CreateOrUpdateObjectStorageAccount.
-type CreateOrUpdateObjectStorageAccountParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
-	// Uses metadata.lastUpdatedTimestamp for comparison.
+// CreateOrUpdateAccountParams defines parameters for CreateOrUpdateAccount.
+type CreateOrUpdateAccountParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// CreateOrUpdateObjectStorageAccountJSONRequestBody defines body for CreateOrUpdateObjectStorageAccount for application/json ContentType.
-type CreateOrUpdateObjectStorageAccountJSONRequestBody = ObjectStorageAccount
+// CreateOrUpdateAccountJSONRequestBody defines body for CreateOrUpdateAccount for application/json ContentType.
+type CreateOrUpdateAccountJSONRequestBody = ObjectStorageAccount
+
+// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
+func (t Reference) AsReferenceURN() (ReferenceURN, error) {
+	var body ReferenceURN
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
+func (t *Reference) FromReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
+func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
+func (t Reference) AsReferenceObject() (ReferenceObject, error) {
+	var body ReferenceObject
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
+func (t *Reference) FromReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
+func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t Reference) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *Reference) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -497,23 +840,23 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// ListObjectStorageAccounts request
-	ListObjectStorageAccounts(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListAccounts request
+	ListAccounts(ctx context.Context, tenant Tenant, workspace Workspace, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteObjectStorageAccount request
-	DeleteObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteAccount request
+	DeleteAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetObjectStorageAccount request
-	GetObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetAccount request
+	GetAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateOrUpdateObjectStorageAccountWithBody request with any body
-	CreateOrUpdateObjectStorageAccountWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateOrUpdateAccountWithBody request with any body
+	CreateOrUpdateAccountWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListObjectStorageAccounts(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListObjectStorageAccountsRequest(c.Server, id, params)
+func (c *Client) ListAccounts(ctx context.Context, tenant Tenant, workspace Workspace, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
 	}
@@ -524,8 +867,8 @@ func (c *Client) ListObjectStorageAccounts(ctx context.Context, id TenantID, par
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteObjectStorageAccountRequest(c.Server, id, name)
+func (c *Client) DeleteAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAccountRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -536,8 +879,8 @@ func (c *Client) DeleteObjectStorageAccount(ctx context.Context, id TenantID, na
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetObjectStorageAccountRequest(c.Server, id, name, params)
+func (c *Client) GetAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccountRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
 	}
@@ -548,8 +891,8 @@ func (c *Client) GetObjectStorageAccount(ctx context.Context, id TenantID, name 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorageAccountWithBody(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageAccountRequestWithBody(c.Server, id, name, params, contentType, body)
+func (c *Client) CreateOrUpdateAccountWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateAccountRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -560,8 +903,8 @@ func (c *Client) CreateOrUpdateObjectStorageAccountWithBody(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateObjectStorageAccount(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateObjectStorageAccountRequest(c.Server, id, name, params, body)
+func (c *Client) CreateOrUpdateAccount(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateAccountRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -572,13 +915,20 @@ func (c *Client) CreateOrUpdateObjectStorageAccount(ctx context.Context, id Tena
 	return c.Client.Do(req)
 }
 
-// NewListObjectStorageAccountsRequest generates requests for ListObjectStorageAccounts
-func NewListObjectStorageAccountsRequest(server string, id TenantID, params *ListObjectStorageAccountsParams) (*http.Request, error) {
+// NewListAccountsRequest generates requests for ListAccounts
+func NewListAccountsRequest(server string, tenant Tenant, workspace Workspace, params *ListAccountsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
 	if err != nil {
 		return nil, err
 	}
@@ -588,7 +938,7 @@ func NewListObjectStorageAccountsRequest(server string, id TenantID, params *Lis
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts", pathParam0)
+	operationPath := fmt.Sprintf("/v1beta1/tenants/%s/workspaces/%s/accounts", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -675,20 +1025,27 @@ func NewListObjectStorageAccountsRequest(server string, id TenantID, params *Lis
 	return req, nil
 }
 
-// NewDeleteObjectStorageAccountRequest generates requests for DeleteObjectStorageAccount
-func NewDeleteObjectStorageAccountRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
+// NewDeleteAccountRequest generates requests for DeleteAccount
+func NewDeleteAccountRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteAccountParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
 
 	var pathParam1 string
 
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -698,7 +1055,7 @@ func NewDeleteObjectStorageAccountRequest(server string, id TenantID, name Resou
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
+	operationPath := fmt.Sprintf("/v1beta1/tenants/%s/workspaces/%s/accounts/%s", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -709,47 +1066,6 @@ func NewDeleteObjectStorageAccountRequest(server string, id TenantID, name Resou
 	}
 
 	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetObjectStorageAccountRequest generates requests for GetObjectStorageAccount
-func NewGetObjectStorageAccountRequest(server string, id TenantID, name ResourceName, params *GetObjectStorageAccountParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -772,31 +1088,27 @@ func NewGetObjectStorageAccountRequest(server string, id TenantID, name Resource
 	return req, nil
 }
 
-// NewCreateOrUpdateObjectStorageAccountRequest calls the generic CreateOrUpdateObjectStorageAccount builder with application/json body
-func NewCreateOrUpdateObjectStorageAccountRequest(server string, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateObjectStorageAccountRequestWithBody(server, id, name, params, "application/json", bodyReader)
-}
-
-// NewCreateOrUpdateObjectStorageAccountRequestWithBody generates requests for CreateOrUpdateObjectStorageAccount with any type of body
-func NewCreateOrUpdateObjectStorageAccountRequestWithBody(server string, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader) (*http.Request, error) {
+// NewGetAccountRequest generates requests for GetAccount
+func NewGetAccountRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
 
 	var pathParam1 string
 
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
 	if err != nil {
 		return nil, err
 	}
@@ -806,7 +1118,66 @@ func NewCreateOrUpdateObjectStorageAccountRequestWithBody(server string, id Tena
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/accounts/%s", pathParam0, pathParam1)
+	operationPath := fmt.Sprintf("/v1beta1/tenants/%s/workspaces/%s/accounts/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateOrUpdateAccountRequest calls the generic CreateOrUpdateAccount builder with application/json body
+func NewCreateOrUpdateAccountRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateOrUpdateAccountRequestWithBody(server, tenant, workspace, name, params, "application/json", bodyReader)
+}
+
+// NewCreateOrUpdateAccountRequestWithBody generates requests for CreateOrUpdateAccount with any type of body
+func NewCreateOrUpdateAccountRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1beta1/tenants/%s/workspaces/%s/accounts/%s", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -884,37 +1255,33 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// ListObjectStorageAccountsWithResponse request
-	ListObjectStorageAccountsWithResponse(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageAccountsResponse, error)
+	// ListAccountsWithResponse request
+	ListAccountsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error)
 
-	// DeleteObjectStorageAccountWithResponse request
-	DeleteObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccountResponse, error)
+	// DeleteAccountWithResponse request
+	DeleteAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error)
 
-	// GetObjectStorageAccountWithResponse request
-	GetObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*GetObjectStorageAccountResponse, error)
+	// GetAccountWithResponse request
+	GetAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetAccountResponse, error)
 
-	// CreateOrUpdateObjectStorageAccountWithBodyWithResponse request with any body
-	CreateOrUpdateObjectStorageAccountWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error)
+	// CreateOrUpdateAccountWithBodyWithResponse request with any body
+	CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
 
-	CreateOrUpdateObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error)
+	CreateOrUpdateAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
 }
 
-type ListObjectStorageAccountsResponse struct {
+type ListAccountsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]ObjectStorageAccount `json:"items,omitempty"`
-		Metadata *ResponseMetadata       `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON404 *Error404
-	JSON500 *Error500
+	JSON200      *AccountIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r ListObjectStorageAccountsResponse) Status() string {
+func (r ListAccountsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -922,25 +1289,27 @@ func (r ListObjectStorageAccountsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListObjectStorageAccountsResponse) StatusCode() int {
+func (r ListAccountsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteObjectStorageAccountResponse struct {
+type DeleteAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
 	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteObjectStorageAccountResponse) Status() string {
+func (r DeleteAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -948,14 +1317,14 @@ func (r DeleteObjectStorageAccountResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteObjectStorageAccountResponse) StatusCode() int {
+func (r DeleteAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetObjectStorageAccountResponse struct {
+type GetAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ObjectStorageAccount
@@ -967,7 +1336,7 @@ type GetObjectStorageAccountResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetObjectStorageAccountResponse) Status() string {
+func (r GetAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -975,27 +1344,30 @@ func (r GetObjectStorageAccountResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetObjectStorageAccountResponse) StatusCode() int {
+func (r GetAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateOrUpdateObjectStorageAccountResponse struct {
+type CreateOrUpdateAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ObjectStorageAccount
+	JSON201      *ObjectStorageAccount
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
 	JSON412      *Error412
 	JSON422      *Error422
 	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateOrUpdateObjectStorageAccountResponse) Status() string {
+func (r CreateOrUpdateAccountResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1003,76 +1375,73 @@ func (r CreateOrUpdateObjectStorageAccountResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateOrUpdateObjectStorageAccountResponse) StatusCode() int {
+func (r CreateOrUpdateAccountResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// ListObjectStorageAccountsWithResponse request returning *ListObjectStorageAccountsResponse
-func (c *ClientWithResponses) ListObjectStorageAccountsWithResponse(ctx context.Context, id TenantID, params *ListObjectStorageAccountsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageAccountsResponse, error) {
-	rsp, err := c.ListObjectStorageAccounts(ctx, id, params, reqEditors...)
+// ListAccountsWithResponse request returning *ListAccountsResponse
+func (c *ClientWithResponses) ListAccountsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error) {
+	rsp, err := c.ListAccounts(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListObjectStorageAccountsResponse(rsp)
+	return ParseListAccountsResponse(rsp)
 }
 
-// DeleteObjectStorageAccountWithResponse request returning *DeleteObjectStorageAccountResponse
-func (c *ClientWithResponses) DeleteObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccountResponse, error) {
-	rsp, err := c.DeleteObjectStorageAccount(ctx, id, name, reqEditors...)
+// DeleteAccountWithResponse request returning *DeleteAccountResponse
+func (c *ClientWithResponses) DeleteAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error) {
+	rsp, err := c.DeleteAccount(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteObjectStorageAccountResponse(rsp)
+	return ParseDeleteAccountResponse(rsp)
 }
 
-// GetObjectStorageAccountWithResponse request returning *GetObjectStorageAccountResponse
-func (c *ClientWithResponses) GetObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *GetObjectStorageAccountParams, reqEditors ...RequestEditorFn) (*GetObjectStorageAccountResponse, error) {
-	rsp, err := c.GetObjectStorageAccount(ctx, id, name, params, reqEditors...)
+// GetAccountWithResponse request returning *GetAccountResponse
+func (c *ClientWithResponses) GetAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetAccountResponse, error) {
+	rsp, err := c.GetAccount(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetObjectStorageAccountResponse(rsp)
+	return ParseGetAccountResponse(rsp)
 }
 
-// CreateOrUpdateObjectStorageAccountWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateObjectStorageAccountResponse
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageAccountWithBodyWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorageAccountWithBody(ctx, id, name, params, contentType, body, reqEditors...)
+// CreateOrUpdateAccountWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateAccountResponse
+func (c *ClientWithResponses) CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
+	rsp, err := c.CreateOrUpdateAccountWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateOrUpdateObjectStorageAccountResponse(rsp)
+	return ParseCreateOrUpdateAccountResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateObjectStorageAccountWithResponse(ctx context.Context, id TenantID, name ResourceName, params *CreateOrUpdateObjectStorageAccountParams, body CreateOrUpdateObjectStorageAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateObjectStorageAccountResponse, error) {
-	rsp, err := c.CreateOrUpdateObjectStorageAccount(ctx, id, name, params, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateAccountWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
+	rsp, err := c.CreateOrUpdateAccount(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateOrUpdateObjectStorageAccountResponse(rsp)
+	return ParseCreateOrUpdateAccountResponse(rsp)
 }
 
-// ParseListObjectStorageAccountsResponse parses an HTTP response from a ListObjectStorageAccountsWithResponse call
-func ParseListObjectStorageAccountsResponse(rsp *http.Response) (*ListObjectStorageAccountsResponse, error) {
+// ParseListAccountsResponse parses an HTTP response from a ListAccountsWithResponse call
+func ParseListAccountsResponse(rsp *http.Response) (*ListAccountsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListObjectStorageAccountsResponse{
+	response := &ListAccountsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]ObjectStorageAccount `json:"items,omitempty"`
-			Metadata *ResponseMetadata       `json:"metadata,omitempty"`
-		}
+		var dest AccountIterator
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1099,13 +1468,6 @@ func ParseListObjectStorageAccountsResponse(rsp *http.Response) (*ListObjectStor
 		}
 		response.JSON403 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -1118,15 +1480,15 @@ func ParseListObjectStorageAccountsResponse(rsp *http.Response) (*ListObjectStor
 	return response, nil
 }
 
-// ParseDeleteObjectStorageAccountResponse parses an HTTP response from a DeleteObjectStorageAccountWithResponse call
-func ParseDeleteObjectStorageAccountResponse(rsp *http.Response) (*DeleteObjectStorageAccountResponse, error) {
+// ParseDeleteAccountResponse parses an HTTP response from a DeleteAccountWithResponse call
+func ParseDeleteAccountResponse(rsp *http.Response) (*DeleteAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteObjectStorageAccountResponse{
+	response := &DeleteAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1160,6 +1522,20 @@ func ParseDeleteObjectStorageAccountResponse(rsp *http.Response) (*DeleteObjectS
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -1172,15 +1548,15 @@ func ParseDeleteObjectStorageAccountResponse(rsp *http.Response) (*DeleteObjectS
 	return response, nil
 }
 
-// ParseGetObjectStorageAccountResponse parses an HTTP response from a GetObjectStorageAccountWithResponse call
-func ParseGetObjectStorageAccountResponse(rsp *http.Response) (*GetObjectStorageAccountResponse, error) {
+// ParseGetAccountResponse parses an HTTP response from a GetAccountWithResponse call
+func ParseGetAccountResponse(rsp *http.Response) (*GetAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetObjectStorageAccountResponse{
+	response := &GetAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -1233,20 +1609,34 @@ func ParseGetObjectStorageAccountResponse(rsp *http.Response) (*GetObjectStorage
 	return response, nil
 }
 
-// ParseCreateOrUpdateObjectStorageAccountResponse parses an HTTP response from a CreateOrUpdateObjectStorageAccountWithResponse call
-func ParseCreateOrUpdateObjectStorageAccountResponse(rsp *http.Response) (*CreateOrUpdateObjectStorageAccountResponse, error) {
+// ParseCreateOrUpdateAccountResponse parses an HTTP response from a CreateOrUpdateAccountWithResponse call
+func ParseCreateOrUpdateAccountResponse(rsp *http.Response) (*CreateOrUpdateAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateOrUpdateObjectStorageAccountResponse{
+	response := &CreateOrUpdateAccountResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorageAccount
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ObjectStorageAccount
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -1274,6 +1664,13 @@ func ParseCreateOrUpdateObjectStorageAccountResponse(rsp *http.Response) (*Creat
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
 		var dest Error412
@@ -1303,18 +1700,18 @@ func ParseCreateOrUpdateObjectStorageAccountResponse(rsp *http.Response) (*Creat
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// List all object storage accounts
-	// (GET /v1/tenants/{id}/accounts)
-	ListObjectStorageAccounts(w http.ResponseWriter, r *http.Request, id TenantID, params ListObjectStorageAccountsParams)
-	// Delete a specific object storage account
-	// (DELETE /v1/tenants/{id}/accounts/{name})
-	DeleteObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
-	// Get a specific object storage account
-	// (GET /v1/tenants/{id}/accounts/{name})
-	GetObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params GetObjectStorageAccountParams)
-	// Create or update a specific object storage account
-	// (PUT /v1/tenants/{id}/accounts/{name})
-	CreateOrUpdateObjectStorageAccount(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName, params CreateOrUpdateObjectStorageAccountParams)
+	// List accounts
+	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts)
+	ListAccounts(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListAccountsParams)
+	// Delete account
+	// (DELETE /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
+	DeleteAccount(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteAccountParams)
+	// Get account
+	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
+	GetAccount(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	// Create or update account
+	// (PUT /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
+	CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateAccountParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1326,17 +1723,26 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-// ListObjectStorageAccounts operation middleware
-func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWriter, r *http.Request) {
+// ListAccounts operation middleware
+func (siw *ServerInterfaceWrapper) ListAccounts(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace Workspace
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
 		return
 	}
 
@@ -1347,7 +1753,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWrit
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params ListObjectStorageAccountsParams
+	var params ListAccountsParams
 
 	// ------------- Optional query parameter "labels" -------------
 
@@ -1377,7 +1783,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWrit
 
 	// ------------- Optional header parameter "Accept" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListObjectStorageAccountsParamsAccept
+		var Accept ListAccountsParamsAccept
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
@@ -1395,7 +1801,7 @@ func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWrit
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListObjectStorageAccounts(w, r, id, params)
+		siw.Handler.ListAccounts(w, r, tenant, workspace, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1405,57 +1811,26 @@ func (siw *ServerInterfaceWrapper) ListObjectStorageAccounts(w http.ResponseWrit
 	handler.ServeHTTP(w, r)
 }
 
-// DeleteObjectStorageAccount operation middleware
-func (siw *ServerInterfaceWrapper) DeleteObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
+// DeleteAccount operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAccount(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	// ------------- Path parameter "workspace" -------------
+	var workspace Workspace
 
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteObjectStorageAccount(w, r, id, name)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// GetObjectStorageAccount operation middleware
-func (siw *ServerInterfaceWrapper) GetObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
 		return
 	}
 
@@ -1475,7 +1850,7 @@ func (siw *ServerInterfaceWrapper) GetObjectStorageAccount(w http.ResponseWriter
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetObjectStorageAccountParams
+	var params DeleteAccountParams
 
 	headers := r.Header
 
@@ -1499,7 +1874,7 @@ func (siw *ServerInterfaceWrapper) GetObjectStorageAccount(w http.ResponseWriter
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetObjectStorageAccount(w, r, id, name, params)
+		siw.Handler.DeleteAccount(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1509,17 +1884,75 @@ func (siw *ServerInterfaceWrapper) GetObjectStorageAccount(w http.ResponseWriter
 	handler.ServeHTTP(w, r)
 }
 
-// CreateOrUpdateObjectStorageAccount operation middleware
-func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorageAccount(w http.ResponseWriter, r *http.Request) {
+// GetAccount operation middleware
+func (siw *ServerInterfaceWrapper) GetAccount(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace Workspace
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourceName
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAccount(w, r, tenant, workspace, name)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateOrUpdateAccount operation middleware
+func (siw *ServerInterfaceWrapper) CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace Workspace
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
 		return
 	}
 
@@ -1539,7 +1972,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorageAccount(w http.Res
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateOrUpdateObjectStorageAccountParams
+	var params CreateOrUpdateAccountParams
 
 	headers := r.Header
 
@@ -1563,7 +1996,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateObjectStorageAccount(w http.Res
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateObjectStorageAccount(w, r, id, name, params)
+		siw.Handler.CreateOrUpdateAccount(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1693,10 +2126,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/accounts", wrapper.ListObjectStorageAccounts)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.DeleteObjectStorageAccount)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.GetObjectStorageAccount)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{id}/accounts/{name}", wrapper.CreateOrUpdateObjectStorageAccount)
+	m.HandleFunc("GET "+options.BaseURL+"/v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts", wrapper.ListAccounts)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name}", wrapper.DeleteAccount)
+	m.HandleFunc("GET "+options.BaseURL+"/v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name}", wrapper.GetAccount)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name}", wrapper.CreateOrUpdateAccount)
 
 	return m
 }

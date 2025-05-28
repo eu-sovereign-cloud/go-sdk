@@ -22,9 +22,9 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 	return &MockServerInterface_Expecter{mock: &_m.Mock}
 }
 
-// CreateOrUpdateWorkspace provides a mock function with given fields: w, r, id, name, params
-func (_m *MockServerInterface) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id string, name string, params workspace.CreateOrUpdateWorkspaceParams) {
-	_m.Called(w, r, id, name, params)
+// CreateOrUpdateWorkspace provides a mock function with given fields: w, r, tenant, name, params
+func (_m *MockServerInterface) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName, params workspace.CreateOrUpdateWorkspaceParams) {
+	_m.Called(w, r, tenant, name, params)
 }
 
 // MockServerInterface_CreateOrUpdateWorkspace_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateWorkspace'
@@ -35,16 +35,16 @@ type MockServerInterface_CreateOrUpdateWorkspace_Call struct {
 // CreateOrUpdateWorkspace is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
-//   - name string
+//   - tenant workspace.Tenant
+//   - name workspace.ResourceName
 //   - params workspace.CreateOrUpdateWorkspaceParams
-func (_e *MockServerInterface_Expecter) CreateOrUpdateWorkspace(w interface{}, r interface{}, id interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateWorkspace_Call {
-	return &MockServerInterface_CreateOrUpdateWorkspace_Call{Call: _e.mock.On("CreateOrUpdateWorkspace", w, r, id, name, params)}
+func (_e *MockServerInterface_Expecter) CreateOrUpdateWorkspace(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateWorkspace_Call {
+	return &MockServerInterface_CreateOrUpdateWorkspace_Call{Call: _e.mock.On("CreateOrUpdateWorkspace", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, name string, params workspace.CreateOrUpdateWorkspaceParams)) *MockServerInterface_CreateOrUpdateWorkspace_Call {
+func (_c *MockServerInterface_CreateOrUpdateWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName, params workspace.CreateOrUpdateWorkspaceParams)) *MockServerInterface_CreateOrUpdateWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(string), args[4].(workspace.CreateOrUpdateWorkspaceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(workspace.Tenant), args[3].(workspace.ResourceName), args[4].(workspace.CreateOrUpdateWorkspaceParams))
 	})
 	return _c
 }
@@ -54,14 +54,14 @@ func (_c *MockServerInterface_CreateOrUpdateWorkspace_Call) Return() *MockServer
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, string, workspace.CreateOrUpdateWorkspaceParams)) *MockServerInterface_CreateOrUpdateWorkspace_Call {
+func (_c *MockServerInterface_CreateOrUpdateWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, workspace.Tenant, workspace.ResourceName, workspace.CreateOrUpdateWorkspaceParams)) *MockServerInterface_CreateOrUpdateWorkspace_Call {
 	_c.Run(run)
 	return _c
 }
 
-// DeleteWorkspace provides a mock function with given fields: w, r, id, name, params
-func (_m *MockServerInterface) DeleteWorkspace(w http.ResponseWriter, r *http.Request, id string, name string, params workspace.DeleteWorkspaceParams) {
-	_m.Called(w, r, id, name, params)
+// DeleteWorkspace provides a mock function with given fields: w, r, tenant, name, params
+func (_m *MockServerInterface) DeleteWorkspace(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName, params workspace.DeleteWorkspaceParams) {
+	_m.Called(w, r, tenant, name, params)
 }
 
 // MockServerInterface_DeleteWorkspace_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteWorkspace'
@@ -72,16 +72,16 @@ type MockServerInterface_DeleteWorkspace_Call struct {
 // DeleteWorkspace is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
-//   - name string
+//   - tenant workspace.Tenant
+//   - name workspace.ResourceName
 //   - params workspace.DeleteWorkspaceParams
-func (_e *MockServerInterface_Expecter) DeleteWorkspace(w interface{}, r interface{}, id interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteWorkspace_Call {
-	return &MockServerInterface_DeleteWorkspace_Call{Call: _e.mock.On("DeleteWorkspace", w, r, id, name, params)}
+func (_e *MockServerInterface_Expecter) DeleteWorkspace(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteWorkspace_Call {
+	return &MockServerInterface_DeleteWorkspace_Call{Call: _e.mock.On("DeleteWorkspace", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, name string, params workspace.DeleteWorkspaceParams)) *MockServerInterface_DeleteWorkspace_Call {
+func (_c *MockServerInterface_DeleteWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName, params workspace.DeleteWorkspaceParams)) *MockServerInterface_DeleteWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(string), args[4].(workspace.DeleteWorkspaceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(workspace.Tenant), args[3].(workspace.ResourceName), args[4].(workspace.DeleteWorkspaceParams))
 	})
 	return _c
 }
@@ -91,14 +91,14 @@ func (_c *MockServerInterface_DeleteWorkspace_Call) Return() *MockServerInterfac
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, string, workspace.DeleteWorkspaceParams)) *MockServerInterface_DeleteWorkspace_Call {
+func (_c *MockServerInterface_DeleteWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, workspace.Tenant, workspace.ResourceName, workspace.DeleteWorkspaceParams)) *MockServerInterface_DeleteWorkspace_Call {
 	_c.Run(run)
 	return _c
 }
 
-// GetWorkspace provides a mock function with given fields: w, r, id, name
-func (_m *MockServerInterface) GetWorkspace(w http.ResponseWriter, r *http.Request, id string, name string) {
-	_m.Called(w, r, id, name)
+// GetWorkspace provides a mock function with given fields: w, r, tenant, name
+func (_m *MockServerInterface) GetWorkspace(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName) {
+	_m.Called(w, r, tenant, name)
 }
 
 // MockServerInterface_GetWorkspace_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetWorkspace'
@@ -109,15 +109,15 @@ type MockServerInterface_GetWorkspace_Call struct {
 // GetWorkspace is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
-//   - name string
-func (_e *MockServerInterface_Expecter) GetWorkspace(w interface{}, r interface{}, id interface{}, name interface{}) *MockServerInterface_GetWorkspace_Call {
-	return &MockServerInterface_GetWorkspace_Call{Call: _e.mock.On("GetWorkspace", w, r, id, name)}
+//   - tenant workspace.Tenant
+//   - name workspace.ResourceName
+func (_e *MockServerInterface_Expecter) GetWorkspace(w interface{}, r interface{}, tenant interface{}, name interface{}) *MockServerInterface_GetWorkspace_Call {
+	return &MockServerInterface_GetWorkspace_Call{Call: _e.mock.On("GetWorkspace", w, r, tenant, name)}
 }
 
-func (_c *MockServerInterface_GetWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, name string)) *MockServerInterface_GetWorkspace_Call {
+func (_c *MockServerInterface_GetWorkspace_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, name workspace.ResourceName)) *MockServerInterface_GetWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(string))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(workspace.Tenant), args[3].(workspace.ResourceName))
 	})
 	return _c
 }
@@ -127,14 +127,14 @@ func (_c *MockServerInterface_GetWorkspace_Call) Return() *MockServerInterface_G
 	return _c
 }
 
-func (_c *MockServerInterface_GetWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, string)) *MockServerInterface_GetWorkspace_Call {
+func (_c *MockServerInterface_GetWorkspace_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, workspace.Tenant, workspace.ResourceName)) *MockServerInterface_GetWorkspace_Call {
 	_c.Run(run)
 	return _c
 }
 
-// ListWorkspaces provides a mock function with given fields: w, r, id, params
-func (_m *MockServerInterface) ListWorkspaces(w http.ResponseWriter, r *http.Request, id string, params workspace.ListWorkspacesParams) {
-	_m.Called(w, r, id, params)
+// ListWorkspaces provides a mock function with given fields: w, r, tenant, params
+func (_m *MockServerInterface) ListWorkspaces(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, params workspace.ListWorkspacesParams) {
+	_m.Called(w, r, tenant, params)
 }
 
 // MockServerInterface_ListWorkspaces_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListWorkspaces'
@@ -145,15 +145,15 @@ type MockServerInterface_ListWorkspaces_Call struct {
 // ListWorkspaces is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - id string
+//   - tenant workspace.Tenant
 //   - params workspace.ListWorkspacesParams
-func (_e *MockServerInterface_Expecter) ListWorkspaces(w interface{}, r interface{}, id interface{}, params interface{}) *MockServerInterface_ListWorkspaces_Call {
-	return &MockServerInterface_ListWorkspaces_Call{Call: _e.mock.On("ListWorkspaces", w, r, id, params)}
+func (_e *MockServerInterface_Expecter) ListWorkspaces(w interface{}, r interface{}, tenant interface{}, params interface{}) *MockServerInterface_ListWorkspaces_Call {
+	return &MockServerInterface_ListWorkspaces_Call{Call: _e.mock.On("ListWorkspaces", w, r, tenant, params)}
 }
 
-func (_c *MockServerInterface_ListWorkspaces_Call) Run(run func(w http.ResponseWriter, r *http.Request, id string, params workspace.ListWorkspacesParams)) *MockServerInterface_ListWorkspaces_Call {
+func (_c *MockServerInterface_ListWorkspaces_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant workspace.Tenant, params workspace.ListWorkspacesParams)) *MockServerInterface_ListWorkspaces_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(string), args[3].(workspace.ListWorkspacesParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(workspace.Tenant), args[3].(workspace.ListWorkspacesParams))
 	})
 	return _c
 }
@@ -163,7 +163,7 @@ func (_c *MockServerInterface_ListWorkspaces_Call) Return() *MockServerInterface
 	return _c
 }
 
-func (_c *MockServerInterface_ListWorkspaces_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, string, workspace.ListWorkspacesParams)) *MockServerInterface_ListWorkspaces_Call {
+func (_c *MockServerInterface_ListWorkspaces_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, workspace.Tenant, workspace.ListWorkspacesParams)) *MockServerInterface_ListWorkspaces_Call {
 	_c.Run(run)
 	return _c
 }

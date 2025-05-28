@@ -22,71 +22,33 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for ActivityLogSpecRequestVerb.
+// Defines values for IPVersion.
 const (
-	DELETE ActivityLogSpecRequestVerb = "DELETE"
-	GET    ActivityLogSpecRequestVerb = "GET"
-	POST   ActivityLogSpecRequestVerb = "POST"
-	PUT    ActivityLogSpecRequestVerb = "PUT"
+	IPv4 IPVersion = "IPv4"
+	IPv6 IPVersion = "IPv6"
 )
 
-// Defines values for GlobalResourceMetadataKind.
+// Defines values for LoadBalancerHealthCheckType.
 const (
-	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
-	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
-	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
-	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
-	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
-	GlobalResourceMetadataKindLan                  GlobalResourceMetadataKind = "lan"
-	GlobalResourceMetadataKindLocation             GlobalResourceMetadataKind = "location"
-	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
-	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
-	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
-	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
-	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
-	GlobalResourceMetadataKindQuota                GlobalResourceMetadataKind = "quota"
-	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
-	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
-	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
-	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
-	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
-	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
-	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
-	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
-	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
+	Connect LoadBalancerHealthCheckType = "connect"
 )
 
 // Defines values for LoadBalancerTargetAlgorithm.
 const (
-	ROUNDROBIN LoadBalancerTargetAlgorithm = "ROUND_ROBIN"
+	RoundRobin LoadBalancerTargetAlgorithm = "round-robin"
 )
 
-// Defines values for LoadBalancerTargetProtocol.
+// Defines values for LoadBalancerTargetProxyProtocol.
 const (
-	LoadBalancerTargetProtocolTCP LoadBalancerTargetProtocol = "TCP"
-	LoadBalancerTargetProtocolUDP LoadBalancerTargetProtocol = "UDP"
+	None LoadBalancerTargetProxyProtocol = "none"
+	V2   LoadBalancerTargetProxyProtocol = "v2"
 )
 
 // Defines values for NetworkLoadBalancerFrontendProtocol.
 const (
-	NetworkLoadBalancerFrontendProtocolTCP NetworkLoadBalancerFrontendProtocol = "TCP"
-	NetworkLoadBalancerFrontendProtocolUDP NetworkLoadBalancerFrontendProtocol = "UDP"
-)
-
-// Defines values for NicPrivateIpAdressType.
-const (
-	NicPrivateIpAdressTypeIPv4 NicPrivateIpAdressType = "IPv4"
-)
-
-// Defines values for PublicIpSpecIpVersion.
-const (
-	PublicIpSpecIpVersionIPv4 PublicIpSpecIpVersion = "IPv4"
-)
-
-// Defines values for PublicIpSpecType.
-const (
-	Dynamic PublicIpSpecType = "Dynamic"
-	Static  PublicIpSpecType = "Static"
+	NetworkLoadBalancerFrontendProtocolBoth NetworkLoadBalancerFrontendProtocol = "both"
+	NetworkLoadBalancerFrontendProtocolTcp  NetworkLoadBalancerFrontendProtocol = "tcp"
+	NetworkLoadBalancerFrontendProtocolUdp  NetworkLoadBalancerFrontendProtocol = "udp"
 )
 
 // Defines values for RegionalResourceMetadataKind.
@@ -96,14 +58,12 @@ const (
 	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
 	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
 	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
-	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
+	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
 	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
 	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
 	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
 	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
 	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
 	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
 	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
 	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
@@ -115,13 +75,6 @@ const (
 	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
 )
 
-// Defines values for SecurityGroupRuleSourceType.
-const (
-	SecurityGroupRuleSourceTypeCidr           SecurityGroupRuleSourceType = "cidr"
-	SecurityGroupRuleSourceTypePublicInternet SecurityGroupRuleSourceType = "publicInternet"
-	SecurityGroupRuleSourceTypeSecurityGroup  SecurityGroupRuleSourceType = "securityGroup"
-)
-
 // Defines values for SecurityGroupRuleSpecDirection.
 const (
 	Egress  SecurityGroupRuleSpecDirection = "egress"
@@ -130,22 +83,17 @@ const (
 
 // Defines values for SecurityGroupRuleSpecProtocol.
 const (
-	All  SecurityGroupRuleSpecProtocol = "all"
-	Icmp SecurityGroupRuleSpecProtocol = "icmp"
-	Tcp  SecurityGroupRuleSpecProtocol = "tcp"
-	Udp  SecurityGroupRuleSpecProtocol = "udp"
+	SecurityGroupRuleSpecProtocolIcmp   SecurityGroupRuleSpecProtocol = "icmp"
+	SecurityGroupRuleSpecProtocolTcp    SecurityGroupRuleSpecProtocol = "tcp"
+	SecurityGroupRuleSpecProtocolTcpUdp SecurityGroupRuleSpecProtocol = "tcp+udp"
+	SecurityGroupRuleSpecProtocolUdp    SecurityGroupRuleSpecProtocol = "udp"
 )
 
-// Defines values for SubnetSpecDefaultGatewayType.
+// Defines values for StorageSkuSpecType.
 const (
-	Auto        SubnetSpecDefaultGatewayType = "auto"
-	InstanceRef SubnetSpecDefaultGatewayType = "instanceRef"
-	InternalIp  SubnetSpecDefaultGatewayType = "internalIp"
-)
-
-// Defines values for SubnetSpecDhcpEnabled.
-const (
-	True SubnetSpecDhcpEnabled = true
+	LocalDurable   StorageSkuSpecType = "local-durable"
+	LocalEphemeral StorageSkuSpecType = "local-ephemeral"
+	RemoteDurable  StorageSkuSpecType = "remote-durable"
 )
 
 // Defines values for TypeMetadataKind.
@@ -155,14 +103,12 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindLan                  TypeMetadataKind = "lan"
-	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
 	TypeMetadataKindNic                  TypeMetadataKind = "nic"
 	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
 	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindQuota                TypeMetadataKind = "quota"
 	TypeMetadataKindRegion               TypeMetadataKind = "region"
 	TypeMetadataKindRole                 TypeMetadataKind = "role"
 	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
@@ -174,6 +120,11 @@ const (
 	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
+// Defines values for VolumeReferenceType.
+const (
+	Virtio VolumeReferenceType = "virtio"
+)
+
 // Defines values for AcceptHeader.
 const (
 	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
@@ -181,28 +132,44 @@ const (
 	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
 )
 
-// Defines values for ListAuditLogsParamsAccept.
+// Defines values for ListActivityLogsParamsAccept.
 const (
-	ListAuditLogsParamsAcceptApplicationjson            ListAuditLogsParamsAccept = "application/json"
-	ListAuditLogsParamsAcceptApplicationjsonDeletedOnly ListAuditLogsParamsAccept = "application/json; deleted=only"
-	ListAuditLogsParamsAcceptApplicationjsonDeletedTrue ListAuditLogsParamsAccept = "application/json; deleted=true"
+	ListActivityLogsParamsAcceptApplicationjson            ListActivityLogsParamsAccept = "application/json"
+	ListActivityLogsParamsAcceptApplicationjsonDeletedOnly ListActivityLogsParamsAccept = "application/json; deleted=only"
+	ListActivityLogsParamsAcceptApplicationjsonDeletedTrue ListActivityLogsParamsAccept = "application/json; deleted=true"
 )
 
-// ActivityLog defines model for ActivityLog.
+// ActivityLog Activity log resource
 type ActivityLog struct {
-	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
-	Spec     ActivityLogSpec         `json:"spec"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec Activity log specification
+	Spec ActivityLogSpec `json:"spec"`
 }
 
-// ActivityLogSpec defines model for ActivityLogSpec.
-type ActivityLogSpec struct {
-	Request *struct {
-		Body  *ActivityLogSpec_Request_Body `json:"body,omitempty"`
-		Scope *string                       `json:"scope,omitempty"`
+// ActivityLogIterator Iterator for activity logs
+type ActivityLogIterator struct {
+	// Items List of activity logs
+	Items []ActivityLog `json:"items"`
 
-		// Verb operation method
-		Verb *ActivityLogSpecRequestVerb `json:"verb,omitempty"`
+	// Metadata Metadata for response objects.
+	Metadata ResponseMetadata `json:"metadata"`
+}
+
+// ActivityLogSpec Activity log specification
+type ActivityLogSpec struct {
+	// Request Request object
+	Request *struct {
+		Body     *ActivityLogSpec_Request_Body `json:"body,omitempty"`
+		Resource *string                       `json:"resource,omitempty"`
+
+		// Verb Verb that describes the action to be performed on the resource.
+		// The verb can be one of the following: get, list, put, delete, post, ..
+		Verb *string `json:"verb,omitempty"`
 	} `json:"request,omitempty"`
+
+	// Response Response object
 	Response *struct {
 		Code *float32 `json:"code,omitempty"`
 	} `json:"response,omitempty"`
@@ -216,73 +183,154 @@ type ActivityLogSpec_Request_Body struct {
 	union json.RawMessage
 }
 
-// ActivityLogSpecRequestVerb operation method
-type ActivityLogSpecRequestVerb string
-
-// BlockStorageSpec defines model for BlockStorageSpec.
+// BlockStorageSpec References the SKU used for this block.
+// If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
-	Origin *struct {
-		// SourceImageRef Reference to the source image used as the base for creating this block storage. This cannot be modified.
-		SourceImageRef *string `json:"sourceImageRef,omitempty"`
-	} `json:"origin,omitempty"`
-	Profile *struct {
-		SkuExtensions *SkuExtensions `json:"skuExtensions,omitempty"`
+	// SizeGB Size of the block storage in GB.
+	SizeGB int `json:"sizeGB"`
 
-		// StorageSkuRef Reference to the SKU used for this block storage
-		StorageSkuRef *string `json:"storageSkuRef,omitempty"`
-	} `json:"profile,omitempty"`
-	SizeGB *int `json:"sizeGB,omitempty"`
+	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SkuRef Reference `json:"skuRef"`
+
+	// SourceImageRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
 }
 
-// Error A generic error response
+// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
 type Error struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error400 defines model for Error400.
 type Error400 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error401 defines model for Error401.
 type Error401 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error403 defines model for Error403.
 type Error403 struct {
-	Errors []ErrorDetail `json:"errors"`
-}
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
 
-// Error404 defines model for Error404.
-type Error404 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error500 defines model for Error500.
 type Error500 struct {
-	Errors []ErrorDetail `json:"errors"`
-}
-
-// ErrorDetail A detailed error response
-type ErrorDetail struct {
-	// Code An application-specific error code, expressed as a string value.
-	Code string `json:"code"`
-
 	// Detail A human-readable explanation specific to this occurrence of the problem.
 	Detail *string `json:"detail,omitempty"`
 
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
 	// Meta A meta object containing non-standard meta-information about the error.
-	Meta map[string]interface{} `json:"meta"`
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
 
-	// Source An object containing references to the source of the error.
-	Source *ErrorSource `json:"source,omitempty"`
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
 
-	// Status The HTTP status code applicable to this problem, expressed as a string value.
-	Status string `json:"status"`
-
-	// Title A short, human-readable summary of the problem.
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
 	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // ErrorSource An object containing references to the source of the error.
@@ -294,163 +342,134 @@ type ErrorSource struct {
 	Pointer string `json:"pointer"`
 }
 
-// GlobalResourceMetadata defines model for GlobalResourceMetadata.
-type GlobalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
+// IPVersion IP version of the address
+type IPVersion string
 
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+// IcmpConfig ICMP specific rule configuration
+type IcmpConfig struct {
+	// Code ICMP code
+	Code int `json:"code"`
 
-	// Kind Type of the resource
-	Kind GlobalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
+	// Type ICMP type
+	Type int `json:"type"`
 }
 
-// GlobalResourceMetadataKind Type of the resource
-type GlobalResourceMetadataKind string
-
-// InstanceNetwork defines model for InstanceNetwork.
-type InstanceNetwork struct {
-	// OtherNics Additional NICs attached to this instance
-	OtherNics *[]InstanceNicRef `json:"otherNics,omitempty"`
-
-	// PrimaryNicRef Reference to the primary NIC for this instance
-	PrimaryNicRef *string `json:"primaryNicRef,omitempty"`
-}
-
-// InstanceNicRef defines model for InstanceNicRef.
-type InstanceNicRef struct {
-	NicRef *string `json:"nicRef,omitempty"`
-	Slot   *int    `json:"slot,omitempty"`
-}
-
-// InstanceSkuCapability Instance performance capabilities
-type InstanceSkuCapability struct {
-	BenchmarkPoints *int `json:"benchmarkPoints,omitempty"`
-	RamGB           *int `json:"ramGB,omitempty"`
-	VCPU            *int `json:"vCPU,omitempty"`
-}
-
-// InstanceSkuSpec defines model for InstanceSkuSpec.
+// InstanceSkuSpec Specification of the instance SKU, including its capabilities and extensions.
 type InstanceSkuSpec struct {
-	// Capabilities Instance performance capabilities
-	Capabilities *InstanceSkuCapability `json:"capabilities,omitempty"`
-	Description  *string                `json:"description,omitempty"`
+	// Ram The amount of RAM (Random Access Memory) allocated to the instance SKU in gigabytes.
+	// This value represents the total memory available to the instance.
+	Ram int `json:"ram"`
 
-	// Extensions Additional instance feature extensions
-	Extensions *[]string `json:"extensions,omitempty"`
-
-	// MandatoryParameters Mandatory parameters for block storage resources
-	MandatoryParameters *[]string `json:"mandatoryParameters,omitempty"`
-
-	// Provider Provider namespace for instance SKUs
-	Provider *string `json:"provider,omitempty"`
-	Tier     *string `json:"tier,omitempty"`
+	// VCPU The number of virtual CPUs (vCPUs) allocated to the instance SKU.
+	// This value represents the number of cores visible to the operating system.
+	// It does not specify the number of physical processors or hyper-threads available.
+	VCPU int `json:"vCPU"`
 }
 
-// InstanceSpec defines model for InstanceSpec.
+// InstanceSpec Specification of the instance, including its SKU, network configuration, and storage options.
 type InstanceSpec struct {
-	Network         *InstanceNetwork `json:"network,omitempty"`
-	OperatingSystem *struct {
-		CloudInitData *struct {
-			// SshKeyExternalRef Provider-specific references to SSH keys used in cloud-init vendorData.
-			// These references are used to inject SSH public keys during instance initialization
-			// through cloud-init's vendor data configuration.
-			SshKeyExternalRef *[]string `json:"sshKeyExternalRef,omitempty"`
+	// AdditionalNicRefs Additional NICs attached to this instance
+	AdditionalNicRefs *[]Reference `json:"additionalNicRefs,omitempty"`
 
-			// UserData Cloud-init user data for instance initialization
-			// Example cloud-init user configuration with SSH key:
-			// ```yaml
-			// #cloud-config
-			// packages:
-			//   - nginx
-			// ```
-			UserData *string `json:"userData,omitempty"`
-		} `json:"cloudInitData,omitempty"`
+	// AntiAffinityGroup Anti-affinity group to which this instance belongs.
+	// Instances in the same anti-affinity group are placed on different physical hosts.
+	// The number of maximum instances in an anti-affinity group is provider-specific.
+	AntiAffinityGroup *string `json:"antiAffinityGroup,omitempty"`
 
-		// OsBlockStorageRef Represents a connection between a Block Storage and a device
-		OsBlockStorageRef *VolumeAttachment `json:"osBlockStorageRef,omitempty"`
-	} `json:"operatingSystem,omitempty"`
-	Profile *struct {
-		// InstanceSkuRef Reference to the SKU used for this instance
-		InstanceSkuRef *string        `json:"instanceSkuRef,omitempty"`
-		SkuExtensions  *SkuExtensions `json:"skuExtensions,omitempty"`
-	} `json:"profile,omitempty"`
-	Storage *struct {
-		DataBlockStorageRef *[]VolumeAttachment `json:"dataBlockStorageRef,omitempty"`
-	} `json:"storage,omitempty"`
-}
+	// BootVolume Represents a connection between a Block Storage and an a user of the block storage.
+	BootVolume  VolumeReference    `json:"bootVolume"`
+	DataVolumes *[]VolumeReference `json:"dataVolumes,omitempty"`
 
-// LanSpec defines model for LanSpec.
-type LanSpec struct {
-	Profile *struct {
-		// NetworkSkuRef Reference to the SKU used for this LAN
-		NetworkSkuRef *string        `json:"networkSkuRef,omitempty"`
-		SkuExtensions *SkuExtensions `json:"skuExtensions,omitempty"`
-	} `json:"profile,omitempty"`
+	// PrimaryNicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	PrimaryNicRef *Reference `json:"primaryNicRef,omitempty"`
+
+	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
+
+	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SkuRef Reference `json:"skuRef"`
+
+	// SshKeys Provider-specific references to SSH keys used in cloud-init vendorData.
+	// These references are used to inject SSH public keys during instance initialization
+	// through cloud-init's vendor data configuration.
+	SshKeys *[]string `json:"sshKeys,omitempty"`
+
+	// UserData Cloud-init user data for instance initialization
+	// Example cloud-init user configuration with SSH key:
+	UserData *string `json:"userData,omitempty"`
+
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
 }
 
 // LoadBalancerHealthCheck Optional port health check. It probes the port with protocol.
 type LoadBalancerHealthCheck struct {
-	// Interval healthcheck interval in seconds. It means after how many seconds it will take a new check
-	Interval *int `json:"interval,omitempty"`
+	// Interval health check interval in seconds. It means after how many seconds it will take a new check
+	Interval int `json:"interval"`
 
-	// Retry healthcheck retry number after considered unhealthy a backend istance
-	Retry *int `json:"retry,omitempty"`
+	// Retry health check retry number after considered unhealthy a backend instance
+	Retry int `json:"retry"`
 
-	// Timeout healthcheck in seconds. It means after how many seconds the attempt will be considered unhealthy
-	Timeout *int `json:"timeout,omitempty"`
+	// Timeout health check in seconds. It means after how many seconds the attempt will be considered unhealthy
+	Timeout int `json:"timeout"`
+
+	// Type Specifies the type of health check. A `connect` health check attempts
+	// to establish a connection to the specified port to determine its health.
+	Type *LoadBalancerHealthCheckType `json:"type,omitempty"`
 }
 
-// LoadBalancerMember defines model for LoadBalancerMember.
-type LoadBalancerMember struct {
-	// NicRef Nic Reference to the LoadBalancerMember as part of the LoadBalancerTarget
-	NicRef *string `json:"nicRef,omitempty"`
-}
+// LoadBalancerHealthCheckType Specifies the type of health check. A `connect` health check attempts
+// to establish a connection to the specified port to determine its health.
+type LoadBalancerHealthCheckType string
 
-// LoadBalancerTarget defines model for LoadBalancerTarget.
+// LoadBalancerTarget The target of the LoadBalancer. It can be a set of instances nics. The port can be different from the frontend port, if omitted it will be the same. If no health check is specified, the LoadBalancer will not check the health of the backend instances.
 type LoadBalancerTarget struct {
-	// Algorithm LoadBalancer algorithm to take a backend istance
+	// Algorithm LoadBalancer algorithm to take a backend instance
 	Algorithm *LoadBalancerTargetAlgorithm `json:"algorithm,omitempty"`
 
-	// Healthcheck Optional port health check. It probes the port with protocol.
-	Healthcheck *LoadBalancerHealthCheck `json:"healthcheck,omitempty"`
-	Members     *[]LoadBalancerMember    `json:"members,omitempty"`
+	// HealthCheck Optional port health check. It probes the port with protocol.
+	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
+
+	// Members Nic reference to the members as part of the LoadBalancerTarget
+	Members []Reference `json:"members"`
 
 	// Port A valid network port number.
-	Port *int32 `json:"port,omitempty"`
+	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
+	Port *Port `json:"port,omitempty"`
 
-	// Protocol Frontend Protocol to which the load balancer will be listening on
-	Protocol *LoadBalancerTargetProtocol `json:"protocol,omitempty"`
+	// ProxyProtocol Specifies the proxy protocol version. The proxy protocol is used to
+	// pass client connection information to the backend instances.
+	// If not specified, the default is `none`.
+	ProxyProtocol *LoadBalancerTargetProxyProtocol `json:"proxyProtocol,omitempty"`
 }
 
-// LoadBalancerTargetAlgorithm LoadBalancer algorithm to take a backend istance
+// LoadBalancerTargetAlgorithm LoadBalancer algorithm to take a backend instance
 type LoadBalancerTargetAlgorithm string
 
-// LoadBalancerTargetProtocol Frontend Protocol to which the load balancer will be listening on
-type LoadBalancerTargetProtocol string
+// LoadBalancerTargetProxyProtocol Specifies the proxy protocol version. The proxy protocol is used to
+// pass client connection information to the backend instances.
+// If not specified, the default is `none`.
+type LoadBalancerTargetProxyProtocol string
 
-// ModificationMetadata Base metadata for all resources with optional location references
+// ModificationMetadata Base metadata for all resources with optional region references
 type ModificationMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
 
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
 }
 
-// NameMetadata defines model for NameMetadata.
+// NameMetadata Metadata for resource names
 type NameMetadata struct {
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
@@ -458,109 +477,225 @@ type NameMetadata struct {
 	Name string `json:"name"`
 }
 
-// NetworkLoadBalancerFrontend defines model for NetworkLoadBalancerFrontend.
+// NetworkLoadBalancerFrontend Represents the frontend configuration of the LoadBalancer. Each frontend
+// can have multiple targets, but the combination of port and protocol must
+// be unique to ensure proper routing.
 type NetworkLoadBalancerFrontend struct {
-	// NicRef NIC reference to the LoadBalancer. If ipAddressType will be ipv4 or dual-stack or if the LoadBalancer will be internal or external depends on the associated NIC
-	NicRef *string `json:"nicRef,omitempty"`
-
 	// Port A valid network port number.
-	Port *int32 `json:"port,omitempty"`
+	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
+	Port Port `json:"port"`
 
 	// Protocol Frontend Protocol to which the load balancer will be listening on
-	Protocol *NetworkLoadBalancerFrontendProtocol `json:"protocol,omitempty"`
-	Target   *LoadBalancerTarget                  `json:"target,omitempty"`
+	Protocol NetworkLoadBalancerFrontendProtocol `json:"protocol"`
+
+	// Target The target of the LoadBalancer. It can be a set of instances nics. The port can be different from the frontend port, if omitted it will be the same. If no health check is specified, the LoadBalancer will not check the health of the backend instances.
+	Target LoadBalancerTarget `json:"target"`
 }
 
 // NetworkLoadBalancerFrontendProtocol Frontend Protocol to which the load balancer will be listening on
 type NetworkLoadBalancerFrontendProtocol string
 
-// NetworkLoadBalancerSpec defines model for NetworkLoadBalancerSpec.
+// NetworkLoadBalancerSpec Defines the specification for a Network Load Balancer. A Load Balancer can have multiple
+// frontends, where each frontend may target multiple backend instances. Frontend ports and
+// protocols must be unique to ensure proper routing. The NIC associated with the proxy
+// determines whether the Load Balancer is internal or external.
 type NetworkLoadBalancerSpec struct {
-	IpConfigurations *[]NetworkLoadBalancerFrontend `json:"ipConfigurations,omitempty"`
-	Profile          *struct {
-		// NetworkLoadBalancerSkuRef Reference to the SKU used for this network-load-balancer
-		NetworkLoadBalancerSkuRef *string `json:"networkLoadBalancerSkuRef,omitempty"`
-	} `json:"profile,omitempty"`
+	Frontends []NetworkLoadBalancerFrontend `json:"frontends"`
+
+	// NicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	NicRef Reference `json:"nicRef"`
 }
 
-// NetworkSkuSpec defines model for NetworkSkuSpec.
+// NetworkSkuSpec Specification of the network SKU, including its bandwidth and packets per second.
 type NetworkSkuSpec struct {
-	// Capabilities Network performance capabilities
-	Capabilities *map[string]interface{} `json:"capabilities,omitempty"`
-	Description  *string                 `json:"description,omitempty"`
+	// Bandwidth The bandwidth in Mbps (Megabits per second).
+	Bandwidth int `json:"bandwidth"`
 
-	// Extensions Additional network feature extensions
-	Extensions *[]string `json:"extensions,omitempty"`
-
-	// MandatoryParameters Mandatory parameters for network resources
-	MandatoryParameters *[]string `json:"mandatoryParameters,omitempty"`
-
-	// Provider Provider namespace for network SKUs
-	Provider *string `json:"provider,omitempty"`
-
-	// Tier Network performance tier
-	Tier *string `json:"tier,omitempty"`
+	// Packets The number of packets per second (PPS) that the network SKU can handle.
+	Packets int `json:"packets"`
 }
 
-// NicPrivateIp defines model for NicPrivateIp.
-type NicPrivateIp struct {
-	AdressType *NicPrivateIpAdressType `json:"adressType,omitempty"`
-	IpAddress  *string                 `json:"ipAddress,omitempty"`
+// NetworkSpec A Network represents a virtual network that can be used to isolate resources.
+// Key network concepts:
+//
+// * Defines a range of IP addresses for compute resources (e.g. instances)
+// * Enables network segmentation and isolation
+// * Provides common performance configuration across the network using a SKU
+//
+// The `cidr` is the base CIDR block for the network. Additional CIDR blocks can be
+// added to the network using the `additionalCidrs` field. The `additionalCidrs` can
+// be changed after the network is created in case they are not used. The main CIDR
+// block cannot be changed after the network is created. All cidrs must be non-overlapping.
+// The cidrs have to be part of the RFC 1918 address space in case of IPv4 and or RFC 4193.
+//
+// In case the system should automatically assign IP addresses to the network cidrs
+// only the network prefix is required. E.g. to request a /16 IPv4 CIDR block the
+// CIDR block would be `0.0.0.0/16` and for a /56 IPv6 CIDR block the CIDR block would
+// be `::/56`. Most CSP will not allow to use a different IPv6 prefix length than /56.
+type NetworkSpec struct {
+	AdditionalCidrs *[]Cidr `json:"additionalCidrs,omitempty"`
+
+	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
+	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
+	// combinations are possible:
+	//
+	// * IPv4 only
+	// * IPv6 only
+	// * IPv4 and IPv6 (Dual Stack)
+	Cidr          Cidr        `json:"cidr"`
+	RouteTableRef interface{} `json:"routeTableRef"`
+	SkuRef        interface{} `json:"skuRef"`
 }
 
-// NicPrivateIpAdressType defines model for NicPrivateIp.AdressType.
-type NicPrivateIpAdressType string
+// NicIp IP address for the NIC. The IP is either IPv4 or IPv6. The IP
+// can be `0.0.0.0` or `::` to indicate that the IP needs to be assigned
+// automatically. The IP can also be a specific IP address.
+// If not provided, the mutate admission controller will populate this value using the default values for ipv4 and ipv6.
+type NicIp = string
 
 // NicSpec Specification of the Network Interface Card
+//
+// The referenced SKU overwrites the default. In case of different network SKU references
+// the highest possible network SKU reference is used. The network SKU reference
+// might be restricted by the instance size.
 type NicSpec struct {
-	// PublicIPRef References to public IP addresses associated with this NIC. The IP may be external and not directly visible on the server/NIC itself. Maximum one IP allowed.
-	PublicIPRef *string `json:"publicIPRef,omitempty"`
+	// Addresses List of IP addresses for the NIC. A specific IP address needs to be in the
+	// CIDR range of the subnet and not used by any other NIC in the subnet. Multiple
+	// IP addresses can be assigned to a NIC. The number of IP addresses is might be
+	// limited by the CSP or the subnet size.
+	Addresses []NicIp `json:"addresses"`
 
-	// StaticPrivateIPs List of static private IP addresses for this NIC. Can only be used when the subnet has dhcpEnabled=false.
-	StaticPrivateIPs *[]NicPrivateIp `json:"staticPrivateIPs,omitempty"`
+	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
+	// and not directly visible on the server/NIC itself.
+	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
 
-	// SubnetRef Subnet this NIC is connected to
-	SubnetRef *string `json:"subnetRef,omitempty"`
+	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SkuRef *Reference `json:"skuRef,omitempty"`
+
+	// SubnetRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SubnetRef Reference `json:"subnetRef"`
 }
 
-// ObjectStorageAccountSpec defines model for ObjectStorageAccountSpec.
+// ObjectStorageAccountSpec The specification of an object storage account, including the region and zone.
 type ObjectStorageAccountSpec = map[string]interface{}
 
-// PortRange Specific port or port range for the rule
-type PortRange struct {
-	From *int `json:"from,omitempty"`
-	To   *int `json:"to,omitempty"`
+// Permission Permission specification, including providers, resources, and verbs.
+// Permissions are used to define access control policies for user accounts.
+type Permission struct {
+	// Provider The provider for which the resource and verbs are defined.
+	Provider string `json:"provider"`
+
+	// Resources The resources are the specific resources that the permission applies to.
+	// The resource can be a wildcard `*` to represent all resources or a
+	// specific resource type. For example, `images/my-image` or
+	// `images/*`.
+	Resources []string `json:"resources"`
+
+	// Verb The verb is a string that represents the action to be performed on a resource.
+	// The standard operations are defined as `get`, `put`, `list`, `delete`. If the
+	// resource has additional actions they can to be permitted individually as
+	// verb and action in the form `<verb>:<action>`. For example, `post.start`,
+	// `post.stop`, `post.restart` or with a wildcard for all actions `post`.
+	Verb []string `json:"verb"`
 }
 
-// PublicIpAssignment defines model for PublicIpAssignment.
-type PublicIpAssignment struct {
-	// Kind Kind of resource the IP is assigned to
-	Kind *string `json:"kind,omitempty"`
-
-	// Name Name of the resource the IP is assigned to
-	Name *string `json:"name,omitempty"`
+// PermissionMetadata Metadata for permission management
+type PermissionMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+	Verb     string `json:"verb"`
 }
 
-// PublicIpSpec Specification of the public IP
+// Port A valid network port number.
+// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
+type Port = int
+
+// Ports Defines a specific port list or port range for the rule.
+// The configuration allows specifying individual ports, ranges, or a combination of both.
+//
+// Behavior:
+// - If only `from` is specified, the range is interpreted as a single port: `from` to `from`.
+// - If only `to` is specified, the range is interpreted as a single port: `to` to `to`.
+// - If both `from` and `to` are specified, the range spans from `from` to `to`.
+// - The `list` property can be used to explicitly define additional individual ports.
+//
+// The final result is a comprehensive list of ports and/or port ranges.
+type Ports struct {
+	// From A valid network port number.
+	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
+	From *Port   `json:"from,omitempty"`
+	List *[]Port `json:"list,omitempty"`
+
+	// To A valid network port number.
+	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
+	To *Port `json:"to,omitempty"`
+}
+
+// PublicIpSpec Specification of the public IP.
 type PublicIpSpec struct {
-	// AssignedTo References to resources this IP is assigned to
-	AssignedTo *[]PublicIpAssignment `json:"assignedTo,omitempty"`
+	// Address The public IP address in case of BYOIP.
+	Address *string `json:"address,omitempty"`
 
-	// IpAddress The public IP address
-	IpAddress *string `json:"ipAddress,omitempty"`
-
-	// IpVersion IP version of the address (limited to IPv4 for now)
-	IpVersion *PublicIpSpecIpVersion `json:"ipVersion,omitempty"`
-
-	// Type Type of public IP allocation
-	Type *PublicIpSpecType `json:"type,omitempty"`
+	// Version IP version of the address
+	Version IPVersion `json:"version"`
 }
 
-// PublicIpSpecIpVersion IP version of the address (limited to IPv4 for now)
-type PublicIpSpecIpVersion string
+// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+// The reference can be used to refer to a resource in other resources.
+type Reference struct {
+	union json.RawMessage
+}
 
-// PublicIpSpecType Type of public IP allocation
-type PublicIpSpecType string
+// ReferenceObject A reference to a resource using an object. The object contains the
+// same information as the ReferenceURN, but is represented as a structured object.
+// The advantage of this representation is that it can be used to reference
+// resources in different workspaces or regions without the need to specify
+// the full URN.
+type ReferenceObject struct {
+	// Provider Provider of the resource. If not set, the provider is inferred from the context.
+	Provider *string `json:"provider,omitempty"`
+
+	// Region Region of the resource. If not set, the region is inferred from the context.
+	Region *string `json:"region,omitempty"`
+
+	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
+	// The type is the resource type, and the name is the resource name.
+	Resource string `json:"resource"`
+
+	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
+	Tenant *string `json:"tenant,omitempty"`
+
+	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
+	Workspace *string `json:"workspace,omitempty"`
+}
+
+// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
+// is represented as the full URN (Uniform Resource Name) name of the resource.
+//
+// ### Automatic Prefix Inference
+//
+// In most cases, the prefix of the URN can be automatically derived in the given context.
+// To simplify usage, only the resource type and name might be specified as a reference
+// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+// additional segments separated by slashes.
+//
+// The prefix is automatically inferred from the context. For example, if the resource is a
+// block storage in the same workspace the reference can be specified as
+// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+//
+// For automatic prefix inference, the following rules apply:
+// - the version is inferred from the current resource version
+// - the workspace is inferred from the current workspace
+// - the region is inferred from the current region
+// - the provider is inferred from the type and context of the usage
+//
+// The prefix inference is resolved on admission into the full URN format, which makes it
+// mostly suitable for human use.
+type ReferenceURN = string
 
 // RegionalMetadata Metadata for regional resources
 type RegionalMetadata struct {
@@ -576,25 +711,38 @@ type RegionalResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
 	Kind RegionalResourceMetadataKind `json:"kind"`
 
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
 
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
 	// Each segment follows the same rules.
-	Name string `json:"name"`
+	Name     string `json:"name"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
 
 	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
 
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
 	Workspace *string `json:"workspace,omitempty"`
@@ -603,92 +751,97 @@ type RegionalResourceMetadata struct {
 // RegionalResourceMetadataKind Type of the resource
 type RegionalResourceMetadataKind string
 
-// ResourceQuotaSpec Represents the ResourceQuota for the single ResourceType of the Resource Provider
-type ResourceQuotaSpec struct {
-	// Value limit number of resourceType instances, set null for unlimited
-	Value *int `json:"value"`
-}
-
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+
 	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
 	SkipToken *string `json:"skipToken,omitempty"`
+	Verb      string  `json:"verb"`
 }
 
-// RoleAssignmentSpec defines model for RoleAssignmentSpec.
+// RoleAssignmentScope Role assignment scope, including the workspaces, regions and tenants.
+type RoleAssignmentScope struct {
+	// Regions Optionally, a restriction can be applied to the region
+	// where the role assignment is valid. If not specified,
+	// the role assignment is valid for all regions.
+	Regions *[]string `json:"regions,omitempty"`
+
+	// Tenants Optionally, can be opened to all tenants or restricted to a specific tenant.
+	// If not specified, the role assignment is valid for the current tenant.
+	Tenants *[]string `json:"tenants,omitempty"`
+
+	// Workspaces Optionally, a restriction can be applied to the workspace
+	// where the role assignment is valid. If not specified,
+	// the role assignment is valid for all workspaces.
+	Workspaces *[]string `json:"workspaces,omitempty"`
+}
+
+// RoleAssignmentSpec Role assignment for a user account. The role is assigned to the user account in the context of the specified scopes.
 type RoleAssignmentSpec struct {
 	// Roles List of assigned role names
-	Roles *[]string `json:"roles,omitempty"`
+	Roles []string `json:"roles"`
 
-	// Scopes List of Scopes to whom the roles are assigned
-	Scopes *[]string `json:"scopes,omitempty"`
+	// Scopes List of scopes (e.g., tenant, workspace) for the role assignment
+	Scopes []RoleAssignmentScope `json:"scopes"`
 
-	// Subs List of subject IDs (from JWT) to whom the roles are assigned
-	Subs *[]string `json:"subs,omitempty"`
+	// Subs List of subject IDs (from JWT) to whom the roles are assigned,
+	// A wildcard `*` can be used to represent all users of the tenant scopes
+	Subs []string `json:"subs"`
 }
 
-// RoleSpec defines model for RoleSpec.
+// RoleSpec Role specification defined as a list of permissions.
+// Roles are used to define access control policies for
+// a user account using a role assignment.
 type RoleSpec struct {
 	// Permissions List of permissions granted by this role
-	Permissions *[]string `json:"permissions,omitempty"`
+	Permissions []Permission `json:"permissions"`
 }
 
-// SecurityGroupRule defines model for SecurityGroupRule.
-type SecurityGroupRule struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	Labels   *map[string]string        `json:"labels,omitempty"`
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-	Spec     SecurityGroupRuleSpec     `json:"spec"`
-
-	// Status Current status of the resource
-	Status *Status `json:"status,omitempty"`
-}
-
-// SecurityGroupRuleSource Source of the traffic. Can be a security group, CIDR range, or 'publicInternet'.
-// 'publicInternet' allows explicit control over internet-facing traffic.
-type SecurityGroupRuleSource struct {
-	Type *SecurityGroupRuleSourceType `json:"type,omitempty"`
-
-	// Value - For securityGroup: name of the source security group
-	// - For cidr: IPv4 CIDR range
-	// - For publicInternet: 'any' or a IPv4 CIDR Range
-	Value *string `json:"value,omitempty"`
-}
-
-// SecurityGroupRuleSourceType defines model for SecurityGroupRuleSource.Type.
-type SecurityGroupRuleSourceType string
-
-// SecurityGroupRuleSpec defines model for SecurityGroupRuleSpec.
+// SecurityGroupRuleSpec Specification of a security group rule defining network access permissions.
+// If no version is specified, any IP version will be allowed.
+// If no protocol is specified, any network protocol will be allowed.
 type SecurityGroupRuleSpec struct {
-	// Description Human-readable description of the rule's purpose
-	Description *string `json:"description,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
+	Annotations *Annotations `json:"annotations,omitempty"`
 
-	// Direction - ingress: Only incoming traffic is allowed
-	// - egress: Only outgoing traffic is allowed
-	// - bidirectional: Traffic can flow both ways
-	Direction *SecurityGroupRuleSpecDirection `json:"direction,omitempty"`
+	// Direction Direction of the traffic flow:
+	// * ingress: Only incoming traffic is allowed
+	// * egress: Only outgoing traffic is allowed
+	Direction SecurityGroupRuleSpecDirection `json:"direction"`
 
-	// PortRange Specific port or port range for the rule
-	PortRange *PortRange `json:"portRange,omitempty"`
+	// Icmp ICMP specific rule configuration
+	Icmp *IcmpConfig `json:"icmp,omitempty"`
 
-	// Priority Rule priority (lower number = higher priority)
-	Priority *int `json:"priority,omitempty"`
+	// Ports Defines a specific port list or port range for the rule.
+	// The configuration allows specifying individual ports, ranges, or a combination of both.
+	//
+	// Behavior:
+	// - If only `from` is specified, the range is interpreted as a single port: `from` to `from`.
+	// - If only `to` is specified, the range is interpreted as a single port: `to` to `to`.
+	// - If both `from` and `to` are specified, the range spans from `from` to `to`.
+	// - The `list` property can be used to explicitly define additional individual ports.
+	//
+	// The final result is a comprehensive list of ports and/or port ranges.
+	Ports *Ports `json:"ports,omitempty"`
 
 	// Protocol Network protocol for the rule
 	Protocol *SecurityGroupRuleSpecProtocol `json:"protocol,omitempty"`
 
-	// Source Source of the traffic. Can be a security group, CIDR range, or 'publicInternet'.
-	// 'publicInternet' allows explicit control over internet-facing traffic.
-	Source *SecurityGroupRuleSource `json:"source,omitempty"`
+	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
+	// with the security group. If a security group is specified, all instances in that group are allowed.
+	// If no sourceRefs are specified, all traffic is allowed.
+	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
+
+	// Version IP version of the address
+	Version *IPVersion `json:"version,omitempty"`
 }
 
-// SecurityGroupRuleSpecDirection - ingress: Only incoming traffic is allowed
-// - egress: Only outgoing traffic is allowed
-// - bidirectional: Traffic can flow both ways
+// SecurityGroupRuleSpecDirection Direction of the traffic flow:
+// * ingress: Only incoming traffic is allowed
+// * egress: Only outgoing traffic is allowed
 type SecurityGroupRuleSpecDirection string
 
 // SecurityGroupRuleSpecProtocol Network protocol for the rule
@@ -699,94 +852,120 @@ type SecurityGroupSpec struct {
 	// Rules Network access rules defining communication between security groups and external networks.
 	//
 	// Rule Evaluation:
-	// - Rules are processed in order of priority (lower number = higher priority)
-	// - First matching rule determines the action (allow/deny)
 	// - Default behavior is to deny all traffic not explicitly allowed
-	Rules *[]SecurityGroupRule `json:"rules,omitempty"`
+	// - Rules provide granular control over allowed traffic types, sources, and destinations
+	Rules []SecurityGroupRuleSpec `json:"rules"`
 }
 
-// SkuExtensions defines model for SkuExtensions.
-type SkuExtensions map[string]interface{}
-
-// Status Current status of the resource
-type Status struct {
-	Conditions []StatusCondition `json:"conditions"`
-}
-
-// StatusCondition StatusCondition describes the state of a resource at a certain point.
-// Conditions are provider-specific and can represent different states depending on the
-// resource type and provider implementation.
-type StatusCondition struct {
-	// LastTransitionTime LastTransitionTime is the last time the condition transitioned from one
-	// status to another. This should be when the underlying condition changed.
-	// If that is not known, then using the time when the API field changed is
-	// acceptable.
-	LastTransitionTime time.Time `json:"lastTransitionTime"`
-
-	// Message A human-readable message indicating details about the transition.
-	Message *string `json:"message,omitempty"`
-
-	// Reason The reason for the condition's last transition in CamelCase.
-	// The specific set of reason values is provider-specific and should be
-	// documented by the provider.
-	Reason *string `json:"reason,omitempty"`
-
-	// Status Status of the condition.
-	Status string `json:"status"`
-
-	// Type Type of condition. The condition type is provider-specific and should
-	// reflect the specific states relevant to your resource.
-	Type string `json:"type"`
-}
-
-// StorageSkuSpec defines model for StorageSkuSpec.
+// StorageSkuSpec Specification of the storage SKU, including its capabilities and extensions.
 type StorageSkuSpec struct {
-	// Capabilities storage performance capabilities
-	Capabilities *map[string]interface{} `json:"capabilities,omitempty"`
-	Description  *string                 `json:"description,omitempty"`
+	// Iops The number of IOPS (Input/Output Operations Per Second) guaranteed for
+	// the storage SKU.
+	Iops int `json:"iops"`
 
-	// Extensions Additional  storage feature extensions
-	Extensions *[]string `json:"extensions,omitempty"`
+	// MinVolumeSize Minimum volume size for guaranteed performance, in GB.
+	MinVolumeSize int `json:"minVolumeSize"`
 
-	// MandatoryParameters Mandatory parameters for  storage resources
-	MandatoryParameters *[]string `json:"mandatoryParameters,omitempty"`
-
-	// Provider Provider namespace for  storage SKUs
-	Provider *string `json:"provider,omitempty"`
-
-	// Tier storage performance tier
-	Tier *string `json:"tier,omitempty"`
+	// Type Type of storage SKU. Can be one of the following:
+	//
+	// * `local-ephemeral`: Local storage is directly attached to the hypervisor
+	//   hosting the instance. In the event of a hypervisor failure or instance
+	//   restart, the data may either be lost or become unavailable. The failure
+	//   mode depends on the Cloud Service Provider (CSP).
+	//   Users of local storage should be aware of these risks and implement
+	//   a robust backup strategy or application level replication of the data.
+	//   Local storage is typically suited for high-performance workloads requiring
+	//   low latency and high throughput, where the application layer can handle
+	//   failures. It is not recommended for workloads demanding high availability
+	//   or data durability. Example use-cases include caching, temporary data
+	//   or immutable workloads such as operating system images without local data.
+	// * `local-durable`: Local durable storage is similar to local storage
+	//   but is designed to provide data durability while providing high-performance.
+	//   It is typically implemented using a redundant storage device or
+	//   replicated storage solution. Local durable storage is suitable for
+	//   workloads requiring high performance and low latency, while also
+	//   ensuring data durability at the cost of availability. The time to
+	//   restore data may vary depending on the CSP and the
+	//   will be significantly higher then using `remote-durable` storage.
+	//   Example use-cases include replicated paxos or raft based databases or
+	//   replicated databases using synchronous replication, in addition to
+	//   file storage.
+	// * `remote-durable`: Remote storage is a network-attached storage solution
+	//   designed to provide data redundancy and high availability. While
+	//   typically slower than local storage, remote storage offers the
+	//   advantage of being accessible by different hypervisors.
+	//   This means the storage can be used by different instances running
+	//   on separate hypervisors, but only one instance at a time. This
+	//   enabled the recreation of the instance with the same storage on a
+	//   different hypervisor and therefore greatly reduces the recovery
+	//   time in case of failure of the hypervisor. Remote storage cannot be
+	//   attached to multiple instances simultaneously.
+	//   Example use-cases include file storage or replicated databases
+	//   using asynchronous replication.
+	Type StorageSkuSpecType `json:"type"`
 }
 
-// SubnetSpec Specification of the subnet
+// StorageSkuSpecType Type of storage SKU. Can be one of the following:
+//
+//   - `local-ephemeral`: Local storage is directly attached to the hypervisor
+//     hosting the instance. In the event of a hypervisor failure or instance
+//     restart, the data may either be lost or become unavailable. The failure
+//     mode depends on the Cloud Service Provider (CSP).
+//     Users of local storage should be aware of these risks and implement
+//     a robust backup strategy or application level replication of the data.
+//     Local storage is typically suited for high-performance workloads requiring
+//     low latency and high throughput, where the application layer can handle
+//     failures. It is not recommended for workloads demanding high availability
+//     or data durability. Example use-cases include caching, temporary data
+//     or immutable workloads such as operating system images without local data.
+//   - `local-durable`: Local durable storage is similar to local storage
+//     but is designed to provide data durability while providing high-performance.
+//     It is typically implemented using a redundant storage device or
+//     replicated storage solution. Local durable storage is suitable for
+//     workloads requiring high performance and low latency, while also
+//     ensuring data durability at the cost of availability. The time to
+//     restore data may vary depending on the CSP and the
+//     will be significantly higher then using `remote-durable` storage.
+//     Example use-cases include replicated paxos or raft based databases or
+//     replicated databases using synchronous replication, in addition to
+//     file storage.
+//   - `remote-durable`: Remote storage is a network-attached storage solution
+//     designed to provide data redundancy and high availability. While
+//     typically slower than local storage, remote storage offers the
+//     advantage of being accessible by different hypervisors.
+//     This means the storage can be used by different instances running
+//     on separate hypervisors, but only one instance at a time. This
+//     enabled the recreation of the instance with the same storage on a
+//     different hypervisor and therefore greatly reduces the recovery
+//     time in case of failure of the hypervisor. Remote storage cannot be
+//     attached to multiple instances simultaneously.
+//     Example use-cases include file storage or replicated databases
+//     using asynchronous replication.
+type StorageSkuSpecType string
+
+// SubnetSpec Detailed specification of the subnet. Automatic address
+// assignment is supported, similar to the network configuration. The
+// subnet's prefix length must be smaller than the network's prefix
+// length, ensuring proper subdivision of the address space.
+// The first and last IP addresses in the subnet are reserved
+// the network address and broadcast address, respectively.
+//
+// Most CSP will not allow to use a different IPv6 prefix length than /64.
 type SubnetSpec struct {
-	Cidr *Cidr `json:"cidr,omitempty"`
+	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
+	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
+	// combinations are possible:
+	//
+	// * IPv4 only
+	// * IPv6 only
+	// * IPv4 and IPv6 (Dual Stack)
+	Cidr          Cidr         `json:"cidr"`
+	RouteTableRef *interface{} `json:"routeTableRef,omitempty"`
+	SkuRef        *interface{} `json:"skuRef,omitempty"`
 
-	// DefaultGateway Configuration for the subnet's default gateway.
-	// Provides flexibility in routing traffic.
-	DefaultGateway *struct {
-		Type *SubnetSpecDefaultGatewayType `json:"type,omitempty"`
-
-		// Value - For 'instanceRef': Name of the compute instance acting as gateway
-		// - For 'internalIp': Specific IP address to use as gateway
-		Value *string `json:"value,omitempty"`
-	} `json:"defaultGateway,omitempty"`
-
-	// DhcpEnabled for now we allow only dhcp enabled
-	DhcpEnabled *SubnetSpecDhcpEnabled `json:"dhcpEnabled,omitempty"`
-	Profile     *struct {
-		// NetworkSkuRef Reference to a network SKU defining bandwidth performance.
-		// Allows selection of network performance tier.
-		// Pattern: '^seca\.(10|100|1000)$'
-		NetworkSkuRef *string `json:"networkSkuRef,omitempty"`
-	} `json:"profile,omitempty"`
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
 }
-
-// SubnetSpecDefaultGatewayType defines model for SubnetSpec.DefaultGateway.Type.
-type SubnetSpecDefaultGatewayType string
-
-// SubnetSpecDhcpEnabled for now we allow only dhcp enabled
-type SubnetSpecDhcpEnabled bool
 
 // TenantMetadata Metadata for global resources with tenant constraints
 type TenantMetadata struct {
@@ -794,53 +973,58 @@ type TenantMetadata struct {
 	Tenant string `json:"tenant"`
 }
 
-// TypeMetadata defines model for TypeMetadata.
+// TypeMetadata Metadata for all resources with type information.
 type TypeMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
 	// Kind Type of the resource
 	Kind TypeMetadataKind `json:"kind"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
 }
 
 // TypeMetadataKind Type of the resource
 type TypeMetadataKind string
 
-// UserResourceMetadata defines model for UserResourceMetadata.
-type UserResourceMetadata struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	Annotations *map[string]string `json:"annotations,omitempty"`
+// VolumeReference Represents a connection between a Block Storage and an a user of the block storage.
+type VolumeReference struct {
+	// DeviceRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	DeviceRef Reference `json:"deviceRef"`
 
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	Labels *map[string]string `json:"labels,omitempty"`
+	// Type The connection type depends on the type of device and type of block storage.
+	Type *VolumeReferenceType `json:"type,omitempty"`
 }
 
-// VolumeAttachment Represents a connection between a Block Storage and a device
-type VolumeAttachment struct {
-	ObjectRef  *string                     `json:"objectRef,omitempty"`
-	Properties *VolumeAttachmentProperties `json:"properties,omitempty"`
-}
+// VolumeReferenceType The connection type depends on the type of device and type of block storage.
+type VolumeReferenceType string
 
-// VolumeAttachmentProperties defines model for VolumeAttachmentProperties.
-type VolumeAttachmentProperties struct {
-	// ConnectionType The connection type depends on the type of device and type of block storage.
-	ConnectionType *string `json:"connectionType,omitempty"`
-
-	// DeviceKind the type of device a block-storage is connected to. For now only 'instance' possible
-	DeviceKind *string `json:"deviceKind,omitempty"`
-	DeviceRef  *string `json:"deviceRef,omitempty"`
-}
-
-// WorkspaceSpec defines model for WorkspaceSpec.
+// WorkspaceSpec Specification of the workspace, including its capabilities and extensions.
 type WorkspaceSpec = map[string]interface{}
 
-// Cidr defines model for cidr.
+// Zone Reference to a specific zone within a region
+type Zone = string
+
+// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+// The number of annotations is eventually limited by the CSP.
+type Annotations map[string]string
+
+// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
+// configuration, either the IPv4 or IPv6 range can be omitted. So the following
+// combinations are possible:
+//
+// * IPv4 only
+// * IPv6 only
+// * IPv4 and IPv6 (Dual Stack)
 type Cidr struct {
-	// Ipv4Range IPv4 address range for the subnet.
-	// Must be unique within the LAN and cannot be modified after creation.
-	// Example: '192.168.1.0/24'
-	Ipv4Range *string `json:"ipv4Range,omitempty"`
+	// Ipv4 IPv4 CIDR block for the subnet.
+	Ipv4 *string `json:"ipv4,omitempty"`
+
+	// Ipv6 IPv6 CIDR block for the subnet.
+	Ipv6 *string `json:"ipv6,omitempty"`
 }
 
 // AcceptHeader defines model for acceptHeader.
@@ -855,11 +1039,14 @@ type LimitParam = int
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// TenantID defines model for tenantID.
-type TenantID = string
+// Tenant defines model for tenant.
+type Tenant = string
 
-// ListAuditLogsParams defines parameters for ListAuditLogs.
-type ListAuditLogsParams struct {
+// Workspace defines model for workspace.
+type Workspace = string
+
+// ListActivityLogsParams defines parameters for ListActivityLogs.
+type ListActivityLogsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
 	// Filter syntax:
 	//   - Equals: key=value
@@ -879,106 +1066,28 @@ type ListAuditLogsParams struct {
 	// - `"application/json"`: Returns only non-deleted resources
 	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
 	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListAuditLogsParamsAccept `json:"Accept,omitempty"`
+	Accept *ListActivityLogsParamsAccept `json:"Accept,omitempty"`
 }
 
-// ListAuditLogsParamsAccept defines parameters for ListAuditLogs.
-type ListAuditLogsParamsAccept string
+// ListActivityLogsParamsAccept defines parameters for ListActivityLogs.
+type ListActivityLogsParamsAccept string
 
-// AsWorkspaceSpec returns the union data inside the ActivityLogSpec_Request_Body as a WorkspaceSpec
-func (t ActivityLogSpec_Request_Body) AsWorkspaceSpec() (WorkspaceSpec, error) {
-	var body WorkspaceSpec
+// AsBlockStorageSpec returns the union data inside the ActivityLogSpec_Request_Body as a BlockStorageSpec
+func (t ActivityLogSpec_Request_Body) AsBlockStorageSpec() (BlockStorageSpec, error) {
+	var body BlockStorageSpec
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromWorkspaceSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided WorkspaceSpec
-func (t *ActivityLogSpec_Request_Body) FromWorkspaceSpec(v WorkspaceSpec) error {
+// FromBlockStorageSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided BlockStorageSpec
+func (t *ActivityLogSpec_Request_Body) FromBlockStorageSpec(v BlockStorageSpec) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeWorkspaceSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided WorkspaceSpec
-func (t *ActivityLogSpec_Request_Body) MergeWorkspaceSpec(v WorkspaceSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsRoleSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleSpec
-func (t ActivityLogSpec_Request_Body) AsRoleSpec() (RoleSpec, error) {
-	var body RoleSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRoleSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleSpec
-func (t *ActivityLogSpec_Request_Body) FromRoleSpec(v RoleSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRoleSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleSpec
-func (t *ActivityLogSpec_Request_Body) MergeRoleSpec(v RoleSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsRoleAssignmentSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleAssignmentSpec
-func (t ActivityLogSpec_Request_Body) AsRoleAssignmentSpec() (RoleAssignmentSpec, error) {
-	var body RoleAssignmentSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRoleAssignmentSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleAssignmentSpec
-func (t *ActivityLogSpec_Request_Body) FromRoleAssignmentSpec(v RoleAssignmentSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRoleAssignmentSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleAssignmentSpec
-func (t *ActivityLogSpec_Request_Body) MergeRoleAssignmentSpec(v RoleAssignmentSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsResourceQuotaSpec returns the union data inside the ActivityLogSpec_Request_Body as a ResourceQuotaSpec
-func (t ActivityLogSpec_Request_Body) AsResourceQuotaSpec() (ResourceQuotaSpec, error) {
-	var body ResourceQuotaSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromResourceQuotaSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ResourceQuotaSpec
-func (t *ActivityLogSpec_Request_Body) FromResourceQuotaSpec(v ResourceQuotaSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeResourceQuotaSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ResourceQuotaSpec
-func (t *ActivityLogSpec_Request_Body) MergeResourceQuotaSpec(v ResourceQuotaSpec) error {
+// MergeBlockStorageSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided BlockStorageSpec
+func (t *ActivityLogSpec_Request_Body) MergeBlockStorageSpec(v BlockStorageSpec) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -1015,58 +1124,6 @@ func (t *ActivityLogSpec_Request_Body) MergeInstanceSkuSpec(v InstanceSkuSpec) e
 	return err
 }
 
-// AsNetworkSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkSkuSpec
-func (t ActivityLogSpec_Request_Body) AsNetworkSkuSpec() (NetworkSkuSpec, error) {
-	var body NetworkSkuSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNetworkSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkSkuSpec
-func (t *ActivityLogSpec_Request_Body) FromNetworkSkuSpec(v NetworkSkuSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNetworkSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkSkuSpec
-func (t *ActivityLogSpec_Request_Body) MergeNetworkSkuSpec(v NetworkSkuSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsStorageSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a StorageSkuSpec
-func (t ActivityLogSpec_Request_Body) AsStorageSkuSpec() (StorageSkuSpec, error) {
-	var body StorageSkuSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromStorageSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided StorageSkuSpec
-func (t *ActivityLogSpec_Request_Body) FromStorageSkuSpec(v StorageSkuSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeStorageSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided StorageSkuSpec
-func (t *ActivityLogSpec_Request_Body) MergeStorageSkuSpec(v StorageSkuSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 // AsInstanceSpec returns the union data inside the ActivityLogSpec_Request_Body as a InstanceSpec
 func (t ActivityLogSpec_Request_Body) AsInstanceSpec() (InstanceSpec, error) {
 	var body InstanceSpec
@@ -1083,188 +1140,6 @@ func (t *ActivityLogSpec_Request_Body) FromInstanceSpec(v InstanceSpec) error {
 
 // MergeInstanceSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided InstanceSpec
 func (t *ActivityLogSpec_Request_Body) MergeInstanceSpec(v InstanceSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsBlockStorageSpec returns the union data inside the ActivityLogSpec_Request_Body as a BlockStorageSpec
-func (t ActivityLogSpec_Request_Body) AsBlockStorageSpec() (BlockStorageSpec, error) {
-	var body BlockStorageSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromBlockStorageSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided BlockStorageSpec
-func (t *ActivityLogSpec_Request_Body) FromBlockStorageSpec(v BlockStorageSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeBlockStorageSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided BlockStorageSpec
-func (t *ActivityLogSpec_Request_Body) MergeBlockStorageSpec(v BlockStorageSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsObjectStorageAccountSpec returns the union data inside the ActivityLogSpec_Request_Body as a ObjectStorageAccountSpec
-func (t ActivityLogSpec_Request_Body) AsObjectStorageAccountSpec() (ObjectStorageAccountSpec, error) {
-	var body ObjectStorageAccountSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromObjectStorageAccountSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ObjectStorageAccountSpec
-func (t *ActivityLogSpec_Request_Body) FromObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeObjectStorageAccountSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ObjectStorageAccountSpec
-func (t *ActivityLogSpec_Request_Body) MergeObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLanSpec returns the union data inside the ActivityLogSpec_Request_Body as a LanSpec
-func (t ActivityLogSpec_Request_Body) AsLanSpec() (LanSpec, error) {
-	var body LanSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLanSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided LanSpec
-func (t *ActivityLogSpec_Request_Body) FromLanSpec(v LanSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLanSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided LanSpec
-func (t *ActivityLogSpec_Request_Body) MergeLanSpec(v LanSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSubnetSpec returns the union data inside the ActivityLogSpec_Request_Body as a SubnetSpec
-func (t ActivityLogSpec_Request_Body) AsSubnetSpec() (SubnetSpec, error) {
-	var body SubnetSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSubnetSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SubnetSpec
-func (t *ActivityLogSpec_Request_Body) FromSubnetSpec(v SubnetSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSubnetSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SubnetSpec
-func (t *ActivityLogSpec_Request_Body) MergeSubnetSpec(v SubnetSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSecurityGroupSpec returns the union data inside the ActivityLogSpec_Request_Body as a SecurityGroupSpec
-func (t ActivityLogSpec_Request_Body) AsSecurityGroupSpec() (SecurityGroupSpec, error) {
-	var body SecurityGroupSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSecurityGroupSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SecurityGroupSpec
-func (t *ActivityLogSpec_Request_Body) FromSecurityGroupSpec(v SecurityGroupSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSecurityGroupSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SecurityGroupSpec
-func (t *ActivityLogSpec_Request_Body) MergeSecurityGroupSpec(v SecurityGroupSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsNicSpec returns the union data inside the ActivityLogSpec_Request_Body as a NicSpec
-func (t ActivityLogSpec_Request_Body) AsNicSpec() (NicSpec, error) {
-	var body NicSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNicSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NicSpec
-func (t *ActivityLogSpec_Request_Body) FromNicSpec(v NicSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNicSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NicSpec
-func (t *ActivityLogSpec_Request_Body) MergeNicSpec(v NicSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsPublicIpSpec returns the union data inside the ActivityLogSpec_Request_Body as a PublicIpSpec
-func (t ActivityLogSpec_Request_Body) AsPublicIpSpec() (PublicIpSpec, error) {
-	var body PublicIpSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromPublicIpSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided PublicIpSpec
-func (t *ActivityLogSpec_Request_Body) FromPublicIpSpec(v PublicIpSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergePublicIpSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided PublicIpSpec
-func (t *ActivityLogSpec_Request_Body) MergePublicIpSpec(v PublicIpSpec) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -1301,12 +1176,360 @@ func (t *ActivityLogSpec_Request_Body) MergeNetworkLoadBalancerSpec(v NetworkLoa
 	return err
 }
 
+// AsNetworkSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkSkuSpec
+func (t ActivityLogSpec_Request_Body) AsNetworkSkuSpec() (NetworkSkuSpec, error) {
+	var body NetworkSkuSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNetworkSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkSkuSpec
+func (t *ActivityLogSpec_Request_Body) FromNetworkSkuSpec(v NetworkSkuSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNetworkSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkSkuSpec
+func (t *ActivityLogSpec_Request_Body) MergeNetworkSkuSpec(v NetworkSkuSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNetworkSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkSpec
+func (t ActivityLogSpec_Request_Body) AsNetworkSpec() (NetworkSpec, error) {
+	var body NetworkSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNetworkSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkSpec
+func (t *ActivityLogSpec_Request_Body) FromNetworkSpec(v NetworkSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNetworkSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkSpec
+func (t *ActivityLogSpec_Request_Body) MergeNetworkSpec(v NetworkSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNicSpec returns the union data inside the ActivityLogSpec_Request_Body as a NicSpec
+func (t ActivityLogSpec_Request_Body) AsNicSpec() (NicSpec, error) {
+	var body NicSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNicSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NicSpec
+func (t *ActivityLogSpec_Request_Body) FromNicSpec(v NicSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNicSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NicSpec
+func (t *ActivityLogSpec_Request_Body) MergeNicSpec(v NicSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsObjectStorageAccountSpec returns the union data inside the ActivityLogSpec_Request_Body as a ObjectStorageAccountSpec
+func (t ActivityLogSpec_Request_Body) AsObjectStorageAccountSpec() (ObjectStorageAccountSpec, error) {
+	var body ObjectStorageAccountSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromObjectStorageAccountSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ObjectStorageAccountSpec
+func (t *ActivityLogSpec_Request_Body) FromObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeObjectStorageAccountSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ObjectStorageAccountSpec
+func (t *ActivityLogSpec_Request_Body) MergeObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPublicIpSpec returns the union data inside the ActivityLogSpec_Request_Body as a PublicIpSpec
+func (t ActivityLogSpec_Request_Body) AsPublicIpSpec() (PublicIpSpec, error) {
+	var body PublicIpSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPublicIpSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided PublicIpSpec
+func (t *ActivityLogSpec_Request_Body) FromPublicIpSpec(v PublicIpSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePublicIpSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided PublicIpSpec
+func (t *ActivityLogSpec_Request_Body) MergePublicIpSpec(v PublicIpSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRoleAssignmentSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleAssignmentSpec
+func (t ActivityLogSpec_Request_Body) AsRoleAssignmentSpec() (RoleAssignmentSpec, error) {
+	var body RoleAssignmentSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoleAssignmentSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleAssignmentSpec
+func (t *ActivityLogSpec_Request_Body) FromRoleAssignmentSpec(v RoleAssignmentSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoleAssignmentSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleAssignmentSpec
+func (t *ActivityLogSpec_Request_Body) MergeRoleAssignmentSpec(v RoleAssignmentSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRoleSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleSpec
+func (t ActivityLogSpec_Request_Body) AsRoleSpec() (RoleSpec, error) {
+	var body RoleSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoleSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleSpec
+func (t *ActivityLogSpec_Request_Body) FromRoleSpec(v RoleSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoleSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleSpec
+func (t *ActivityLogSpec_Request_Body) MergeRoleSpec(v RoleSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsSecurityGroupSpec returns the union data inside the ActivityLogSpec_Request_Body as a SecurityGroupSpec
+func (t ActivityLogSpec_Request_Body) AsSecurityGroupSpec() (SecurityGroupSpec, error) {
+	var body SecurityGroupSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSecurityGroupSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SecurityGroupSpec
+func (t *ActivityLogSpec_Request_Body) FromSecurityGroupSpec(v SecurityGroupSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSecurityGroupSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SecurityGroupSpec
+func (t *ActivityLogSpec_Request_Body) MergeSecurityGroupSpec(v SecurityGroupSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStorageSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a StorageSkuSpec
+func (t ActivityLogSpec_Request_Body) AsStorageSkuSpec() (StorageSkuSpec, error) {
+	var body StorageSkuSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided StorageSkuSpec
+func (t *ActivityLogSpec_Request_Body) FromStorageSkuSpec(v StorageSkuSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided StorageSkuSpec
+func (t *ActivityLogSpec_Request_Body) MergeStorageSkuSpec(v StorageSkuSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsSubnetSpec returns the union data inside the ActivityLogSpec_Request_Body as a SubnetSpec
+func (t ActivityLogSpec_Request_Body) AsSubnetSpec() (SubnetSpec, error) {
+	var body SubnetSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubnetSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SubnetSpec
+func (t *ActivityLogSpec_Request_Body) FromSubnetSpec(v SubnetSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubnetSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SubnetSpec
+func (t *ActivityLogSpec_Request_Body) MergeSubnetSpec(v SubnetSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsWorkspaceSpec returns the union data inside the ActivityLogSpec_Request_Body as a WorkspaceSpec
+func (t ActivityLogSpec_Request_Body) AsWorkspaceSpec() (WorkspaceSpec, error) {
+	var body WorkspaceSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromWorkspaceSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided WorkspaceSpec
+func (t *ActivityLogSpec_Request_Body) FromWorkspaceSpec(v WorkspaceSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeWorkspaceSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided WorkspaceSpec
+func (t *ActivityLogSpec_Request_Body) MergeWorkspaceSpec(v WorkspaceSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t ActivityLogSpec_Request_Body) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
 }
 
 func (t *ActivityLogSpec_Request_Body) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
+func (t Reference) AsReferenceURN() (ReferenceURN, error) {
+	var body ReferenceURN
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
+func (t *Reference) FromReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
+func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
+func (t Reference) AsReferenceObject() (ReferenceObject, error) {
+	var body ReferenceObject
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
+func (t *Reference) FromReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
+func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t Reference) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *Reference) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -1384,12 +1607,12 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// ListAuditLogs request
-	ListAuditLogs(ctx context.Context, id TenantID, workspace string, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListActivityLogs request
+	ListActivityLogs(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListAuditLogs(ctx context.Context, id TenantID, workspace string, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListAuditLogsRequest(c.Server, id, workspace, params)
+func (c *Client) ListActivityLogs(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListActivityLogsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
 	}
@@ -1400,13 +1623,13 @@ func (c *Client) ListAuditLogs(ctx context.Context, id TenantID, workspace strin
 	return c.Client.Do(req)
 }
 
-// NewListAuditLogsRequest generates requests for ListAuditLogs
-func NewListAuditLogsRequest(server string, id TenantID, workspace string, params *ListAuditLogsParams) (*http.Request, error) {
+// NewListActivityLogsRequest generates requests for ListActivityLogs
+func NewListActivityLogsRequest(server string, tenant Tenant, workspace Workspace, params *ListActivityLogsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1423,7 +1646,7 @@ func NewListAuditLogsRequest(server string, id TenantID, workspace string, param
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/activity-logs", pathParam0, pathParam1)
+	operationPath := fmt.Sprintf("/v1beta1/tenants/%s/workspaces/%s/activity-logs", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -1553,26 +1776,22 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// ListAuditLogsWithResponse request
-	ListAuditLogsWithResponse(ctx context.Context, id TenantID, workspace string, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*ListAuditLogsResponse, error)
+	// ListActivityLogsWithResponse request
+	ListActivityLogsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error)
 }
 
-type ListAuditLogsResponse struct {
+type ListActivityLogsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]ActivityLog    `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON404 *Error404
-	JSON500 *Error500
+	JSON200      *ActivityLogIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r ListAuditLogsResponse) Status() string {
+func (r ListActivityLogsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -1580,41 +1799,38 @@ func (r ListAuditLogsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListAuditLogsResponse) StatusCode() int {
+func (r ListActivityLogsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// ListAuditLogsWithResponse request returning *ListAuditLogsResponse
-func (c *ClientWithResponses) ListAuditLogsWithResponse(ctx context.Context, id TenantID, workspace string, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*ListAuditLogsResponse, error) {
-	rsp, err := c.ListAuditLogs(ctx, id, workspace, params, reqEditors...)
+// ListActivityLogsWithResponse request returning *ListActivityLogsResponse
+func (c *ClientWithResponses) ListActivityLogsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error) {
+	rsp, err := c.ListActivityLogs(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListAuditLogsResponse(rsp)
+	return ParseListActivityLogsResponse(rsp)
 }
 
-// ParseListAuditLogsResponse parses an HTTP response from a ListAuditLogsWithResponse call
-func ParseListAuditLogsResponse(rsp *http.Response) (*ListAuditLogsResponse, error) {
+// ParseListActivityLogsResponse parses an HTTP response from a ListActivityLogsWithResponse call
+func ParseListActivityLogsResponse(rsp *http.Response) (*ListActivityLogsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListAuditLogsResponse{
+	response := &ListActivityLogsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]ActivityLog    `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
-		}
+		var dest ActivityLogIterator
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1641,13 +1857,6 @@ func ParseListAuditLogsResponse(rsp *http.Response) (*ListAuditLogsResponse, err
 		}
 		response.JSON403 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -1662,9 +1871,9 @@ func ParseListAuditLogsResponse(rsp *http.Response) (*ListAuditLogsResponse, err
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// List all Audit Logs
-	// (GET /v1/tenants/{id}/workspaces/{workspace}/activity-logs)
-	ListAuditLogs(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListAuditLogsParams)
+	// List activity logs
+	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/activity-logs)
+	ListActivityLogs(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListActivityLogsParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1676,22 +1885,22 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-// ListAuditLogs operation middleware
-func (siw *ServerInterfaceWrapper) ListAuditLogs(w http.ResponseWriter, r *http.Request) {
+// ListActivityLogs operation middleware
+func (siw *ServerInterfaceWrapper) ListActivityLogs(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1706,7 +1915,7 @@ func (siw *ServerInterfaceWrapper) ListAuditLogs(w http.ResponseWriter, r *http.
 	r = r.WithContext(ctx)
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params ListAuditLogsParams
+	var params ListActivityLogsParams
 
 	// ------------- Optional query parameter "labels" -------------
 
@@ -1736,7 +1945,7 @@ func (siw *ServerInterfaceWrapper) ListAuditLogs(w http.ResponseWriter, r *http.
 
 	// ------------- Optional header parameter "Accept" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListAuditLogsParamsAccept
+		var Accept ListActivityLogsParamsAccept
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
@@ -1754,7 +1963,7 @@ func (siw *ServerInterfaceWrapper) ListAuditLogs(w http.ResponseWriter, r *http.
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListAuditLogs(w, r, id, workspace, params)
+		siw.Handler.ListActivityLogs(w, r, tenant, workspace, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1884,7 +2093,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/activity-logs", wrapper.ListAuditLogs)
+	m.HandleFunc("GET "+options.BaseURL+"/v1beta1/tenants/{tenant}/workspaces/{workspace}/activity-logs", wrapper.ListActivityLogs)
 
 	return m
 }

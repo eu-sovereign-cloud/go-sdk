@@ -23,48 +23,15 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for InstancePlacementStrategyStrategy.
+// Defines values for ResourceState.
 const (
-	AntiAffinity InstancePlacementStrategyStrategy = "anti-affinity"
-	Auto         InstancePlacementStrategyStrategy = "auto"
-	Zone         InstancePlacementStrategyStrategy = "zone"
-)
-
-// Defines values for RegionalResourceMetadataKind.
-const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindLan                  RegionalResourceMetadataKind = "lan"
-	RegionalResourceMetadataKindLocation             RegionalResourceMetadataKind = "location"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindQuota                RegionalResourceMetadataKind = "quota"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
-)
-
-// Defines values for ResourceStatePhase.
-const (
-	ResourceStatePhaseActive    ResourceStatePhase = "active"
-	ResourceStatePhaseCreating  ResourceStatePhase = "creating"
-	ResourceStatePhaseDeleting  ResourceStatePhase = "deleting"
-	ResourceStatePhaseError     ResourceStatePhase = "error"
-	ResourceStatePhasePending   ResourceStatePhase = "pending"
-	ResourceStatePhaseSuspended ResourceStatePhase = "suspended"
-	ResourceStatePhaseUpdating  ResourceStatePhase = "updating"
+	ResourceStateActive    ResourceState = "active"
+	ResourceStateCreating  ResourceState = "creating"
+	ResourceStateDeleting  ResourceState = "deleting"
+	ResourceStateError     ResourceState = "error"
+	ResourceStatePending   ResourceState = "pending"
+	ResourceStateSuspended ResourceState = "suspended"
+	ResourceStateUpdating  ResourceState = "updating"
 )
 
 // Defines values for TypeMetadataKind.
@@ -74,14 +41,12 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindLan                  TypeMetadataKind = "lan"
-	TypeMetadataKindLocation             TypeMetadataKind = "location"
+	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
 	TypeMetadataKindNic                  TypeMetadataKind = "nic"
 	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
 	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindQuota                TypeMetadataKind = "quota"
 	TypeMetadataKindRegion               TypeMetadataKind = "region"
 	TypeMetadataKindRole                 TypeMetadataKind = "role"
 	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
@@ -93,6 +58,11 @@ const (
 	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
 )
 
+// Defines values for VolumeReferenceType.
+const (
+	Virtio VolumeReferenceType = "virtio"
+)
+
 // Defines values for ZonalResourceMetadataKind.
 const (
 	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
@@ -100,14 +70,12 @@ const (
 	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
 	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
 	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
-	ZonalResourceMetadataKindLan                  ZonalResourceMetadataKind = "lan"
-	ZonalResourceMetadataKindLocation             ZonalResourceMetadataKind = "location"
+	ZonalResourceMetadataKindNetwork              ZonalResourceMetadataKind = "network"
 	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
 	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
 	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
 	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
 	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
-	ZonalResourceMetadataKindQuota                ZonalResourceMetadataKind = "quota"
 	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
 	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
 	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
@@ -126,13 +94,6 @@ const (
 	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
 )
 
-// Defines values for ListComputeQuotasParamsAccept.
-const (
-	ListComputeQuotasParamsAcceptApplicationjson            ListComputeQuotasParamsAccept = "application/json"
-	ListComputeQuotasParamsAcceptApplicationjsonDeletedOnly ListComputeQuotasParamsAccept = "application/json; deleted=only"
-	ListComputeQuotasParamsAcceptApplicationjsonDeletedTrue ListComputeQuotasParamsAccept = "application/json; deleted=true"
-)
-
 // Defines values for ListSkusParamsAccept.
 const (
 	ListSkusParamsAcceptApplicationjson            ListSkusParamsAccept = "application/json"
@@ -142,70 +103,252 @@ const (
 
 // Defines values for ListInstancesParamsAccept.
 const (
-	ListInstancesParamsAcceptApplicationjson            ListInstancesParamsAccept = "application/json"
-	ListInstancesParamsAcceptApplicationjsonDeletedOnly ListInstancesParamsAccept = "application/json; deleted=only"
-	ListInstancesParamsAcceptApplicationjsonDeletedTrue ListInstancesParamsAccept = "application/json; deleted=true"
+	Applicationjson            ListInstancesParamsAccept = "application/json"
+	ApplicationjsonDeletedOnly ListInstancesParamsAccept = "application/json; deleted=only"
+	ApplicationjsonDeletedTrue ListInstancesParamsAccept = "application/json; deleted=true"
 )
 
-// Error A generic error response
+// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
 type Error struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error400 defines model for Error400.
 type Error400 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error401 defines model for Error401.
 type Error401 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error403 defines model for Error403.
 type Error403 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error404 defines model for Error404.
 type Error404 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
+}
+
+// Error409 defines model for Error409.
+type Error409 struct {
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error412 defines model for Error412.
 type Error412 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error422 defines model for Error422.
 type Error422 struct {
-	Errors []ErrorDetail `json:"errors"`
+	// Detail A human-readable explanation specific to this occurrence of the problem.
+	Detail *string `json:"detail,omitempty"`
+
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
+	// Meta A meta object containing non-standard meta-information about the error.
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
+
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
+
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
+	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // Error500 defines model for Error500.
 type Error500 struct {
-	Errors []ErrorDetail `json:"errors"`
-}
-
-// ErrorDetail A detailed error response
-type ErrorDetail struct {
-	// Code An application-specific error code, expressed as a string value.
-	Code string `json:"code"`
-
 	// Detail A human-readable explanation specific to this occurrence of the problem.
 	Detail *string `json:"detail,omitempty"`
 
+	// Instance A URI reference that identifies the specific occurrence of the problem.
+	// It may or may not yield further information if dereferenced.
+	Instance string `json:"instance"`
+
 	// Meta A meta object containing non-standard meta-information about the error.
-	Meta map[string]interface{} `json:"meta"`
+	Meta    *map[string]interface{} `json:"meta,omitempty"`
+	Sources *[]ErrorSource          `json:"sources,omitempty"`
 
-	// Source An object containing references to the source of the error.
-	Source *ErrorSource `json:"source,omitempty"`
+	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
+	// generated by the origin server for this occurrence of the problem.
+	Status float32 `json:"status"`
 
-	// Status The HTTP status code applicable to this problem, expressed as a string value.
-	Status string `json:"status"`
-
-	// Title A short, human-readable summary of the problem.
+	// Title A short, human-readable summary of the problem
+	// type.  It SHOULD NOT change from occurrence to occurrence of the
+	// problem, except for purposes of localization (e.g., using
+	// proactive content negotiation; see [RFC7231], Section 3.4).
 	Title string `json:"title"`
+
+	// Type The type of error, expressed as a URI.
+	Type string `json:"type"`
 }
 
 // ErrorSource An object containing references to the source of the error.
@@ -220,137 +363,186 @@ type ErrorSource struct {
 // Instance defines model for Instance.
 type Instance struct {
 	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
 	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
+	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
+	Extensions *map[string]string `json:"extensions,omitempty"`
 
 	// Labels User-defined key/value pairs that are mutable and can be used to
 	// organize and categorize resources. They can be used to filter resources.
-	Labels   *map[string]string     `json:"labels,omitempty"`
+	// The number of labels is eventually limited by the CSP.
+	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
 	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
-	Spec     InstanceSpec           `json:"spec"`
-	Status   *InstanceStatus        `json:"status,omitempty"`
+
+	// Spec Specification of the instance, including its SKU, network configuration, and storage options.
+	Spec InstanceSpec `json:"spec"`
+
+	// Status Current status of the instance.
+	Status *InstanceStatus `json:"status,omitempty"`
 }
 
-// InstanceNetwork defines model for InstanceNetwork.
-type InstanceNetwork struct {
-	// OtherNics Additional NICs attached to this instance
-	OtherNics *[]InstanceNicRef `json:"otherNics,omitempty"`
+// InstanceIterator Iterator for instances
+type InstanceIterator struct {
+	// Items List of instances
+	Items []Instance `json:"items"`
 
-	// PrimaryNicRef Reference to the primary NIC for this instance
-	PrimaryNicRef *string `json:"primaryNicRef,omitempty"`
+	// Metadata Metadata for response objects.
+	Metadata ResponseMetadata `json:"metadata"`
 }
 
-// InstanceNicRef defines model for InstanceNicRef.
-type InstanceNicRef struct {
-	NicRef *string `json:"nicRef,omitempty"`
-	Slot   *int    `json:"slot,omitempty"`
-}
-
-// InstancePlacementStrategy defines model for InstancePlacementStrategy.
-type InstancePlacementStrategy struct {
-	AntiAffinityGroup *string                            `json:"antiAffinityGroup,omitempty"`
-	Strategy          *InstancePlacementStrategyStrategy `json:"strategy,omitempty"`
-	Zone              *string                            `json:"zone,omitempty"`
-}
-
-// InstancePlacementStrategyStrategy defines model for InstancePlacementStrategy.Strategy.
-type InstancePlacementStrategyStrategy string
-
-// InstanceSku Represents a Stock Keeping Unit (SKU) for compute instances.
-//
-// Properties, capabilites and extensions can also be found in the metadata.labels sections for filtering.
+// InstanceSku defines model for InstanceSku.
 type InstanceSku struct {
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-	Spec     *InstanceSkuSpec          `json:"spec,omitempty"`
+	// Annotations System-defined key/value pairs to annotate the resource.
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
-	// Status Current status of the resource
-	Status *Status `json:"status,omitempty"`
+	// Extensions System-defined key/value pairs to document available extensions.
+	Extensions *map[string]string `json:"extensions,omitempty"`
+
+	// Labels System-defined key/value pairs to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// InstanceSkuCapability Instance performance capabilities
-type InstanceSkuCapability struct {
-	BenchmarkPoints *int `json:"benchmarkPoints,omitempty"`
-	RamGB           *int `json:"ramGB,omitempty"`
-	VCPU            *int `json:"vCPU,omitempty"`
-}
-
-// InstanceSkuSpec defines model for InstanceSkuSpec.
+// InstanceSkuSpec Specification of the instance SKU, including its capabilities and extensions.
 type InstanceSkuSpec struct {
-	// Capabilities Instance performance capabilities
-	Capabilities *InstanceSkuCapability `json:"capabilities,omitempty"`
-	Description  *string                `json:"description,omitempty"`
+	// Ram The amount of RAM (Random Access Memory) allocated to the instance SKU in gigabytes.
+	// This value represents the total memory available to the instance.
+	Ram int `json:"ram"`
 
-	// Extensions Additional instance feature extensions
-	Extensions *[]string `json:"extensions,omitempty"`
-
-	// MandatoryParameters Mandatory parameters for block storage resources
-	MandatoryParameters *[]string `json:"mandatoryParameters,omitempty"`
-
-	// Provider Provider namespace for instance SKUs
-	Provider *string `json:"provider,omitempty"`
-	Tier     *string `json:"tier,omitempty"`
+	// VCPU The number of virtual CPUs (vCPUs) allocated to the instance SKU.
+	// This value represents the number of cores visible to the operating system.
+	// It does not specify the number of physical processors or hyper-threads available.
+	VCPU int `json:"vCPU"`
 }
 
-// InstanceSpec defines model for InstanceSpec.
+// InstanceSpec Specification of the instance, including its SKU, network configuration, and storage options.
 type InstanceSpec struct {
-	Network         *InstanceNetwork `json:"network,omitempty"`
-	OperatingSystem *struct {
-		CloudInitData *struct {
-			// SshKeyExternalRef Provider-specific references to SSH keys used in cloud-init vendorData.
-			// These references are used to inject SSH public keys during instance initialization
-			// through cloud-init's vendor data configuration.
-			SshKeyExternalRef *[]string `json:"sshKeyExternalRef,omitempty"`
+	// AdditionalNicRefs Additional NICs attached to this instance
+	AdditionalNicRefs *[]Reference `json:"additionalNicRefs,omitempty"`
 
-			// UserData Cloud-init user data for instance initialization
-			// Example cloud-init user configuration with SSH key:
-			// ```yaml
-			// #cloud-config
-			// packages:
-			//   - nginx
-			// ```
-			UserData *string `json:"userData,omitempty"`
-		} `json:"cloudInitData,omitempty"`
+	// AntiAffinityGroup Anti-affinity group to which this instance belongs.
+	// Instances in the same anti-affinity group are placed on different physical hosts.
+	// The number of maximum instances in an anti-affinity group is provider-specific.
+	AntiAffinityGroup *string `json:"antiAffinityGroup,omitempty"`
 
-		// OsBlockStorageRef Represents a connection between a Block Storage and a device
-		OsBlockStorageRef *VolumeAttachment `json:"osBlockStorageRef,omitempty"`
-	} `json:"operatingSystem,omitempty"`
-	Profile *struct {
-		// InstanceSkuRef Reference to the SKU used for this instance
-		InstanceSkuRef *string        `json:"instanceSkuRef,omitempty"`
-		SkuExtensions  *SkuExtensions `json:"skuExtensions,omitempty"`
-	} `json:"profile,omitempty"`
-	Storage *struct {
-		DataBlockStorageRef *[]VolumeAttachment `json:"dataBlockStorageRef,omitempty"`
-	} `json:"storage,omitempty"`
+	// BootVolume Represents a connection between a Block Storage and an a user of the block storage.
+	BootVolume  VolumeReference    `json:"bootVolume"`
+	DataVolumes *[]VolumeReference `json:"dataVolumes,omitempty"`
+
+	// PrimaryNicRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	PrimaryNicRef *Reference `json:"primaryNicRef,omitempty"`
+
+	// SecurityGroupRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
+
+	// SkuRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	SkuRef Reference `json:"skuRef"`
+
+	// SshKeys Provider-specific references to SSH keys used in cloud-init vendorData.
+	// These references are used to inject SSH public keys during instance initialization
+	// through cloud-init's vendor data configuration.
+	SshKeys *[]string `json:"sshKeys,omitempty"`
+
+	// UserData Cloud-init user data for instance initialization
+	// Example cloud-init user configuration with SSH key:
+	UserData *string `json:"userData,omitempty"`
+
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
 }
 
-// InstanceStatus defines model for InstanceStatus.
-type InstanceStatus struct {
-	Conditions          *[]StatusCondition         `json:"conditions,omitempty"`
-	DataBlockStorageRef *[]string                  `json:"dataBlockStorageRef,omitempty"`
-	Network             *InstanceNetwork           `json:"network,omitempty"`
-	Placement           *InstancePlacementStrategy `json:"placement,omitempty"`
+// InstanceStatus Current status of the resource
+type InstanceStatus = Status
 
-	// State Generic state definition for all resources. All states are optional, but must not have more states.
-	// If a provider wants to present fine granular states, please use conditions.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// ModificationMetadata Base metadata for all resources with optional location references
+// ModificationMetadata Base metadata for all resources with optional region references
 type ModificationMetadata struct {
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
 
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
 }
 
-// NameMetadata defines model for NameMetadata.
+// NameMetadata Metadata for resource names
 type NameMetadata struct {
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
 	// Each segment follows the same rules.
 	Name string `json:"name"`
 }
+
+// PermissionMetadata Metadata for permission management
+type PermissionMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+	Verb     string `json:"verb"`
+}
+
+// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+// The reference can be used to refer to a resource in other resources.
+type Reference struct {
+	union json.RawMessage
+}
+
+// ReferenceObject A reference to a resource using an object. The object contains the
+// same information as the ReferenceURN, but is represented as a structured object.
+// The advantage of this representation is that it can be used to reference
+// resources in different workspaces or regions without the need to specify
+// the full URN.
+type ReferenceObject struct {
+	// Provider Provider of the resource. If not set, the provider is inferred from the context.
+	Provider *string `json:"provider,omitempty"`
+
+	// Region Region of the resource. If not set, the region is inferred from the context.
+	Region *string `json:"region,omitempty"`
+
+	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
+	// The type is the resource type, and the name is the resource name.
+	Resource string `json:"resource"`
+
+	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
+	Tenant *string `json:"tenant,omitempty"`
+
+	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
+	Workspace *string `json:"workspace,omitempty"`
+}
+
+// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
+// is represented as the full URN (Uniform Resource Name) name of the resource.
+//
+// ### Automatic Prefix Inference
+//
+// In most cases, the prefix of the URN can be automatically derived in the given context.
+// To simplify usage, only the resource type and name might be specified as a reference
+// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+// additional segments separated by slashes.
+//
+// The prefix is automatically inferred from the context. For example, if the resource is a
+// block storage in the same workspace the reference can be specified as
+// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+//
+// For automatic prefix inference, the following rules apply:
+// - the version is inferred from the current resource version
+// - the workspace is inferred from the current workspace
+// - the region is inferred from the current region
+// - the provider is inferred from the type and context of the usage
+//
+// The prefix inference is resolved on admission into the full URN format, which makes it
+// mostly suitable for human use.
+type ReferenceURN = string
 
 // RegionalMetadata Metadata for regional resources
 type RegionalMetadata struct {
@@ -361,75 +553,7 @@ type RegionalMetadata struct {
 	Workspace *string `json:"workspace,omitempty"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
-
-	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-
-	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-}
-
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
-
-// ResourceQuota defines model for ResourceQuota.
-type ResourceQuota struct {
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Represents the ResourceQuota for the single ResourceType of the Resource Provider
-	Spec   *ResourceQuotaSpec   `json:"spec,omitempty"`
-	Status *ResourceQuotaStatus `json:"status,omitempty"`
-}
-
-// ResourceQuotaSpec Represents the ResourceQuota for the single ResourceType of the Resource Provider
-type ResourceQuotaSpec struct {
-	// Value limit number of resourceType instances, set null for unlimited
-	Value *int `json:"value"`
-}
-
-// ResourceQuotaStatus defines model for ResourceQuotaStatus.
-type ResourceQuotaStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
-	Current    *ResourceQuota    `json:"current,omitempty"`
-	Usage      *ResourceQuota    `json:"usage,omitempty"`
-}
-
-// ResourceState Generic state definition for all resources. All states are optional, but must not have more states.
-// If a provider wants to present fine granular states, please use conditions.
-type ResourceState struct {
-	// Phase Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	Phase *ResourceStatePhase `json:"phase,omitempty"`
-}
-
-// ResourceStatePhase Current phase of the resource:
+// ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
 // - creating: not available, creation started
 // - active: available for data layer usage
@@ -437,31 +561,54 @@ type ResourceState struct {
 // - deleting: maybe still available for data layer user, can fail any moment
 // - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
 // - error: failed to fulfill the request; would be related to provider issue or customer related input.
-type ResourceStatePhase string
+type ResourceState string
 
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
+	Provider string `json:"provider"`
+	Resource string `json:"resource"`
+
 	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
 	SkipToken *string `json:"skipToken,omitempty"`
+	Verb      string  `json:"verb"`
 }
 
-// SkuExtensions defines model for SkuExtensions.
-type SkuExtensions map[string]interface{}
+// SkuIterator Iterator for skus
+type SkuIterator struct {
+	// Items List of skus
+	Items []InstanceSku `json:"items"`
+
+	// Metadata Metadata for response objects.
+	Metadata ResponseMetadata `json:"metadata"`
+}
+
+// SkuResourceMetadata Metadata for resource names
+type SkuResourceMetadata = NameMetadata
 
 // Status Current status of the resource
 type Status struct {
 	Conditions []StatusCondition `json:"conditions"`
+
+	// State Current phase of the resource:
+	// - pending: not available, waiting for other resources
+	// - creating: not available, creation started
+	// - active: available for data layer usage
+	// - updating: available for data layer usage
+	// - deleting: maybe still available for data layer user, can fail any moment
+	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
+	State *ResourceState `json:"state,omitempty"`
 }
 
 // StatusCondition StatusCondition describes the state of a resource at a certain point.
 // Conditions are provider-specific and can represent different states depending on the
 // resource type and provider implementation.
 type StatusCondition struct {
-	// LastTransitionTime LastTransitionTime is the last time the condition transitioned from one
+	// LastTransitionAt LastTransitionAt is the last time the condition transitioned from one
 	// status to another. This should be when the underlying condition changed.
 	// If that is not known, then using the time when the API field changed is
 	// acceptable.
-	LastTransitionTime time.Time `json:"lastTransitionTime"`
+	LastTransitionAt time.Time `json:"lastTransitionAt"`
 
 	// Message A human-readable message indicating details about the transition.
 	Message *string `json:"message,omitempty"`
@@ -471,12 +618,31 @@ type StatusCondition struct {
 	// documented by the provider.
 	Reason *string `json:"reason,omitempty"`
 
-	// Status Status of the condition.
-	Status string `json:"status"`
+	// State Current phase of the resource:
+	// - pending: not available, waiting for other resources
+	// - creating: not available, creation started
+	// - active: available for data layer usage
+	// - updating: available for data layer usage
+	// - deleting: maybe still available for data layer user, can fail any moment
+	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
+	State ResourceState `json:"state"`
 
 	// Type Type of condition. The condition type is provider-specific and should
 	// reflect the specific states relevant to your resource.
-	Type string `json:"type"`
+	Type *string `json:"type,omitempty"`
+}
+
+// SystemResourceMetadata Metadata for user-defined resource properties
+type SystemResourceMetadata struct {
+	// Annotations System-defined key/value pairs to annotate the resource.
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Extensions System-defined key/value pairs to document available extensions.
+	Extensions *map[string]string `json:"extensions,omitempty"`
+
+	// Labels System-defined key/value pairs to filter resources.
+	Labels *map[string]string `json:"labels,omitempty"`
 }
 
 // TenantMetadata Metadata for global resources with tenant constraints
@@ -485,48 +651,55 @@ type TenantMetadata struct {
 	Tenant string `json:"tenant"`
 }
 
-// TypeMetadata defines model for TypeMetadata.
+// TypeMetadata Metadata for all resources with type information.
 type TypeMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
 	// Kind Type of the resource
 	Kind TypeMetadataKind `json:"kind"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
 }
 
 // TypeMetadataKind Type of the resource
 type TypeMetadataKind string
 
-// UserResourceMetadata defines model for UserResourceMetadata.
+// UserResourceMetadata Metadata for user-defined resource properties
 type UserResourceMetadata struct {
 	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
 	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
+	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
+	Extensions *map[string]string `json:"extensions,omitempty"`
 
 	// Labels User-defined key/value pairs that are mutable and can be used to
 	// organize and categorize resources. They can be used to filter resources.
+	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// VolumeAttachment Represents a connection between a Block Storage and a device
-type VolumeAttachment struct {
-	ObjectRef  *string                     `json:"objectRef,omitempty"`
-	Properties *VolumeAttachmentProperties `json:"properties,omitempty"`
+// VolumeReference Represents a connection between a Block Storage and an a user of the block storage.
+type VolumeReference struct {
+	// DeviceRef Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	DeviceRef Reference `json:"deviceRef"`
+
+	// Type The connection type depends on the type of device and type of block storage.
+	Type *VolumeReferenceType `json:"type,omitempty"`
 }
 
-// VolumeAttachmentProperties defines model for VolumeAttachmentProperties.
-type VolumeAttachmentProperties struct {
-	// ConnectionType The connection type depends on the type of device and type of block storage.
-	ConnectionType *string `json:"connectionType,omitempty"`
-
-	// DeviceKind the type of device a block-storage is connected to. For now only 'instance' possible
-	DeviceKind *string `json:"deviceKind,omitempty"`
-	DeviceRef  *string `json:"deviceRef,omitempty"`
-}
+// VolumeReferenceType The connection type depends on the type of device and type of block storage.
+type VolumeReferenceType string
 
 // ZonalMetadata Metadata for zonal resources
 type ZonalMetadata struct {
-	// Zone Reference to the specific zone where the resource is located
-	Zone string `json:"zone"`
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
 }
 
 // ZonalResourceMetadata defines model for ZonalResourceMetadata.
@@ -534,41 +707,57 @@ type ZonalResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
-	// DeletionTimestamp If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletionTimestamp time.Time `json:"deletionTimestamp"`
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
 	Kind ZonalResourceMetadataKind `json:"kind"`
 
-	// LastModifiedTimestamp Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedTimestamp time.Time `json:"lastModifiedTimestamp"`
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
 
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
 	// Each segment follows the same rules.
-	Name string `json:"name"`
+	Name     string `json:"name"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
 
 	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
 
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
 	Workspace *string `json:"workspace,omitempty"`
 
-	// Zone Reference to the specific zone where the resource is located
-	Zone string `json:"zone"`
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
 }
 
 // ZonalResourceMetadataKind Type of the resource
 type ZonalResourceMetadataKind string
 
+// Zone Reference to a specific zone within a region
+type Zone = string
+
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
 
 // IfUnmodifiedSince defines model for ifUnmodifiedSince.
-type IfUnmodifiedSince = time.Time
+type IfUnmodifiedSince = int
 
 // LabelSelector defines model for labelSelector.
 type LabelSelector = string
@@ -582,45 +771,11 @@ type ResourceName = string
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// TenantID defines model for tenantID.
-type TenantID = string
+// Tenant defines model for tenant.
+type Tenant = string
 
-// WorkspaceName defines model for workspaceName.
-type WorkspaceName = string
-
-// ListComputeQuotasParams defines parameters for ListComputeQuotas.
-type ListComputeQuotasParams struct {
-	// Labels Filter resources by their labels. Multiple filters are combined with comma.
-	// Filter syntax:
-	//   - Equals: key=value
-	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
-	//   - Numeric: key>value, key<value, key>=value, key<=value
-	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
-
-	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
-
-	// Accept Controls whether deleted resources are included:
-	// - `"application/json"`: Returns only non-deleted resources
-	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
-	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListComputeQuotasParamsAccept `json:"Accept,omitempty"`
-}
-
-// ListComputeQuotasParamsAccept defines parameters for ListComputeQuotas.
-type ListComputeQuotasParamsAccept string
-
-// CreateOrUpdateComputeQuotaParams defines parameters for CreateOrUpdateComputeQuota.
-type CreateOrUpdateComputeQuotaParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
-	// Uses metadata.lastUpdatedTimestamp for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
-}
+// Workspace defines model for workspace.
+type Workspace = string
 
 // ListSkusParams defines parameters for ListSkus.
 type ListSkusParams struct {
@@ -676,18 +831,105 @@ type ListInstancesParams struct {
 // ListInstancesParamsAccept defines parameters for ListInstances.
 type ListInstancesParamsAccept string
 
-// CreateOrUpdateInstanceParams defines parameters for CreateOrUpdateInstance.
-type CreateOrUpdateInstanceParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified time.
-	// Uses metadata.lastUpdatedTimestamp for comparison.
+// DeleteInstanceParams defines parameters for DeleteInstance.
+type DeleteInstanceParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// CreateOrUpdateComputeQuotaJSONRequestBody defines body for CreateOrUpdateComputeQuota for application/json ContentType.
-type CreateOrUpdateComputeQuotaJSONRequestBody = ResourceQuota
+// CreateOrUpdateInstanceParams defines parameters for CreateOrUpdateInstance.
+type CreateOrUpdateInstanceParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// RestartInstanceParams defines parameters for RestartInstance.
+type RestartInstanceParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// StartInstanceParams defines parameters for StartInstance.
+type StartInstanceParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// StopInstanceParams defines parameters for StopInstance.
+type StopInstanceParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
 
 // CreateOrUpdateInstanceJSONRequestBody defines body for CreateOrUpdateInstance for application/json ContentType.
 type CreateOrUpdateInstanceJSONRequestBody = Instance
+
+// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
+func (t Reference) AsReferenceURN() (ReferenceURN, error) {
+	var body ReferenceURN
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
+func (t *Reference) FromReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
+func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
+func (t Reference) AsReferenceObject() (ReferenceObject, error) {
+	var body ReferenceObject
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
+func (t *Reference) FromReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
+func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t Reference) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *Reference) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -762,46 +1004,38 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// ListComputeQuotas request
-	ListComputeQuotas(ctx context.Context, id TenantID, params *ListComputeQuotasParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateOrUpdateComputeQuotaWithBody request with any body
-	CreateOrUpdateComputeQuotaWithBody(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateOrUpdateComputeQuota(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, body CreateOrUpdateComputeQuotaJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListSkus request
-	ListSkus(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSku request
-	GetSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInstances request
-	ListInstances(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListInstances(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteInstance request
-	DeleteInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetInstance request
-	GetInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateInstanceWithBody request with any body
-	CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInstanceWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PowerCycleInstance request
-	PowerCycleInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// RestartInstance request
+	RestartInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *RestartInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PowerOffInstance request
-	PowerOffInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// StartInstance request
+	StartInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StartInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PowerOnInstance request
-	PowerOnInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// StopInstance request
+	StopInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StopInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListComputeQuotas(ctx context.Context, id TenantID, params *ListComputeQuotasParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListComputeQuotasRequest(c.Server, id, params)
+func (c *Client) ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSkusRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
 	}
@@ -812,8 +1046,8 @@ func (c *Client) ListComputeQuotas(ctx context.Context, id TenantID, params *Lis
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateComputeQuotaWithBody(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateComputeQuotaRequestWithBody(c.Server, id, resourceType, params, contentType, body)
+func (c *Client) GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSkuRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
 	}
@@ -824,8 +1058,8 @@ func (c *Client) CreateOrUpdateComputeQuotaWithBody(ctx context.Context, id Tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateComputeQuota(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, body CreateOrUpdateComputeQuotaJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateComputeQuotaRequest(c.Server, id, resourceType, params, body)
+func (c *Client) ListInstances(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListInstancesRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
 	}
@@ -836,8 +1070,8 @@ func (c *Client) CreateOrUpdateComputeQuota(ctx context.Context, id TenantID, re
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListSkus(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSkusRequest(c.Server, id, params)
+func (c *Client) DeleteInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteInstanceRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -848,8 +1082,8 @@ func (c *Client) ListSkus(ctx context.Context, id TenantID, params *ListSkusPara
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSku(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetSkuRequest(c.Server, id, name)
+func (c *Client) GetInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetInstanceRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
 	}
@@ -860,8 +1094,8 @@ func (c *Client) GetSku(ctx context.Context, id TenantID, name ResourceName, req
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListInstances(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListInstancesRequest(c.Server, id, workspace, params)
+func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateInstanceRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -872,8 +1106,8 @@ func (c *Client) ListInstances(ctx context.Context, id TenantID, workspace strin
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteInstanceRequest(c.Server, id, workspace, name)
+func (c *Client) CreateOrUpdateInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateInstanceRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -884,8 +1118,8 @@ func (c *Client) DeleteInstance(ctx context.Context, id TenantID, workspace Work
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetInstanceRequest(c.Server, id, workspace, name)
+func (c *Client) RestartInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *RestartInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestartInstanceRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -896,8 +1130,8 @@ func (c *Client) GetInstance(ctx context.Context, id TenantID, workspace Workspa
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateInstanceRequestWithBody(c.Server, id, workspace, name, params, contentType, body)
+func (c *Client) StartInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StartInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStartInstanceRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -908,8 +1142,8 @@ func (c *Client) CreateOrUpdateInstanceWithBody(ctx context.Context, id TenantID
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateInstanceRequest(c.Server, id, workspace, name, params, body)
+func (c *Client) StopInstance(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StopInstanceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStopInstanceRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -918,223 +1152,15 @@ func (c *Client) CreateOrUpdateInstance(ctx context.Context, id TenantID, worksp
 		return nil, err
 	}
 	return c.Client.Do(req)
-}
-
-func (c *Client) PowerCycleInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPowerCycleInstanceRequest(c.Server, id, workspace, name)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) PowerOffInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPowerOffInstanceRequest(c.Server, id, workspace, name)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) PowerOnInstance(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPowerOnInstanceRequest(c.Server, id, workspace, name)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// NewListComputeQuotasRequest generates requests for ListComputeQuotas
-func NewListComputeQuotasRequest(server string, id TenantID, params *ListComputeQuotasParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/quotas", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Labels != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "labels", runtime.ParamLocationQuery, *params.Labels); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.SkipToken != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "skipToken", runtime.ParamLocationQuery, *params.SkipToken); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.Accept != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "Accept", runtime.ParamLocationHeader, *params.Accept)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Accept", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewCreateOrUpdateComputeQuotaRequest calls the generic CreateOrUpdateComputeQuota builder with application/json body
-func NewCreateOrUpdateComputeQuotaRequest(server string, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, body CreateOrUpdateComputeQuotaJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateComputeQuotaRequestWithBody(server, id, resourceType, params, "application/json", bodyReader)
-}
-
-// NewCreateOrUpdateComputeQuotaRequestWithBody generates requests for CreateOrUpdateComputeQuota with any type of body
-func NewCreateOrUpdateComputeQuotaRequestWithBody(server string, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "resourceType", runtime.ParamLocationPath, resourceType)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/quotas/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.IfUnmodifiedSince != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("if-unmodified-since", headerParam0)
-		}
-
-	}
-
-	return req, nil
 }
 
 // NewListSkusRequest generates requests for ListSkus
-func NewListSkusRequest(server string, id TenantID, params *ListSkusParams) (*http.Request, error) {
+func NewListSkusRequest(server string, tenant Tenant, params *ListSkusParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1232,12 +1258,12 @@ func NewListSkusRequest(server string, id TenantID, params *ListSkusParams) (*ht
 }
 
 // NewGetSkuRequest generates requests for GetSku
-func NewGetSkuRequest(server string, id TenantID, name ResourceName) (*http.Request, error) {
+func NewGetSkuRequest(server string, tenant Tenant, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1273,12 +1299,12 @@ func NewGetSkuRequest(server string, id TenantID, name ResourceName) (*http.Requ
 }
 
 // NewListInstancesRequest generates requests for ListInstances
-func NewListInstancesRequest(server string, id TenantID, workspace string, params *ListInstancesParams) (*http.Request, error) {
+func NewListInstancesRequest(server string, tenant Tenant, workspace Workspace, params *ListInstancesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1383,12 +1409,12 @@ func NewListInstancesRequest(server string, id TenantID, workspace string, param
 }
 
 // NewDeleteInstanceRequest generates requests for DeleteInstance
-func NewDeleteInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
+func NewDeleteInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInstanceParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1427,16 +1453,31 @@ func NewDeleteInstanceRequest(server string, id TenantID, workspace WorkspaceNam
 		return nil, err
 	}
 
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
+	}
+
 	return req, nil
 }
 
 // NewGetInstanceRequest generates requests for GetInstance
-func NewGetInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
+func NewGetInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1479,23 +1520,23 @@ func NewGetInstanceRequest(server string, id TenantID, workspace WorkspaceName, 
 }
 
 // NewCreateOrUpdateInstanceRequest calls the generic CreateOrUpdateInstance builder with application/json body
-func NewCreateOrUpdateInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateInstanceRequestWithBody(server, id, workspace, name, params, "application/json", bodyReader)
+	return NewCreateOrUpdateInstanceRequestWithBody(server, tenant, workspace, name, params, "application/json", bodyReader)
 }
 
 // NewCreateOrUpdateInstanceRequestWithBody generates requests for CreateOrUpdateInstance with any type of body
-func NewCreateOrUpdateInstanceRequestWithBody(server string, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateInstanceRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1554,13 +1595,13 @@ func NewCreateOrUpdateInstanceRequestWithBody(server string, id TenantID, worksp
 	return req, nil
 }
 
-// NewPowerCycleInstanceRequest generates requests for PowerCycleInstance
-func NewPowerCycleInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
+// NewRestartInstanceRequest generates requests for RestartInstance
+func NewRestartInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *RestartInstanceParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1584,7 +1625,7 @@ func NewPowerCycleInstanceRequest(server string, id TenantID, workspace Workspac
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/power-cycle", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/restart", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -1597,18 +1638,33 @@ func NewPowerCycleInstanceRequest(server string, id TenantID, workspace Workspac
 	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
 	}
 
 	return req, nil
 }
 
-// NewPowerOffInstanceRequest generates requests for PowerOffInstance
-func NewPowerOffInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
+// NewStartInstanceRequest generates requests for StartInstance
+func NewStartInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *StartInstanceParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1632,7 +1688,7 @@ func NewPowerOffInstanceRequest(server string, id TenantID, workspace WorkspaceN
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/power-off", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/start", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -1645,18 +1701,33 @@ func NewPowerOffInstanceRequest(server string, id TenantID, workspace WorkspaceN
 	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
 	}
 
 	return req, nil
 }
 
-// NewPowerOnInstanceRequest generates requests for PowerOnInstance
-func NewPowerOnInstanceRequest(server string, id TenantID, workspace WorkspaceName, name ResourceName) (*http.Request, error) {
+// NewStopInstanceRequest generates requests for StopInstance
+func NewStopInstanceRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *StopInstanceParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -1680,7 +1751,7 @@ func NewPowerOnInstanceRequest(server string, id TenantID, workspace WorkspaceNa
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/power-on", pathParam0, pathParam1, pathParam2)
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/instances/%s/stop", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -1693,6 +1764,21 @@ func NewPowerOnInstanceRequest(server string, id TenantID, workspace WorkspaceNa
 	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
 	}
 
 	return req, nil
@@ -1741,114 +1827,44 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// ListComputeQuotasWithResponse request
-	ListComputeQuotasWithResponse(ctx context.Context, id TenantID, params *ListComputeQuotasParams, reqEditors ...RequestEditorFn) (*ListComputeQuotasResponse, error)
-
-	// CreateOrUpdateComputeQuotaWithBodyWithResponse request with any body
-	CreateOrUpdateComputeQuotaWithBodyWithResponse(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateComputeQuotaResponse, error)
-
-	CreateOrUpdateComputeQuotaWithResponse(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, body CreateOrUpdateComputeQuotaJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateComputeQuotaResponse, error)
-
 	// ListSkusWithResponse request
-	ListSkusWithResponse(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
+	ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
 
 	// GetSkuWithResponse request
-	GetSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
+	GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
 
 	// ListInstancesWithResponse request
-	ListInstancesWithResponse(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*ListInstancesResponse, error)
+	ListInstancesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*ListInstancesResponse, error)
 
 	// DeleteInstanceWithResponse request
-	DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error)
+	DeleteInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInstanceParams, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error)
 
 	// GetInstanceWithResponse request
-	GetInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error)
+	GetInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error)
 
 	// CreateOrUpdateInstanceWithBodyWithResponse request with any body
-	CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
+	CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
 
-	CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
+	CreateOrUpdateInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error)
 
-	// PowerCycleInstanceWithResponse request
-	PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error)
+	// RestartInstanceWithResponse request
+	RestartInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *RestartInstanceParams, reqEditors ...RequestEditorFn) (*RestartInstanceResponse, error)
 
-	// PowerOffInstanceWithResponse request
-	PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error)
+	// StartInstanceWithResponse request
+	StartInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StartInstanceParams, reqEditors ...RequestEditorFn) (*StartInstanceResponse, error)
 
-	// PowerOnInstanceWithResponse request
-	PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error)
-}
-
-type ListComputeQuotasResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]ResourceQuota  `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON404 *Error404
-	JSON500 *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r ListComputeQuotasResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListComputeQuotasResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateOrUpdateComputeQuotaResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateOrUpdateComputeQuotaResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateOrUpdateComputeQuotaResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
+	// StopInstanceWithResponse request
+	StopInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StopInstanceParams, reqEditors ...RequestEditorFn) (*StopInstanceResponse, error)
 }
 
 type ListSkusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]InstanceSku    `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON404 *Error404
-	JSON500 *Error500
+	JSON200      *SkuIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1897,15 +1913,11 @@ func (r GetSkuResponse) StatusCode() int {
 type ListInstancesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Items    *[]Instance       `json:"items,omitempty"`
-		Metadata *ResponseMetadata `json:"metadata,omitempty"`
-	}
-	JSON400 *Error400
-	JSON401 *Error401
-	JSON403 *Error403
-	JSON404 *Error404
-	JSON500 *Error500
+	JSON200      *InstanceIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1931,6 +1943,8 @@ type DeleteInstanceResponse struct {
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
 	JSON500      *Error500
 }
 
@@ -1980,10 +1994,13 @@ func (r GetInstanceResponse) StatusCode() int {
 type CreateOrUpdateInstanceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *Instance
+	JSON201      *Instance
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
 	JSON412      *Error412
 	JSON422      *Error422
 	JSON500      *Error500
@@ -2005,18 +2022,19 @@ func (r CreateOrUpdateInstanceResponse) StatusCode() int {
 	return 0
 }
 
-type PowerCycleInstanceResponse struct {
+type RestartInstanceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
 	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r PowerCycleInstanceResponse) Status() string {
+func (r RestartInstanceResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2024,25 +2042,26 @@ func (r PowerCycleInstanceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PowerCycleInstanceResponse) StatusCode() int {
+func (r RestartInstanceResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PowerOffInstanceResponse struct {
+type StartInstanceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
 	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r PowerOffInstanceResponse) Status() string {
+func (r StartInstanceResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2050,25 +2069,26 @@ func (r PowerOffInstanceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PowerOffInstanceResponse) StatusCode() int {
+func (r StartInstanceResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PowerOnInstanceResponse struct {
+type StopInstanceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON400      *Error400
 	JSON401      *Error401
 	JSON403      *Error403
 	JSON404      *Error404
+	JSON409      *Error409
 	JSON500      *Error500
 }
 
 // Status returns HTTPResponse.Status
-func (r PowerOnInstanceResponse) Status() string {
+func (r StopInstanceResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2076,42 +2096,16 @@ func (r PowerOnInstanceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PowerOnInstanceResponse) StatusCode() int {
+func (r StopInstanceResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
-}
-
-// ListComputeQuotasWithResponse request returning *ListComputeQuotasResponse
-func (c *ClientWithResponses) ListComputeQuotasWithResponse(ctx context.Context, id TenantID, params *ListComputeQuotasParams, reqEditors ...RequestEditorFn) (*ListComputeQuotasResponse, error) {
-	rsp, err := c.ListComputeQuotas(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListComputeQuotasResponse(rsp)
-}
-
-// CreateOrUpdateComputeQuotaWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateComputeQuotaResponse
-func (c *ClientWithResponses) CreateOrUpdateComputeQuotaWithBodyWithResponse(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateComputeQuotaResponse, error) {
-	rsp, err := c.CreateOrUpdateComputeQuotaWithBody(ctx, id, resourceType, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateComputeQuotaResponse(rsp)
-}
-
-func (c *ClientWithResponses) CreateOrUpdateComputeQuotaWithResponse(ctx context.Context, id TenantID, resourceType string, params *CreateOrUpdateComputeQuotaParams, body CreateOrUpdateComputeQuotaJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateComputeQuotaResponse, error) {
-	rsp, err := c.CreateOrUpdateComputeQuota(ctx, id, resourceType, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateComputeQuotaResponse(rsp)
 }
 
 // ListSkusWithResponse request returning *ListSkusResponse
-func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, id TenantID, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
-	rsp, err := c.ListSkus(ctx, id, params, reqEditors...)
+func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
+	rsp, err := c.ListSkus(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -2119,8 +2113,8 @@ func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, id Tenan
 }
 
 // GetSkuWithResponse request returning *GetSkuResponse
-func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, id TenantID, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
-	rsp, err := c.GetSku(ctx, id, name, reqEditors...)
+func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
+	rsp, err := c.GetSku(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -2128,8 +2122,8 @@ func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, id TenantI
 }
 
 // ListInstancesWithResponse request returning *ListInstancesResponse
-func (c *ClientWithResponses) ListInstancesWithResponse(ctx context.Context, id TenantID, workspace string, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*ListInstancesResponse, error) {
-	rsp, err := c.ListInstances(ctx, id, workspace, params, reqEditors...)
+func (c *ClientWithResponses) ListInstancesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInstancesParams, reqEditors ...RequestEditorFn) (*ListInstancesResponse, error) {
+	rsp, err := c.ListInstances(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -2137,8 +2131,8 @@ func (c *ClientWithResponses) ListInstancesWithResponse(ctx context.Context, id 
 }
 
 // DeleteInstanceWithResponse request returning *DeleteInstanceResponse
-func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error) {
-	rsp, err := c.DeleteInstance(ctx, id, workspace, name, reqEditors...)
+func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInstanceParams, reqEditors ...RequestEditorFn) (*DeleteInstanceResponse, error) {
+	rsp, err := c.DeleteInstance(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -2146,8 +2140,8 @@ func (c *ClientWithResponses) DeleteInstanceWithResponse(ctx context.Context, id
 }
 
 // GetInstanceWithResponse request returning *GetInstanceResponse
-func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error) {
-	rsp, err := c.GetInstance(ctx, id, workspace, name, reqEditors...)
+func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetInstanceResponse, error) {
+	rsp, err := c.GetInstance(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -2155,179 +2149,47 @@ func (c *ClientWithResponses) GetInstanceWithResponse(ctx context.Context, id Te
 }
 
 // CreateOrUpdateInstanceWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateInstanceResponse
-func (c *ClientWithResponses) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
-	rsp, err := c.CreateOrUpdateInstanceWithBody(ctx, id, workspace, name, params, contentType, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
+	rsp, err := c.CreateOrUpdateInstanceWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateInstanceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
-	rsp, err := c.CreateOrUpdateInstance(ctx, id, workspace, name, params, body, reqEditors...)
+func (c *ClientWithResponses) CreateOrUpdateInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInstanceParams, body CreateOrUpdateInstanceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInstanceResponse, error) {
+	rsp, err := c.CreateOrUpdateInstance(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateInstanceResponse(rsp)
 }
 
-// PowerCycleInstanceWithResponse request returning *PowerCycleInstanceResponse
-func (c *ClientWithResponses) PowerCycleInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerCycleInstanceResponse, error) {
-	rsp, err := c.PowerCycleInstance(ctx, id, workspace, name, reqEditors...)
+// RestartInstanceWithResponse request returning *RestartInstanceResponse
+func (c *ClientWithResponses) RestartInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *RestartInstanceParams, reqEditors ...RequestEditorFn) (*RestartInstanceResponse, error) {
+	rsp, err := c.RestartInstance(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePowerCycleInstanceResponse(rsp)
+	return ParseRestartInstanceResponse(rsp)
 }
 
-// PowerOffInstanceWithResponse request returning *PowerOffInstanceResponse
-func (c *ClientWithResponses) PowerOffInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOffInstanceResponse, error) {
-	rsp, err := c.PowerOffInstance(ctx, id, workspace, name, reqEditors...)
+// StartInstanceWithResponse request returning *StartInstanceResponse
+func (c *ClientWithResponses) StartInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StartInstanceParams, reqEditors ...RequestEditorFn) (*StartInstanceResponse, error) {
+	rsp, err := c.StartInstance(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePowerOffInstanceResponse(rsp)
+	return ParseStartInstanceResponse(rsp)
 }
 
-// PowerOnInstanceWithResponse request returning *PowerOnInstanceResponse
-func (c *ClientWithResponses) PowerOnInstanceWithResponse(ctx context.Context, id TenantID, workspace WorkspaceName, name ResourceName, reqEditors ...RequestEditorFn) (*PowerOnInstanceResponse, error) {
-	rsp, err := c.PowerOnInstance(ctx, id, workspace, name, reqEditors...)
+// StopInstanceWithResponse request returning *StopInstanceResponse
+func (c *ClientWithResponses) StopInstanceWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *StopInstanceParams, reqEditors ...RequestEditorFn) (*StopInstanceResponse, error) {
+	rsp, err := c.StopInstance(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePowerOnInstanceResponse(rsp)
-}
-
-// ParseListComputeQuotasResponse parses an HTTP response from a ListComputeQuotasWithResponse call
-func ParseListComputeQuotasResponse(rsp *http.Response) (*ListComputeQuotasResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListComputeQuotasResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]ResourceQuota  `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateOrUpdateComputeQuotaResponse parses an HTTP response from a CreateOrUpdateComputeQuotaWithResponse call
-func ParseCreateOrUpdateComputeQuotaResponse(rsp *http.Response) (*CreateOrUpdateComputeQuotaResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateOrUpdateComputeQuotaResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON412 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
+	return ParseStopInstanceResponse(rsp)
 }
 
 // ParseListSkusResponse parses an HTTP response from a ListSkusWithResponse call
@@ -2345,10 +2207,7 @@ func ParseListSkusResponse(rsp *http.Response) (*ListSkusResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]InstanceSku    `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
-		}
+		var dest SkuIterator
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2374,13 +2233,6 @@ func ParseListSkusResponse(rsp *http.Response) (*ListSkusResponse, error) {
 			return nil, err
 		}
 		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2470,10 +2322,7 @@ func ParseListInstancesResponse(rsp *http.Response) (*ListInstancesResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Items    *[]Instance       `json:"items,omitempty"`
-			Metadata *ResponseMetadata `json:"metadata,omitempty"`
-		}
+		var dest InstanceIterator
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2499,13 +2348,6 @@ func ParseListInstancesResponse(rsp *http.Response) (*ListInstancesResponse, err
 			return nil, err
 		}
 		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2560,6 +2402,20 @@ func ParseDeleteInstanceResponse(rsp *http.Response) (*DeleteInstanceResponse, e
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2648,6 +2504,20 @@ func ParseCreateOrUpdateInstanceResponse(rsp *http.Response) (*CreateOrUpdateIns
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Instance
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Instance
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -2675,6 +2545,13 @@ func ParseCreateOrUpdateInstanceResponse(rsp *http.Response) (*CreateOrUpdateIns
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
 		var dest Error412
@@ -2702,15 +2579,15 @@ func ParseCreateOrUpdateInstanceResponse(rsp *http.Response) (*CreateOrUpdateIns
 	return response, nil
 }
 
-// ParsePowerCycleInstanceResponse parses an HTTP response from a PowerCycleInstanceWithResponse call
-func ParsePowerCycleInstanceResponse(rsp *http.Response) (*PowerCycleInstanceResponse, error) {
+// ParseRestartInstanceResponse parses an HTTP response from a RestartInstanceWithResponse call
+func ParseRestartInstanceResponse(rsp *http.Response) (*RestartInstanceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PowerCycleInstanceResponse{
+	response := &RestartInstanceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -2743,6 +2620,13 @@ func ParsePowerCycleInstanceResponse(rsp *http.Response) (*PowerCycleInstanceRes
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2756,15 +2640,15 @@ func ParsePowerCycleInstanceResponse(rsp *http.Response) (*PowerCycleInstanceRes
 	return response, nil
 }
 
-// ParsePowerOffInstanceResponse parses an HTTP response from a PowerOffInstanceWithResponse call
-func ParsePowerOffInstanceResponse(rsp *http.Response) (*PowerOffInstanceResponse, error) {
+// ParseStartInstanceResponse parses an HTTP response from a StartInstanceWithResponse call
+func ParseStartInstanceResponse(rsp *http.Response) (*StartInstanceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PowerOffInstanceResponse{
+	response := &StartInstanceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -2797,6 +2681,13 @@ func ParsePowerOffInstanceResponse(rsp *http.Response) (*PowerOffInstanceRespons
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2810,15 +2701,15 @@ func ParsePowerOffInstanceResponse(rsp *http.Response) (*PowerOffInstanceRespons
 	return response, nil
 }
 
-// ParsePowerOnInstanceResponse parses an HTTP response from a PowerOnInstanceWithResponse call
-func ParsePowerOnInstanceResponse(rsp *http.Response) (*PowerOnInstanceResponse, error) {
+// ParseStopInstanceResponse parses an HTTP response from a StopInstanceWithResponse call
+func ParseStopInstanceResponse(rsp *http.Response) (*StopInstanceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PowerOnInstanceResponse{
+	response := &StopInstanceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -2851,6 +2742,13 @@ func ParsePowerOnInstanceResponse(rsp *http.Response) (*PowerOnInstanceResponse,
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest Error500
@@ -2866,39 +2764,33 @@ func ParsePowerOnInstanceResponse(rsp *http.Response) (*PowerOnInstanceResponse,
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// List current Compute Provider Resource Quotas
-	// (GET /v1/tenants/{id}/quotas)
-	ListComputeQuotas(w http.ResponseWriter, r *http.Request, id TenantID, params ListComputeQuotasParams)
-	// Create or update the resource quota for the Compute Resource Provider
-	// (PUT /v1/tenants/{id}/quotas/{resourceType})
-	CreateOrUpdateComputeQuota(w http.ResponseWriter, r *http.Request, id TenantID, resourceType string, params CreateOrUpdateComputeQuotaParams)
-	// List available SKUs for compute instances
-	// (GET /v1/tenants/{id}/skus)
-	ListSkus(w http.ResponseWriter, r *http.Request, id TenantID, params ListSkusParams)
-	// Get details of a specific SKU
-	// (GET /v1/tenants/{id}/skus/{name})
-	GetSku(w http.ResponseWriter, r *http.Request, id TenantID, name ResourceName)
-	// List all instances
-	// (GET /v1/tenants/{id}/workspaces/{workspace}/instances)
-	ListInstances(w http.ResponseWriter, r *http.Request, id TenantID, workspace string, params ListInstancesParams)
-	// Delete a specific instance
-	// (DELETE /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	DeleteInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
-	// Get a specific instance
-	// (GET /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	GetInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
-	// Create or update a specific instance
-	// (PUT /v1/tenants/{id}/workspaces/{workspace}/instances/{name})
-	CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName, params CreateOrUpdateInstanceParams)
-	// Power cycle a specific instance
-	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-cycle)
-	PowerCycleInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
-	// Power off a specific instance
-	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-off)
-	PowerOffInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
-	// Power on a specific instance
-	// (POST /v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-on)
-	PowerOnInstance(w http.ResponseWriter, r *http.Request, id TenantID, workspace WorkspaceName, name ResourceName)
+	// List skus
+	// (GET /v1/tenants/{tenant}/skus)
+	ListSkus(w http.ResponseWriter, r *http.Request, tenant Tenant, params ListSkusParams)
+	// Get sku
+	// (GET /v1/tenants/{tenant}/skus/{name})
+	GetSku(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName)
+	// List instances
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/instances)
+	ListInstances(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListInstancesParams)
+	// Delete instance
+	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name})
+	DeleteInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteInstanceParams)
+	// Get instance
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name})
+	GetInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	// Create or update instance
+	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name})
+	CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateInstanceParams)
+	// restart instance
+	// (POST /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/restart)
+	RestartInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params RestartInstanceParams)
+	// start instance
+	// (POST /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/start)
+	StartInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params StartInstanceParams)
+	// stop instance
+	// (POST /v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/stop)
+	StopInstance(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params StopInstanceParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -2910,160 +2802,17 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-// ListComputeQuotas operation middleware
-func (siw *ServerInterfaceWrapper) ListComputeQuotas(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params ListComputeQuotasParams
-
-	// ------------- Optional query parameter "labels" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "labels", r.URL.Query(), &params.Labels)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "labels", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "limit" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "skipToken" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "skipToken", r.URL.Query(), &params.SkipToken)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "skipToken", Err: err})
-		return
-	}
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Accept" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListComputeQuotasParamsAccept
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
-			return
-		}
-
-		params.Accept = &Accept
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListComputeQuotas(w, r, id, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// CreateOrUpdateComputeQuota operation middleware
-func (siw *ServerInterfaceWrapper) CreateOrUpdateComputeQuota(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "id" -------------
-	var id TenantID
-
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "resourceType" -------------
-	var resourceType string
-
-	err = runtime.BindStyledParameterWithOptions("simple", "resourceType", r.PathValue("resourceType"), &resourceType, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "resourceType", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateOrUpdateComputeQuotaParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "if-unmodified-since" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
-			return
-		}
-
-		params.IfUnmodifiedSince = &IfUnmodifiedSince
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateComputeQuota(w, r, id, resourceType, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
 // ListSkus operation middleware
 func (siw *ServerInterfaceWrapper) ListSkus(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
@@ -3122,7 +2871,7 @@ func (siw *ServerInterfaceWrapper) ListSkus(w http.ResponseWriter, r *http.Reque
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListSkus(w, r, id, params)
+		siw.Handler.ListSkus(w, r, tenant, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3137,12 +2886,12 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
@@ -3162,7 +2911,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	r = r.WithContext(ctx)
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetSku(w, r, id, name)
+		siw.Handler.GetSku(w, r, tenant, name)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3177,17 +2926,17 @@ func (siw *ServerInterfaceWrapper) ListInstances(w http.ResponseWriter, r *http.
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace string
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3250,7 +2999,7 @@ func (siw *ServerInterfaceWrapper) ListInstances(w http.ResponseWriter, r *http.
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListInstances(w, r, id, workspace, params)
+		siw.Handler.ListInstances(w, r, tenant, workspace, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3265,17 +3014,17 @@ func (siw *ServerInterfaceWrapper) DeleteInstance(w http.ResponseWriter, r *http
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3298,8 +3047,32 @@ func (siw *ServerInterfaceWrapper) DeleteInstance(w http.ResponseWriter, r *http
 
 	r = r.WithContext(ctx)
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteInstanceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteInstance(w, r, id, workspace, name)
+		siw.Handler.DeleteInstance(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3314,17 +3087,17 @@ func (siw *ServerInterfaceWrapper) GetInstance(w http.ResponseWriter, r *http.Re
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3348,7 +3121,7 @@ func (siw *ServerInterfaceWrapper) GetInstance(w http.ResponseWriter, r *http.Re
 	r = r.WithContext(ctx)
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetInstance(w, r, id, workspace, name)
+		siw.Handler.GetInstance(w, r, tenant, workspace, name)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3363,17 +3136,17 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInstance(w http.ResponseWriter,
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3421,7 +3194,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInstance(w http.ResponseWriter,
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateInstance(w, r, id, workspace, name, params)
+		siw.Handler.CreateOrUpdateInstance(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3431,22 +3204,22 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInstance(w http.ResponseWriter,
 	handler.ServeHTTP(w, r)
 }
 
-// PowerCycleInstance operation middleware
-func (siw *ServerInterfaceWrapper) PowerCycleInstance(w http.ResponseWriter, r *http.Request) {
+// RestartInstance operation middleware
+func (siw *ServerInterfaceWrapper) RestartInstance(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3469,8 +3242,32 @@ func (siw *ServerInterfaceWrapper) PowerCycleInstance(w http.ResponseWriter, r *
 
 	r = r.WithContext(ctx)
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RestartInstanceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PowerCycleInstance(w, r, id, workspace, name)
+		siw.Handler.RestartInstance(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3480,22 +3277,22 @@ func (siw *ServerInterfaceWrapper) PowerCycleInstance(w http.ResponseWriter, r *
 	handler.ServeHTTP(w, r)
 }
 
-// PowerOffInstance operation middleware
-func (siw *ServerInterfaceWrapper) PowerOffInstance(w http.ResponseWriter, r *http.Request) {
+// StartInstance operation middleware
+func (siw *ServerInterfaceWrapper) StartInstance(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3518,8 +3315,32 @@ func (siw *ServerInterfaceWrapper) PowerOffInstance(w http.ResponseWriter, r *ht
 
 	r = r.WithContext(ctx)
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StartInstanceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PowerOffInstance(w, r, id, workspace, name)
+		siw.Handler.StartInstance(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3529,22 +3350,22 @@ func (siw *ServerInterfaceWrapper) PowerOffInstance(w http.ResponseWriter, r *ht
 	handler.ServeHTTP(w, r)
 }
 
-// PowerOnInstance operation middleware
-func (siw *ServerInterfaceWrapper) PowerOnInstance(w http.ResponseWriter, r *http.Request) {
+// StopInstance operation middleware
+func (siw *ServerInterfaceWrapper) StopInstance(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	// ------------- Path parameter "id" -------------
-	var id TenantID
+	// ------------- Path parameter "tenant" -------------
+	var tenant Tenant
 
-	err = runtime.BindStyledParameterWithOptions("simple", "id", r.PathValue("id"), &id, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "id", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
 		return
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspaceName
+	var workspace Workspace
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3567,8 +3388,32 @@ func (siw *ServerInterfaceWrapper) PowerOnInstance(w http.ResponseWriter, r *htt
 
 	r = r.WithContext(ctx)
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StopInstanceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PowerOnInstance(w, r, id, workspace, name)
+		siw.Handler.StopInstance(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -3698,17 +3543,15 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/quotas", wrapper.ListComputeQuotas)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{id}/quotas/{resourceType}", wrapper.CreateOrUpdateComputeQuota)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/skus", wrapper.ListSkus)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/skus/{name}", wrapper.GetSku)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances", wrapper.ListInstances)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}", wrapper.DeleteInstance)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}", wrapper.GetInstance)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}", wrapper.CreateOrUpdateInstance)
-	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-cycle", wrapper.PowerCycleInstance)
-	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-off", wrapper.PowerOffInstance)
-	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{id}/workspaces/{workspace}/instances/{name}/power-on", wrapper.PowerOnInstance)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/skus", wrapper.ListSkus)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/skus/{name}", wrapper.GetSku)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances", wrapper.ListInstances)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}", wrapper.DeleteInstance)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}", wrapper.GetInstance)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}", wrapper.CreateOrUpdateInstance)
+	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/restart", wrapper.RestartInstance)
+	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/start", wrapper.StartInstance)
+	m.HandleFunc("POST "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/instances/{name}/stop", wrapper.StopInstance)
 
 	return m
 }

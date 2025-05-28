@@ -4,12 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	//     "github.com/aws/aws-sdk-go/aws"
-	//     "github.com/aws/aws-sdk-go/aws/session"
-	//     "github.com/aws/aws-sdk-go/service/s3"
-
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 	"k8s.io/utils/ptr"
+
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
 )
 
 type WorkspaceID string
@@ -22,7 +19,7 @@ func (client *RegionClient) Workspaces(ctx context.Context, tid TenantID) (*Iter
 
 	iter := Iterator[workspace.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
-			resp, err := wsClient.ListWorkspacesWithResponse(ctx, workspace.TenantID(tid), &workspace.ListWorkspacesParams{
+			resp, err := wsClient.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -42,7 +39,7 @@ func (client *RegionClient) Workspace(ctx context.Context, tref TenantReference)
 		return nil, err
 	}
 
-	resp, err := wsClient.GetWorkspaceWithResponse(ctx, workspace.TenantID(tref.Tenant), string(tref.Name))
+	resp, err := wsClient.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +56,7 @@ func (client *RegionClient) DeleteWorkspace(ctx context.Context, ws *workspace.W
 	}
 
 	resp, err := wsClient.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
-		IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
+		IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 	})
 	if err != nil {
 		return err
@@ -82,7 +79,7 @@ func (client *RegionClient) SaveWorkspace(ctx context.Context, ws *workspace.Wor
 
 	resp, err := wsClient.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
-			IfUnmodifiedSince: &ws.Metadata.LastModifiedTimestamp,
+			IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 		}, *ws)
 	if err != nil {
 		return err

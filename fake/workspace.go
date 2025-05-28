@@ -10,22 +10,22 @@ import (
 var _ workspace.ServerInterface = (*Server)(nil)
 
 // CreateOrUpdateWorkspace implements workspace.ServerInterface.
-func (s *Server) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id workspace.TenantID, name string, params workspace.CreateOrUpdateWorkspaceParams) {
+func (s *Server) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string, params workspace.CreateOrUpdateWorkspaceParams) {
 	panic("unimplemented")
 }
 
 // DeleteWorkspace implements workspace.ServerInterface.
-func (s *Server) DeleteWorkspace(w http.ResponseWriter, r *http.Request, id workspace.TenantID, name string, params workspace.DeleteWorkspaceParams) {
+func (s *Server) DeleteWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string, params workspace.DeleteWorkspaceParams) {
 	panic("unimplemented")
 }
 
 // GetWorkspace implements workspace.ServerInterface.
-func (s *Server) GetWorkspace(w http.ResponseWriter, r *http.Request, id workspace.TenantID, name string) {
+func (s *Server) GetWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string) {
 	panic("unimplemented")
 }
 
 // ListWorkspaces implements workspace.ServerInterface.
-func (s *Server) ListWorkspaces(w http.ResponseWriter, r *http.Request, id workspace.TenantID, params workspace.ListWorkspacesParams) {
+func (s *Server) ListWorkspaces(w http.ResponseWriter, r *http.Request, id workspace.Tenant, params workspace.ListWorkspacesParams) {
 	var resp workspace.ListWorkspacesResponse
 
 	resp.JSON200 = &workspace.WorkspaceIterator{

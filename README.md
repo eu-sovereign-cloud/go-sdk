@@ -22,8 +22,13 @@ To get started with the project, follow these steps:
 3. Update all external dependencies:
 
     ```sh
-    cd spec && make build
-    cd .. && make clean update all mock
+    make update
+    ```
+
+4. Generate the API clients and mocks:
+
+    ```sh
+    make clean spec generate mock
     ```
 
 ## Testing
