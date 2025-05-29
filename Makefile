@@ -3,7 +3,7 @@ OPENAPI_GENERATOR := github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
 TOOLS_GOMOD := -modfile=./tools/go.mod
 GO_TOOL := $(GO) run $(TOOLS_GOMOD)
 
-PKG := pkg
+PKG := pkg/spec
 SPEC_SRC := spec/spec
 SPEC_DIST := spec/dist/specs
 SPEC_SOURCES := $(shell ls $(SPEC_SRC)/*.yaml)
