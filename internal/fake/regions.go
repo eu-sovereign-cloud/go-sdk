@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
 var _ region.ServerInterface = (*Server)(nil)

@@ -10,6 +10,15 @@ SPEC_SOURCES := $(shell ls $(SPEC_SRC)/*.yaml)
 SCHEMAS_SOURCES := $(SPEC_SOURCES:$(SPEC_SRC)/%.yaml=$(SPEC_DIST)/%.yaml)
 SCHEMAS_FINAL = $(SCHEMAS_SOURCES:$(SPEC_DIST)/%.yaml=$(PKG)/%/api.go)
 
+.PHONY: update	
+update:
+	git pull --recurse-submodules
+	git submodule update --remote --recursive
+
+.PHONY: spec
+spec:
+	sh -c "cd spec && make build"
+
 .PHONY: generate
 generate: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
 
@@ -21,22 +30,17 @@ $(PKG)/%/api.go: $(SPEC_DIST)/%.yaml
 	-$(GO_TOOL) $(OPENAPI_GENERATOR) -alias-types -generate "types,client,std-http" \
 		-package $(shell basename $(shell dirname $@) | cut -d '.' -f 2) -o $@ $<
 
-.PHONY: spec
-spec:
-	sh -c "cd spec && make build"
+.PHONY: mock
+mock: generate
+	$(GO_TOOL) github.com/vektra/mockery/v2
 
-.PHONY: update	
-update:
-	git pull --recurse-submodules
-	git submodule update --remote --recursive
+.PHONY: build
+build:
+	$(GO) build ./...
 
 .PHONY: test
 test:
 	$(GO) test -count=1 -cover -v ./...
-
-.PHONY: mock
-mock: generate
-	$(GO_TOOL) github.com/vektra/mockery/v2
 
 .PHONY: fmt
 fmt:

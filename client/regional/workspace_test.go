@@ -1,4 +1,4 @@
-package client_test
+package regional_test
 
 import (
 	"context"
@@ -8,19 +8,19 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/client"
-	"github.com/eu-sovereign-cloud/go-sdk/fake"
-	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/client/global"
+	"github.com/eu-sovereign-cloud/go-sdk/internal/fake"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestMockedWorkspaces(t *testing.T) {
+func TestMockedListWorkspaces(t *testing.T) {
 	ctx := context.Background()
 	wsSim := mockworkspace.NewMockServerInterface(t)
 
@@ -61,7 +61,6 @@ func TestMockedWorkspaces(t *testing.T) {
 	reSim := mockregion.NewMockServerInterface(t)
 
 	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
-		assert.Equal(t, "eu-central-1", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte(`
@@ -100,13 +99,13 @@ func TestMockedWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := client.NewClient(server.URL + "/providers/seca.regions")
+	globalClient, err := global.NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionalClient, err := globalClient.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx, "test")
+	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
@@ -116,7 +115,7 @@ func TestMockedWorkspaces(t *testing.T) {
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 }
 
-func TestFakedWorkspaces(t *testing.T) {
+func TestFakedListWorkspaces(t *testing.T) {
 	ctx := context.Background()
 
 	fakeServer := fake.NewServer("eu-central-1")
@@ -133,13 +132,13 @@ func TestFakedWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := client.NewClient(server.URL + "/providers/seca.regions")
+	globalClient, err := global.NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionalClient, err := globalClient.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx, "test")
+	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)

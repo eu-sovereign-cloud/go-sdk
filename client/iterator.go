@@ -11,7 +11,7 @@ type IteratorFunc[T any] func(ctx context.Context, skipToken *string) ([]T, *str
 
 // Iterator is a generic iterator that can be used to iterate over a collection of items.
 type Iterator[T any] struct {
-	fn        IteratorFunc[T]
+	Func      IteratorFunc[T]
 	ptr       int
 	buf       []T
 	skipToken *string
@@ -20,7 +20,7 @@ type Iterator[T any] struct {
 // NewIterator creates a new iterator.
 func NewIterator[T any](fn IteratorFunc[T]) *Iterator[T] {
 	return &Iterator[T]{
-		fn: fn,
+		Func: fn,
 	}
 }
 
@@ -39,7 +39,7 @@ func (i *Iterator[T]) Next(ctx context.Context) (*T, error) {
 	}
 
 	// Fetch more items
-	newData, newSkipToken, err := i.fn(ctx, i.skipToken)
+	newData, newSkipToken, err := i.Func(ctx, i.skipToken)
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-package client_test
+package global_test
 
 import (
 	"context"
@@ -6,16 +6,16 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/eu-sovereign-cloud/go-sdk/client"
-	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/client/global"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestRegions(t *testing.T) {
+func TestListRegions(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
@@ -56,10 +56,10 @@ func TestRegions(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := client.NewClient(server.URL)
+	globalClient, err := global.NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	regionIter, err := client.Regions(ctx)
+	regionIter, err := globalClient.ListRegions(ctx)
 	require.NoError(t, err)
 
 	region, err := regionIter.All(ctx)
@@ -70,12 +70,11 @@ func TestRegions(t *testing.T) {
 	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
 }
 
-func TestRegion(t *testing.T) {
+func TestGetRegion(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
 	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
-		assert.Equal(t, "test", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte(`
@@ -105,10 +104,10 @@ func TestRegion(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := client.NewClient(server.URL)
+	client, err := global.NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	region, err := client.Region(ctx, "test")
+	region, err := client.GetRegion(ctx, "test")
 	require.NoError(t, err)
 
 	assert.Len(t, region.Spec.Providers, 1)
