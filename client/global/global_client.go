@@ -8,7 +8,7 @@ import (
 )
 
 type GlobalClient struct {
-	regionClient        region.ClientWithResponsesInterface
+	regionClient region.ClientWithResponsesInterface
 }
 
 func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {

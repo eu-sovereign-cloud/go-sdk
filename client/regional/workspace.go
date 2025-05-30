@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"k8s.io/utils/ptr"
-	
+
 	"github.com/eu-sovereign-cloud/go-sdk/client"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )

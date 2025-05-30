@@ -11,7 +11,7 @@ import (
 type RegionalClient struct {
 	region *region.Region
 
-	workspaceClient     workspace.ClientWithResponsesInterface
+	workspaceClient workspace.ClientWithResponsesInterface
 
 	mu sync.Mutex
 }

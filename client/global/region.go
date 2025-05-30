@@ -10,7 +10,6 @@ import (
 )
 
 func (gc *GlobalClient) ListRegions(ctx context.Context) (*client.Iterator[region.Region], error) {
-
 	iter := client.Iterator[region.Region]{
 		Func: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
 			resp, err := gc.regionClient.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
