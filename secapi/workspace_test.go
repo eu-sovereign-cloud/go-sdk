@@ -102,10 +102,10 @@ func TestListWorkspaces(t *testing.T) {
 	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.ListWorkspaces(ctx, "test")
+	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
@@ -135,7 +135,7 @@ func TestFakedListWorkspaces(t *testing.T) {
 	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
 	wsIter, err := regionClient.ListWorkspaces(ctx, "test")

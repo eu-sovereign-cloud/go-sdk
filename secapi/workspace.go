@@ -47,7 +47,7 @@ func (client *RegionalClient) GetWorkspace(ctx context.Context, tref TenantRefer
 	return resp.JSON200, nil
 }
 
-func (client *RegionalClient) createOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (client *RegionalClient) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	panicUnlessTenantExists(ws)
 
 	wsClient, err := client.workspaceClient()

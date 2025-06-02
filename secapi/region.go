@@ -11,7 +11,7 @@ import (
 func (client *GlobalClient) ListRegions(ctx context.Context) (*Iterator[region.Region], error) {
 	iter := Iterator[region.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
-			resp, err := client.regions.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
+			resp, err := client.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -26,19 +26,10 @@ func (client *GlobalClient) ListRegions(ctx context.Context) (*Iterator[region.R
 }
 
 func (client *GlobalClient) GetRegion(ctx context.Context, name string) (*region.Region, error) {
-	resp, err := client.regions.GetRegionWithResponse(ctx, name)
+	resp, err := client.region.GetRegionWithResponse(ctx, name)
 	if err != nil {
 		return nil, err
 	}
 
 	return resp.JSON200, nil
-}
-
-func (client *GlobalClient) RegionClient(ctx context.Context, name string) (*RegionalClient, error) {
-	region, err := client.GetRegion(ctx, name)
-	if err != nil {
-		return nil, err
-	}
-
-	return NewRegionalClient(region), nil
 }
