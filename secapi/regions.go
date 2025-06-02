@@ -5,13 +5,13 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) {
+func (client *GlobalClient) ListRegions(ctx context.Context) (*Iterator[region.Region], error) {
 	iter := Iterator[region.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
-			resp, err := c.regions.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
+			resp, err := client.regions.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -25,8 +25,8 @@ func (c *Client) Regions(ctx context.Context) (*Iterator[region.Region], error) 
 	return &iter, nil
 }
 
-func (c *Client) Region(ctx context.Context, name string) (*region.Region, error) {
-	resp, err := c.regions.GetRegionWithResponse(ctx, name)
+func (client *GlobalClient) GetRegion(ctx context.Context, name string) (*region.Region, error) {
+	resp, err := client.regions.GetRegionWithResponse(ctx, name)
 	if err != nil {
 		return nil, err
 	}
@@ -34,11 +34,11 @@ func (c *Client) Region(ctx context.Context, name string) (*region.Region, error
 	return resp.JSON200, nil
 }
 
-func (c *Client) RegionClient(ctx context.Context, name string) (*RegionClient, error) {
-	region, err := c.Region(ctx, name)
+func (client *GlobalClient) RegionClient(ctx context.Context, name string) (*RegionalClient, error) {
+	region, err := client.GetRegion(ctx, name)
 	if err != nil {
 		return nil, err
 	}
 
-	return NewRegionClient(region), nil
+	return NewRegionalClient(region), nil
 }

@@ -6,15 +6,15 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestRegions(t *testing.T) {
+func TestListRegions(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
@@ -55,10 +55,10 @@ func TestRegions(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL)
+	client, err := NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	regionIter, err := client.Regions(ctx)
+	regionIter, err := client.ListRegions(ctx)
 	require.NoError(t, err)
 
 	region, err := regionIter.All(ctx)
@@ -69,7 +69,7 @@ func TestRegions(t *testing.T) {
 	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
 }
 
-func TestRegion(t *testing.T) {
+func TestGetRegion(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
@@ -104,10 +104,10 @@ func TestRegion(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL)
+	client, err := NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	region, err := client.Region(ctx, "test")
+	region, err := client.GetRegion(ctx, "test")
 	require.NoError(t, err)
 
 	assert.Len(t, region.Spec.Providers, 1)

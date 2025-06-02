@@ -1,15 +1,15 @@
 package secapi
 
 import (
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-type Client struct {
+type GlobalClient struct {
 	regions region.ClientWithResponsesInterface
 }
 
-func NewClient(regionsUrl string) (*Client, error) {
-	client := &Client{}
+func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
+	client := &GlobalClient{}
 
 	regionsClient, err := region.NewClientWithResponses(regionsUrl)
 	if err != nil {

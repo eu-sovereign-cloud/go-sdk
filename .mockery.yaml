@@ -3,58 +3,58 @@ with-expecter: true
 issue-845-fix: true
 resolve-type-alias: false
 packages:
-  github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.activitylog.v1beta1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.activitylog.v1beta1:
     config:
       all: true
-      dir: mock/mockactivitylog.v1beta1
+      dir: mock/spec/extensions.activitylog.v1beta1
       outpkg: mockactivitylog  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.kubernetes.v1beta1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.kubernetes.v1beta1:
     config:
       all: true
-      dir: mock/mockkubernetes.v1beta1
+      dir: mock/spec/extensions.kubernetes.v1beta1
       outpkg: mockkubernetes  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.loadbalancer.v1beta1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.loadbalancer.v1beta1:
     config:
       all: true
-      dir: mock/mockloadbalancer.v1beta1
+      dir: mock/spec/extensions.loadbalancer.v1beta1
       outpkg: mockloadbalancer  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.natgateway.v1beta1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.natgateway.v1beta1:
     config:
       all: true
-      dir: mock/mocknatgateway.v1beta1
+      dir: mock/spec/extensions.natgateway.v1beta1
       outpkg: mocknatgateway  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/extensions.objectstorage.v1beta1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.objectstorage.v1beta1:
     config:
       all: true
-      dir: mock/mockobjectstorage.v1beta1
+      dir: mock/spec/extensions.objectstorage.v1beta1
       outpkg: mockobjectstorage  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.authorization.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1:
     config:
       all: true
-      dir: mock/mockauthorization.v1
+      dir: mock/spec/foundation.authorization.v1
       outpkg: mockauthorization  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.compute.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1:
     config:
       all: true
-      dir: mock/mockcompute.v1
+      dir: mock/spec/foundation.compute.v1
       outpkg: mockcompute  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.network.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1:
     config:
       all: true
-      dir: mock/mockworksnetworkpace.v1
+      dir: mock/spec/foundation.network.v1
       outpkg: mocknetwork
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1:
     config:
       all: true
-      dir: mock/mockregion.v1
+      dir: mock/spec/foundation.region.v1
       outpkg: mockregion  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.storage.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1:
     config:
       all: true
-      dir: mock/mockstorage.v1
+      dir: mock/spec/foundation.storage.v1
       outpkg: mockstorage  
-  github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1:
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1:
     config:
       all: true
-      dir: mock/mockworkspace.v1
+      dir: mock/spec/foundation.workspace.v1
       outpkg: mockworkspace
