@@ -8,18 +8,18 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/fake"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/mockregion.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/mockworkspace.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/internal/fake"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestMockedWorkspaces(t *testing.T) {
+func TestListWorkspaces(t *testing.T) {
 	ctx := context.Background()
 	wsSim := mockworkspace.NewMockServerInterface(t)
 
@@ -99,13 +99,13 @@ func TestMockedWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx, "test")
+	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
@@ -115,7 +115,7 @@ func TestMockedWorkspaces(t *testing.T) {
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 }
 
-func TestFakedWorkspaces(t *testing.T) {
+func TestFakedListWorkspaces(t *testing.T) {
 	ctx := context.Background()
 
 	fakeServer := fake.NewServer("eu-central-1")
@@ -132,13 +132,13 @@ func TestFakedWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
 	require.NoError(t, err)
 
-	regionClient, err := client.RegionClient(ctx, "eu-central-1")
+	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.Workspaces(ctx, "test")
+	wsIter, err := regionClient.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
