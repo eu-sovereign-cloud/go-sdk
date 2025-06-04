@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -58,7 +58,7 @@ func TestListRegions(t *testing.T) {
 	client, err := NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	regionIter, err := client.ListRegions(ctx)
+	regionIter, err := client.RegionV1.ListRegions(ctx)
 	require.NoError(t, err)
 
 	region, err := regionIter.All(ctx)
@@ -107,7 +107,7 @@ func TestGetRegion(t *testing.T) {
 	client, err := NewGlobalClient(server.URL)
 	require.NoError(t, err)
 
-	region, err := client.GetRegion(ctx, "test")
+	region, err := client.RegionV1.GetRegion(ctx, "test")
 	require.NoError(t, err)
 
 	assert.Len(t, region.Spec.Providers, 1)

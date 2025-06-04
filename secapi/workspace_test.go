@@ -105,7 +105,7 @@ func TestListWorkspaces(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
+	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
@@ -138,7 +138,7 @@ func TestFakedListWorkspaces(t *testing.T) {
 	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1")
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.ListWorkspaces(ctx, "test")
+	wsIter, err := regionClient.WorkspaceV1.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)

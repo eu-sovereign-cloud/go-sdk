@@ -2,28 +2,27 @@ package secapi
 
 import (
 	"context"
-
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
 type GlobalClient struct {
-	region region.ClientWithResponsesInterface
+	AuthorizationV1 *AuthorizationAPIV1
+	RegionV1        *RegionAPIV1
 }
 
 func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
-	client := &GlobalClient{}
-
-	regionClient, err := region.NewClientWithResponses(regionsUrl)
+	regionV1, err := newRegionAPIV1(regionsUrl)
 	if err != nil {
 		return nil, err
 	}
-	client.region = regionClient
 
-	return client, nil
+	return &GlobalClient{
+		AuthorizationV1: newAuthorizationAPIV1(),
+		RegionV1:        regionV1,
+	}, nil
 }
 
 func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string) (*RegionalClient, error) {
-	region, err := client.GetRegion(ctx, name)
+	region, err := client.RegionV1.GetRegion(ctx, name)
 	if err != nil {
 		return nil, err
 	}
