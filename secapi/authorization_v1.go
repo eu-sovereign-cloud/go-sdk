@@ -6,20 +6,20 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 )
 
-type AuthorizationAPIV1 struct {
+type AuthorizationV1 struct {
 	secapi.GlobalAPI[authorization.ClientWithResponsesInterface]
 }
 
-func newAuthorizationAPIV1() *AuthorizationAPIV1 {
-	return &AuthorizationAPIV1{
+func newAuthorizationV1() *AuthorizationV1 {
+	return &AuthorizationV1{
 		GlobalAPI: secapi.GlobalAPI[authorization.ClientWithResponsesInterface]{},
 	}
 }
 
-func (api *AuthorizationAPIV1) getClient() (authorization.ClientWithResponsesInterface, error) {
+func (api *AuthorizationV1) getClient() (authorization.ClientWithResponsesInterface, error) {
 	fn := func(url string) (authorization.ClientWithResponsesInterface, error) {
 		return authorization.NewClientWithResponses(url)
 	}
@@ -41,7 +41,7 @@ func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetad
 	}
 }
 
-func (api *AuthorizationAPIV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
+func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (api *AuthorizationAPIV1) ListRoles(ctx context.Context, tid TenantID) (*It
 	return &iter, nil
 }
 
-func (api *AuthorizationAPIV1) GetRole(ctx context.Context, tref TenantReference) (*authorization.Role, error) {
+func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (*authorization.Role, error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (api *AuthorizationAPIV1) GetRole(ctx context.Context, tref TenantReference
 	return resp.JSON200, nil
 }
 
-func (api *AuthorizationAPIV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) error {
+func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) error {
 	validateAuthorizationMetadataV1(role.Metadata)
 
 	client, err := api.getClient()
@@ -101,7 +101,7 @@ func (api *AuthorizationAPIV1) CreateOrUpdateRole(ctx context.Context, role *aut
 	return nil
 }
 
-func (api *AuthorizationAPIV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
+func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
 	validateAuthorizationMetadataV1(role.Metadata)
 
 	client, err := api.getClient()

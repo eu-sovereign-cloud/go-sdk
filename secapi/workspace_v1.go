@@ -6,21 +6,21 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
-type WorkspaceAPIV1 struct {
+type WorkspaceV1 struct {
 	secapi.RegionalAPI[workspace.ClientWithResponsesInterface]
 }
 
-func newWorkspaceAPIV1(region *region.Region) *WorkspaceAPIV1 {
-	return &WorkspaceAPIV1{
+func newWorkspaceV1(region *region.Region) *WorkspaceV1 {
+	return &WorkspaceV1{
 		RegionalAPI: secapi.RegionalAPI[workspace.ClientWithResponsesInterface]{Region: region},
 	}
 }
 
-func (api *WorkspaceAPIV1) getClient() (workspace.ClientWithResponsesInterface, error) {
+func (api *WorkspaceV1) getClient() (workspace.ClientWithResponsesInterface, error) {
 	fn := func(url string) (workspace.ClientWithResponsesInterface, error) {
 		return workspace.NewClientWithResponses(url)
 	}
@@ -42,7 +42,7 @@ func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) {
 	}
 }
 
-func (api *WorkspaceAPIV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
+func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (api *WorkspaceAPIV1) ListWorkspaces(ctx context.Context, tid TenantID) (*I
 	return &iter, nil
 }
 
-func (api *WorkspaceAPIV1) GetWorkspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
+func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (api *WorkspaceAPIV1) GetWorkspace(ctx context.Context, tref TenantReferenc
 	return resp.JSON200, nil
 }
 
-func (api *WorkspaceAPIV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	validateWorkspaceMetadataV1(ws.Metadata)
 
 	client, err := api.getClient()
@@ -102,7 +102,7 @@ func (api *WorkspaceAPIV1) CreateOrUpdateWorkspace(ctx context.Context, ws *work
 	return nil
 }
 
-func (api *WorkspaceAPIV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	validateWorkspaceMetadataV1(ws.Metadata)
 
 	client, err := api.getClient()

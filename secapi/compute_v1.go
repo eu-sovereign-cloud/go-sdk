@@ -6,21 +6,21 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-type ComputeAPIV1 struct {
+type ComputeV1 struct {
 	secapi.RegionalAPI[compute.ClientWithResponsesInterface]
 }
 
-func newComputeAPIV1(region *region.Region) *ComputeAPIV1 {
-	return &ComputeAPIV1{
+func newComputeV1(region *region.Region) *ComputeV1 {
+	return &ComputeV1{
 		RegionalAPI: secapi.RegionalAPI[compute.ClientWithResponsesInterface]{Region: region},
 	}
 }
 
-func (api *ComputeAPIV1) getClient() (compute.ClientWithResponsesInterface, error) {
+func (api *ComputeV1) getClient() (compute.ClientWithResponsesInterface, error) {
 	fn := func(url string) (compute.ClientWithResponsesInterface, error) {
 		return compute.NewClientWithResponses(url)
 	}
@@ -46,7 +46,7 @@ func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) {
 	}
 }
 
-func (api *ComputeAPIV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
+func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (api *ComputeAPIV1) ListInstances(ctx context.Context, tid TenantID, wid Wo
 	return &iter, nil
 }
 
-func (api *ComputeAPIV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
+func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -82,7 +82,7 @@ func (api *ComputeAPIV1) GetInstance(ctx context.Context, wref WorkspaceReferenc
 	return resp.JSON200, nil
 }
 
-func (api *ComputeAPIV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) error {
 	validateComputeMetadataV1(inst.Metadata)
 
 	client, err := api.getClient()
@@ -106,7 +106,7 @@ func (api *ComputeAPIV1) CreateOrUpdateInstance(ctx context.Context, inst *compu
 	return nil
 }
 
-func (api *ComputeAPIV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
 	validateComputeMetadataV1(inst.Metadata)
 
 	client, err := api.getClient()

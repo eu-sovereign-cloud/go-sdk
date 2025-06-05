@@ -6,21 +6,21 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-type NetworkAPIV1 struct {
+type NetworkV1 struct {
 	secapi.RegionalAPI[network.ClientWithResponsesInterface]
 }
 
-func newNetworkAPIV1(region *region.Region) *NetworkAPIV1 {
-	return &NetworkAPIV1{
+func newNetworkV1(region *region.Region) *NetworkV1 {
+	return &NetworkV1{
 		RegionalAPI: secapi.RegionalAPI[network.ClientWithResponsesInterface]{Region: region},
 	}
 }
 
-func (api *NetworkAPIV1) getClient() (network.ClientWithResponsesInterface, error) {
+func (api *NetworkV1) getClient() (network.ClientWithResponsesInterface, error) {
 	fn := func(url string) (network.ClientWithResponsesInterface, error) {
 		return network.NewClientWithResponses(url)
 	}
@@ -46,7 +46,7 @@ func validateNetworkMetadataV1(metadata *network.RegionalResourceMetadata) {
 	}
 }
 
-func (api *NetworkAPIV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Network], error) {
+func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Network], error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (api *NetworkAPIV1) ListNetworks(ctx context.Context, tid TenantID, wid Wor
 	return &iter, nil
 }
 
-func (api *NetworkAPIV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*network.Network, error) {
+func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*network.Network, error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -82,7 +82,7 @@ func (api *NetworkAPIV1) GetNetwork(ctx context.Context, wref WorkspaceReference
 	return resp.JSON200, nil
 }
 
-func (api *NetworkAPIV1) CreateOrUpdateInstance(ctx context.Context, net *network.Network) error {
+func (api *NetworkV1) CreateOrUpdateInstance(ctx context.Context, net *network.Network) error {
 	validateNetworkMetadataV1(net.Metadata)
 
 	client, err := api.getClient()
@@ -106,7 +106,7 @@ func (api *NetworkAPIV1) CreateOrUpdateInstance(ctx context.Context, net *networ
 	return nil
 }
 
-func (api *NetworkAPIV1) DeleteInstance(ctx context.Context, net *network.Network) error {
+func (api *NetworkV1) DeleteInstance(ctx context.Context, net *network.Network) error {
 	validateNetworkMetadataV1(net.Metadata)
 
 	client, err := api.getClient()

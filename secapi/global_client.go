@@ -5,18 +5,18 @@ import (
 )
 
 type GlobalClient struct {
-	AuthorizationV1 *AuthorizationAPIV1
-	RegionV1        *RegionAPIV1
+	AuthorizationV1 *AuthorizationV1
+	RegionV1        *RegionV1
 }
 
 func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
-	regionV1, err := newRegionAPIV1(regionsUrl)
+	regionV1, err := newRegionV1(regionsUrl)
 	if err != nil {
 		return nil, err
 	}
 
 	return &GlobalClient{
-		AuthorizationV1: newAuthorizationAPIV1(),
+		AuthorizationV1: newAuthorizationV1(),
 		RegionV1:        regionV1,
 	}, nil
 }

@@ -6,21 +6,21 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 )
 
-type StorageAPIV1 struct {
+type StorageV1 struct {
 	secapi.RegionalAPI[storage.ClientWithResponsesInterface]
 }
 
-func newStorageAPIV1(region *region.Region) *StorageAPIV1 {
-	return &StorageAPIV1{
+func newStorageV1(region *region.Region) *StorageV1 {
+	return &StorageV1{
 		RegionalAPI: secapi.RegionalAPI[storage.ClientWithResponsesInterface]{Region: region},
 	}
 }
 
-func (api *StorageAPIV1) getClient() (storage.ClientWithResponsesInterface, error) {
+func (api *StorageV1) getClient() (storage.ClientWithResponsesInterface, error) {
 	fn := func(url string) (storage.ClientWithResponsesInterface, error) {
 		return storage.NewClientWithResponses(url)
 	}
@@ -46,7 +46,7 @@ func validateStorageMetadataV1(metadata *storage.ZonalResourceMetadata) {
 	}
 }
 
-func (api *StorageAPIV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.BlockStorage], error) {
+func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.BlockStorage], error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (api *StorageAPIV1) ListBlockStorages(ctx context.Context, tid TenantID, wi
 	return &iter, nil
 }
 
-func (api *StorageAPIV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*storage.BlockStorage, error) {
+func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*storage.BlockStorage, error) {
 	client, err := api.getClient()
 	if err != nil {
 		return nil, err
@@ -82,7 +82,7 @@ func (api *StorageAPIV1) GetBlockStorage(ctx context.Context, wref WorkspaceRefe
 	return resp.JSON200, nil
 }
 
-func (api *StorageAPIV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
 	validateStorageMetadataV1(block.Metadata)
 
 	client, err := api.getClient()
@@ -106,7 +106,7 @@ func (api *StorageAPIV1) CreateOrUpdateBlockStorage(ctx context.Context, block *
 	return nil
 }
 
-func (api *StorageAPIV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
 	validateStorageMetadataV1(block.Metadata)
 
 	client, err := api.getClient()
