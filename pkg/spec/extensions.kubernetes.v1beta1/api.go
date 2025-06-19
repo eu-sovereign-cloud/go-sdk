@@ -23,6 +23,13 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
+// Defines values for KubernetesNodeTaintEffect.
+const (
+	NoExecute        KubernetesNodeTaintEffect = "NoExecute"
+	NoSchedule       KubernetesNodeTaintEffect = "NoSchedule"
+	PreferNoSchedule KubernetesNodeTaintEffect = "PreferNoSchedule"
+)
+
 // Defines values for RegionalResourceMetadataKind.
 const (
 	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
@@ -397,12 +404,22 @@ type KubernetesCluster struct {
 //
 // Changing the sku of the cluster will cause the cluster to be recreated.
 type KubernetesClusterSpec struct {
+	// PodCidr CIDR range for the pod network. This is used to allocate IP addresses
+	// for pods in the cluster. The CIDR must be a valid IPv4 or IPv6 CIDR.
+	// If not specified, a default provider CIDR will be used.
+	PodCidr *string `json:"podCidr,omitempty"`
+
 	// RestrictKubernetesApi Restrict access to the Kubernetes API to specific IP addresses or ranges.
 	// This is a security feature to limit access to the cluster. If not specified,
 	// the Kubernetes API is accessible from any IP address. Nodes that are
 	// part of the cluster are always allowed to access the Kubernetes API.
-	RestrictKubernetesApi *[]string   `json:"restrictKubernetesApi,omitempty"`
-	SkuRef                interface{} `json:"skuRef"`
+	RestrictKubernetesApi *[]string `json:"restrictKubernetesApi,omitempty"`
+
+	// ServiceCidr CIDR range for the service network. This is used to allocate IP addresses
+	// for services in the cluster. The CIDR must be a valid IPv4 or IPv6 CIDR.
+	// If not specified, a default provider CIDR will be used.
+	ServiceCidr *string     `json:"serviceCidr,omitempty"`
+	SkuRef      interface{} `json:"skuRef"`
 }
 
 // KubernetesClusterStatus defines model for KubernetesClusterStatus.
@@ -465,6 +482,11 @@ type KubernetesNodePoolSpec struct {
 	// the instance SKU, subnet, and zone in which the nodes will be created.
 	// The SKU must be one of the available compute SKUs in the region.
 	NodeTemplate KubernetesNodeTemplate `json:"nodeTemplate"`
+
+	// Taints List of taints to apply to the nodes in the node pool. Taints are used
+	// to mark nodes as unsuitable for certain workloads, allowing for more
+	// fine-grained control over scheduling.
+	Taints *[]KubernetesNodeTaint `json:"taints,omitempty"`
 }
 
 // KubernetesNodePoolStatus defines model for KubernetesNodePoolStatus.
@@ -495,6 +517,29 @@ type KubernetesNodeRootVolume struct {
 	SizeGB int         `json:"sizeGB"`
 	SkuRef interface{} `json:"skuRef"`
 }
+
+// KubernetesNodeTaint Represents a taint applied to the nodes in the node pool. Taints are used
+// to control which pods can be scheduled on the nodes. A taint consists of a
+// key, value, and effect.
+type KubernetesNodeTaint struct {
+	// Effect The effect of the taint. The effect determines how the taint is applied to
+	// the nodes in the node pool. For details on the effects, see the
+	// (kubernetes documentation on taints and tolerations)[https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/].
+	Effect KubernetesNodeTaintEffect `json:"effect"`
+
+	// Key The key of the taint. The key is used to identify the taint and is used
+	// in conjunction with the value and effect.
+	Key string `json:"key"`
+
+	// Value The value of the taint. The value is used to identify the taint and is used
+	// in conjunction with the key and effect.
+	Value string `json:"value"`
+}
+
+// KubernetesNodeTaintEffect The effect of the taint. The effect determines how the taint is applied to
+// the nodes in the node pool. For details on the effects, see the
+// (kubernetes documentation on taints and tolerations)[https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/].
+type KubernetesNodeTaintEffect string
 
 // KubernetesNodeTemplate Template for creating nodes in the node pool. The template includes
 // the instance SKU, subnet, and zone in which the nodes will be created.
