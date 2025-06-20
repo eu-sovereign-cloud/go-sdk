@@ -7,6 +7,7 @@ import (
 type GlobalClient struct {
 	AuthorizationV1 *AuthorizationV1
 	RegionV1        *RegionV1
+	WellknownV1     *WellknownV1
 }
 
 func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
@@ -18,6 +19,7 @@ func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
 	return &GlobalClient{
 		AuthorizationV1: newAuthorizationV1(),
 		RegionV1:        regionV1,
+		WellknownV1:     newWellknownV1(),
 	}, nil
 }
 
