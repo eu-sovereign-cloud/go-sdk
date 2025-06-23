@@ -5,31 +5,20 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 )
 
 type NetworkV1 struct {
-	secapi.RegionalAPI[network.ClientWithResponsesInterface]
+	network network.ClientWithResponsesInterface
 }
 
-func newNetworkV1(region *region.Region) *NetworkV1 {
-	return &NetworkV1{
-		RegionalAPI: secapi.RegionalAPI[network.ClientWithResponsesInterface]{Region: region},
-	}
-}
-
-func (api *NetworkV1) getClient() (network.ClientWithResponsesInterface, error) {
-	fn := func(url string) (network.ClientWithResponsesInterface, error) {
-		return network.NewClientWithResponses(url)
-	}
-
-	client, err := api.GetClient("seca.network", fn)
+func newNetworkV1(networkUrl string) (*NetworkV1, error) {
+	network, err := network.NewClientWithResponses(networkUrl)
 	if err != nil {
 		return nil, err
 	}
-	return *client, nil
+
+	return &NetworkV1{network: network}, nil
 }
 
 func validateNetworkMetadataV1(metadata *network.RegionalResourceMetadata) {
@@ -47,14 +36,9 @@ func validateNetworkMetadataV1(metadata *network.RegionalResourceMetadata) {
 }
 
 func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Network], error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
 	iter := Iterator[network.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Network, *string, error) {
-			resp, err := client.ListNetworksWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListNetworksParams{
+			resp, err := api.network.ListNetworksWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListNetworksParams{
 				Accept: ptr.To(network.ListNetworksParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -69,12 +53,7 @@ func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid Worksp
 }
 
 func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*network.Network, error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := client.GetNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
+	resp, err := api.network.GetNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -85,12 +64,7 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 func (api *NetworkV1) CreateOrUpdateInstance(ctx context.Context, net *network.Network) error {
 	validateNetworkMetadataV1(net.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.CreateOrUpdateNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name,
+	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name,
 		&network.CreateOrUpdateNetworkParams{
 			IfUnmodifiedSince: &net.Metadata.ResourceVersion,
 		}, *net)
@@ -109,12 +83,7 @@ func (api *NetworkV1) CreateOrUpdateInstance(ctx context.Context, net *network.N
 func (api *NetworkV1) DeleteInstance(ctx context.Context, net *network.Network) error {
 	validateNetworkMetadataV1(net.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name, &network.DeleteNetworkParams{
+	resp, err := api.network.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name, &network.DeleteNetworkParams{
 		IfUnmodifiedSince: &net.Metadata.ResourceVersion,
 	})
 	if err != nil {

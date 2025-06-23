@@ -5,30 +5,20 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 )
 
 type AuthorizationV1 struct {
-	secapi.GlobalAPI[authorization.ClientWithResponsesInterface]
+	authorization authorization.ClientWithResponsesInterface
 }
 
-func newAuthorizationV1() *AuthorizationV1 {
-	return &AuthorizationV1{
-		GlobalAPI: secapi.GlobalAPI[authorization.ClientWithResponsesInterface]{},
-	}
-}
-
-func (api *AuthorizationV1) getClient() (authorization.ClientWithResponsesInterface, error) {
-	fn := func(url string) (authorization.ClientWithResponsesInterface, error) {
-		return authorization.NewClientWithResponses(url)
-	}
-
-	client, err := api.GetClient("seca.authorization", fn)
+func newAuthorizationV1(authorizationsUrl string) (*AuthorizationV1, error) {
+	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
 	if err != nil {
 		return nil, err
 	}
-	return *client, nil
+
+	return &AuthorizationV1{authorization: authorization}, nil
 }
 
 func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) {
@@ -42,14 +32,9 @@ func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetad
 }
 
 func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
 	iter := Iterator[authorization.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.Role, *string, error) {
-			resp, err := client.ListRolesWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRolesParams{
+			resp, err := api.authorization.ListRolesWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRolesParams{
 				Accept: ptr.To(authorization.Applicationjson),
 			})
 			if err != nil {
@@ -64,12 +49,7 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 }
 
 func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (*authorization.Role, error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := client.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
+	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err
 	}
@@ -80,12 +60,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) error {
 	validateAuthorizationMetadataV1(role.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
+	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
 		&authorization.CreateOrUpdateRoleParams{
 			IfUnmodifiedSince: &role.Metadata.ResourceVersion,
 		}, *role)
@@ -104,12 +79,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
 	validateAuthorizationMetadataV1(role.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.DeleteRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleParams{
+	resp, err := api.authorization.DeleteRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleParams{
 		IfUnmodifiedSince: &role.Metadata.ResourceVersion,
 	})
 	if err != nil {

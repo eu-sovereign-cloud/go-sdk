@@ -5,31 +5,20 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 )
 
 type StorageV1 struct {
-	secapi.RegionalAPI[storage.ClientWithResponsesInterface]
+	storage storage.ClientWithResponsesInterface
 }
 
-func newStorageV1(region *region.Region) *StorageV1 {
-	return &StorageV1{
-		RegionalAPI: secapi.RegionalAPI[storage.ClientWithResponsesInterface]{Region: region},
-	}
-}
-
-func (api *StorageV1) getClient() (storage.ClientWithResponsesInterface, error) {
-	fn := func(url string) (storage.ClientWithResponsesInterface, error) {
-		return storage.NewClientWithResponses(url)
-	}
-
-	client, err := api.GetClient("seca.storage", fn)
+func newStorageV1(storageUrl string) (*StorageV1, error) {
+	storage, err := storage.NewClientWithResponses(storageUrl)
 	if err != nil {
 		return nil, err
 	}
-	return *client, nil
+
+	return &StorageV1{storage: storage}, nil
 }
 
 func validateStorageMetadataV1(metadata *storage.ZonalResourceMetadata) {
@@ -47,14 +36,9 @@ func validateStorageMetadataV1(metadata *storage.ZonalResourceMetadata) {
 }
 
 func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.BlockStorage], error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
 	iter := Iterator[storage.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]storage.BlockStorage, *string, error) {
-			resp, err := client.ListBlockStoragesWithResponse(ctx, storage.Tenant(tid), storage.Workspace(wid), &storage.ListBlockStoragesParams{
+			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, storage.Tenant(tid), storage.Workspace(wid), &storage.ListBlockStoragesParams{
 				Accept: ptr.To(storage.ListBlockStoragesParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -69,12 +53,7 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 }
 
 func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*storage.BlockStorage, error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := client.GetBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name)
+	resp, err := api.storage.GetBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -85,12 +64,7 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
 	validateStorageMetadataV1(block.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
+	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
 		&storage.CreateOrUpdateBlockStorageParams{
 			IfUnmodifiedSince: &block.Metadata.ResourceVersion,
 		}, *block)
@@ -109,12 +83,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
 	validateStorageMetadataV1(block.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, &storage.DeleteBlockStorageParams{
+	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, &storage.DeleteBlockStorageParams{
 		IfUnmodifiedSince: &block.Metadata.ResourceVersion,
 	})
 	if err != nil {

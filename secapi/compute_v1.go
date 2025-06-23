@@ -5,31 +5,20 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 )
 
 type ComputeV1 struct {
-	secapi.RegionalAPI[compute.ClientWithResponsesInterface]
+	compute compute.ClientWithResponsesInterface
 }
 
-func newComputeV1(region *region.Region) *ComputeV1 {
-	return &ComputeV1{
-		RegionalAPI: secapi.RegionalAPI[compute.ClientWithResponsesInterface]{Region: region},
-	}
-}
-
-func (api *ComputeV1) getClient() (compute.ClientWithResponsesInterface, error) {
-	fn := func(url string) (compute.ClientWithResponsesInterface, error) {
-		return compute.NewClientWithResponses(url)
-	}
-
-	client, err := api.GetClient("seca.compute", fn)
+func newComputeV1(computeUrl string) (*ComputeV1, error) {
+	compute, err := compute.NewClientWithResponses(computeUrl)
 	if err != nil {
 		return nil, err
 	}
-	return *client, nil
+
+	return &ComputeV1{compute: compute}, nil
 }
 
 func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) {
@@ -47,14 +36,9 @@ func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) {
 }
 
 func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
 	iter := Iterator[compute.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]compute.Instance, *string, error) {
-			resp, err := client.ListInstancesWithResponse(ctx, compute.Tenant(tid), compute.Workspace(wid), &compute.ListInstancesParams{
+			resp, err := api.compute.ListInstancesWithResponse(ctx, compute.Tenant(tid), compute.Workspace(wid), &compute.ListInstancesParams{
 				Accept: ptr.To(compute.Applicationjson),
 			})
 			if err != nil {
@@ -69,12 +53,7 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := client.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name)
+	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -85,12 +64,7 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) error {
 	validateComputeMetadataV1(inst.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name,
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name,
 		&compute.CreateOrUpdateInstanceParams{
 			IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
 		}, *inst)
@@ -109,12 +83,7 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
 	validateComputeMetadataV1(inst.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.DeleteInstanceParams{
+	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.DeleteInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
 	})
 	if err != nil {

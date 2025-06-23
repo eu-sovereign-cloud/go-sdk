@@ -5,31 +5,20 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/internal/secapi"
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 type WorkspaceV1 struct {
-	secapi.RegionalAPI[workspace.ClientWithResponsesInterface]
+	workspace workspace.ClientWithResponsesInterface
 }
 
-func newWorkspaceV1(region *region.Region) *WorkspaceV1 {
-	return &WorkspaceV1{
-		RegionalAPI: secapi.RegionalAPI[workspace.ClientWithResponsesInterface]{Region: region},
-	}
-}
-
-func (api *WorkspaceV1) getClient() (workspace.ClientWithResponsesInterface, error) {
-	fn := func(url string) (workspace.ClientWithResponsesInterface, error) {
-		return workspace.NewClientWithResponses(url)
-	}
-
-	client, err := api.GetClient("seca.workspace", fn)
+func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
+	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
 	if err != nil {
 		return nil, err
 	}
-	return *client, nil
+
+	return &WorkspaceV1{workspace: workspace}, nil
 }
 
 func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) {
@@ -43,14 +32,9 @@ func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) {
 }
 
 func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
 	iter := Iterator[workspace.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
-			resp, err := client.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
 			})
 			if err != nil {
@@ -65,12 +49,7 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 }
 
 func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
-	client, err := api.getClient()
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := client.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
+	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err
 	}
@@ -81,12 +60,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	validateWorkspaceMetadataV1(ws.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
+	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
 			IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 		}, *ws)
@@ -105,12 +79,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspa
 func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
 	validateWorkspaceMetadataV1(ws.Metadata)
 
-	client, err := api.getClient()
-	if err != nil {
-		return err
-	}
-
-	resp, err := client.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
+	resp, err := api.workspace.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
 		IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 	})
 	if err != nil {

@@ -99,10 +99,10 @@ func TestListWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1")
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
 	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, "test")
@@ -132,10 +132,10 @@ func TestFakedListWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
 	require.NoError(t, err)
 
-	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1")
+	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
 	wsIter, err := regionClient.WorkspaceV1.ListWorkspaces(ctx, "test")

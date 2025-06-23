@@ -55,7 +55,7 @@ func TestListRegions(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL)
+	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionIter, err := client.RegionV1.ListRegions(ctx)
@@ -104,7 +104,7 @@ func TestGetRegion(t *testing.T) {
 	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL)
+	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	region, err := client.RegionV1.GetRegion(ctx, "test")
