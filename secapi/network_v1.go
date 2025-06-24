@@ -72,8 +72,7 @@ func (api *NetworkV1) CreateOrUpdateInstance(ctx context.Context, net *network.N
 		return err
 	}
 
-	err = checkStatusCode(resp, 200, 201)
-	if err != nil {
+	if err = checkStatusCode(resp, 200, 201); err != nil {
 		return err
 	}
 
@@ -90,8 +89,7 @@ func (api *NetworkV1) DeleteInstance(ctx context.Context, net *network.Network) 
 		return err
 	}
 
-	err = checkStatusCode(resp, 204, 404)
-	if err != nil {
+	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
 	}
 

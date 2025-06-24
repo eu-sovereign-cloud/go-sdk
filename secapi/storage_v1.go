@@ -72,8 +72,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 		return err
 	}
 
-	err = checkStatusCode(resp, 200, 201)
-	if err != nil {
+	if err = checkStatusCode(resp, 200, 201); err != nil {
 		return err
 	}
 
@@ -90,8 +89,7 @@ func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.Blo
 		return err
 	}
 
-	err = checkStatusCode(resp, 204, 404)
-	if err != nil {
+	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
 	}
 

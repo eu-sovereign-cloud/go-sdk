@@ -25,18 +25,18 @@ func (client *GlobalClient) setAuthorizationV1(authorization *AuthorizationV1) {
 	client.AuthorizationV1 = authorization
 }
 
-func initGlobalAPI[T any](provider string, endpoints []wellknown.WellknownEndpoint, newFn func(url string) (*T, error), setFn func(*T)) error {
+func initGlobalAPI[T any](provider string, endpoints []wellknown.WellknownEndpoint, newFunc func(url string) (*T, error), setFunc func(*T)) error {
 	url, err := findGlobalProviderUrl(provider, endpoints)
 	if err != nil {
 		return err
 	}
 
-	client, err := newFn(url)
+	client, err := newFunc(url)
 	if err != nil {
 		return err
 	}
 
-	setFn(client)
+	setFunc(client)
 	return nil
 }
 

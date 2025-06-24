@@ -68,8 +68,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 		return err
 	}
 
-	err = checkStatusCode(resp, 200, 201)
-	if err != nil {
+	if err = checkStatusCode(resp, 200, 201); err != nil {
 		return err
 	}
 
@@ -86,8 +85,7 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 		return err
 	}
 
-	err = checkStatusCode(resp, 204, 404)
-	if err != nil {
+	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
 	}
 

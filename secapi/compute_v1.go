@@ -72,8 +72,7 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 		return err
 	}
 
-	err = checkStatusCode(resp, 200, 201)
-	if err != nil {
+	if err = checkStatusCode(resp, 200, 201); err != nil {
 		return err
 	}
 
@@ -90,8 +89,7 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 		return err
 	}
 
-	err = checkStatusCode(resp, 204, 404)
-	if err != nil {
+	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
 	}
 

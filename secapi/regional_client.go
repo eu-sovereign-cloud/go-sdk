@@ -39,18 +39,18 @@ func (client *RegionalClient) setWorkspaceV1(workspace *WorkspaceV1) {
 	client.WorkspaceV1 = workspace
 }
 
-func initRegionalAPI[T any](name string, region *region.Region, newFn func(url string) (*T, error), setFn func(*T)) error {
+func initRegionalAPI[T any](name string, region *region.Region, newFunc func(url string) (*T, error), setFunc func(*T)) error {
 	provider, err := findRegionalProvider(name, region)
 	if err != nil {
 		return err
 	}
 
-	client, err := newFn(provider.Url)
+	client, err := newFunc(provider.Url)
 	if err != nil {
 		return err
 	}
 
-	setFn(client)
+	setFunc(client)
 	return nil
 }
 

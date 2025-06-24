@@ -68,8 +68,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspa
 		return err
 	}
 
-	err = checkStatusCode(resp, 200, 201)
-	if err != nil {
+	if err = checkStatusCode(resp, 200, 201); err != nil {
 		return err
 	}
 
@@ -86,8 +85,7 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 		return err
 	}
 
-	err = checkStatusCode(resp, 204, 404)
-	if err != nil {
+	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
 	}
 
