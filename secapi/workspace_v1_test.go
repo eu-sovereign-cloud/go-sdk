@@ -109,7 +109,7 @@ func TestListWorkspaces(t *testing.T) {
 	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
 		BaseURL:    "/.wellknown/secapi",
 		BaseRouter: sm,
-	})	
+	})
 	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
 		BaseRouter: sm,
@@ -117,7 +117,7 @@ func TestListWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + "/.wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
@@ -150,7 +150,7 @@ func TestFakedListWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewGlobalClient(server.URL + "/.wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})

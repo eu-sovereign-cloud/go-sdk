@@ -97,7 +97,7 @@ func TestListRegions(t *testing.T) {
 	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
 }
 
-func TestGetRegion(t *testing.T) {	
+func TestGetRegion(t *testing.T) {
 	ctx := context.Background()
 
 	wkSim := mockwellknown.NewMockServerInterface(t)

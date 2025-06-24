@@ -24,8 +24,6 @@ func (s *Server) GetWellknown(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-
-
 	http.Header.Add(w.Header(), "Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp.JSON200) // nolint:errcheck
 }
