@@ -114,6 +114,10 @@ func TestListWorkspaces(t *testing.T) {
 		BaseURL:    "/providers/seca.regions",
 		BaseRouter: sm,
 	})
+	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
+		BaseURL:    "/providers/seca.workspace",
+		BaseRouter: sm,
+	})	
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
