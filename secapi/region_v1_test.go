@@ -6,7 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
@@ -15,10 +17,27 @@ import (
 )
 
 func TestListRegions(t *testing.T) {
-	sim := mockregion.NewMockServerInterface(t)
 	ctx := context.Background()
 
-	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, lrp region.ListRegionsParams) {
+	wkSim := mockwellknown.NewMockServerInterface(t)
+	wkSim.EXPECT().GetWellknown(mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`
+			{
+				"version": "v1",
+				"endpoints": [
+					{
+						"provider": "seca.region/v1",
+						"url": "http://` + r.Host + `/providers/seca.regions"
+					}
+				]
+			}
+		`))
+	})
+
+	reSim := mockregion.NewMockServerInterface(t)
+	reSim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, lrp region.ListRegionsParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte(` 
@@ -52,10 +71,19 @@ func TestListRegions(t *testing.T) {
 		`))
 	})
 
-	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
+	sm := http.NewServeMux()
+	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
+		BaseURL:    "/.wellknown/secapi",
+		BaseRouter: sm,
+	})
+	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
+		BaseURL:    "/providers/seca.regions",
+		BaseRouter: sm,
+	})
+	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionIter, err := client.RegionV1.ListRegions(ctx)
@@ -69,11 +97,28 @@ func TestListRegions(t *testing.T) {
 	assert.Equal(t, "seca.network", region[0].Spec.Providers[0].Name)
 }
 
-func TestGetRegion(t *testing.T) {
-	sim := mockregion.NewMockServerInterface(t)
+func TestGetRegion(t *testing.T) {	
 	ctx := context.Background()
 
-	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
+	wkSim := mockwellknown.NewMockServerInterface(t)
+	wkSim.EXPECT().GetWellknown(mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`
+			{
+				"version": "v1",
+				"endpoints": [
+					{
+						"provider": "seca.region/v1",
+						"url": "http://` + r.Host + `/providers/seca.regions"
+					}
+				]
+			}
+		`))
+	})
+
+	reSim := mockregion.NewMockServerInterface(t)
+	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
 		assert.Equal(t, "test", name)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
@@ -101,10 +146,19 @@ func TestGetRegion(t *testing.T) {
 		`))
 	})
 
-	server := httptest.NewServer(region.HandlerWithOptions(sim, region.StdHTTPServerOptions{}))
+	sm := http.NewServeMux()
+	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
+		BaseURL:    "/.wellknown/secapi",
+		BaseRouter: sm,
+	})
+	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
+		BaseURL:    "/providers/seca.regions",
+		BaseRouter: sm,
+	})
+	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	region, err := client.RegionV1.GetRegion(ctx, "test")

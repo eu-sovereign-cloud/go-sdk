@@ -9,8 +9,10 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/fake"
+	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
@@ -21,8 +23,54 @@ import (
 
 func TestListWorkspaces(t *testing.T) {
 	ctx := context.Background()
-	wsSim := mockworkspace.NewMockServerInterface(t)
 
+	wkSim := mockwellknown.NewMockServerInterface(t)
+	wkSim.EXPECT().GetWellknown(mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`
+			{
+				"version": "v1",
+				"endpoints": [
+					{
+						"provider": "seca.region/v1",
+						"url": "http://` + r.Host + `/providers/seca.regions"
+					}
+				]
+			}
+		`))
+	})
+
+	reSim := mockregion.NewMockServerInterface(t)
+	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
+		assert.Equal(t, "eu-central-1", name)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`
+			{
+				"apiVersion": "v1",
+				"kind": "region",
+				"metadata": {
+					"name": "eu-central-1"
+				},
+				"spec": {
+					"availableZones": [ "A", "B" ],
+					"providers": [
+						{
+							"name": "seca.workspace",
+							"version": "v1",
+							"url": "http://` + r.Host + `/providers/seca.workspace"
+						}
+					]
+				},
+				"status": {
+					"conditions": [ { "status": "Ready" } ]
+				}
+			}
+		`))
+	})
+
+	wsSim := mockworkspace.NewMockServerInterface(t)
 	wsSim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
@@ -57,41 +105,11 @@ func TestListWorkspaces(t *testing.T) {
 		`))
 	})
 
-	reSim := mockregion.NewMockServerInterface(t)
-
-	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
-		assert.Equal(t, "eu-central-1", name)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`
-			{
-				"apiVersion": "v1",
-				"kind": "region",
-				"metadata": {
-					"name": "eu-central-1"
-				},
-				"spec": {
-					"availableZones": [ "A", "B" ],
-					"providers": [
-						{
-							"name": "seca.workspace",
-							"version": "v1",
-							"url": "http://` + r.Host + `/providers/seca.workspace"
-						}
-					]
-				},
-				"status": {
-					"conditions": [ { "status": "Ready" } ]
-				}
-			}
-		`))
-	})
-
 	sm := http.NewServeMux()
-	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
-		BaseURL:    "/providers/seca.workspace",
+	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
+		BaseURL:    "/.wellknown/secapi",
 		BaseRouter: sm,
-	})
+	})	
 	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
 		BaseRouter: sm,
@@ -99,7 +117,7 @@ func TestListWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL + "/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
@@ -132,7 +150,7 @@ func TestFakedListWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewGlobalClient(server.URL + ".wellknown/secapi", nil)
+	client, err := NewGlobalClient(server.URL + "/.wellknown/secapi", nil)
 	require.NoError(t, err)
 
 	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
