@@ -33,27 +33,27 @@ func initGlobalAPI[T any](endpoint string, newFunc func(url string) (*T, error),
 }
 
 func NewGlobalClient(endpoints *GlobalEndpoints) (*GlobalClient, error) {
-	globalClient := &GlobalClient{}
+	client := &GlobalClient{}
 
 	if endpoints == nil {
-		return globalClient, nil
+		return client, nil
 	}
 
 	// Initializes regionsV1 API client
 	if endpoints.RegionV1 != "" {
-		if err := initGlobalAPI(endpoints.RegionV1, newRegionV1, globalClient.setRegionV1); err != nil {
+		if err := initGlobalAPI(endpoints.RegionV1, newRegionV1, client.setRegionV1); err != nil {
 			return nil, err
 		}
 	}
 
 	// Initializes authorizationV1 API client
 	if endpoints.AuthorizationV1 != "" {
-		if err := initGlobalAPI(endpoints.AuthorizationV1, newAuthorizationV1, globalClient.setAuthorizationV1); err != nil {
+		if err := initGlobalAPI(endpoints.AuthorizationV1, newAuthorizationV1, client.setAuthorizationV1); err != nil {
 			return nil, err
 		}
 	}
 
-	return globalClient, nil
+	return client, nil
 }
 
 func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string, regionalAPIs []RegionalAPI) (*RegionalClient, error) {

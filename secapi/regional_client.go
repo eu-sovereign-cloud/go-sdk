@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
 type RegionalAPI string
@@ -65,39 +65,35 @@ func findRegionalProvider(name string, region *region.Region) (*region.Provider,
 }
 
 func NewRegionalClient(region *region.Region, regionalAPIs []RegionalAPI) (*RegionalClient, error) {
-	regionalClient := &RegionalClient{}
+	client := &RegionalClient{}
 
 	// Initializes computeV1 API client
 	if found := slices.Contains(regionalAPIs, ComputeV1API); found {
-		err := initRegionalAPI("seca.compute", region, newComputeV1, regionalClient.setComputeV1)
-		if err != nil {
+		if err := initRegionalAPI(string(ComputeV1API), region, newComputeV1, client.setComputeV1); err != nil {
 			return nil, err
 		}
 	}
 
 	// Initializes networkV1 API client
 	if found := slices.Contains(regionalAPIs, NetworkV1API); found {
-		err := initRegionalAPI("seca.network", region, newNetworkV1, regionalClient.setNetworkV1)
-		if err != nil {
+		if err := initRegionalAPI(string(NetworkV1API), region, newNetworkV1, client.setNetworkV1); err != nil {
 			return nil, err
 		}
 	}
 
 	// Initializes storageV1 API client
 	if found := slices.Contains(regionalAPIs, StorageV1API); found {
-		err := initRegionalAPI("seca.storage", region, newStorageV1, regionalClient.setStorageV1)
-		if err != nil {
+		if err := initRegionalAPI(string(StorageV1API), region, newStorageV1, client.setStorageV1); err != nil {
 			return nil, err
 		}
 	}
 
 	// Initializes workspaceV1 API client
 	if found := slices.Contains(regionalAPIs, WorkspaceV1API); found {
-		err := initRegionalAPI("seca.workspace", region, newWorkspaceV1, regionalClient.setWorkspaceV1)
-		if err != nil {
+		if err := initRegionalAPI(string(WorkspaceV1API), region, newWorkspaceV1, client.setWorkspaceV1); err != nil {
 			return nil, err
 		}
 	}
 
-	return regionalClient, nil
+	return client, nil
 }
