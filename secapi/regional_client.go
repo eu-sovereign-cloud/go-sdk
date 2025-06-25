@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-type RegionalAPI int
+type RegionalAPI string
 
 const (
-	ComputeV1API RegionalAPI = iota
-	NetworkV1API
-	StorageV1API
-	WorkspaceV1API
+	ComputeV1API   RegionalAPI = "seca.compute"
+	NetworkV1API   RegionalAPI = "seca.network"
+	StorageV1API   RegionalAPI = "seca.storage"
+	WorkspaceV1API RegionalAPI = "seca.workspace"
 )
 
 type RegionalClient struct {

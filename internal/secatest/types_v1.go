@@ -1,14 +1,5 @@
 package secatest
 
-type GetWellknownResponseV1 struct {
-	Endpoints []GetWellknownResponseEndpointV1
-}
-
-type GetWellknownResponseEndpointV1 struct {
-	Provider string
-	URL      string
-}
-
 type ListRegionsResponseV1 struct {
 	Name      string
 	Providers []ListRegionsResponseProviderV1

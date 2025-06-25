@@ -7,9 +7,7 @@ import (
 	"testing"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
@@ -19,18 +17,8 @@ import (
 func TestListRegionsV1(t *testing.T) {
 	ctx := context.Background()
 
-	wkSim := mockwellknown.NewMockServerInterface(t)
-	secatest.MockGetWellknownV1(wkSim, secatest.GetWellknownResponseV1{
-		Endpoints: []secatest.GetWellknownResponseEndpointV1{
-			{
-				Provider: secatest.ProviderRegionName,
-				URL:      secatest.ProviderRegionEndpoint,
-			},
-		},
-	})
-
-	reSim := mockregion.NewMockServerInterface(t)
-	secatest.MockListRegionsV1(reSim, secatest.ListRegionsResponseV1{
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockListRegionsV1(sim, secatest.ListRegionsResponseV1{
 		Name: secatest.RegionName,
 		Providers: []secatest.ListRegionsResponseProviderV1{
 			{
@@ -41,18 +29,14 @@ func TestListRegionsV1(t *testing.T) {
 	})
 
 	sm := http.NewServeMux()
-	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderWellknownEndpoint,
-		BaseRouter: sm,
-	})
-	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
 		BaseURL:    secatest.ProviderRegionEndpoint,
 		BaseRouter: sm,
 	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL+secatest.ProviderWellknownEndpoint, nil)
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
 	regionIter, err := client.RegionV1.ListRegions(ctx)
@@ -71,18 +55,8 @@ func TestListRegionsV1(t *testing.T) {
 func TestGetRegionV1(t *testing.T) {
 	ctx := context.Background()
 
-	wkSim := mockwellknown.NewMockServerInterface(t)
-	secatest.MockGetWellknownV1(wkSim, secatest.GetWellknownResponseV1{
-		Endpoints: []secatest.GetWellknownResponseEndpointV1{
-			{
-				Provider: secatest.ProviderRegionName,
-				URL:      secatest.ProviderRegionEndpoint,
-			},
-		},
-	})
-
-	reSim := mockregion.NewMockServerInterface(t)
-	secatest.MockGetRegionV1(reSim, secatest.GetRegionResponseV1{
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
 		Name: secatest.RegionName,
 		Providers: []secatest.GetRegionResponseProviderV1{
 			{
@@ -93,18 +67,14 @@ func TestGetRegionV1(t *testing.T) {
 	})
 
 	sm := http.NewServeMux()
-	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderWellknownEndpoint,
-		BaseRouter: sm,
-	})
-	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
 		BaseURL:    secatest.ProviderRegionEndpoint,
 		BaseRouter: sm,
 	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL+secatest.ProviderWellknownEndpoint, nil)
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
 	region, err := client.RegionV1.GetRegion(ctx, "test")

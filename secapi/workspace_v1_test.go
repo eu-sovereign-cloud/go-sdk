@@ -9,10 +9,8 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/fake"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
@@ -21,25 +19,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestListWorkspaces(t *testing.T) {
+func TestListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
-
-	wkSim := mockwellknown.NewMockServerInterface(t)
-	wkSim.EXPECT().GetWellknown(mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`
-			{
-				"version": "v1",
-				"endpoints": [
-					{
-						"provider": "seca.region/v1",
-						"url": "http://` + r.Host + `/providers/seca.regions"
-					}
-				]
-			}
-		`))
-	})
 
 	reSim := mockregion.NewMockServerInterface(t)
 	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
@@ -106,10 +87,6 @@ func TestListWorkspaces(t *testing.T) {
 	})
 
 	sm := http.NewServeMux()
-	wellknown.HandlerWithOptions(wkSim, wellknown.StdHTTPServerOptions{
-		BaseURL:    "/.wellknown/secapi",
-		BaseRouter: sm,
-	})
 	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
 		BaseRouter: sm,
@@ -121,7 +98,7 @@ func TestListWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
 	require.NoError(t, err)
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
@@ -137,7 +114,7 @@ func TestListWorkspaces(t *testing.T) {
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 }
 
-func TestFakedListWorkspaces(t *testing.T) {
+func TestFakedListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 
 	fakeServer := fake.NewServer("eu-central-1")
@@ -154,7 +131,7 @@ func TestFakedListWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewGlobalClient(server.URL+"/.wellknown/secapi", nil)
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
 	require.NoError(t, err)
 
 	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})

@@ -3,20 +3,6 @@ package secatest
 const (
 	// Response Templates
 
-	GetWellknownResponseTemplateV1 = `
-	{
-		"version": "v1",
-		"endpoints": [
-			{{- range $i, $ep := .Endpoints }}
-			{{if $i}},{{end}}
-			{
-				"provider": "{{$ep.Provider}}",
-				"url": "{{$ep.URL}}"
-			}
-			{{- end}}
-		]
-	}`
-
 	ListRegionsResponseTemplateV1 = `
 	{
 		"items": [

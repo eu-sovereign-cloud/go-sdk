@@ -8,8 +8,6 @@ const (
 
 	// Providers
 
-	ProviderWellknownEndpoint = "/.wellknown/secapi"
-
 	ProviderRegionName     = "seca.region/v1"
 	ProviderRegionEndpoint = "/providers/seca.regions"
 

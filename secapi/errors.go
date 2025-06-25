@@ -2,10 +2,11 @@ package secapi
 
 import "errors"
 
-var ErrNoTenantID = errors.New("tenant ID not found in context")
+var (
+	ErrNoTenantID          = errors.New("tenant ID not found in context")
+	ErrNoMetatada          = errors.New("metadata is empty")
+	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
+	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
+)
 
-var ErrNoMetatada = errors.New("metadata is empty")
-
-var ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
-
-var ErrNoMetatadaTenant = errors.New("metadata tenant is empty")
+var ErrRegionRequiredToRegionalClient = errors.New("region provider is required to create a regional client")
