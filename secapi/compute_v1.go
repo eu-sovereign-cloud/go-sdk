@@ -5,7 +5,7 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 )
 
 type ComputeV1 struct {
@@ -33,6 +33,32 @@ func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) {
 	if metadata.Tenant == "" {
 		panic(ErrNoMetatadaTenant)
 	}
+}
+
+func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.InstanceSku], error) {
+	iter := Iterator[compute.InstanceSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]compute.InstanceSku, *string, error) {
+			resp, err := api.compute.ListSkusWithResponse(ctx, compute.Tenant(tid), &compute.ListSkusParams{
+				Accept: ptr.To(compute.ListSkusParamsAcceptApplicationjson),
+			})
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*compute.InstanceSku, error) {
+	resp, err := api.compute.GetSkuWithResponse(ctx, compute.Tenant(tref.Tenant), tref.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.JSON200, nil
 }
 
 func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
@@ -83,6 +109,57 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 	validateComputeMetadataV1(inst.Metadata)
 
 	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.DeleteInstanceParams{
+		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
+	})
+	if err != nil {
+		return err
+	}
+
+	if err = checkStatusCode(resp, 204, 404); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance) error {
+	validateComputeMetadataV1(inst.Metadata)
+
+	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StartInstanceParams{
+		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
+	})
+	if err != nil {
+		return err
+	}
+
+	if err = checkStatusCode(resp, 204, 404); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) error {
+	validateComputeMetadataV1(inst.Metadata)
+
+	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StopInstanceParams{
+		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
+	})
+	if err != nil {
+		return err
+	}
+
+	if err = checkStatusCode(resp, 204, 404); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance) error {
+	validateComputeMetadataV1(inst.Metadata)
+
+	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.RestartInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
 	})
 	if err != nil {
