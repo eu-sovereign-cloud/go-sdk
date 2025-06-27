@@ -4,23 +4,13 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 var _ workspace.ServerInterface = (*Server)(nil)
 
-// CreateOrUpdateWorkspace implements workspace.ServerInterface.
-func (s *Server) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string, params workspace.CreateOrUpdateWorkspaceParams) {
-	panic("unimplemented")
-}
-
 // DeleteWorkspace implements workspace.ServerInterface.
 func (s *Server) DeleteWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string, params workspace.DeleteWorkspaceParams) {
-	panic("unimplemented")
-}
-
-// GetWorkspace implements workspace.ServerInterface.
-func (s *Server) GetWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string) {
 	panic("unimplemented")
 }
 
@@ -38,4 +28,24 @@ func (s *Server) ListWorkspaces(w http.ResponseWriter, r *http.Request, id works
 
 	http.Header.Add(w.Header(), "Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp.JSON200) // nolint:errcheck
+}
+
+// GetWorkspace implements workspace.ServerInterface.
+func (s *Server) GetWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name string) {
+	var resp workspace.GetWorkspaceResponse
+
+	resp.JSON200 = &workspace.Workspace{}
+
+	http.Header.Add(w.Header(), "Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp.JSON200)
+}
+
+// CreateOrUpdateWorkspace implements workspace.ServerInterface.
+func (s *Server) CreateOrUpdateWorkspace(w http.ResponseWriter, r *http.Request, id workspace.Tenant, name workspace.ResourceName, ws workspace.CreateOrUpdateWorkspaceParams) {
+	var resp workspace.CreateOrUpdateWorkspaceResponse
+
+	resp.JSON200 = &workspace.Workspace{}
+
+	http.Header.Add(w.Header(), "Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp.JSON200)
 }

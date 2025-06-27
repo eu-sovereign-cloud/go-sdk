@@ -19,3 +19,16 @@ type GetRegionResponseProviderV1 struct {
 	Name string
 	URL  string
 }
+type ListWorkspaceResponseV1 struct {
+	Name   string
+	Tenant string
+}
+
+type GetWorkspaceResponseV1 struct {
+	Name   string
+	Tenant string
+}
+type CreateOrUpdateWorkspaceResponseV1 struct {
+	Name   string
+	Tenant string
+}

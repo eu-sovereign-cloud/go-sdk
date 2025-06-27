@@ -9,96 +9,50 @@ import (
 	"k8s.io/utils/ptr"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/fake"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
+	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
 func TestListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 
-	reSim := mockregion.NewMockServerInterface(t)
-	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
-		assert.Equal(t, "eu-central-1", name)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
+		Name: secatest.RegionName,
+		Providers: []secatest.GetRegionResponseProviderV1{
 			{
-				"apiVersion": "v1",
-				"kind": "region",
-				"metadata": {
-					"name": "eu-central-1"
-				},
-				"spec": {
-					"availableZones": [ "A", "B" ],
-					"providers": [
-						{
-							"name": "seca.workspace",
-							"version": "v1",
-							"url": "http://` + r.Host + `/providers/seca.workspace"
-						}
-					]
-				},
-				"status": {
-					"conditions": [ { "status": "Ready" } ]
-				}
-			}
-		`))
+				Name: secatest.ProviderWorkspaceName,
+				URL:  secatest.ProviderWorkspaceEndpoint,
+			},
+		},
 	})
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
-	wsSim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`
-			{
-				"items": [
-					{
-						"apiVersion": "v1",
-						"kind": "workspace",
-						"metadata": {
-							"name": "some-workspace",
-							"tenant": "test",
-							"deletionTimestamp": "2019-08-24T14:15:22Z",
-							"lastModifiedTimestamp": "2019-08-24T14:15:22Z",
-							"description": "string",
-							"labels": {
-								"language": "en",
-								"billing.cost-center": "platform-eng",
-								"env": "production"
-							}
-						},
-						"spec": {},
-						"status": {
-							"conditions": [ { "status": "Ready" } ]
-						}
-					}
-				],
-				"metadata": {
-					"skipToken": null
-				}
-			}
-		`))
+	secatest.MockListWorkspaceV1(wsSim, secatest.ListWorkspaceResponseV1{
+		Name:   "some-workspace",
+		Tenant: "test",
 	})
 
 	sm := http.NewServeMux()
-	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
-		BaseURL:    "/providers/seca.regions",
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderRegionEndpoint,
 		BaseRouter: sm,
 	})
 	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
-		BaseURL:    "/providers/seca.workspace",
+		BaseURL:    secatest.ProviderWorkspaceEndpoint,
 		BaseRouter: sm,
 	})
+
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
@@ -110,8 +64,9 @@ func TestListWorkspacesV1(t *testing.T) {
 	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
-
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
+	assert.Equal(t, "active", ws[0].Metadata.Name)
+
 }
 
 func TestFakedListWorkspacesV1(t *testing.T) {
@@ -147,4 +102,108 @@ func TestFakedListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 	assert.Equal(t, "test", ws[0].Metadata.Tenant)
 	assert.EqualValues(t, "pending", *ws[0].Status.State)
+}
+
+func TestGetWorkspaces(t *testing.T) {
+	ctx := context.Background()
+
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
+		Name: secatest.RegionName,
+		Providers: []secatest.GetRegionResponseProviderV1{
+			{
+				Name: secatest.ProviderWorkspaceName,
+				URL:  secatest.ProviderWorkspaceEndpoint,
+			},
+		},
+	})
+
+	wsSim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockGetWorkspaceV1(wsSim, secatest.GetWorkspaceResponseV1{
+		Name:   "some-workspace",
+		Tenant: "test-tenant",
+	})
+	sm := http.NewServeMux()
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderRegionEndpoint,
+		BaseRouter: sm,
+	})
+	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderWorkspaceEndpoint,
+		BaseRouter: sm,
+	})
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
+	require.NoError(t, err)
+
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	require.NoError(t, err)
+
+	tref := TenantReference{
+		Tenant: "test-tenant",
+		Name:   "some-workspace",
+	}
+
+	ws, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
+	require.NoError(t, err)
+	require.NotNil(t, ws)
+	assert.Equal(t, "some-workspace", ws.Metadata.Name)
+	assert.Equal(t, "test-tenant", ws.Metadata.Tenant)
+	require.NotNil(t, *ws.Status.State)
+	assert.EqualValues(t, "active", *ws.Status.State)
+
+}
+func TestCreateOrUpdateWorkspace(t *testing.T) {
+	ctx := context.Background()
+
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
+		Name: secatest.RegionName,
+		Providers: []secatest.GetRegionResponseProviderV1{
+			{
+				Name: secatest.ProviderWorkspaceName,
+				URL:  secatest.ProviderWorkspaceEndpoint,
+			},
+		},
+	})
+
+	wsSim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockCreateOrUpdateWorkspaceV1(wsSim, secatest.CreateOrUpdateWorkspaceResponseV1{
+		Name:   "new-workspace",
+		Tenant: "test-tenant",
+	})
+	sm := http.NewServeMux()
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderRegionEndpoint,
+		BaseRouter: sm,
+	})
+	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderWorkspaceEndpoint,
+		BaseRouter: sm,
+	})
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
+	require.NoError(t, err)
+
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	require.NoError(t, err)
+
+	ws := &workspace.Workspace{
+		Metadata: &workspace.RegionalResourceMetadata{
+			Tenant: "test-tenant",
+			Name:   "new-workspace",
+		},
+		Spec: workspace.WorkspaceSpec{},
+	}
+
+	err = regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
+
+	require.NoError(t, err)
+
 }
