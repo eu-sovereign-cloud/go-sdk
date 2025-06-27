@@ -207,3 +207,52 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	require.NoError(t, err)
 
 }
+
+func TestDeleteWorkspace(t *testing.T) {
+	ctx := context.Background()
+
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
+		Name: secatest.RegionName,
+		Providers: []secatest.GetRegionResponseProviderV1{
+			{
+				Name: secatest.ProviderWorkspaceName,
+				URL:  secatest.ProviderWorkspaceEndpoint,
+			},
+		},
+	})
+
+	wsSim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockDeleteWorkspaceV1(wsSim)
+	sm := http.NewServeMux()
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderRegionEndpoint,
+		BaseRouter: sm,
+	})
+	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderWorkspaceEndpoint,
+		BaseRouter: sm,
+	})
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
+	require.NoError(t, err)
+
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	require.NoError(t, err)
+
+	ws := &workspace.Workspace{
+		Metadata: &workspace.RegionalResourceMetadata{
+			Tenant: "test-tenant",
+			Name:   "new-workspace",
+		},
+		Spec: workspace.WorkspaceSpec{},
+	}
+
+	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, ws)
+
+	require.NoError(t, err)
+
+}

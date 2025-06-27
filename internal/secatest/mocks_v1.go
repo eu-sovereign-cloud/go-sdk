@@ -80,3 +80,12 @@ func MockCreateOrUpdateWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp 
 		writeTemplateResponse(w, json, resp)
 	})
 }
+
+func MockDeleteWorkspaceV1(sim *mockWorkspace.MockServerInterface) {
+
+	sim.EXPECT().DeleteWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params workspace.DeleteWorkspaceParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusAccepted)
+
+	})
+}

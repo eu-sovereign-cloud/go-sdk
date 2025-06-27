@@ -5,7 +5,7 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 type WorkspaceV1 struct {
@@ -85,7 +85,7 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkStatusCode(resp, 202); err != nil {
 		return err
 	}
 
