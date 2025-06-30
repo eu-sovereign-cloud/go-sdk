@@ -121,4 +121,53 @@ const (
 				"resourcesCount": 1
 		}
 	}`
+
+	CreateOrUpdateInstaceResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"name": "{{.Name}}",
+			"tenant": "{{.Tenant}}"
+			"region": "{{.Region}}",
+			"workspace": "{{.Workspace}}",
+			"zone": "a",
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"
+		},
+		"spec": {
+			"skuRef": "skus/seca.s",
+			"zone": "a",
+			"bootVolume": {
+				"deviceRef": {
+					"provider": "seca.storage/v1",
+					"resource": "block-storages/block-123"
+				},
+				"type": "virtio"
+			}
+		},
+		"status": {
+			"state": "active",
+			"conditions": [
+				{
+					"state": "active",
+					"lastTransitionAt": "2024-11-21T14:39:22Z"
+				}
+			]
+		}
+	}`
+
+	GetInstanceResponseTemplateV1 = ``
+
+	GetInstanceSkuResponseTemplateV1 = ``
+
+	ListInstancesResponseTemplateV1 = ``
+
+	ListInstancesSkusResponseTemplateV1 = ``
 )

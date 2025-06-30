@@ -17,6 +17,9 @@ const (
 	ProviderNetworkName     = "seca.network"
 	ProviderNetworkEndpoint = "/providers/seca.network"
 
+	ProviderComputeName     = "seca.compute"
+	ProviderComputeEndpoint = "/providers/seca.compute"
+
 	// Test Data
 
 	RegionName = "eu-central-1"

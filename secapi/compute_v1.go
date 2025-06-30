@@ -115,7 +115,7 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkStatusCode(resp, 202, 404); err != nil {
 		return err
 	}
 

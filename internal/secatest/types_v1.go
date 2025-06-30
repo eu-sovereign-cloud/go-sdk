@@ -32,3 +32,32 @@ type CreateOrUpdateWorkspaceResponseV1 struct {
 	Name   string
 	Tenant string
 }
+
+type CreateOrUpdateInstanceResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+}
+
+type GetInstanceResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+}
+
+type GetInstanceSkuResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+}
+
+type ListInstancesResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+}
+type ListInstancesSkusResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+}

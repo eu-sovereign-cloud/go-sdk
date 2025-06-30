@@ -65,7 +65,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
-	assert.Equal(t, "active", ws[0].Metadata.Name)
+	assert.EqualValues(t, "active", *ws[0].Status.State)
 
 }
 
