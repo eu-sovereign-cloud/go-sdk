@@ -5,48 +5,11 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 )
 
 type StorageV1 struct {
 	storage storage.ClientWithResponsesInterface
-}
-
-func newStorageV1(storageUrl string) (*StorageV1, error) {
-	storage, err := storage.NewClientWithResponses(storageUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &StorageV1{storage: storage}, nil
-}
-
-func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
-}
-
-func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	return nil
 }
 
 func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.StorageSku], error) {
@@ -200,6 +163,43 @@ func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) err
 
 	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newStorageV1(storageUrl string) (*StorageV1, error) {
+	storage, err := storage.NewClientWithResponses(storageUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &StorageV1{storage: storage}, nil
+}
+
+func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
+	}
+
+	return nil
+}
+
+func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
 	}
 
 	return nil

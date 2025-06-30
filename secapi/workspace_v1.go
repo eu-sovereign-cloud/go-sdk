@@ -5,32 +5,11 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 type WorkspaceV1 struct {
 	workspace workspace.ClientWithResponsesInterface
-}
-
-func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
-	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &WorkspaceV1{workspace: workspace}, nil
-}
-
-func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
 }
 
 func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
@@ -93,6 +72,27 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 
 	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
+	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &WorkspaceV1{workspace: workspace}, nil
+}
+
+func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
 	}
 
 	return nil

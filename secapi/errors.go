@@ -7,6 +7,6 @@ var (
 	ErrNoMetatada          = errors.New("metadata is empty")
 	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
 	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
-)
 
-var ErrRegionRequiredToRegionalClient = errors.New("region provider is required to create a regional client")
+	ErrRegionRequiredToRegionalClient = errors.New("region provider is required to create a regional client")
+)

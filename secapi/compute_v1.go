@@ -5,36 +5,11 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 )
 
 type ComputeV1 struct {
 	compute compute.ClientWithResponsesInterface
-}
-
-func newComputeV1(computeUrl string) (*ComputeV1, error) {
-	compute, err := compute.NewClientWithResponses(computeUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ComputeV1{compute: compute}, nil
-}
-
-func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
 }
 
 func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.InstanceSku], error) {
@@ -180,6 +155,31 @@ func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instanc
 
 	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newComputeV1(computeUrl string) (*ComputeV1, error) {
+	compute, err := compute.NewClientWithResponses(computeUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ComputeV1{compute: compute}, nil
+}
+
+func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
 	}
 
 	return nil

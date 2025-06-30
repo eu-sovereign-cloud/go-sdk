@@ -12,27 +12,6 @@ type AuthorizationV1 struct {
 	authorization authorization.ClientWithResponsesInterface
 }
 
-func newAuthorizationV1(authorizationsUrl string) (*AuthorizationV1, error) {
-	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &AuthorizationV1{authorization: authorization}, nil
-}
-
-func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
-}
-
 func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
 	iter := Iterator[authorization.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.Role, *string, error) {
@@ -158,6 +137,27 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, role *auth
 
 	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newAuthorizationV1(authorizationsUrl string) (*AuthorizationV1, error) {
+	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &AuthorizationV1{authorization: authorization}, nil
+}
+
+func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
 	}
 
 	return nil

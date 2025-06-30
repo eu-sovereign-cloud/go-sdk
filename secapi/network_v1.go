@@ -5,52 +5,11 @@ import (
 
 	"k8s.io/utils/ptr"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 )
 
 type NetworkV1 struct {
 	network network.ClientWithResponsesInterface
-}
-
-func newNetworkV1(networkUrl string) (*NetworkV1, error) {
-	network, err := network.NewClientWithResponses(networkUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &NetworkV1{network: network}, nil
-}
-
-func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
-}
-
-func validateNetworkRegionalMetadataV1(metadata *network.RegionalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
 }
 
 func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.NetworkSku], error) {
@@ -529,6 +488,47 @@ func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) 
 
 	if err = checkStatusCode(resp, 204, 404); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newNetworkV1(networkUrl string) (*NetworkV1, error) {
+	network, err := network.NewClientWithResponses(networkUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &NetworkV1{network: network}, nil
+}
+
+func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
+	}
+
+	return nil
+}
+
+func validateNetworkRegionalMetadataV1(metadata *network.RegionalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
 	}
 
 	return nil

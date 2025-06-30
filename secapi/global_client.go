@@ -14,24 +14,6 @@ type GlobalClient struct {
 	AuthorizationV1 *AuthorizationV1
 }
 
-func (client *GlobalClient) setRegionV1(region *RegionV1) {
-	client.RegionV1 = region
-}
-
-func (client *GlobalClient) setAuthorizationV1(authorization *AuthorizationV1) {
-	client.AuthorizationV1 = authorization
-}
-
-func initGlobalAPI[T any](endpoint string, newFunc func(url string) (*T, error), setFunc func(*T)) error {
-	client, err := newFunc(endpoint)
-	if err != nil {
-		return err
-	}
-
-	setFunc(client)
-	return nil
-}
-
 func NewGlobalClient(endpoints *GlobalEndpoints) (*GlobalClient, error) {
 	client := &GlobalClient{}
 
@@ -67,4 +49,22 @@ func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string, 
 	}
 
 	return NewRegionalClient(region, regionalAPIs)
+}
+
+func initGlobalAPI[T any](endpoint string, newFunc func(url string) (*T, error), setFunc func(*T)) error {
+	client, err := newFunc(endpoint)
+	if err != nil {
+		return err
+	}
+
+	setFunc(client)
+	return nil
+}
+
+func (client *GlobalClient) setRegionV1(region *RegionV1) {
+	client.RegionV1 = region
+}
+
+func (client *GlobalClient) setAuthorizationV1(authorization *AuthorizationV1) {
+	client.AuthorizationV1 = authorization
 }
