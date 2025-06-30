@@ -163,11 +163,112 @@ const (
 		}
 	}`
 
-	GetInstanceResponseTemplateV1 = ``
+	GetInstanceResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"name": "{{.Name}}",
+			"tenant": "{{.Tenant}}"
+			"region": "{{.Region}}",
+			"workspace": "{{.Workspace}}",		
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"
+		},
+		"spec": {
+			"skuRef": "skus/seca.s",
+			"zone": "a",
+			"bootVolume": {
+			"deviceRef": {
+				"provider": "seca.storage/v1",
+				"resource": "block-storages/block-123"
+			},
+			"type": "virtio"
+			}
+		},
+		"status": {
+			"state": "active",
+			"conditions": [
+			{
+				"state": "active",
+				"lastTransitionAt": "2024-11-21T14:39:22Z"
+			}
+			]
+		}
+	}`
 
-	GetInstanceSkuResponseTemplateV1 = ``
+	GetInstanceSkuResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"name": "resource-name"
+		},
+		"spec": {
+			"vCPU": 2,
+			"ram": 230
+		}
+	}`
 
-	ListInstancesResponseTemplateV1 = ``
+	ListInstancesResponseTemplateV1 = `
+	{
+		"items": [
+			{
+			"labels": {
+				"env": "production"
+			},
+			"annotations": {
+				"description": "Human readable description"
+			},
+			"extensions": {},
+			"metadata": {
+				"name": "{{.Name}}",
+				"tenant": "{{.Tenant}}"
+				"region": "{{.Region}}",			
+				"provider": "seca.compute/v1",
+				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+				"verb": "get"
+			},
+			"spec": {
+				"skuRef": "skus/seca.s",
+				"zone": "a",
+				"bootVolume": {
+				"deviceRef": {
+					"provider": "seca.storage/v1",
+					"resource": "block-storages/block-123"
+				},
+				"type": "virtio"
+				}
+			},
+			"status": {
+				"state": "active",
+				"conditions": [
+				{
+					"state": "active",
+					"lastTransitionAt": "2024-11-21T14:39:22Z"
+				}
+				]
+			}
+			}
+		],
+		"metadata": {
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get",
+			"skipToken": "false"
+		}
+	}`
 
 	ListInstancesSkusResponseTemplateV1 = ``
 )

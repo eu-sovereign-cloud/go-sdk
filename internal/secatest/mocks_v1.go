@@ -14,12 +14,6 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func writeTemplateResponse(w http.ResponseWriter, tmpl *template.Template, data any) {
-	var buffer bytes.Buffer
-	_ = tmpl.Execute(&buffer, data)
-	_, _ = w.Write(buffer.Bytes())
-}
-
 // Region
 func MockListRegionsV1(sim *mockRegion.MockServerInterface, resp ListRegionsResponseV1) {
 	json := template.Must(template.New("response").Parse(ListRegionsResponseTemplateV1))
@@ -174,4 +168,10 @@ func MockStopInstanceV1(sim *mockCompute.MockServerInterface) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 		w.WriteHeader(http.StatusAccepted)
 	})
+}
+
+func writeTemplateResponse(w http.ResponseWriter, tmpl *template.Template, data any) {
+	var buffer bytes.Buffer
+	_ = tmpl.Execute(&buffer, data)
+	_, _ = w.Write(buffer.Bytes())
 }
