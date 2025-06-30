@@ -20,11 +20,11 @@ func TenantIDFromContext(ctx context.Context) (TenantID, bool) {
 }
 
 // MustTenantIDFromContext returns the TenantID from the given context.
-// If the TenantID is not found, it panics.
-func MustTenantIDFromContext(ctx context.Context) TenantID {
+// If the TenantID is not found, returns error.
+func MustTenantIDFromContext(ctx context.Context) (TenantID, error) {
 	tid, ok := TenantIDFromContext(ctx)
 	if !ok {
-		panic(ErrNoTenantID)
+		return "", ErrNoTenantID
 	}
-	return tid
+	return tid, nil
 }

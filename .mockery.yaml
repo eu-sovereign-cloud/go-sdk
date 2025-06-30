@@ -27,7 +27,12 @@ packages:
     config:
       all: true
       dir: mock/spec/extensions.objectstorage.v1beta1
-      outpkg: mockobjectstorage  
+      outpkg: mockobjectstorage
+  github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1:
+    config:
+      all: true
+      dir: mock/spec/extensions.wellknown.v1
+      outpkg: mockwellknown
   github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1:
     config:
       all: true

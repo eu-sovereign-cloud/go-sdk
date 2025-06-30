@@ -19,10 +19,39 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestListWorkspaces(t *testing.T) {
+func TestListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
-	wsSim := mockworkspace.NewMockServerInterface(t)
 
+	reSim := mockregion.NewMockServerInterface(t)
+	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
+		assert.Equal(t, "eu-central-1", name)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`
+			{
+				"apiVersion": "v1",
+				"kind": "region",
+				"metadata": {
+					"name": "eu-central-1"
+				},
+				"spec": {
+					"availableZones": [ "A", "B" ],
+					"providers": [
+						{
+							"name": "seca.workspace",
+							"version": "v1",
+							"url": "http://` + r.Host + `/providers/seca.workspace"
+						}
+					]
+				},
+				"status": {
+					"conditions": [ { "status": "Ready" } ]
+				}
+			}
+		`))
+	})
+
+	wsSim := mockworkspace.NewMockServerInterface(t)
 	wsSim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
@@ -57,55 +86,25 @@ func TestListWorkspaces(t *testing.T) {
 		`))
 	})
 
-	reSim := mockregion.NewMockServerInterface(t)
-
-	reSim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {
-		assert.Equal(t, "eu-central-1", name)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`
-			{
-				"apiVersion": "v1",
-				"kind": "region",
-				"metadata": {
-					"name": "eu-central-1"
-				},
-				"spec": {
-					"availableZones": [ "A", "B" ],
-					"providers": [
-						{
-							"name": "seca.workspace",
-							"version": "v1",
-							"url": "http://` + r.Host + `/providers/seca.workspace"
-						}
-					]
-				},
-				"status": {
-					"conditions": [ { "status": "Ready" } ]
-				}
-			}
-		`))
-	})
-
 	sm := http.NewServeMux()
-	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
-		BaseURL:    "/providers/seca.workspace",
-		BaseRouter: sm,
-	})
 	region.HandlerWithOptions(reSim, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
+		BaseRouter: sm,
+	})
+	workspace.HandlerWithOptions(wsSim, workspace.StdHTTPServerOptions{
+		BaseURL:    "/providers/seca.workspace",
 		BaseRouter: sm,
 	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1")
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionalClient.ListWorkspaces(ctx, "test")
+	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
@@ -115,7 +114,7 @@ func TestListWorkspaces(t *testing.T) {
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
 }
 
-func TestFakedListWorkspaces(t *testing.T) {
+func TestFakedListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 
 	fakeServer := fake.NewServer("eu-central-1")
@@ -132,13 +131,13 @@ func TestFakedListWorkspaces(t *testing.T) {
 		},
 	}
 
-	client, err := NewGlobalClient(server.URL + "/providers/seca.regions")
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
 	require.NoError(t, err)
 
-	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1")
+	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.ListWorkspaces(ctx, "test")
+	wsIter, err := regionClient.WorkspaceV1.ListWorkspaces(ctx, "test")
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)

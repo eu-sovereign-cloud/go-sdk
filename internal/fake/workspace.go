@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 var _ workspace.ServerInterface = (*Server)(nil)

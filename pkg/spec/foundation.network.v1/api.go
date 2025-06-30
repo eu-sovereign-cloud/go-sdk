@@ -467,6 +467,16 @@ type InternetGateway struct {
 	// organize and categorize resources. They can be used to filter resources.
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec The internet gateway will use the reserved IP addres.
+	// the subnet CIDR block to provide internet access to the subnet.
+	Spec InternetGatewaySpec `json:"spec"`
+
+	// Status Current status of the resource
+	Status *Status `json:"status,omitempty"`
 }
 
 // InternetGatewayIterator Iterator for internet gateways

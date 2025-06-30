@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
 type Server struct {
@@ -43,12 +43,13 @@ func NewServer(regionNames ...string) *Server {
 func (s *Server) Start() *httptest.Server {
 	mux := http.NewServeMux()
 
-	workspace.HandlerWithOptions(s, workspace.StdHTTPServerOptions{
-		BaseURL:    "/providers/seca.workspace",
-		BaseRouter: mux,
-	})
 	region.HandlerWithOptions(s, region.StdHTTPServerOptions{
 		BaseURL:    "/providers/seca.regions",
+		BaseRouter: mux,
+	})
+
+	workspace.HandlerWithOptions(s, workspace.StdHTTPServerOptions{
+		BaseURL:    "/providers/seca.workspace",
 		BaseRouter: mux,
 	})
 
