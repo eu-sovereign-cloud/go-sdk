@@ -77,7 +77,7 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -96,7 +96,7 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 		return err
 	}
 
-	if err = checkStatusCode(resp, 202, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -115,7 +115,7 @@ func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance)
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessPostStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -134,7 +134,7 @@ func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) 
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessPostStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -153,7 +153,7 @@ func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instanc
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessPostStatusCodes(resp); err != nil {
 		return err
 	}
 

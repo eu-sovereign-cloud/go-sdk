@@ -51,7 +51,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -70,7 +70,7 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -116,7 +116,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, ro
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -135,7 +135,7 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, role *auth
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 

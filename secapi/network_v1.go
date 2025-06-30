@@ -77,7 +77,7 @@ func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Ne
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -96,7 +96,7 @@ func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) e
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -142,7 +142,7 @@ func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Sub
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -161,7 +161,7 @@ func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) err
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -207,7 +207,7 @@ func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *netwo
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -226,7 +226,7 @@ func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.Route
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -272,7 +272,7 @@ func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *ne
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -291,7 +291,7 @@ func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.In
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -337,7 +337,7 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, route *ne
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -356,7 +356,7 @@ func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.Se
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -402,7 +402,7 @@ func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) e
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -421,7 +421,7 @@ func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -467,7 +467,7 @@ func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.Pu
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -486,7 +486,7 @@ func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) 
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 

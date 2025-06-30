@@ -77,7 +77,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -96,7 +96,7 @@ func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.Blo
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -142,7 +142,7 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Im
 		return err
 	}
 
-	if err = checkStatusCode(resp, 200, 201); err != nil {
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
 		return err
 	}
 
@@ -161,7 +161,7 @@ func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) err
 		return err
 	}
 
-	if err = checkStatusCode(resp, 204, 404); err != nil {
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
 		return err
 	}
 
