@@ -91,3 +91,64 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 
 	return nil
 }
+
+func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[authorization.RoleAssignment], error) {
+	iter := Iterator[authorization.RoleAssignment]{
+		fn: func(ctx context.Context, skipToken *string) ([]authorization.RoleAssignment, *string, error) {
+			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRoleAssignmentsParams{
+				Accept: ptr.To(authorization.ListRoleAssignmentsParamsAcceptApplicationjson),
+			})
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantReference) (*authorization.RoleAssignment, error) {
+	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.JSON200, nil
+}
+
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
+	validateAuthorizationMetadataV1(role.Metadata)
+
+	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
+		&authorization.CreateOrUpdateRoleAssignmentParams{
+			IfUnmodifiedSince: &role.Metadata.ResourceVersion,
+		}, *role)
+	if err != nil {
+		return err
+	}
+
+	if err = checkStatusCode(resp, 200, 201); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
+	validateAuthorizationMetadataV1(role.Metadata)
+
+	resp, err := api.authorization.DeleteRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleAssignmentParams{
+		IfUnmodifiedSince: &role.Metadata.ResourceVersion,
+	})
+	if err != nil {
+		return err
+	}
+
+	if err = checkStatusCode(resp, 204, 404); err != nil {
+		return err
+	}
+
+	return nil
+}
