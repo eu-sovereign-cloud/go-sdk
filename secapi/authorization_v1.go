@@ -21,14 +21,16 @@ func newAuthorizationV1(authorizationsUrl string) (*AuthorizationV1, error) {
 	return &AuthorizationV1{authorization: authorization}, nil
 }
 
-func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) {
+func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) error {
 	if metadata == nil {
-		panic(ErrNoMetatada)
+		return ErrNoMetatada
 	}
 
 	if metadata.Tenant == "" {
-		panic(ErrNoMetatadaTenant)
+		return ErrNoMetatadaTenant
 	}
+
+	return nil
 }
 
 func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
@@ -58,7 +60,9 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) error {
-	validateAuthorizationMetadataV1(role.Metadata)
+	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
 		&authorization.CreateOrUpdateRoleParams{
@@ -76,7 +80,9 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 }
 
 func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
-	validateAuthorizationMetadataV1(role.Metadata)
+	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.authorization.DeleteRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleParams{
 		IfUnmodifiedSince: &role.Metadata.ResourceVersion,
@@ -119,7 +125,9 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
-	validateAuthorizationMetadataV1(role.Metadata)
+	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
 		&authorization.CreateOrUpdateRoleAssignmentParams{
@@ -137,7 +145,9 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, ro
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
-	validateAuthorizationMetadataV1(role.Metadata)
+	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.authorization.DeleteRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleAssignmentParams{
 		IfUnmodifiedSince: &role.Metadata.ResourceVersion,

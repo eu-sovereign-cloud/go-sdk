@@ -21,28 +21,32 @@ func newStorageV1(storageUrl string) (*StorageV1, error) {
 	return &StorageV1{storage: storage}, nil
 }
 
-func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) {
+func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) error {
 	if metadata == nil {
-		panic(ErrNoMetatada)
+		return ErrNoMetatada
 	}
 
 	if metadata.Tenant == "" {
-		panic(ErrNoMetatadaTenant)
+		return ErrNoMetatadaTenant
 	}
+
+	return nil
 }
 
-func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) {
+func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) error {
 	if metadata == nil {
-		panic(ErrNoMetatada)
+		return ErrNoMetatada
 	}
 
 	if metadata.Tenant == "" {
-		panic(ErrNoMetatadaTenant)
+		return ErrNoMetatadaTenant
 	}
 
 	if metadata.Workspace == nil {
-		panic(ErrNoMetatadaWorkspace)
+		return ErrNoMetatadaWorkspace
 	}
+
+	return nil
 }
 
 func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.StorageSku], error) {
@@ -98,7 +102,9 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 }
 
 func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
-	validateStorageZonalMetadataV1(block.Metadata)
+	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
 		&storage.CreateOrUpdateBlockStorageParams{
@@ -116,7 +122,9 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 }
 
 func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
-	validateStorageZonalMetadataV1(block.Metadata)
+	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, &storage.DeleteBlockStorageParams{
 		IfUnmodifiedSince: &block.Metadata.ResourceVersion,
@@ -159,7 +167,9 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 }
 
 func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) error {
-	validateStorageRegionalMetadataV1(image.Metadata)
+	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name,
 		&storage.CreateOrUpdateImageParams{
@@ -177,7 +187,9 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Im
 }
 
 func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) error {
-	validateStorageRegionalMetadataV1(image.Metadata)
+	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.storage.DeleteImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name, &storage.DeleteImageParams{
 		IfUnmodifiedSince: &image.Metadata.ResourceVersion,
