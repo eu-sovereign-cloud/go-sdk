@@ -12,25 +12,6 @@ type WorkspaceV1 struct {
 	workspace workspace.ClientWithResponsesInterface
 }
 
-func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
-	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &WorkspaceV1{workspace: workspace}, nil
-}
-
-func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) {
-	if metadata == nil {
-		panic(ErrNoMetatada)
-	}
-
-	if metadata.Tenant == "" {
-		panic(ErrNoMetatadaTenant)
-	}
-}
-
 func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	iter := Iterator[workspace.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
@@ -58,7 +39,9 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 }
 
 func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
-	validateWorkspaceMetadataV1(ws.Metadata)
+	if err := validateWorkspaceMetadataV1(ws.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
@@ -76,7 +59,9 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspa
 }
 
 func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
-	validateWorkspaceMetadataV1(ws.Metadata)
+	if err := validateWorkspaceMetadataV1(ws.Metadata); err != nil {
+		return err
+	}
 
 	resp, err := api.workspace.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
 		IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
@@ -87,6 +72,27 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 
 	if err = checkStatusCode(resp, 202); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
+	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &WorkspaceV1{workspace: workspace}, nil
+}
+
+func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) error {
+	if metadata == nil {
+		return ErrNoMetatada
+	}
+
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant
 	}
 
 	return nil
