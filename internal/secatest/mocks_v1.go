@@ -5,10 +5,13 @@ import (
 	"net/http"
 	"text/template"
 
+	mockAuthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	mockCompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	mockRegion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	mockStorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
 	mockWorkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+
+	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
@@ -174,7 +177,7 @@ func MockStopInstanceV1(sim *mockCompute.MockServerInterface) {
 }
 
 // Storage
-func MockStorageListSkusV1(sim *mockStorage.MockServerInterface, resp ListStorageSkusResponseV1) {
+func MockStorageListSkusV1(sim *mockStorage.MockServerInterface, resp GenericTenantResponseV1) {
 	json := template.Must(template.New("response").Parse(ListStorageSkusResponseTemplateV1))
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, params storage.ListSkusParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -183,7 +186,7 @@ func MockStorageListSkusV1(sim *mockStorage.MockServerInterface, resp ListStorag
 	})
 }
 
-func MockGetStorageSkusV1(sim *mockStorage.MockServerInterface, resp GetStorageSkuResponseV1) {
+func MockGetStorageSkusV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(GetStorageSkuResponseTemplateV1))
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -192,7 +195,7 @@ func MockGetStorageSkusV1(sim *mockStorage.MockServerInterface, resp GetStorageS
 	})
 }
 
-func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(ListBlockStorageResponseTemplateV1))
 	sim.EXPECT().ListBlockStorages(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, params storage.ListBlockStoragesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -201,7 +204,7 @@ func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp GenericR
 	})
 }
 
-func MockGetBlockStorageV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockGetBlockStorageV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(GetBlockStorageResponseTemplateV1))
 	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -210,7 +213,7 @@ func MockGetBlockStorageV1(sim *mockStorage.MockServerInterface, resp GenericRes
 	})
 }
 
-func MockCreateOrUpdateBlockStorageV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockCreateOrUpdateBlockStorageV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(CreateOrUpdateBlockStorageResponseTemplateV1))
 	sim.EXPECT().CreateOrUpdateBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName, params storage.CreateOrUpdateBlockStorageParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -226,7 +229,7 @@ func MockDeleteBlockStorageV1(sim *mockStorage.MockServerInterface) {
 	})
 }
 
-func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(ListBlockStorageResponseTemplateV1))
 	sim.EXPECT().ListImages(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, params storage.ListImagesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -235,7 +238,7 @@ func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp GenericR
 	})
 }
 
-func MockGetStorageImageV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockGetStorageImageV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(GetStorageImageResponseTemplateV1))
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -244,7 +247,7 @@ func MockGetStorageImageV1(sim *mockStorage.MockServerInterface, resp GenericRes
 	})
 }
 
-func MockCreateOrUpdateImageV1(sim *mockStorage.MockServerInterface, resp GenericResponseV1) {
+func MockCreateOrUpdateImageV1(sim *mockStorage.MockServerInterface, resp GenericNameResponseV1) {
 	json := template.Must(template.New("response").Parse(CreateOrUpdateImageResponseTemplateV1))
 	sim.EXPECT().CreateOrUpdateImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName, params storage.CreateOrUpdateImageParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -255,6 +258,88 @@ func MockCreateOrUpdateImageV1(sim *mockStorage.MockServerInterface, resp Generi
 
 func MockDeleteImageV1(sim *mockStorage.MockServerInterface) {
 	sim.EXPECT().DeleteImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName, params storage.DeleteImageParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusAccepted)
+	})
+}
+
+func MockListRolesV1(sim *mockAuthorization.MockServerInterface, resp GenericTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(ListRolesResponseTemplateV1))
+
+	sim.EXPECT().ListRoles(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, params authorization.ListRolesParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockGetRoleV1(sim *mockAuthorization.MockServerInterface, resp GenericNameAndTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(GetRoleResponseTemplateV1))
+
+	sim.EXPECT().GetRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockCreateOrUpdateRoleV1(sim *mockAuthorization.MockServerInterface, resp GenericNameAndTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(CreateOrUpdateRoleResponseTemplateV1))
+
+	sim.EXPECT().CreateOrUpdateRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.CreateOrUpdateRoleParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockDeleteRoleV1(sim *mockAuthorization.MockServerInterface) {
+
+	sim.EXPECT().DeleteRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.DeleteRoleParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusAccepted)
+	})
+}
+
+func MockListRoleAssignmentsV1(sim *mockAuthorization.MockServerInterface, resp GenericTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(ListRolesAssignmentsResponseTemplateV1))
+
+	sim.EXPECT().ListRoleAssignments(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, params authorization.ListRoleAssignmentsParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockGetRoleAssignmentV1(sim *mockAuthorization.MockServerInterface, resp GenericNameAndTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(GetRoleAssignmentResponseTemplateV1))
+
+	sim.EXPECT().GetRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockCreateOrUpdateRoleAssignmentV1(sim *mockAuthorization.MockServerInterface, resp GenericNameAndTenantResponseV1) {
+	json := template.Must(template.New("response").Parse(CreateOrUpdateRoleAssigmentResponseTemplateV1))
+
+	sim.EXPECT().CreateOrUpdateRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.CreateOrUpdateRoleAssignmentParams) {
+		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+
+		writeTemplateResponse(w, json, resp)
+	})
+}
+
+func MockDeleteRoleAssignmentV1(sim *mockAuthorization.MockServerInterface) {
+
+	sim.EXPECT().DeleteRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.DeleteRoleAssignmentParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 		w.WriteHeader(http.StatusAccepted)
 	})

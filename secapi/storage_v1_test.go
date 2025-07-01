@@ -30,7 +30,7 @@ func TestListSkus(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockStorageListSkusV1(sgSim, secatest.ListStorageSkusResponseV1{
+	secatest.MockStorageListSkusV1(sgSim, secatest.GenericTenantResponseV1{
 		Tenant: "test",
 	})
 
@@ -75,7 +75,7 @@ func TestGetSku(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetStorageSkusV1(sgSim, secatest.GetStorageSkuResponseV1{
+	secatest.MockGetStorageSkusV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "some-workspace",
 	})
 
@@ -120,7 +120,7 @@ func TestListBlockStorages(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockListBlockStoragesV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockListBlockStoragesV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "some-workspace",
 	})
 
@@ -165,7 +165,7 @@ func TestGetBlockStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetBlockStorageV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockGetBlockStorageV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "workspace_1",
 	})
 
@@ -214,7 +214,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateBlockStorageV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockCreateOrUpdateBlockStorageV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "workspace_1",
 	})
 
@@ -310,7 +310,7 @@ func TestListImageStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockListStorageImagesV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockListStorageImagesV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "test",
 	})
 
@@ -354,7 +354,7 @@ func TestGetImage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetStorageImageV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockGetStorageImageV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "test-image",
 	})
 
@@ -400,7 +400,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateImageV1(sgSim, secatest.GenericResponseV1{
+	secatest.MockCreateOrUpdateImageV1(sgSim, secatest.GenericNameResponseV1{
 		Name: "test-image",
 	})
 

@@ -62,12 +62,13 @@ type ListInstancesSkusResponseV1 struct {
 	Workspace string
 }
 
-type ListStorageSkusResponseV1 struct {
+type GenericTenantResponseV1 struct {
 	Tenant string
 }
-type GetStorageSkuResponseV1 struct {
+type GenericNameResponseV1 struct {
 	Name string
 }
-type GenericResponseV1 struct {
-	Name string
+type GenericNameAndTenantResponseV1 struct {
+	Name   string
+	Tenant string
 }

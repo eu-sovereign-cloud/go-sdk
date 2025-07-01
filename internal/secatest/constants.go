@@ -23,6 +23,9 @@ const (
 	ProviderStorageName     = "seca.storage"
 	ProviderStorageEndpoint = "/providers/seca.storage"
 
+	ProviderAuthorizationName     = "seca.authorization"
+	ProviderAuthorizationEndpoint = "/providers/seca.authorization"
+
 	// Test Data
 
 	RegionName = "eu-central-1"
