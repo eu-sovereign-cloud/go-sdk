@@ -31,8 +31,9 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateInstanceV1(wsSim, secatest.CreateOrUpdateInstanceResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:      "some-workspace",
+		Tenant:    "test",
+		Workspace: "test-workspace",
 	})
 
 	sm := http.NewServeMux()
@@ -53,11 +54,12 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-
+	ws := "test-workspace"
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant: "test",
-			Name:   "test-instance",
+			Tenant:    "test",
+			Name:      "test-instance",
+			Workspace: &ws,
 		},
 	}
 
@@ -113,7 +115,7 @@ func TestGetInstance(t *testing.T) {
 	}
 	ws, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
-	require.Nil(t, ws)
+	require.NotEmpty(t, ws)
 
 }
 
@@ -160,10 +162,11 @@ func TestGetInstanceSkU(t *testing.T) {
 		Name:   "some-workspace",
 	})
 	require.NoError(t, err)
-	require.Nil(t, ws)
+	require.NotEmpty(t, ws)
 
 }
 
+// error
 func TestListInstances(t *testing.T) {
 	ctx := context.Background()
 
@@ -179,8 +182,9 @@ func TestListInstances(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockListInstancesV1(wsSim, secatest.ListInstancesResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:      "some-workspace",
+		Tenant:    "test",
+		Workspace: "test-workspace",
 	})
 
 	sm := http.NewServeMux()
@@ -202,9 +206,10 @@ func TestListInstances(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	ws, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
+	wsIter, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
+	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
-	require.Nil(t, ws)
+	require.Len(t, ws, 1)
 
 }
 func TestListInstancesSku(t *testing.T) {
@@ -221,9 +226,10 @@ func TestListInstancesSku(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockInstanceListSkusV1(sim, secatest.ListInstancesSkusResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+	secatest.MockInstanceListSkusV1(wsSim, secatest.ListInstancesSkusResponseV1{
+		Name:      "some-workspace",
+		Tenant:    "test",
+		Workspace: "test-workspace",
 	})
 
 	sm := http.NewServeMux()
@@ -245,9 +251,10 @@ func TestListInstancesSku(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	ws, err := regionalClient.ComputeV1.ListSkus(ctx, "test", "some-workspace")
+	wsIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test", "some-workspace")
+	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
-	require.Nil(t, ws)
+	require.Len(t, ws, 14)
 
 }
 
@@ -265,7 +272,7 @@ func TestRestartInstanace(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockRestartInstanceV1(sim)
+	secatest.MockRestartInstanceV1(wsSim)
 
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -285,10 +292,12 @@ func TestRestartInstanace(t *testing.T) {
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
+	ws := "test-workspace"
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant: "test",
-			Name:   "test-instance",
+			Tenant:    "test",
+			Name:      "test-instance",
+			Workspace: &ws,
 		},
 	}
 	err = regionalClient.ComputeV1.RestartInstance(ctx, cp)
@@ -310,7 +319,7 @@ func TestStartInstanace(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockStartInstanceV1(sim)
+	secatest.MockStartInstanceV1(wsSim)
 
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -330,10 +339,12 @@ func TestStartInstanace(t *testing.T) {
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
+	ws := "test-workspace"
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant: "test",
-			Name:   "test-instance",
+			Tenant:    "test",
+			Name:      "test-instance",
+			Workspace: &ws,
 		},
 	}
 	err = regionalClient.ComputeV1.StartInstance(ctx, cp)
@@ -355,7 +366,7 @@ func TestStopInstanace(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockStopInstanceV1(sim)
+	secatest.MockStopInstanceV1(wsSim)
 
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -375,10 +386,12 @@ func TestStopInstanace(t *testing.T) {
 
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
+	ws := "test-workspace"
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant: "test",
-			Name:   "test-instance",
+			Tenant:    "test",
+			Name:      "test-instance",
+			Workspace: &ws,
 		},
 	}
 	err = regionalClient.ComputeV1.StopInstance(ctx, cp)

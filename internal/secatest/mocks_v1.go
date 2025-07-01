@@ -99,6 +99,7 @@ func MockCreateOrUpdateInstanceV1(sim *mockCompute.MockServerInterface, resp Cre
 		writeTemplateResponse(w, json, resp)
 	})
 }
+
 func MockDeleteInstanceV1(sim *mockCompute.MockServerInterface) {
 
 	sim.EXPECT().DeleteInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.DeleteInstanceParams) {
