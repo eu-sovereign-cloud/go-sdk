@@ -113,9 +113,9 @@ func TestGetInstance(t *testing.T) {
 		},
 		Workspace: "workspace_1",
 	}
-	ws, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
+	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
-	require.NotEmpty(t, ws)
+	require.NotEmpty(t, cp)
 
 }
 
@@ -157,12 +157,12 @@ func TestGetInstanceSkU(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	ws, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
+	cp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
 		Tenant: "test-tenant",
 		Name:   "some-workspace",
 	})
 	require.NoError(t, err)
-	require.NotEmpty(t, ws)
+	require.NotEmpty(t, cp)
 
 }
 
@@ -206,10 +206,10 @@ func TestListInstances(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
-	ws, err := wsIter.All(ctx)
+	cpIter, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
+	cp, err := cpIter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, ws, 1)
+	require.Len(t, cp, 1)
 
 }
 func TestListInstancesSku(t *testing.T) {
@@ -251,10 +251,11 @@ func TestListInstancesSku(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test", "some-workspace")
-	ws, err := wsIter.All(ctx)
+	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test", "some-workspace")
 	require.NoError(t, err)
-	require.Len(t, ws, 14)
+	cp, err := cpIter.All(ctx)
+	require.NoError(t, err)
+	require.Len(t, cp, 14)
 
 }
 

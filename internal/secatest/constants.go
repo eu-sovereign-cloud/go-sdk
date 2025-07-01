@@ -20,6 +20,9 @@ const (
 	ProviderComputeName     = "seca.compute"
 	ProviderComputeEndpoint = "/providers/seca.compute"
 
+	ProviderStorageName     = "seca.storage"
+	ProviderStorageEndpoint = "/providers/seca.storage"
+
 	// Test Data
 
 	RegionName = "eu-central-1"
