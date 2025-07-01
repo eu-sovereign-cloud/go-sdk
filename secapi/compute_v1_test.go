@@ -166,7 +166,6 @@ func TestGetInstanceSkU(t *testing.T) {
 
 }
 
-// error
 func TestListInstances(t *testing.T) {
 	ctx := context.Background()
 
@@ -398,4 +397,49 @@ func TestStopInstanace(t *testing.T) {
 	err = regionalClient.ComputeV1.StopInstance(ctx, cp)
 	require.NoError(t, err)
 
+}
+func TestDeleteInstance(t *testing.T) {
+	ctx := context.Background()
+
+	sim := mockRegion.NewMockServerInterface(t)
+	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
+		Name: secatest.RegionName,
+		Providers: []secatest.GetRegionResponseProviderV1{
+			{
+				Name: secatest.ProviderComputeName,
+				URL:  secatest.ProviderComputeEndpoint,
+			},
+		},
+	})
+	wsSim := mockCompute.NewMockServerInterface(t)
+	secatest.MockDeleteInstanceV1(wsSim)
+
+	sm := http.NewServeMux()
+	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderRegionEndpoint,
+		BaseRouter: sm,
+	})
+	compute.HandlerWithOptions(wsSim, compute.StdHTTPServerOptions{
+		BaseURL:    secatest.ProviderComputeEndpoint,
+		BaseRouter: sm,
+	})
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
+	require.NoError(t, err)
+
+	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	require.NoError(t, err)
+	ws := "test-workspace"
+	cp := &compute.Instance{
+		Metadata: &compute.ZonalResourceMetadata{
+			Tenant:    "test",
+			Name:      "test-instance",
+			Workspace: &ws,
+		},
+	}
+	err = regionalClient.ComputeV1.DeleteInstance(ctx, cp)
+	require.NoError(t, err)
 }
