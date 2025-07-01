@@ -465,5 +465,316 @@ const (
 				"resource": "tenants/1/skus",
 				"verb": "list"
 			}
-}`
+	}`
+
+	ListStorageSkusResponseTemplateV1 = `{
+		"items": [
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "RD100"
+				},
+				"metadata": {
+					"name": "seca.rd100"
+				},
+				"spec": {
+					"iops": 100,
+					"minVolumeSize": 50,
+					"type": "remote-durable"
+				}
+			},
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "RD500"
+				},
+				"metadata": {
+					"name": "seca.rd500"
+				},
+				"spec": {
+					"iops": 500,
+					"minVolumeSize": 50,
+					"type": "remote-durable"
+				}
+			},
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "RD2K"
+				},
+				"metadata": {
+					"name": "seca.rd2k"
+				},
+				"spec": {
+					"iops": 2000,
+					"minVolumeSize": 50,
+					"type": "remote-durable"
+				}
+			},
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "RD10K"
+				},
+				"metadata": {
+					"name": "seca.rd10k"
+				},
+				"spec": {
+					"iops": 10000,
+					"minVolumeSize": 50,
+					"type": "remote-durable"
+				}
+			},
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "RD20K"
+				},
+				"metadata": {
+					"name": "seca.rd20k"
+				},
+				"spec": {
+					"iops": 20000,
+					"minVolumeSize": 50,
+					"type": "remote-durable"
+				}
+			},
+			{
+				"labels": {
+					"provider": "seca",
+					"tier": "LD100"
+				},
+				"metadata": {
+					"name": "seca.ld100"
+				},
+				"spec": {
+					"iops": 100,
+					"minVolumeSize": 50,
+					"type": "local-durable"
+				}
+			}
+		],
+		"metadata": {
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/skus",
+			"verb": "list"
+		}
+	}`
+
+	GetStorageSkuResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"name": "{{.Name}}"
+		},
+		"spec": {
+			"iops": 100,
+			"type": "remote-durable",
+			"minVolumeSize": 50
+		}
+	}`
+
+	ListBlockStorageResponseTemplateV1 = `
+	{
+		"items": [
+			{
+			"labels": {
+				"env": "production"
+			},
+			"annotations": {
+				"description": "Human readable description"
+			},
+			"extensions": {},
+			"metadata": {
+				"provider": "seca.compute/v1",
+				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+				"verb": "get"
+			},
+			"spec": {
+				"skuRef": "resources/resource-a1b2c3",
+				"sizeGB": 10,
+				"sourceImageRef": "resources/resource-a1b2c3"
+			},
+			"status": {
+				"state": "active",
+				"conditions": [
+				{
+					"state": "active",
+					"lastTransitionAt": "2024-11-21T14:39:22Z"
+				}
+				],
+				"sizeGB": 10,
+				"attachedTo": "resources/resource-a1b2c3"
+			}
+			}
+		],
+		"metadata": {
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"
+		}
+	}`
+
+	GetBlockStorageResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"name": "{{.Name}}",
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"
+		},
+		"spec": {
+			"skuRef": "resources/resource-a1b2c3",
+			"sizeGB": 10,
+			"sourceImageRef": "resources/resource-a1b2c3"
+		},
+		"status": {
+			"state": "active",
+			"conditions": [
+			{
+				"state": "active",
+				"lastTransitionAt": "2024-11-21T14:39:22Z"
+			}
+			],
+			"sizeGB": 10,
+			"attachedTo": "resources/resource-a1b2c3"
+		}
+	}`
+
+	CreateOrUpdateBlockStorageResponseTemplateV1 = `
+	{
+		"labels": {
+			"env": "production"
+		},
+		"annotations": {
+			"description": "Human readable description"
+		},
+		"extensions": {},
+		"metadata": {
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"
+		},
+		"spec": {
+			"skuRef": "resources/resource-a1b2c3",
+			"sizeGB": 10,
+			"sourceImageRef": "resources/resource-a1b2c3"
+		},
+		"status": {
+			"state": "active",
+			"conditions": [
+			{
+				"state": "active",
+				"lastTransitionAt": "2024-11-21T14:39:22Z"
+			}
+			],
+			"sizeGB": 10,
+			"attachedTo": "resources/resource-a1b2c3"
+		}
+	}`
+
+	ListImageResponseTemplateV1 = `
+	{
+			"items": [
+				{
+					"labels": {
+						"os": "linux",
+						"version": "13",
+						"base": "debian"
+					},
+					"annotations": {
+						"name": "Debian Container",
+						"description": "The image contains the debian image base including\npreinstalled software for the use of linux containers.\n",
+						"release": "2025-01-01T00:00:00Z",
+						"eol": "2026-01-01T00:00:00Z",
+						"recommendedCpu": "2",
+						"recommendedMemory": "2",
+						"recommendedNics": "2",
+						"recommendedStorageSize": "100"
+					},
+					"spec": {
+						"blockStorageRef": "block-storages/temp-a9b2bc3d81",
+						"cpuArchitecture": "amd64",
+						"boot": "UEFI",
+						"initializer": "cloudinit-22"
+					}
+				}
+			],
+			"metadata": {
+				"provider": "seca.compute/v1",
+				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+				"verb": "get",
+				"skipToken": "false"
+			}
+		}
+	`
+
+	GetStorageImageResponseTemplateV1 = `
+	{
+		"labels": {
+			"os": "linux",
+			"version": "13",
+			"base": "debian"
+		},
+		"metadata": {
+			"name": "{{.Name}}"
+		},
+		"annotations": {
+			"name": "Debian Container",
+			"description": "The image contains the debian image base including\npreinstalled software for the use of linux containers.\n",
+			"release": "2025-01-01T00:00:00Z",
+			"eol": "2026-01-01T00:00:00Z",
+			"recommendedCpu": "2",
+			"recommendedMemory": "2",
+			"recommendedNics": "2",
+			"recommendedStorageSize": "100"
+		},
+		"spec": {
+			"blockStorageRef": "block-storages/temp-a9b2bc3d81",
+			"cpuArchitecture": "amd64",
+			"boot": "UEFI",
+			"initializer": "cloudinit-22"
+		}
+	}`
+
+	CreateOrUpdateImageResponseTemplateV1 = `
+	{
+		"labels": {
+			"os": "linux",
+			"version": "13",
+			"base": "debian"
+		},
+		"metadata": {
+			"name": "{{.Name}}"
+		},
+		"annotations": {
+			"name": "Debian Container",
+			"description": "The image contains the debian image base including\npreinstalled software for the use of linux containers.\n",
+			"release": "2025-01-01T00:00:00Z",
+			"eol": "2026-01-01T00:00:00Z",
+			"recommendedCpu": "2",
+			"recommendedMemory": "2",
+			"recommendedNics": "2",
+			"recommendedStorageSize": "100"
+		},
+		"spec": {
+			"blockStorageRef": "block-storages/temp-a9b2bc3d81",
+			"cpuArchitecture": "amd64",
+			"boot": "UEFI",
+			"initializer": "cloudinit-22"
+		}
+	}`
 )
