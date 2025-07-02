@@ -37,6 +37,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	secatest.MockListWorkspaceV1(wsSim, secatest.ListWorkspaceResponseV1{
 		Name:   "some-workspace",
 		Tenant: "test",
+		State:  "active",
 	})
 
 	sm := http.NewServeMux()
@@ -65,6 +66,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
+	assert.Equal(t, "test", ws[0].Metadata.Tenant)
 	assert.EqualValues(t, "active", *ws[0].Status.State)
 
 }
@@ -122,6 +124,7 @@ func TestGetWorkspaces(t *testing.T) {
 	secatest.MockGetWorkspaceV1(wsSim, secatest.GetWorkspaceResponseV1{
 		Name:   "some-workspace",
 		Tenant: "test-tenant",
+		State:  "active",
 	})
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{

@@ -30,8 +30,25 @@ func TestListSkus(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockStorageListSkusV1(sgSim, secatest.GenericTenantResponseV1{
+	secatest.MockStorageListSkusV1(sgSim, secatest.ListStorageSkusResponseV1{
+		Name:   "sku1",
 		Tenant: "test",
+		Skus: []secatest.ListStorageSkuMetaInfoResponseProviderV1{
+			{
+				Provider:      "seca",
+				Tier:          "RD500",
+				Iops:          100,
+				MinVolumeSize: 50,
+				Type:          "remote-durable",
+			},
+			{
+				Provider:      "seca",
+				Tier:          "DXS",
+				Iops:          200,
+				MinVolumeSize: 50,
+				Type:          "remote-durable",
+			},
+		},
 	})
 
 	sm := http.NewServeMux()
@@ -58,7 +75,14 @@ func TestListSkus(t *testing.T) {
 
 	sg, err := sgIter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, sg, 6)
+	require.Len(t, sg, 2)
+
+	for _, sku := range sg {
+
+		require.NotEmpty(t, sku.Labels)
+		require.NotEmpty(t, sku.Spec.Iops)
+		require.NotEmpty(t, sku.Spec.MinVolumeSize)
+	}
 }
 
 func TestGetSku(t *testing.T) {

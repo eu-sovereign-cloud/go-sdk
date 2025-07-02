@@ -116,6 +116,8 @@ func TestGetInstance(t *testing.T) {
 	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
+	require.Equal(t, "some-workspace", cp.Metadata.Name)
+	require.Equal(t, "test", cp.Metadata.Tenant)
 
 }
 
@@ -136,6 +138,8 @@ func TestGetInstanceSkU(t *testing.T) {
 	secatest.MockGetInstanceSkuV1(wsSim, secatest.GetInstanceSkuResponseV1{
 		Name:   "some-workspace",
 		Tenant: "test",
+		VCPU:   4,
+		Ram:    32,
 	})
 
 	sm := http.NewServeMux()
@@ -163,6 +167,10 @@ func TestGetInstanceSkU(t *testing.T) {
 	})
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
+
+	require.Equal(t, 4, cp.Spec.VCPU)
+	require.Equal(t, 32, cp.Spec.Ram)
+	require.Equal(t, "some-workspace", cp.Metadata.Name)
 
 }
 
@@ -206,6 +214,8 @@ func TestListInstances(t *testing.T) {
 	require.NoError(t, err)
 
 	cpIter, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
+	require.NoError(t, err)
+
 	cp, err := cpIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, cp, 1)
@@ -226,9 +236,24 @@ func TestListInstancesSku(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockInstanceListSkusV1(wsSim, secatest.ListInstancesSkusResponseV1{
-		Name:      "some-workspace",
-		Tenant:    "test",
-		Workspace: "test-workspace",
+		Name:   "some-workspace",
+		Tenant: "test",
+		Skus: []secatest.ListInstanceSkuMetaInfoResponseProviderV1{
+			{
+				Provider:     "seca",
+				Tier:         "D2XS",
+				VCPU:         1,
+				Ram:          1,
+				Architecture: "amd64",
+			},
+			{
+				Provider:     "seca",
+				Tier:         "DXS",
+				VCPU:         1,
+				Ram:          2,
+				Architecture: "amd64",
+			},
+		},
 	})
 
 	sm := http.NewServeMux()
@@ -254,7 +279,13 @@ func TestListInstancesSku(t *testing.T) {
 	require.NoError(t, err)
 	cp, err := cpIter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, cp, 14)
+	for _, sku := range cp {
+
+		require.NotEmpty(t, sku.Labels)
+		require.NotEmpty(t, sku.Spec.VCPU)
+		require.NotEmpty(t, sku.Spec.Ram)
+
+	}
 
 }
 

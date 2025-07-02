@@ -177,7 +177,7 @@ func MockStopInstanceV1(sim *mockCompute.MockServerInterface) {
 }
 
 // Storage
-func MockStorageListSkusV1(sim *mockStorage.MockServerInterface, resp GenericTenantResponseV1) {
+func MockStorageListSkusV1(sim *mockStorage.MockServerInterface, resp ListStorageSkusResponseV1) {
 	json := template.Must(template.New("response").Parse(ListStorageSkusResponseTemplateV1))
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, params storage.ListSkusParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
