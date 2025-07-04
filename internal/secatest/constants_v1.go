@@ -124,13 +124,7 @@ const (
 
 	CreateOrUpdateInstaceResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
@@ -164,13 +158,7 @@ const (
 
 	GetInstanceResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
@@ -203,13 +191,7 @@ const (
 
 	GetInstanceSkuResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}"
 		},
@@ -223,41 +205,40 @@ const (
 	{
 		"items": [
 			{
-			"extensions": {},
-			"metadata": {
-				"name": "{{.Name}}",
-				"tenant": "{{.Tenant}}",			
-				"provider": "seca.compute/v1",
-				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-				"verb": "get"
-			},
-			"spec": {
-				"skuRef": "skus/seca.s",
-				"zone": "a",
-				"bootVolume": {
-				"deviceRef": {
-					"provider": "seca.storage/v1",
-					"resource": "block-storages/block-123"
+				"extensions": {},
+				"metadata": {
+					"name": "{{.Name}}",
+					"tenant": "{{.Tenant}}",			
+					"provider": "seca.compute/v1",
+					"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+					"verb": "get"
 				},
-				"type": "virtio"
-				}
-			},
-			"status": {
-				"state": "active",
-				"conditions": [
-				{
+				"spec": {
+					"skuRef": "skus/seca.s",
+					"zone": "a",
+					"bootVolume": {
+					"deviceRef": {
+						"provider": "seca.storage/v1",
+						"resource": "block-storages/block-123"
+					},
+					"type": "virtio"
+					}
+				},
+				"status": {
 					"state": "active",
-					"lastTransitionAt": "2024-11-21T14:39:22Z"
+					"conditions": [
+					{
+						"state": "active",
+						"lastTransitionAt": "2024-11-21T14:39:22Z"
+					}
+					]
 				}
-				]
-			}
 			}
 		],
 		"metadata": {
 			"provider": "seca.compute/v1",
 			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-			"verb": "get",
-			"skipToken": "null"
+			"verb": "get"
 		}
 	}`
 
@@ -317,12 +298,6 @@ const (
 
 	GetStorageSkuResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
 		"extensions": {},
 		"metadata": {
 			"name": "{{.Name}}"
@@ -338,13 +313,7 @@ const (
 	{
 		"items": [
 			{
-			"labels": {
-				"env": "production"
-			},
-			"annotations": {
-				"description": "Human readable description"
-			},
-			"extensions": {},
+
 			"metadata": {
 				"provider": "seca.compute/v1",
 				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
@@ -377,13 +346,7 @@ const (
 
 	GetBlockStorageResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"provider": "seca.compute/v1",
@@ -410,13 +373,7 @@ const (
 
 	CreateOrUpdateBlockStorageResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"provider": "seca.compute/v1",
 			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
@@ -536,13 +493,6 @@ const (
 	{
 		"items": [
 			{
-			"labels": {
-				"env": "production"
-			},
-			"annotations": {
-				"description": "Human readable description"
-			},
-			"extensions": {},
 			"metadata": {
 				"provider": "seca.compute/v1",
 				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
@@ -609,13 +559,7 @@ const (
 
 	GetRoleResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
@@ -676,13 +620,7 @@ const (
 	}`
 	CreateOrUpdateRoleResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
@@ -746,13 +684,6 @@ const (
 	{
 		"items": [
 			{
-				"labels": {
-					"env": "production"
-				},
-				"annotations": {
-					"description": "Human readable description"
-				},
-				"extensions": {},
 				"metadata": {
 					"tenant": "{{.Tenant}}",
 					"provider": "seca.compute/v1",
@@ -803,13 +734,7 @@ const (
 
 	GetRoleAssignmentResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
@@ -853,13 +778,7 @@ const (
 
 	CreateOrUpdateRoleAssigmentResponseTemplateV1 = `
 	{
-		"labels": {
-			"env": "production"
-		},
-		"annotations": {
-			"description": "Human readable description"
-		},
-		"extensions": {},
+
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
