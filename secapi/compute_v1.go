@@ -12,7 +12,7 @@ type ComputeV1 struct {
 	compute compute.ClientWithResponsesInterface
 }
 
-func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.InstanceSku], error) {
+func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[compute.InstanceSku], error) {
 	iter := Iterator[compute.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]compute.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, compute.Tenant(tid), &compute.ListSkusParams{

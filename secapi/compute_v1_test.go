@@ -107,11 +107,9 @@ func TestGetInstance(t *testing.T) {
 	require.NoError(t, err)
 
 	wref := WorkspaceReference{
-		TenantReference: TenantReference{
-			Tenant: "test-tenant",
-			Name:   "some-workspace",
-		},
+		Tenant:    "test-tenant",
 		Workspace: "workspace_1",
+		Name:      "some-workspace",
 	}
 	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
@@ -275,7 +273,7 @@ func TestListInstancesSku(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test", "some-workspace")
+	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test")
 	require.NoError(t, err)
 	cp, err := cpIter.All(ctx)
 	require.NoError(t, err)

@@ -12,7 +12,7 @@ type StorageV1 struct {
 	storage storage.ClientWithResponsesInterface
 }
 
-func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.StorageSku], error) {
+func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[storage.StorageSku], error) {
 	iter := Iterator[storage.StorageSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]storage.StorageSku, *string, error) {
 			resp, err := api.storage.ListSkusWithResponse(ctx, storage.Tenant(tid), &storage.ListSkusParams{

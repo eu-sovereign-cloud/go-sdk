@@ -1,6 +1,9 @@
 package secapi
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type httpResponse interface {
 	StatusCode() int
@@ -17,21 +20,21 @@ func checkStatusCode(resp httpResponse, alloweds ...int) error {
 }
 
 func checkSuccessPutStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, 200, 201); err != nil {
+	if err := checkStatusCode(resp, http.StatusOK, http.StatusCreated); err != nil {
 		return err
 	}
 	return nil
 }
 
 func checkSuccessPostStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, 202); err != nil {
+	if err := checkStatusCode(resp, http.StatusAccepted); err != nil {
 		return err
 	}
 	return nil
 }
 
 func checkSuccessDeleteStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, 202, 404); err != nil {
+	if err := checkStatusCode(resp, http.StatusAccepted, http.StatusNotFound); err != nil {
 		return err
 	}
 	return nil

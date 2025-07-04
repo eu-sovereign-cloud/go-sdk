@@ -2,17 +2,18 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	"k8s.io/utils/ptr"
 
-	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 )
 
 type NetworkV1 struct {
 	network network.ClientWithResponsesInterface
 }
 
-func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.NetworkSku], error) {
+func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[network.NetworkSku], error) {
 	iter := Iterator[network.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.NetworkSku, *string, error) {
 			resp, err := api.network.ListSkusWithResponse(ctx, network.Tenant(tid), &network.ListSkusParams{
@@ -30,6 +31,10 @@ func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID, wid WorkspaceI
 }
 
 func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*network.NetworkSku, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetSkuWithResponse(ctx, network.Tenant(tref.Tenant), tref.Name)
 	if err != nil {
 		return nil, err
@@ -56,6 +61,10 @@ func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid Worksp
 }
 
 func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*network.Network, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -64,9 +73,9 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Network) error {
-	if err := validateNetworkRegionalMetadataV1(net.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network) (*network.Network, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
 	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name,
@@ -74,14 +83,18 @@ func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Ne
 			IfUnmodifiedSince: &net.Metadata.ResourceVersion,
 		}, *net)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) error {
@@ -121,6 +134,10 @@ func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid Workspa
 }
 
 func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*network.Subnet, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -129,24 +146,28 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Subnet) error {
-	if err := validateNetworkZonalMetadataV1(sub.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet) (*network.Subnet, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name,
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name,
 		&network.CreateOrUpdateSubnetParams{
 			IfUnmodifiedSince: &sub.Metadata.ResourceVersion,
 		}, *sub)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) error {
@@ -186,6 +207,10 @@ func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid Wor
 }
 
 func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference) (*network.RouteTable, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetRouteTableWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -194,9 +219,9 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *network.RouteTable) error {
-	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable) (*network.RouteTable, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
 	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name,
@@ -204,14 +229,18 @@ func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *netwo
 			IfUnmodifiedSince: &route.Metadata.ResourceVersion,
 		}, *route)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.RouteTable) error {
@@ -251,6 +280,10 @@ func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wi
 }
 
 func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*network.InternetGateway, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -259,24 +292,28 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *network.InternetGateway) error {
-	if err := validateNetworkRegionalMetadataV1(gtw.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway) (*network.InternetGateway, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name,
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name,
 		&network.CreateOrUpdateInternetGatewayParams{
 			IfUnmodifiedSince: &gtw.Metadata.ResourceVersion,
 		}, *gtw)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.InternetGateway) error {
@@ -316,6 +353,10 @@ func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid 
 }
 
 func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*network.SecurityGroup, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetSecurityGroupWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -324,24 +365,28 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, route *network.SecurityGroup) error {
-	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup) (*network.SecurityGroup, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name,
+	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, group.Metadata.Tenant, *group.Metadata.Workspace, group.Metadata.Name,
 		&network.CreateOrUpdateSecurityGroupParams{
-			IfUnmodifiedSince: &route.Metadata.ResourceVersion,
-		}, *route)
+			IfUnmodifiedSince: &group.Metadata.ResourceVersion,
+		}, *group)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.SecurityGroup) error {
@@ -381,6 +426,10 @@ func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceI
 }
 
 func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*network.Nic, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -389,9 +438,9 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) error {
-	if err := validateNetworkZonalMetadataV1(nic.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic) (*network.Nic, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
 	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, nic.Metadata.Tenant, *nic.Metadata.Workspace, nic.Metadata.Name,
@@ -399,14 +448,18 @@ func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) e
 			IfUnmodifiedSince: &nic.Metadata.ResourceVersion,
 		}, *nic)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
@@ -446,6 +499,10 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*network.PublicIp, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.network.GetPublicIpWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -454,9 +511,9 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.PublicIp) error {
-	if err := validateNetworkRegionalMetadataV1(ip.Metadata); err != nil {
-		return err
+func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp) (*network.PublicIp, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
 	}
 
 	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, ip.Metadata.Tenant, *ip.Metadata.Workspace, ip.Metadata.Name,
@@ -464,14 +521,18 @@ func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.Pu
 			IfUnmodifiedSince: &ip.Metadata.ResourceVersion,
 		}, *ip)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) error {

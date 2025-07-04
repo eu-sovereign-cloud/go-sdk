@@ -70,7 +70,7 @@ func TestListSkus(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
-	sgIter, err := regionalClient.StorageV1.ListSkus(ctx, "test", "some-workspace")
+	sgIter, err := regionalClient.StorageV1.ListSkus(ctx, "test")
 	require.NoError(t, err)
 
 	sg, err := sgIter.All(ctx)
@@ -212,11 +212,9 @@ func TestGetBlockStorage(t *testing.T) {
 	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 	wref := WorkspaceReference{
-		TenantReference: TenantReference{
-			Tenant: "test-tenant",
-			Name:   "some-workspace",
-		},
+		Tenant:    "test-tenant",
 		Workspace: "workspace_1",
+		Name:      "some-workspace",
 	}
 	sg, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
 	require.NoError(t, err)
