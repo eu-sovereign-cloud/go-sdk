@@ -32,7 +32,7 @@ func TestListSkus(t *testing.T) {
 	sgSim := mockStorage.NewMockServerInterface(t)
 	secatest.MockStorageListSkusV1(sgSim, secatest.ListStorageSkusResponseV1{
 		Name:   "sku1",
-		Tenant: "test",
+		Tenant: secatest.Tenant1Name,
 		Skus: []secatest.ListStorageSkuMetaInfoResponseProviderV1{
 			{
 				Provider:      "seca",
@@ -67,10 +67,10 @@ func TestListSkus(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
-	sgIter, err := regionalClient.StorageV1.ListSkus(ctx, "test")
+	sgIter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	sg, err := sgIter.All(ctx)
@@ -99,8 +99,8 @@ func TestGetSku(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetStorageSkusV1(sgSim, secatest.GenericNameResponseV1{
-		Name: "some-workspace",
+	secatest.MockGetStorageSkusV1(sgSim, secatest.NameResponseV1{
+		Name: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -119,12 +119,12 @@ func TestGetSku(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
 	cp, err := regionalClient.StorageV1.GetSku(ctx, TenantReference{
-		Tenant: "test-tenant",
-		Name:   "some-workspace",
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Workspace1Name,
 	})
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
@@ -144,8 +144,8 @@ func TestListBlockStorages(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockListBlockStoragesV1(sgSim, secatest.GenericNameResponseV1{
-		Name: "some-workspace",
+	secatest.MockListBlockStoragesV1(sgSim, secatest.NameResponseV1{
+		Name: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -164,10 +164,10 @@ func TestListBlockStorages(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
-	sgIter, err := regionalClient.StorageV1.ListBlockStorages(ctx, "test-tenant", "some-workspace")
+	sgIter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
 
 	sg, err := sgIter.All(ctx)
@@ -189,8 +189,8 @@ func TestGetBlockStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetBlockStorageV1(sgSim, secatest.GenericNameResponseV1{
-		Name: "workspace_1",
+	secatest.MockGetBlockStorageV1(sgSim, secatest.NameResponseV1{
+		Name: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -209,17 +209,17 @@ func TestGetBlockStorage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 	wref := WorkspaceReference{
-		Tenant:    "test-tenant",
-		Workspace: "workspace_1",
-		Name:      "some-workspace",
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Workspace1Name,
 	}
 	sg, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
 	require.NoError(t, err)
 	require.NotEmpty(t, sg)
-	require.Equal(t, "workspace_1", sg.Metadata.Name)
+	require.Equal(t, secatest.Workspace1Name, sg.Metadata.Name)
 }
 
 func TestCreateOrUpdateBlockStorage(t *testing.T) {
@@ -236,8 +236,8 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateBlockStorageV1(sgSim, secatest.GenericNameResponseV1{
-		Name: "workspace_1",
+	secatest.MockCreateOrUpdateBlockStorageV1(sgSim, secatest.NameResponseV1{
+		Name: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -256,13 +256,13 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
-	ws := "workspace_1"
+	ws := secatest.Workspace1Name
 	block := &storage.BlockStorage{
 		Metadata: &storage.ZonalResourceMetadata{
-			Tenant:    "test-tenant",
-			Name:      "workspace_1",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Workspace1Name,
 			Workspace: &ws,
 		},
 	}
@@ -303,13 +303,13 @@ func TestDeleteBlockStorage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
-	ws := "workspace_1"
+	ws := secatest.Workspace1Name
 	block := &storage.BlockStorage{
 		Metadata: &storage.ZonalResourceMetadata{
-			Tenant:    "test-tenant",
-			Name:      "workspace_1",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Workspace1Name,
 			Workspace: &ws,
 		},
 	}
@@ -332,8 +332,8 @@ func TestListImageStorage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockListStorageImagesV1(sgSim, secatest.GenericNameResponseV1{
-		Name: "test",
+	secatest.MockListStorageImagesV1(sgSim, secatest.NameResponseV1{
+		Name: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -352,10 +352,10 @@ func TestListImageStorage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
-	imgIter, err := regionalClient.StorageV1.ListImages(ctx, "test-tenant")
+	imgIter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	images, err := imgIter.All(ctx)
@@ -376,7 +376,7 @@ func TestGetImage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockGetStorageImageV1(sgSim, secatest.GenericNameResponseV1{
+	secatest.MockGetStorageImageV1(sgSim, secatest.NameResponseV1{
 		Name: "test-image",
 	})
 
@@ -396,11 +396,11 @@ func TestGetImage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
 	tref := TenantReference{
-		Tenant: "test-tenant",
+		Tenant: secatest.Tenant1Name,
 		Name:   "test-image",
 	}
 	img, err := regionalClient.StorageV1.GetImage(ctx, tref)
@@ -422,7 +422,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 		},
 	})
 	sgSim := mockStorage.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateImageV1(sgSim, secatest.GenericNameResponseV1{
+	secatest.MockCreateOrUpdateImageV1(sgSim, secatest.NameResponseV1{
 		Name: "test-image",
 	})
 
@@ -442,12 +442,12 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
 	image := &storage.Image{
 		Metadata: &storage.RegionalResourceMetadata{
-			Tenant: "test-tenant",
+			Tenant: secatest.Tenant1Name,
 			Name:   "test-image",
 		},
 	}
@@ -487,12 +487,12 @@ func TestDeleteImage(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{StorageV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{StorageV1API})
 	require.NoError(t, err)
 
 	image := &storage.Image{
 		Metadata: &storage.RegionalResourceMetadata{
-			Tenant: "test-tenant",
+			Tenant: secatest.Tenant1Name,
 			Name:   "test-image",
 		},
 	}

@@ -35,8 +35,8 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockListWorkspaceV1(wsSim, secatest.ListWorkspaceResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:   secatest.Workspace1Name,
+		Tenant: secatest.Tenant1Name,
 		State:  "active",
 	})
 
@@ -56,17 +56,17 @@ func TestListWorkspacesV1(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, "test")
+	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
-	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
-	assert.Equal(t, "test", ws[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, ws[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, ws[0].Metadata.Tenant)
 	assert.EqualValues(t, "active", *ws[0].Status.State)
 
 }
@@ -74,14 +74,14 @@ func TestListWorkspacesV1(t *testing.T) {
 func TestFakedListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 
-	fakeServer := fake.NewServer("eu-central-1")
+	fakeServer := fake.NewServer(secatest.RegionName)
 	server := fakeServer.Start()
 	defer server.Close()
 
-	fakeServer.Workspaces["some-workspace"] = &workspace.Workspace{
+	fakeServer.Workspaces[secatest.Workspace1Name] = &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
-			Tenant: "test",
-			Name:   "some-workspace",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.Workspace1Name,
 		},
 		Status: &workspace.WorkspaceStatus{
 			State: ptr.To(workspace.ResourceStatePending),
@@ -91,18 +91,18 @@ func TestFakedListWorkspacesV1(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + "/providers/seca.regions"})
 	require.NoError(t, err)
 
-	regionClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	regionClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
-	wsIter, err := regionClient.WorkspaceV1.ListWorkspaces(ctx, "test")
+	wsIter, err := regionClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	ws, err := wsIter.All(ctx)
 	require.NoError(t, err)
 	require.Len(t, ws, 1)
 
-	assert.Equal(t, "some-workspace", ws[0].Metadata.Name)
-	assert.Equal(t, "test", ws[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, ws[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, ws[0].Metadata.Tenant)
 	assert.EqualValues(t, "pending", *ws[0].Status.State)
 }
 
@@ -122,8 +122,8 @@ func TestGetWorkspaces(t *testing.T) {
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockGetWorkspaceV1(wsSim, secatest.GetWorkspaceResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test-tenant",
+		Name:   secatest.Workspace1Name,
+		Tenant: secatest.Tenant1Name,
 		State:  "active",
 	})
 	sm := http.NewServeMux()
@@ -142,19 +142,19 @@ func TestGetWorkspaces(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
 	tref := TenantReference{
-		Tenant: "test-tenant",
-		Name:   "some-workspace",
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Workspace1Name,
 	}
 
 	ws, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
 	require.NoError(t, err)
 	require.NotNil(t, ws)
-	assert.Equal(t, "some-workspace", ws.Metadata.Name)
-	assert.Equal(t, "test-tenant", ws.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, ws.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, ws.Metadata.Tenant)
 	require.NotNil(t, *ws.Status.State)
 	assert.EqualValues(t, "active", *ws.Status.State)
 
@@ -176,7 +176,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	wsSim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateWorkspaceV1(wsSim, secatest.CreateOrUpdateWorkspaceResponseV1{
 		Name:   "new-workspace",
-		Tenant: "test-tenant",
+		Tenant: secatest.Tenant1Name,
 	})
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -194,12 +194,12 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
-			Tenant: "test-tenant",
+			Tenant: secatest.Tenant1Name,
 			Name:   "new-workspace",
 		},
 		Spec: workspace.WorkspaceSpec{},
@@ -243,12 +243,12 @@ func TestDeleteWorkspace(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{WorkspaceV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{WorkspaceV1API})
 	require.NoError(t, err)
 
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
-			Tenant: "test-tenant",
+			Tenant: secatest.Tenant1Name,
 			Name:   "new-workspace",
 		},
 		Spec: workspace.WorkspaceSpec{},

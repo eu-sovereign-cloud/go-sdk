@@ -59,5 +59,11 @@ const (
 	CidrIpv4 = "0.0.0.0/16"
 
 	// Compute
-	Instance1Ref = "instances/instance-1"
+	Instance1Ref  = "instances/instance-1"
+	Instance1Name = "instance-1"
+
+	// Authorization
+	AuthorizationName               = "authorization-1"
+	AuthorizationRoleName           = "role-1"
+	AuthorizationRoleAssignmentName = "role-assignment-1"
 )

@@ -17,8 +17,8 @@ func TestListRoles(t *testing.T) {
 	ctx := context.Background()
 
 	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockListRolesV1(authSim, secatest.GenericTenantResponseV1{
-		Tenant: "test-tenant",
+	secatest.MockListRolesV1(authSim, secatest.TenantResponseV1{
+		Tenant: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -34,7 +34,7 @@ func TestListRoles(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	authIter, err := client.AuthorizationV1.ListRoles(ctx, "test-tenant")
+	authIter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	auth, err := authIter.All(ctx)
@@ -47,13 +47,13 @@ func TestGetRole(t *testing.T) {
 	authSim := mockAuthorization.NewMockServerInterface(t)
 	expectedRole := authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-role",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationRoleName,
 		},
 	}
-	secatest.MockGetRoleV1(authSim, secatest.GenericNameAndTenantResponseV1{
-		Name:   "test-role",
-		Tenant: "test-tenant"})
+	secatest.MockGetRoleV1(authSim, secatest.NameAndTenantResponseV1{
+		Name:   secatest.AuthorizationRoleName,
+		Tenant: secatest.Tenant1Name})
 
 	sm := http.NewServeMux()
 	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
@@ -67,7 +67,7 @@ func TestGetRole(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	tref := TenantReference{Tenant: "test-tenant", Name: "test-role"}
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.AuthorizationRoleName}
 	role, err := client.AuthorizationV1.GetRole(ctx, tref)
 	require.NoError(t, err)
 	require.NotNil(t, role)
@@ -80,9 +80,9 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	authSim := mockAuthorization.NewMockServerInterface(t)
 
-	secatest.MockCreateOrUpdateRoleV1(authSim, secatest.GenericNameAndTenantResponseV1{
-		Name:   "test-role",
-		Tenant: "test-tenant",
+	secatest.MockCreateOrUpdateRoleV1(authSim, secatest.NameAndTenantResponseV1{
+		Name:   secatest.AuthorizationRoleName,
+		Tenant: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -98,8 +98,8 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	require.NoError(t, err)
 	role := authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-role",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationRoleName,
 		},
 	}
 	err = client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
@@ -125,8 +125,8 @@ func TestDeleteRole(t *testing.T) {
 
 	role := &authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-role",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationRoleName,
 		},
 	}
 
@@ -139,11 +139,11 @@ func TestListRoleAssignments(t *testing.T) {
 	authSim := mockAuthorization.NewMockServerInterface(t)
 	expectedAssignment := authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
+			Tenant: secatest.Tenant1Name,
 		},
 	}
-	secatest.MockListRoleAssignmentsV1(authSim, secatest.GenericTenantResponseV1{
-		Tenant: "test-tenant",
+	secatest.MockListRoleAssignmentsV1(authSim, secatest.TenantResponseV1{
+		Tenant: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -158,7 +158,7 @@ func TestListRoleAssignments(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, "test-tenant")
+	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 	require.NotNil(t, iter)
 
@@ -174,13 +174,13 @@ func TestGetRoleAssignment(t *testing.T) {
 	authSim := mockAuthorization.NewMockServerInterface(t)
 	expectedAssignment := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-assignment",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationName,
 		},
 	}
-	secatest.MockGetRoleAssignmentV1(authSim, secatest.GenericNameAndTenantResponseV1{
-		Name:   "test-assignment",
-		Tenant: "test-tenant",
+	secatest.MockGetRoleAssignmentV1(authSim, secatest.NameAndTenantResponseV1{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.AuthorizationRoleAssignmentName,
 	})
 
 	sm := http.NewServeMux()
@@ -195,7 +195,7 @@ func TestGetRoleAssignment(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	tref := TenantReference{Tenant: "test-tenant", Name: "test-assignment"}
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.AuthorizationRoleAssignmentName}
 	assignment, err := client.AuthorizationV1.GetRoleAssignment(ctx, tref)
 	require.NoError(t, err)
 	require.NotNil(t, assignment)
@@ -207,9 +207,9 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	ctx := context.Background()
 
 	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRoleAssignmentV1(authSim, secatest.GenericNameAndTenantResponseV1{
-		Name:   "test-assignment",
-		Tenant: "test-tenant",
+	secatest.MockCreateOrUpdateRoleAssignmentV1(authSim, secatest.NameAndTenantResponseV1{
+		Name:   secatest.AuthorizationRoleAssignmentName,
+		Tenant: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -226,8 +226,8 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 	roleAssignment := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-assignment",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationRoleAssignmentName,
 		},
 	}
 	err = client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, roleAssignment)
@@ -253,8 +253,8 @@ func TestDeleteRoleAssignment(t *testing.T) {
 
 	roleAssignment := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: "test-tenant",
-			Name:   "test-assignment",
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.AuthorizationRoleAssignmentName,
 		},
 	}
 

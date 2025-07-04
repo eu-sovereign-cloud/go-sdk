@@ -31,9 +31,9 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateInstanceV1(wsSim, secatest.CreateOrUpdateInstanceResponseV1{
-		Name:      "some-workspace",
-		Tenant:    "test",
-		Workspace: "test-workspace",
+		Name:      secatest.Workspace1Name,
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -52,13 +52,13 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-	ws := "test-workspace"
+	ws := secatest.Workspace1Name
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    "test",
-			Name:      "test-instance",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Instance1Name,
 			Workspace: &ws,
 		},
 	}
@@ -83,8 +83,8 @@ func TestGetInstance(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceV1(wsSim, secatest.GetInstanceResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:   secatest.Workspace1Name,
+		Tenant: secatest.Tenant1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -103,19 +103,19 @@ func TestGetInstance(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
 	wref := WorkspaceReference{
-		Tenant:    "test-tenant",
-		Workspace: "workspace_1",
-		Name:      "some-workspace",
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Workspace1Name,
 	}
 	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
-	require.Equal(t, "some-workspace", cp.Metadata.Name)
-	require.Equal(t, "test", cp.Metadata.Tenant)
+	require.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
+	require.Equal(t, secatest.Tenant1Name, cp.Metadata.Tenant)
 
 }
 
@@ -134,8 +134,8 @@ func TestGetInstanceSkU(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceSkuV1(wsSim, secatest.GetInstanceSkuResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:   secatest.Workspace1Name,
+		Tenant: secatest.Tenant1Name,
 		VCPU:   4,
 		Ram:    32,
 	})
@@ -156,19 +156,19 @@ func TestGetInstanceSkU(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
 	cp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
-		Tenant: "test-tenant",
-		Name:   "some-workspace",
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Workspace1Name,
 	})
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
 
 	require.Equal(t, 4, cp.Spec.VCPU)
 	require.Equal(t, 32, cp.Spec.Ram)
-	require.Equal(t, "some-workspace", cp.Metadata.Name)
+	require.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
 
 }
 
@@ -187,9 +187,9 @@ func TestListInstances(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockListInstancesV1(wsSim, secatest.ListInstancesResponseV1{
-		Name:      "some-workspace",
-		Tenant:    "test",
-		Workspace: "test-workspace",
+		Name:      secatest.Workspace1Name,
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -208,10 +208,10 @@ func TestListInstances(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	cpIter, err := regionalClient.ComputeV1.ListInstances(ctx, "test", "some-workspace")
+	cpIter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
 
 	cp, err := cpIter.All(ctx)
@@ -234,8 +234,8 @@ func TestListInstancesSku(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockInstanceListSkusV1(wsSim, secatest.ListInstancesSkusResponseV1{
-		Name:   "some-workspace",
-		Tenant: "test",
+		Name:   secatest.Workspace1Name,
+		Tenant: secatest.Tenant1Name,
 		Skus: []secatest.ListInstanceSkuMetaInfoResponseProviderV1{
 			{
 				Provider:     "seca",
@@ -270,10 +270,10 @@ func TestListInstancesSku(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
 
-	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, "test")
+	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 	cp, err := cpIter.All(ctx)
 	require.NoError(t, err)
@@ -319,13 +319,13 @@ func TestRestartInstanace(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-	ws := "test-workspace"
+	ws := secatest.Workspace1Name
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    "test",
-			Name:      "test-instance",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Instance1Name,
 			Workspace: &ws,
 		},
 	}
@@ -366,13 +366,13 @@ func TestStartInstanace(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-	ws := "test-workspace"
+	ws := secatest.Workspace1Name
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    "test",
-			Name:      "test-instance",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Instance1Name,
 			Workspace: &ws,
 		},
 	}
@@ -413,13 +413,13 @@ func TestStopInstanace(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-	ws := "test-workspace"
+	ws := secatest.Workspace1Name
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    "test",
-			Name:      "test-instance",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Instance1Name,
 			Workspace: &ws,
 		},
 	}
@@ -459,13 +459,13 @@ func TestDeleteInstance(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionalClient, err := client.NewRegionalClient(ctx, "eu-central-1", []RegionalAPI{ComputeV1API})
+	regionalClient, err := client.NewRegionalClient(ctx, secatest.RegionName, []RegionalAPI{ComputeV1API})
 	require.NoError(t, err)
-	ws := "test-workspace"
+	ws := secatest.Workspace1Name
 	cp := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    "test",
-			Name:      "test-instance",
+			Tenant:    secatest.Tenant1Name,
+			Name:      secatest.Instance1Name,
 			Workspace: &ws,
 		},
 	}
