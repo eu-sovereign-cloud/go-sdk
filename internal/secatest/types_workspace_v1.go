@@ -6,12 +6,8 @@ type ListWorkspaceResponseV1 struct {
 	State  string
 }
 
-type GetWorkspaceResponseV1 struct {
+type WorkspaceTypeResponseV1 struct {
 	Name   string
 	Tenant string
 	State  string
-}
-type CreateOrUpdateWorkspaceResponseV1 struct {
-	Name   string
-	Tenant string
 }

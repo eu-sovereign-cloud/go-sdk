@@ -34,7 +34,7 @@ func MockGetInstanceSkuV1(sim *mockCompute.MockServerInterface, resp GetInstance
 }
 
 func MockListInstancesV1(sim *mockCompute.MockServerInterface, resp ListInstancesResponseV1) {
-	json := template.Must(template.New("response").Parse(ListInstancesResponseTemplateV1))
+	json := template.Must(template.New("response").Parse(InstancesResponseV1))
 
 	sim.EXPECT().ListInstances(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, params compute.ListInstancesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -45,7 +45,7 @@ func MockListInstancesV1(sim *mockCompute.MockServerInterface, resp ListInstance
 }
 
 func MockGetInstanceV1(sim *mockCompute.MockServerInterface, resp GetInstanceResponseV1) {
-	json := template.Must(template.New("response").Parse(GetInstanceResponseTemplateV1))
+	json := template.Must(template.New("response").Parse(InstancesResponseV1))
 
 	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -56,7 +56,7 @@ func MockGetInstanceV1(sim *mockCompute.MockServerInterface, resp GetInstanceRes
 }
 
 func MockCreateOrUpdateInstanceV1(sim *mockCompute.MockServerInterface, resp CreateOrUpdateInstanceResponseV1) {
-	json := template.Must(template.New("response").Parse(CreateOrUpdateInstaceResponseTemplateV1))
+	json := template.Must(template.New("response").Parse(InstancesResponseV1))
 
 	sim.EXPECT().CreateOrUpdateInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.Tenant, lwp compute.CreateOrUpdateInstanceParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)

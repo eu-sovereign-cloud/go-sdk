@@ -17,9 +17,9 @@ func TestListRoles(t *testing.T) {
 	ctx := context.Background()
 
 	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockListRolesV1(authSim, secatest.TenantResponseV1{
-		Tenant: secatest.Tenant1Name,
-	})
+	secatest.MockListRolesV1(authSim, secatest.NameAndTenantResponseV1{
+		Name:   secatest.AuthorizationRoleName,
+		Tenant: secatest.Tenant1Name})
 
 	sm := http.NewServeMux()
 
@@ -142,8 +142,10 @@ func TestListRoleAssignments(t *testing.T) {
 			Tenant: secatest.Tenant1Name,
 		},
 	}
-	secatest.MockListRoleAssignmentsV1(authSim, secatest.TenantResponseV1{
-		Tenant: secatest.Tenant1Name,
+	secatest.MockListRoleAssignmentsV1(authSim, secatest.RoleAssignmentResponseV1{
+		Tenant:    secatest.Tenant1Name,
+		Region:    secatest.Region1Name,
+		Workspace: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -175,12 +177,14 @@ func TestGetRoleAssignment(t *testing.T) {
 	expectedAssignment := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   secatest.AuthorizationName,
+			Name:   secatest.AuthorizationRoleAssignmentName,
 		},
 	}
-	secatest.MockGetRoleAssignmentV1(authSim, secatest.NameAndTenantResponseV1{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.AuthorizationRoleAssignmentName,
+	secatest.MockGetRoleAssignmentV1(authSim, secatest.RoleAssignmentResponseV1{
+		Tenant:    secatest.Tenant1Name,
+		Name:      secatest.AuthorizationRoleAssignmentName,
+		Region:    secatest.Region1Name,
+		Workspace: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()
@@ -207,9 +211,11 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	ctx := context.Background()
 
 	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRoleAssignmentV1(authSim, secatest.NameAndTenantResponseV1{
-		Name:   secatest.AuthorizationRoleAssignmentName,
-		Tenant: secatest.Tenant1Name,
+	secatest.MockCreateOrUpdateRoleAssignmentV1(authSim, secatest.RoleAssignmentResponseV1{
+		Tenant:    secatest.Tenant1Name,
+		Name:      secatest.AuthorizationRoleAssignmentName,
+		Region:    secatest.Region1Name,
+		Workspace: secatest.Workspace1Name,
 	})
 
 	sm := http.NewServeMux()

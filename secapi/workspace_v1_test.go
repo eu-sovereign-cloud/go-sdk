@@ -121,7 +121,7 @@ func TestGetWorkspaces(t *testing.T) {
 	})
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(wsSim, secatest.GetWorkspaceResponseV1{
+	secatest.MockGetWorkspaceV1(wsSim, secatest.WorkspaceTypeResponseV1{
 		Name:   secatest.Workspace1Name,
 		Tenant: secatest.Tenant1Name,
 		State:  "active",
@@ -159,6 +159,7 @@ func TestGetWorkspaces(t *testing.T) {
 	assert.EqualValues(t, "active", *ws.Status.State)
 
 }
+
 func TestCreateOrUpdateWorkspace(t *testing.T) {
 	ctx := context.Background()
 
@@ -174,9 +175,10 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	})
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateWorkspaceV1(wsSim, secatest.CreateOrUpdateWorkspaceResponseV1{
-		Name:   "new-workspace",
+	secatest.MockCreateOrUpdateWorkspaceV1(wsSim, secatest.WorkspaceTypeResponseV1{
+		Name:   secatest.Workspace1Name,
 		Tenant: secatest.Tenant1Name,
+		State:  "active",
 	})
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -200,7 +202,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   "new-workspace",
+			Name:   secatest.Workspace1Name,
 		},
 		Spec: workspace.WorkspaceSpec{},
 	}

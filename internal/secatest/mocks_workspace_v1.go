@@ -12,7 +12,7 @@ import (
 
 // Workspace
 func MockListWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp ListWorkspaceResponseV1) {
-	json := template.Must(template.New("response").Parse(ListWorkspaceResponseTemplateV1))
+	json := template.Must(template.New("response").Parse(ItemsWorkspaceResponseV1))
 
 	sim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -22,8 +22,8 @@ func MockListWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp ListWorksp
 	})
 }
 
-func MockGetWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp GetWorkspaceResponseV1) {
-	json := template.Must(template.New("response").Parse(GetWorkspaceResponseTemplateV1))
+func MockGetWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp WorkspaceTypeResponseV1) {
+	json := template.Must(template.New("response").Parse(WorkspaceResponseV1))
 
 	sim.EXPECT().GetWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -33,8 +33,8 @@ func MockGetWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp GetWorkspac
 	})
 }
 
-func MockCreateOrUpdateWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp CreateOrUpdateWorkspaceResponseV1) {
-	json := template.Must(template.New("response").Parse(CreateOrUpdateWorkspaceResponseTemplateV1))
+func MockCreateOrUpdateWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp WorkspaceTypeResponseV1) {
+	json := template.Must(template.New("response").Parse(WorkspaceResponseV1))
 
 	sim.EXPECT().CreateOrUpdateWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params workspace.CreateOrUpdateWorkspaceParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)

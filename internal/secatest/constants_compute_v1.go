@@ -40,7 +40,7 @@ const (
 		}
 	}`
 
-	ListInstancesResponseTemplateV1 = `
+	InstancesResponseV1 = `
 	{
 		"items": [
 			{
@@ -75,76 +75,11 @@ const (
 			}
 		],
 		"metadata": {
-			"provider": "seca.compute/v1",
-			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-			"verb": "get"
-		}
-	}`
-
-	GetInstanceResponseTemplateV1 = `
-	{
-
-		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",		
 			"provider": "seca.compute/v1",
 			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
 			"verb": "get"
-		},
-		"spec": {
-			"skuRef": "skus/seca.s",
-			"zone": "a",
-			"bootVolume": {
-			"deviceRef": {
-				"provider": "seca.storage/v1",
-				"resource": "block-storages/block-123"
-			},
-			"type": "virtio"
-			}
-		},
-		"status": {
-			"state": "active",
-			"conditions": [
-			{
-				"state": "active",
-				"lastTransitionAt": "2024-11-21T14:39:22Z"
-			}
-			]
-		}
-	}`
-
-	CreateOrUpdateInstaceResponseTemplateV1 = `
-	{
-
-		"metadata": {
-			"name": "{{.Name}}",
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
-			"zone": "a",
-			"provider": "seca.compute/v1",
-			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-			"verb": "get"
-		},
-		"spec": {
-			"skuRef": "skus/seca.s",
-			"zone": "a",
-			"bootVolume": {
-				"deviceRef": {
-					"provider": "seca.storage/v1",
-					"resource": "block-storages/block-123"
-				},
-				"type": "virtio"
-			}
-		},
-		"status": {
-			"state": "active",
-			"conditions": [
-				{
-					"state": "active",
-					"lastTransitionAt": "2024-11-21T14:39:22Z"
-				}
-			]
 		}
 	}`
 )

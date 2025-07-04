@@ -3,7 +3,7 @@ package secatest
 const (
 	// Response Templates
 
-	ListWorkspaceResponseTemplateV1 = `
+	ItemsWorkspaceResponseV1 = `
 	{
 		"items": [
 			{
@@ -26,44 +26,29 @@ const (
 			}
 		],
 		"metadata": {
-			"skipToken": null
-		}
+					"name": "{{.Name}}",
+					"tenant": "{{.Tenant}}"
+				}
 	}`
 
-	GetWorkspaceResponseTemplateV1 = `
+	WorkspaceResponseV1 = `
 	{
-		"apiVersion": "v1",
-		"kind": "workspace",
+
 		"metadata": {
 			"name": "{{.Name}}",
-			"tenant": "{{.Tenant}}"
+			"tenant": "{{.Tenant}}",
+			"apiVersion": "v1",
+			"kind": "workspace"
 		},
 		"spec": {},
 		"status": {
-			"state": "active",
-			"conditions": [ {
-					"status": "active",
-					"lastTransitionAt": "2025-06-23T14:15:22Z"
-			 }]
-		}
-	}`
-
-	CreateOrUpdateWorkspaceResponseTemplateV1 = `
-	{
-		"apiVersion": "v1",
-		"kind": "workspace",
-		"metadata": {
-			"name": "{{.Name}}",
-			"tenant": "{{.Tenant}}"
+			"state": "{{.State}}",
+			"conditions": [
+				{
+					"status": "Ready"
+				}
+			]
 		},
-		"spec": {},
-		"status": {
-			"state": "active",
-			"conditions": [ {
-					"status": "active",
-					"lastTransitionAt": "2025-06-23T14:15:22Z"
-			 }],
-				"resourcesCount": 1
-		}
+		"resourcesCount": 1
 	}`
 )
