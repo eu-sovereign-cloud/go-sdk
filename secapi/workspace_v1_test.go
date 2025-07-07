@@ -256,7 +256,7 @@ func TestDeleteWorkspace(t *testing.T) {
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   "new-workspace",
+			Name:   secatest.Workspace1Name,
 		},
 		Spec: workspace.WorkspaceSpec{},
 	}
