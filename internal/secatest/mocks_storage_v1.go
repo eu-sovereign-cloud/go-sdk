@@ -29,7 +29,7 @@ func MockGetStorageSkusV1(sim *mockStorage.MockServerInterface, resp NameRespons
 	})
 }
 
-func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp NameResponseV1) {
+func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp BlockStorageResponseV1) {
 	json := template.Must(template.New("response").Parse(ListBlockStorageResponseTemplateV1))
 	sim.EXPECT().ListBlockStorages(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, params storage.ListBlockStoragesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
@@ -38,8 +38,8 @@ func MockListBlockStoragesV1(sim *mockStorage.MockServerInterface, resp NameResp
 	})
 }
 
-func MockGetBlockStorageV1(sim *mockStorage.MockServerInterface, resp NameResponseV1) {
-	json := template.Must(template.New("response").Parse(GetBlockStorageResponseTemplateV1))
+func MockGetBlockStorageV1(sim *mockStorage.MockServerInterface, resp BlockStorageResponseV1) {
+	json := template.Must(template.New("response").Parse(BlockStorageResponseTemplateV1))
 	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 		w.WriteHeader(http.StatusOK)
@@ -63,8 +63,8 @@ func MockDeleteBlockStorageV1(sim *mockStorage.MockServerInterface) {
 	})
 }
 
-func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp NameResponseV1) {
-	json := template.Must(template.New("response").Parse(ListBlockStorageResponseTemplateV1))
+func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp ImageResponseV1) {
+	json := template.Must(template.New("response").Parse(ListImageResponseTemplateV1))
 	sim.EXPECT().ListImages(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, params storage.ListImagesParams) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 		w.WriteHeader(http.StatusOK)
@@ -72,8 +72,8 @@ func MockListStorageImagesV1(sim *mockStorage.MockServerInterface, resp NameResp
 	})
 }
 
-func MockGetStorageImageV1(sim *mockStorage.MockServerInterface, resp NameResponseV1) {
-	json := template.Must(template.New("response").Parse(GetStorageImageResponseTemplateV1))
+func MockGetStorageImageV1(sim *mockStorage.MockServerInterface, resp ImageResponseV1) {
+	json := template.Must(template.New("response").Parse(StorageImageResponseTemplateV1))
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName) {
 		w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 		w.WriteHeader(http.StatusOK)

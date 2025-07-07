@@ -63,7 +63,15 @@ const (
 	Instance1Name = "instance-1"
 
 	// Authorization
-	AuthorizationName               = "authorization-1"
-	AuthorizationRoleName           = "role-1"
-	AuthorizationRoleAssignmentName = "role-assignment-1"
+	Authorization1Name               = "authorization-1"
+	AuthorizationRole1Name           = "role-1"
+	AuthorizationRoleAssignment1Name = "role-assignment-1"
+
+	// Storage
+	Storage1Name = "storage-1"
+	Image1Name   = "image-1"
+
+	// Workspace
+	State1Active   = "active"
+	State1Creating = "creating"
 )

@@ -11,7 +11,7 @@ import (
 )
 
 // Workspace
-func MockListWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp ListWorkspaceResponseV1) {
+func MockListWorkspaceV1(sim *mockWorkspace.MockServerInterface, resp WorkspaceTypeResponseV1) {
 	json := template.Must(template.New("response").Parse(ItemsWorkspaceResponseV1))
 
 	sim.EXPECT().ListWorkspaces(mock.Anything, mock.Anything, mock.Anything, mock.Anything).RunAndReturn(func(w http.ResponseWriter, r *http.Request, s string, lwp workspace.ListWorkspacesParams) {

@@ -8,9 +8,7 @@ type ListInstanceSkuMetaInfoResponseProviderV1 struct {
 	Architecture string
 }
 type ListInstancesSkusResponseV1 struct {
-	Name   string
-	Tenant string
-	Skus   []ListInstanceSkuMetaInfoResponseProviderV1
+	Skus []ListInstanceSkuMetaInfoResponseProviderV1
 }
 
 type GetInstanceSkuResponseV1 struct {
@@ -20,16 +18,12 @@ type GetInstanceSkuResponseV1 struct {
 	Ram    int
 }
 
-type ListInstancesResponseV1 struct {
+type InstanceResponseV1 struct {
 	Name      string
 	Tenant    string
 	Workspace string
-}
-
-type GetInstanceResponseV1 struct {
-	Name      string
-	Tenant    string
-	Workspace string
+	Region    string
+	Zone      string
 }
 
 type CreateOrUpdateInstanceResponseV1 struct {

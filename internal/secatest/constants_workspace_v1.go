@@ -11,7 +11,9 @@ const (
 				"kind": "workspace",
 				"metadata": {
 					"name": "{{.Name}}",
-					"tenant": "{{.Tenant}}"
+					"tenant": "{{.Tenant}}",
+					"workspace": "{{.Workspace}}",
+					"region": "{{.Region}}"
 				},
 				"spec": {},
 				"status": {
@@ -26,9 +28,10 @@ const (
 			}
 		],
 		"metadata": {
-					"name": "{{.Name}}",
-					"tenant": "{{.Tenant}}"
-				}
+		    "provider": "seca.compute/v1",
+    		"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+    		"verb": "get"
+		}
 	}`
 
 	WorkspaceResponseV1 = `
@@ -37,6 +40,8 @@ const (
 		"metadata": {
 			"name": "{{.Name}}",
 			"tenant": "{{.Tenant}}",
+			"workspace": "{{.Workspace}}",
+			"region": "{{.Region}}",
 			"apiVersion": "v1",
 			"kind": "workspace"
 		},

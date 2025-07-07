@@ -34,10 +34,12 @@ func TestListWorkspacesV1(t *testing.T) {
 	})
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockListWorkspaceV1(wsSim, secatest.ListWorkspaceResponseV1{
-		Name:   secatest.Workspace1Name,
-		Tenant: secatest.Tenant1Name,
-		State:  "active",
+	secatest.MockListWorkspaceV1(wsSim, secatest.WorkspaceTypeResponseV1{
+		Name:      secatest.Workspace1Name,
+		Tenant:    secatest.Tenant1Name,
+		Region:    secatest.Region1Name,
+		Workspace: secatest.Workspace1Name,
+		State:     secatest.State1Active,
 	})
 
 	sm := http.NewServeMux()
@@ -67,7 +69,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	require.Len(t, ws, 1)
 	assert.Equal(t, secatest.Workspace1Name, ws[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, ws[0].Metadata.Tenant)
-	assert.EqualValues(t, "active", *ws[0].Status.State)
+	assert.EqualValues(t, secatest.State1Active, *ws[0].Status.State)
 
 }
 
@@ -122,9 +124,11 @@ func TestGetWorkspaces(t *testing.T) {
 
 	wsSim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockGetWorkspaceV1(wsSim, secatest.WorkspaceTypeResponseV1{
-		Name:   secatest.Workspace1Name,
-		Tenant: secatest.Tenant1Name,
-		State:  "active",
+		Name:      secatest.Workspace1Name,
+		Tenant:    secatest.Tenant1Name,
+		Region:    secatest.Region1Name,
+		Workspace: secatest.Workspace1Name,
+		State:     secatest.State1Active,
 	})
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
@@ -155,8 +159,9 @@ func TestGetWorkspaces(t *testing.T) {
 	require.NotNil(t, ws)
 	assert.Equal(t, secatest.Workspace1Name, ws.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, ws.Metadata.Tenant)
-	require.NotNil(t, *ws.Status.State)
-	assert.EqualValues(t, "active", *ws.Status.State)
+
+	assert.NotNil(t, *ws.Status.State)
+	assert.EqualValues(t, secatest.State1Active, *ws.Status.State)
 
 }
 
@@ -178,7 +183,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	secatest.MockCreateOrUpdateWorkspaceV1(wsSim, secatest.WorkspaceTypeResponseV1{
 		Name:   secatest.Workspace1Name,
 		Tenant: secatest.Tenant1Name,
-		State:  "active",
+		State:  secatest.State1Active,
 	})
 	sm := http.NewServeMux()
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{

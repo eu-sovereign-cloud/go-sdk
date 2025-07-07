@@ -48,6 +48,11 @@ const (
 			{
 
 			"metadata": {
+				"name": "{{.Name}}",
+				"tenant":"{{.Tenant}}",
+				"workspace": "{{.Workspace}}",
+				"region": "{{.Region}}",
+				"zone": "{{.Zone}}",
 				"provider": "seca.compute/v1",
 				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
 				"verb": "get"
@@ -77,11 +82,15 @@ const (
 		}
 	}`
 
-	GetBlockStorageResponseTemplateV1 = `
+	BlockStorageResponseTemplateV1 = `
 	{
 
 		"metadata": {
 			"name": "{{.Name}}",
+			"tenant":"{{.Tenant}}",
+			"workspace": "{{.Workspace}}",
+			"region": "{{.Region}}",
+			"zone": "{{.Zone}}",	
 			"provider": "seca.compute/v1",
 			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
 			"verb": "get"
@@ -139,6 +148,15 @@ const (
 						"version": "13",
 						"base": "debian"
 					},
+					"metadata": {
+						"name": "{{.Name}}",
+						"tenant": "{{.Tenant}}",
+						"workspace": "{{.Workspace}}",
+						"region": "{{.Region}}",
+						"provider": "seca.compute/v1",
+						"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+						"verb": "get"
+					},
 					"annotations": {
 						"name": "Debian Container",
 						"description": "The image contains the debian image base including\npreinstalled software for the use of linux containers.\n",
@@ -160,13 +178,12 @@ const (
 			"metadata": {
 				"provider": "seca.compute/v1",
 				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-				"verb": "get",
-				"skipToken": "false"
+				"verb": "get"
 			}
 		}
 	`
 
-	GetStorageImageResponseTemplateV1 = `
+	StorageImageResponseTemplateV1 = `
 	{
 		"labels": {
 			"os": "linux",
@@ -174,7 +191,13 @@ const (
 			"base": "debian"
 		},
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Name}}",
+			"tenant":"{{.Tenant}}",
+			"workspace": "{{.Workspace}}",
+			"region": "{{.Region}}",
+			"provider": "seca.compute/v1",
+			"resource": "tenants/1/workspaces/ws-1/instances/my-server",
+			"verb": "get"			
 		},
 		"annotations": {
 			"name": "Debian Container",

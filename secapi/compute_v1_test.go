@@ -13,6 +13,7 @@ import (
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -31,8 +32,6 @@ func TestListInstancesSku(t *testing.T) {
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
 	secatest.MockInstanceListSkusV1(wsSim, secatest.ListInstancesSkusResponseV1{
-		Name:   secatest.Workspace1Name,
-		Tenant: secatest.Tenant1Name,
 		Skus: []secatest.ListInstanceSkuMetaInfoResponseProviderV1{
 			{
 				Provider:     "seca",
@@ -81,7 +80,6 @@ func TestListInstancesSku(t *testing.T) {
 		require.NotEmpty(t, sku.Spec.Ram)
 
 	}
-
 }
 func TestGetInstanceSkU(t *testing.T) {
 	ctx := context.Background()
@@ -130,9 +128,9 @@ func TestGetInstanceSkU(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
 
-	require.Equal(t, 4, cp.Spec.VCPU)
-	require.Equal(t, 32, cp.Spec.Ram)
-	require.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
+	assert.Equal(t, 4, cp.Spec.VCPU)
+	assert.Equal(t, 32, cp.Spec.Ram)
+	assert.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
 
 }
 
@@ -150,10 +148,12 @@ func TestListInstances(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockListInstancesV1(wsSim, secatest.ListInstancesResponseV1{
+	secatest.MockListInstancesV1(wsSim, secatest.InstanceResponseV1{
 		Name:      secatest.Workspace1Name,
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
+		Region:    secatest.RegionName,
+		Zone:      secatest.ZoneA,
 	})
 
 	sm := http.NewServeMux()
@@ -182,6 +182,11 @@ func TestListInstances(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, cp, 1)
 
+	assert.Equal(t, secatest.Workspace1Name, cp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, cp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.RegionName, cp[0].Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, cp[0].Metadata.Zone)
+
 }
 
 func TestGetInstance(t *testing.T) {
@@ -198,9 +203,11 @@ func TestGetInstance(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockGetInstanceV1(wsSim, secatest.GetInstanceResponseV1{
+	secatest.MockGetInstanceV1(wsSim, secatest.InstanceResponseV1{
 		Name:   secatest.Workspace1Name,
 		Tenant: secatest.Tenant1Name,
+		Region: secatest.RegionName,
+		Zone:   secatest.ZoneA,
 	})
 
 	sm := http.NewServeMux()
@@ -230,8 +237,10 @@ func TestGetInstance(t *testing.T) {
 	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
 	require.NotEmpty(t, cp)
-	require.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
-	require.Equal(t, secatest.Tenant1Name, cp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, cp.Metadata.Tenant)
+	assert.Equal(t, secatest.RegionName, cp.Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, cp.Metadata.Zone)
 
 }
 
@@ -249,10 +258,12 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 		},
 	})
 	wsSim := mockCompute.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateInstanceV1(wsSim, secatest.CreateOrUpdateInstanceResponseV1{
+	secatest.MockCreateOrUpdateInstanceV1(wsSim, secatest.InstanceResponseV1{
 		Name:      secatest.Workspace1Name,
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
+		Region:    secatest.RegionName,
+		Zone:      secatest.ZoneA,
 	})
 
 	sm := http.NewServeMux()
@@ -278,6 +289,8 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
+			Region:    secatest.RegionName,
+			Zone:      secatest.ZoneA,
 			Workspace: &ws,
 		},
 	}

@@ -12,3 +12,17 @@ type ListStorageSkusResponseV1 struct {
 	Tenant string
 	Skus   []ListStorageSkuMetaInfoResponseProviderV1
 }
+
+type BlockStorageResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+	Region    string
+	Zone      string
+}
+type ImageResponseV1 struct {
+	Name      string
+	Tenant    string
+	Workspace string
+	Region    string
+}
