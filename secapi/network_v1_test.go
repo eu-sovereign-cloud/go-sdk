@@ -895,7 +895,7 @@ func TestListNicsV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
-	assert.Equal(t, secatest.Subnet1Ref, *&resp[0].Spec.SubnetRef)
+	assert.Equal(t, secatest.Subnet1Ref, resp[0].Spec.SubnetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
@@ -930,7 +930,7 @@ func TestGetNicV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
-	assert.Equal(t, secatest.Subnet1Ref, *&resp.Spec.SubnetRef)
+	assert.Equal(t, secatest.Subnet1Ref, resp.Spec.SubnetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
@@ -973,7 +973,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
-	assert.Equal(t, secatest.Subnet1Ref, *&resp.Spec.SubnetRef)
+	assert.Equal(t, secatest.Subnet1Ref, resp.Spec.SubnetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
