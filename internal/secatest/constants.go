@@ -24,16 +24,15 @@ const (
 	ProviderStorageName     = "seca.storage"
 	ProviderStorageEndpoint = "/providers/seca.storage"
 
+	ProviderVersion1 = "v1"
+
 	// Test Data
 
 	/// Metadata
-	Tenant1Name = "tenant-1"
-
+	Tenant1Name    = "tenant-1"
 	Workspace1Name = "woskpace-1"
-
-	Region1Name = "region-1"
-
-	ZoneA = "a"
+	Region1Name    = "region-1"
+	ZoneA          = "a"
 
 	/// Network
 	NetworkSku1Name = "sku-1"
@@ -71,11 +70,11 @@ const (
 	Instance1Name = "instance-1"
 
 	/// Authorization
-	Authorization1Name               = "authorization-1"
-	AuthorizationRole1Name           = "role-1"
-	AuthorizationRoleAssignment1Name = "role-assignment-1"
+	AuthorizationRole1Name = "role-1"
+
+	AuthorizationRoleAssignment1Name    = "role-assignment-1"
 	AuthorizationRoleAssignment1Subject = "sub@secapi.com"
-	AuthorizationPermissionVerb      = "get"
+	AuthorizationPermissionVerb         = "get"
 
 	/// Storage
 	StorageSku1Name          = "sku-1"
