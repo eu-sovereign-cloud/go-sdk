@@ -38,7 +38,7 @@ func NewGlobalClient(endpoints *GlobalEndpoints) (*GlobalClient, error) {
 	return client, nil
 }
 
-func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string, regionalAPIs []RegionalAPI) (*RegionalClient, error) {
+func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string) (*RegionalClient, error) {
 	if client.RegionV1 == nil {
 		return nil, ErrRegionRequiredToRegionalClient
 	}
@@ -48,7 +48,7 @@ func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string, 
 		return nil, err
 	}
 
-	return NewRegionalClient(region, regionalAPIs)
+	return NewRegionalClient(region)
 }
 
 func initGlobalAPI[T any](endpoint string, newFunc func(url string) (*T, error), setFunc func(*T)) error {
