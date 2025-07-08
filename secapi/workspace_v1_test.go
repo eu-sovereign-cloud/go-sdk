@@ -31,16 +31,16 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	wsIter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
-	ws, err := wsIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, ws, 1)
+	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Workspace1Name, ws[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, ws[0].Metadata.Tenant)
-	assert.EqualValues(t, secatest.StatusStateActive, *ws[0].Status.State)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.EqualValues(t, secatest.StatusStateActive, *resp[0].Status.State)
 }
 func TestGetWorkspaces(t *testing.T) {
 	ctx := context.Background()
@@ -62,14 +62,14 @@ func TestGetWorkspaces(t *testing.T) {
 		Tenant: secatest.Tenant1Name,
 		Name:   secatest.Workspace1Name,
 	}
-	ws, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
+	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
 	require.NoError(t, err)
-	require.NotNil(t, ws)
+	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.Workspace1Name, ws.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, ws.Metadata.Tenant)
-	assert.NotNil(t, *ws.Status.State)
-	assert.EqualValues(t, secatest.StatusStateActive, *ws.Status.State)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.NotNil(t, *resp.Status.State)
+	assert.EqualValues(t, secatest.StatusStateActive, *resp.Status.State)
 }
 func TestCreateOrUpdateWorkspace(t *testing.T) {
 	ctx := context.Background()

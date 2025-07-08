@@ -32,16 +32,16 @@ func TestListStorageSkus(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	sgIter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
-	sg, err := sgIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, sg, 1)
+	require.Len(t, resp, 1)
 
-	require.NotEmpty(t, sg[0].Labels)
-	require.NotEmpty(t, sg[0].Spec.Iops)
-	require.NotEmpty(t, sg[0].Spec.MinVolumeSize)
+	require.NotEmpty(t, resp[0].Labels)
+	require.NotEmpty(t, resp[0].Spec.Iops)
+	require.NotEmpty(t, resp[0].Spec.MinVolumeSize)
 }
 
 func TestGetStorageSku(t *testing.T) {
@@ -59,14 +59,14 @@ func TestGetStorageSku(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	sg, err := regionalClient.StorageV1.GetSku(ctx, TenantReference{
+	resp, err := regionalClient.StorageV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
 		Name:   secatest.StorageSku1Name,
 	})
 	require.NoError(t, err)
-	require.NotEmpty(t, sg)
+	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.StorageSku1Name, sg.Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
 }
 
 // Block Storage
@@ -86,17 +86,17 @@ func TestListBlockStorages(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	sgIter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
 
-	sg, err := sgIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, sg, 1)
+	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Workspace1Name, sg[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, sg[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Region1Name, sg[0].Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, sg[0].Metadata.Zone)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, resp[0].Metadata.Zone)
 }
 
 func TestGetBlockStorage(t *testing.T) {
@@ -119,14 +119,14 @@ func TestGetBlockStorage(t *testing.T) {
 		Workspace: secatest.Workspace1Name,
 		Name:      secatest.Storage1Name,
 	}
-	sg, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
+	resp, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
 	require.NoError(t, err)
-	require.NotEmpty(t, sg)
+	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.Storage1Name, sg.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, sg.Metadata.Tenant)
-	assert.Equal(t, secatest.Region1Name, sg.Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, sg.Metadata.Zone)
+	assert.Equal(t, secatest.Storage1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, resp.Metadata.Zone)
 }
 
 func TestCreateOrUpdateBlockStorage(t *testing.T) {
@@ -198,17 +198,17 @@ func TestListImages(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	imgIter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
-	images, err := imgIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.NotEmpty(t, images)
+	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.Image1Name, images[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, images[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *images[0].Metadata.Workspace)
-	assert.Equal(t, secatest.Region1Name, images[0].Metadata.Region)
+	assert.Equal(t, secatest.Image1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 }
 
 func TestGetImage(t *testing.T) {
@@ -231,14 +231,14 @@ func TestGetImage(t *testing.T) {
 		Tenant: secatest.Tenant1Name,
 		Name:   secatest.Image1Name,
 	}
-	image, err := regionalClient.StorageV1.GetImage(ctx, tref)
+	resp, err := regionalClient.StorageV1.GetImage(ctx, tref)
 	require.NoError(t, err)
-	require.NotNil(t, image)
+	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.Image1Name, image.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, image.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *image.Metadata.Workspace)
-	assert.Equal(t, secatest.Region1Name, image.Metadata.Region)
+	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 }
 
 func TestCreateOrUpdateImage(t *testing.T) {

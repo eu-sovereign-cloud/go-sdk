@@ -37,16 +37,16 @@ func TestListRegionsV1(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	regionIter, err := client.RegionV1.ListRegions(ctx)
+	iter, err := client.RegionV1.ListRegions(ctx)
 	require.NoError(t, err)
 
-	region, err := regionIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, region, 1)
+	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Region1Name, region[0].Metadata.Name)
-	assert.Len(t, region[0].Spec.Providers, 1)
-	assert.Equal(t, secatest.ProviderNetworkName, region[0].Spec.Providers[0].Name)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
+	assert.Len(t, resp[0].Spec.Providers, 1)
+	assert.Equal(t, secatest.ProviderNetworkName, resp[0].Spec.Providers[0].Name)
 }
 
 func TestGetRegionV1(t *testing.T) {
@@ -71,9 +71,9 @@ func TestGetRegionV1(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	region, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
+	resp, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
 	require.NoError(t, err)
 
-	assert.Len(t, region.Spec.Providers, 1)
-	assert.Equal(t, secatest.ProviderNetworkName, region.Spec.Providers[0].Name)
+	assert.Len(t, resp.Spec.Providers, 1)
+	assert.Equal(t, secatest.ProviderNetworkName, resp.Spec.Providers[0].Name)
 }

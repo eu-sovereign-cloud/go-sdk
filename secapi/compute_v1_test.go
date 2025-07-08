@@ -33,15 +33,15 @@ func TestListInstancesSku(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cpIter, err := regionalClient.ComputeV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.ComputeV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
-	cp, err := cpIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
 
-	require.NotEmpty(t, cp[0].Labels)
-	require.NotEmpty(t, cp[0].Spec.VCPU)
-	require.NotEmpty(t, cp[0].Spec.Ram)
+	require.NotEmpty(t, resp[0].Labels)
+	require.NotEmpty(t, resp[0].Spec.VCPU)
+	require.NotEmpty(t, resp[0].Spec.Ram)
 }
 
 func TestGetInstanceSkU(t *testing.T) {
@@ -60,16 +60,16 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
+	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
 		Name:   secatest.Workspace1Name,
 	})
 	require.NoError(t, err)
-	require.NotEmpty(t, cp)
+	require.NotEmpty(t, resp)
 
-	assert.Equal(t, 4, cp.Spec.VCPU)
-	assert.Equal(t, 32, cp.Spec.Ram)
-	assert.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
+	assert.Equal(t, 4, resp.Spec.VCPU)
+	assert.Equal(t, 32, resp.Spec.Ram)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 }
 
 // Instance
@@ -90,18 +90,18 @@ func TestListInstances(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cpIter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
 
-	cp, err := cpIter.All(ctx)
+	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, cp, 1)
+	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Instance1Name, cp[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, cp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, cp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.Region1Name, cp[0].Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, cp[0].Metadata.Zone)
+	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, resp[0].Metadata.Zone)
 }
 
 func TestGetInstance(t *testing.T) {
@@ -124,14 +124,14 @@ func TestGetInstance(t *testing.T) {
 		Workspace: secatest.Workspace1Name,
 		Name:      secatest.Workspace1Name,
 	}
-	cp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
+	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
-	require.NotEmpty(t, cp)
+	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.Workspace1Name, cp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, cp.Metadata.Tenant)
-	assert.Equal(t, secatest.Region1Name, cp.Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, cp.Metadata.Zone)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+	assert.Equal(t, secatest.ZoneA, resp.Metadata.Zone)
 }
 
 func TestCreateOrUpdateInstance(t *testing.T) {
