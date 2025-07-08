@@ -37,7 +37,9 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
@@ -51,7 +53,9 @@ const (
 	blockStorageResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},	
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
@@ -67,7 +71,9 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"blockStorageRef": "{{.BlockStorageRef}}"
@@ -81,7 +87,9 @@ const (
 	imageResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"blockStorageRef": "{{.BlockStorageRef}}"

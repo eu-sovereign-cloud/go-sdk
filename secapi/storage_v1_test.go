@@ -98,9 +98,13 @@ func TestListBlockStorages(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockListBlockStoragesV1(sim, secatest.BlockStorageResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.BlockStorage1Name},
-		SkuRef:   secatest.StorageSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.BlockStorage1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.StorageSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -118,6 +122,8 @@ func TestListBlockStorages(t *testing.T) {
 
 	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.BlockStorage1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
 	require.NotEmpty(t, resp[0].Spec.SkuRef)
 	assert.Equal(t, secatest.StorageSku1Ref, resp[0].Spec.SkuRef)
@@ -134,9 +140,13 @@ func TestGetBlockStorage(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockGetBlockStorageV1(sim, secatest.BlockStorageResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
-		SkuRef:   secatest.StorageSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.BlockStorage1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.StorageSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -155,7 +165,9 @@ func TestGetBlockStorage(t *testing.T) {
 	require.NotEmpty(t, resp)
 
 	require.NotEmpty(t, resp.Metadata.Name)
-	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.BlockStorage1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
 	require.NotEmpty(t, resp.Spec.SkuRef)
 	assert.Equal(t, secatest.StorageSku1Ref, resp.Spec.SkuRef)
@@ -197,6 +209,15 @@ func TestDeleteBlockStorage(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
+	secatest.MockGetBlockStorageV1(sim, secatest.BlockStorageResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.BlockStorage1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.StorageSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteBlockStorageV1(sim)
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -205,14 +226,16 @@ func TestDeleteBlockStorage(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
-	block := &storage.BlockStorage{
-		Metadata: &storage.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Name:      secatest.Workspace1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.BlockStorage1Name,
 	}
-	err := regionalClient.StorageV1.DeleteBlockStorage(ctx, block)
+	resp, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
+	require.NoError(t, err)
+	require.NotEmpty(t, resp)
+
+	err = regionalClient.StorageV1.DeleteBlockStorage(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -226,7 +249,11 @@ func TestListImages(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockListStorageImagesV1(sim, secatest.ImageResponseV1{
-		Metadata:        secatest.MetadataResponseV1{Name: secatest.Image1Name},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Image1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -246,6 +273,8 @@ func TestListImages(t *testing.T) {
 
 	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Image1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
 	require.NotEmpty(t, resp[0].Spec.BlockStorageRef)
 	assert.Equal(t, secatest.BlockStorage1Ref, resp[0].Spec.BlockStorageRef)
@@ -262,7 +291,11 @@ func TestGetImage(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockGetStorageImageV1(sim, secatest.ImageResponseV1{
-		Metadata:        secatest.MetadataResponseV1{Name: secatest.Image1Name},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Image1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -283,6 +316,8 @@ func TestGetImage(t *testing.T) {
 
 	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
 	require.NotEmpty(t, resp.Spec.BlockStorageRef)
 	assert.Equal(t, secatest.BlockStorage1Ref, resp.Spec.BlockStorageRef)
@@ -323,6 +358,15 @@ func TestDeleteImage(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
+	secatest.MockGetStorageImageV1(sim, secatest.ImageResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Image1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		BlockStorageRef: secatest.BlockStorage1Ref,
+		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteImageV1(sim)
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -331,12 +375,14 @@ func TestDeleteImage(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
-	image := &storage.Image{
-		Metadata: &storage.RegionalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.Image1Name,
-		},
+	tref := TenantReference{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Image1Name,
 	}
-	err := regionalClient.StorageV1.DeleteImage(ctx, image)
+	resp, err := regionalClient.StorageV1.GetImage(ctx, tref)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	err = regionalClient.StorageV1.DeleteImage(ctx, resp)
 	require.NoError(t, err)
 }
