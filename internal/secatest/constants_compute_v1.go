@@ -39,7 +39,9 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
@@ -53,7 +55,9 @@ const (
 	instanceResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"skuRef": "{{.SkuRef}}"

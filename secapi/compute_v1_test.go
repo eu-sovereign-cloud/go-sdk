@@ -99,9 +99,13 @@ func TestListInstances(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockListInstancesV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
-		SkuRef:   secatest.InstanceSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.InstanceSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -118,6 +122,8 @@ func TestListInstances(t *testing.T) {
 	require.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
 	assert.Equal(t, secatest.InstanceSku1Ref, resp[0].Spec.SkuRef)
 
@@ -131,9 +137,13 @@ func TestGetInstance(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
-		SkuRef:   secatest.InstanceSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.InstanceSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -152,6 +162,8 @@ func TestGetInstance(t *testing.T) {
 	require.NotEmpty(t, resp)
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
 	assert.Equal(t, secatest.InstanceSku1Ref, resp.Spec.SkuRef)
 
@@ -275,6 +287,16 @@ func TestDeleteInstance(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
+	secatest.MockGetInstanceV1(sim, secatest.InstanceResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.InstanceSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
+
 	secatest.MockDeleteInstanceV1(sim)
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -282,14 +304,15 @@ func TestDeleteInstance(t *testing.T) {
 	defer server.Close()
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{ComputeV1API}, server)
-
-	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Instance1Name,
 	}
-	err := regionalClient.ComputeV1.DeleteInstance(ctx, inst)
+	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp)
 	require.NoError(t, err)
 }
