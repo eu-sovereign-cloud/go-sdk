@@ -34,9 +34,15 @@ const (
 	Region1Name    = "region-1"
 	ZoneA          = "a"
 
+	// Labels
+	LabelKeyTier = "tier"
+
 	/// Network
-	NetworkSku1Name = "sku-1"
-	NetworkSku1Ref  = "skus/sku-1"
+	NetworkSku1Name      = "sku-1"
+	NetworkSku1Tier      = "N1K"
+	NetworkSku1Bandwidth = 1000
+	NetworkSku1Packets   = 100
+	NetworkSku1Ref       = "skus/sku-1"
 
 	Network1Name = "network-1"
 	Network1Ref  = "networks/network-1"
@@ -59,12 +65,11 @@ const (
 	CidrIpv4 = "0.0.0.0/16"
 
 	/// Compute
+	InstanceSku1Ref          = "skus/sku-1"
 	InstanceSku1Name         = "sku-1"
-	InstanceSku1Provider     = "seca"
 	InstanceSku1Tier         = "D2XS"
 	InstanceSku1VCPU         = 16
-	InstanceSku1Ram          = 32
-	InstanceSku1Architecture = "amd64"
+	InstanceSku1RAM          = 32
 
 	Instance1Ref  = "instances/instance-1"
 	Instance1Name = "instance-1"
@@ -85,9 +90,8 @@ const (
 	StorageSku1MinVolumeSize = 50
 	StorageSku1Type          = "remote-durable"
 
-	BlockStorage1Ref = "storage/block-storage-1"
-	Storage1Name     = "storage-1"
-	Image1Name       = "image-1"
+	Storage1Name = "storage-1"
+	Image1Name   = "image-1"
 
 	/// Status
 	StatusStateActive    = "active"

@@ -13,7 +13,8 @@ const (
 					"tier": "{{.Tier}}"
 				},
 				"spec": {
-					"vCPU": {{.VCPU}}
+					"vCPU": {{.VCPU}},
+					"ram": {{.Ram}}
 				}
 			}
 		]
@@ -27,7 +28,8 @@ const (
 			"tier": "{{.Tier}}"
 		},
 		"spec": {
-			"vCPU": {{.VCPU}}
+			"vCPU": {{.VCPU}},
+			"ram": {{.Ram}}
 		} 
 	}`
 

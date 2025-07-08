@@ -9,11 +9,12 @@ const (
 				"metadata": {
 					"name": "{{.Metadata.Name}}"
 				},
-				"spec": {
-					"bandwidth": {{.Bandwidth}}
+				"labels": {
+					"tier": "{{.Tier}}"
 				},
-				"status": {
-					"state": "{{.Status.State}}"
+				"spec": {
+					"bandwidth": {{.Bandwidth}},
+					"packets": {{.Packets}}
 				}
 			}
     	]
@@ -23,11 +24,12 @@ const (
 		"metadata": {
 			"name": "{{.Metadata.Name}}"
 		},
-		"spec": {
-			"bandwidth": {{.Bandwidth}}
+		"labels": {
+					"tier": "{{.Tier}}"
 		},
-		status": {
-			"state": "{{.Status.State}}"
+		"spec": {
+			"bandwidth": {{.Bandwidth}},
+			"packets": {{.Packets}}
 		}
 	}`
 

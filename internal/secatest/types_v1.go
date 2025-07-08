@@ -24,6 +24,7 @@ type InstanceSkuResponseV1 struct {
 	Metadata MetadataResponseV1
 	Tier     string
 	VCPU     int
+	Ram      int
 }
 type InstanceResponseV1 struct {
 	Metadata MetadataResponseV1
@@ -34,8 +35,9 @@ type InstanceResponseV1 struct {
 // Network
 type NetworkSkuResponseV1 struct {
 	Metadata  MetadataResponseV1
+	Tier      string
 	Bandwidth int
-	Status    StatusResponseV1
+	Packets   int
 }
 type NetworkResponseV1 struct {
 	Metadata      MetadataResponseV1

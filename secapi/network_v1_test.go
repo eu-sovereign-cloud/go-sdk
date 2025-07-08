@@ -25,6 +25,10 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockListNetworkSkusV1(sim, secatest.NetworkSkuResponseV1{
+		Metadata:  secatest.MetadataResponseV1{Name: secatest.NetworkSku1Name},
+		Tier:      secatest.NetworkSku1Tier,
+		Bandwidth: secatest.NetworkSku1Bandwidth,
+		Packets:   secatest.NetworkSku1Packets,
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -41,6 +45,13 @@ func TestListNetworkSkusV1(t *testing.T) {
 	require.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.NetworkSku1Name, resp[0].Metadata.Name)
+
+	labels := *resp[0].Labels
+	require.Len(t, labels, 1)
+	assert.Equal(t, secatest.NetworkSku1Tier, labels[secatest.LabelKeyTier])
+
+	assert.Equal(t, secatest.NetworkSku1Bandwidth, resp[0].Spec.Bandwidth)
+	assert.Equal(t, secatest.NetworkSku1Packets, resp[0].Spec.Packets)
 }
 
 func TestGetNetworkSkuV1(t *testing.T) {
@@ -51,6 +62,10 @@ func TestGetNetworkSkuV1(t *testing.T) {
 
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockGetNetworkSkuV1(sim, secatest.NetworkSkuResponseV1{
+		Metadata:  secatest.MetadataResponseV1{Name: secatest.NetworkSku1Name},
+		Tier:      secatest.NetworkSku1Tier,
+		Bandwidth: secatest.NetworkSku1Bandwidth,
+		Packets:   secatest.NetworkSku1Packets,
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -63,6 +78,13 @@ func TestGetNetworkSkuV1(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.NetworkSku1Name, resp.Metadata.Name)
+
+	labels := *resp.Labels
+	require.Len(t, labels, 1)
+	assert.Equal(t, secatest.NetworkSku1Tier, labels[secatest.LabelKeyTier])
+
+	assert.Equal(t, secatest.NetworkSku1Bandwidth, resp.Spec.Bandwidth)
+	assert.Equal(t, secatest.NetworkSku1Packets, resp.Spec.Packets)
 }
 
 // Network
@@ -74,8 +96,7 @@ func TestListNetworksV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListNetworksV1(sim, secatest.NetworkResponseV1{
-	})
+	secatest.MockListNetworksV1(sim, secatest.NetworkResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -102,8 +123,7 @@ func TestGetNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{
-	})
+	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -126,8 +146,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateNetworkV1(sim, secatest.NetworkResponseV1{
-	})
+	secatest.MockCreateOrUpdateNetworkV1(sim, secatest.NetworkResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -162,8 +181,7 @@ func TestDeleteNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{
-	})
+	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{})
 	secatest.MockDeleteNetworkV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -193,8 +211,7 @@ func TestListSubnetsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListSubnetsV1(sim, secatest.SubnetResponseV1{
-	})
+	secatest.MockListSubnetsV1(sim, secatest.SubnetResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -221,8 +238,7 @@ func TestGetSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{
-	})
+	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -245,8 +261,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateSubnetV1(sim, secatest.SubnetResponseV1{
-	})
+	secatest.MockCreateOrUpdateSubnetV1(sim, secatest.SubnetResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -280,8 +295,7 @@ func TestDeleteSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{
-	})
+	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{})
 	secatest.MockDeleteSubnetV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -307,8 +321,7 @@ func TestListRouteTablesV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListRouteTablesV1(sim, secatest.RouteTableResponseV1{
-	})
+	secatest.MockListRouteTablesV1(sim, secatest.RouteTableResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -335,8 +348,7 @@ func TestGetRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{
-	})
+	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -359,8 +371,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRouteTableV1(sim, secatest.RouteTableResponseV1{
-	})
+	secatest.MockCreateOrUpdateRouteTableV1(sim, secatest.RouteTableResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -399,8 +410,7 @@ func TestDeleteRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{
-	})
+	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{})
 	secatest.MockDeleteRouteTableV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -426,8 +436,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListInternetGatewaysV1(sim, secatest.InternetGatewayResponseV1{
-	})
+	secatest.MockListInternetGatewaysV1(sim, secatest.InternetGatewayResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -454,8 +463,7 @@ func TestGetInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
-	})
+	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -478,8 +486,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
-	})
+	secatest.MockCreateOrUpdateInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -510,8 +517,7 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
-	})
+	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
 	secatest.MockDeleteInternetGatewayV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -537,8 +543,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListSecurityGroupsV1(sim, secatest.SecurityGroupResponseV1{
-	})
+	secatest.MockListSecurityGroupsV1(sim, secatest.SecurityGroupResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -565,8 +570,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
-	})
+	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -589,8 +593,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
-	})
+	secatest.MockCreateOrUpdateSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -633,8 +636,7 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
-	})
+	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
 	secatest.MockDeleteSecurityGroupV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -660,8 +662,7 @@ func TestListNicsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListNicsV1(sim, secatest.NicResponseV1{
-	})
+	secatest.MockListNicsV1(sim, secatest.NicResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -688,8 +689,7 @@ func TestGetNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNicV1(sim, secatest.NicResponseV1{
-	})
+	secatest.MockGetNicV1(sim, secatest.NicResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -712,8 +712,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateNicV1(sim, secatest.NicResponseV1{
-	})
+	secatest.MockCreateOrUpdateNicV1(sim, secatest.NicResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -744,8 +743,7 @@ func TestDeleteNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNicV1(sim, secatest.NicResponseV1{
-	})
+	secatest.MockGetNicV1(sim, secatest.NicResponseV1{})
 	secatest.MockDeleteNicV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -771,8 +769,7 @@ func TestListPublicIpsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListPublicIpsV1(sim, secatest.PublicIpResponseV1{
-	})
+	secatest.MockListPublicIpsV1(sim, secatest.PublicIpResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -799,8 +796,7 @@ func TestGetPublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{
-	})
+	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -823,8 +819,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdatePublicIpV1(sim, secatest.PublicIpResponseV1{
-	})
+	secatest.MockCreateOrUpdatePublicIpV1(sim, secatest.PublicIpResponseV1{})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -855,8 +850,7 @@ func TestDeletePublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{
-	})
+	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{})
 	secatest.MockDeletePublicIpV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 

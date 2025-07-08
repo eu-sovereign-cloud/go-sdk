@@ -28,6 +28,7 @@ func TestListInstancesSku(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
 		Tier:     secatest.InstanceSku1Tier,
 		VCPU:     secatest.InstanceSku1VCPU,
+		Ram:      secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -42,14 +43,14 @@ func TestListInstancesSku(t *testing.T) {
 	resp, err := iter.All(ctx)
 	require.NoError(t, err)
 
-	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	require.NotEmpty(t, resp[0].Labels)
-	assert.Equal(t, secatest.InstanceSku1Tier, (*resp[0].Labels)["tier"])
+	labels := *resp[0].Labels
+	require.Len(t, labels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
-	require.NotEmpty(t, resp[0].Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
+	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
 }
 
 func TestGetInstanceSkU(t *testing.T) {
@@ -63,6 +64,7 @@ func TestGetInstanceSkU(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
 		Tier:     secatest.InstanceSku1Tier,
 		VCPU:     secatest.InstanceSku1VCPU,
+		Ram:      secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -77,14 +79,14 @@ func TestGetInstanceSkU(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
 
-	require.NotEmpty(t, resp.Labels)
-	assert.Equal(t, secatest.InstanceSku1Tier, (*resp.Labels)["tier"])
+	labels := *resp.Labels
+	require.Len(t, labels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
-	require.NotEmpty(t, resp.Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp.Spec.VCPU)
+	assert.Equal(t, secatest.InstanceSku1RAM, resp.Spec.Ram)
 }
 
 // Instance
@@ -98,7 +100,7 @@ func TestListInstances(t *testing.T) {
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockListInstancesV1(sim, secatest.InstanceResponseV1{
 		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
-		SkuRef:   secatest.Instance1Ref,
+		SkuRef:   secatest.InstanceSku1Ref,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
@@ -115,13 +117,10 @@ func TestListInstances(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
 
-	require.NotEmpty(t, resp[0].Spec.SkuRef)
-	assert.Equal(t, secatest.Instance1Ref, resp[0].Spec.SkuRef)
+	assert.Equal(t, secatest.InstanceSku1Ref, resp[0].Spec.SkuRef)
 
-	require.NotEmpty(t, resp[0].Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
@@ -133,7 +132,7 @@ func TestGetInstance(t *testing.T) {
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceV1(sim, secatest.InstanceResponseV1{
 		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
-		SkuRef:   secatest.Instance1Ref,
+		SkuRef:   secatest.InstanceSku1Ref,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
@@ -152,13 +151,10 @@ func TestGetInstance(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, resp)
 
-	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 
-	require.NotEmpty(t, resp.Spec.SkuRef)
-	assert.Equal(t, secatest.Instance1Ref, resp.Spec.SkuRef)
+	assert.Equal(t, secatest.InstanceSku1Ref, resp.Spec.SkuRef)
 
-	require.NotEmpty(t, resp.Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
@@ -169,7 +165,11 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateInstanceV1(sim, secatest.InstanceResponseV1{})
+	secatest.MockCreateOrUpdateInstanceV1(sim, secatest.InstanceResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
+		SkuRef:   secatest.InstanceSku1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
