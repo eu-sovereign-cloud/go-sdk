@@ -10,10 +10,10 @@ const (
 					"name": "{{.Metadata.Name}}"
 				},
 				"labels": {
-					"iops": "{{.Iops}}"
+					"tier": "{{.Tier}}"
 				},
 				"spec": {
-					"vCPU": {{.VCPU}}
+					"iops": {{.Iops}}
 				}
 			}
 		]
@@ -23,11 +23,11 @@ const (
 		"metadata": {
 			"name": "{{.Metadata.Name}}"
 		},
-		"spec": {
-			"type": "{{.Type}}"
+		"labels": {
+			"tier": "{{.Tier}}"
 		},
-		"status": {
-			"state": "{{.Status.State}}"
+		"spec": {
+			"iops": {{.Iops}}
 		}
 	}`
 

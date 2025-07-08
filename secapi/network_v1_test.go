@@ -250,9 +250,13 @@ func TestListSubnetsV1(t *testing.T) {
 
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockListSubnetsV1(sim, secatest.SubnetResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Subnet1Name},
-		SkuRef:   secatest.NetworkSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Subnet1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.NetworkSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
