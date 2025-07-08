@@ -15,13 +15,11 @@ const (
 						{{if $i}},{{end}}
 						{
 							"name": "{{$p.Name}}",
-							"url": "{{$p.URL}}"
+							"url": "{{$p.URL}}",
+							"version": "{{$p.Version}}"
 						}
 						{{- end}}
 					]
-				},
-				"status": {
-					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -37,13 +35,11 @@ const (
 				{{if $i}},{{end}}
 				{
 					"name": "{{$p.Name}}",
-					"url": "{{$p.URL}}"
+					"url": "{{$p.URL}}",
+					"version": "{{$p.Version}}"
 				}
 				{{- end}}
 			]
-		},
-		"status": {
-			"state": "{{.Status.State}}"
 		}
 	}`
 )

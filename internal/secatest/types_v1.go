@@ -76,13 +76,12 @@ type PublicIpResponseV1 struct {
 // Region
 type RegionResponseV1 struct {
 	Metadata  MetadataResponseV1
-	Name      string
 	Providers []RegionResponseProviderV1
-	Status    StatusResponseV1
 }
 type RegionResponseProviderV1 struct {
-	Name string
-	URL  string
+	Name    string
+	URL     string
+	Version string
 }
 
 // Storage

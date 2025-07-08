@@ -21,11 +21,12 @@ func TestListRegionsV1(t *testing.T) {
 
 	sim := mockregion.NewMockServerInterface(t)
 	secatest.MockListRegionsV1(sim, secatest.RegionResponseV1{
-		Name: secatest.Region1Name,
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
 		Providers: []secatest.RegionResponseProviderV1{
 			{
-				Name: secatest.ProviderNetworkName,
-				URL:  secatest.ProviderNetworkEndpoint,
+				Name:    secatest.ProviderNetworkName,
+				URL:     secatest.ProviderNetworkEndpoint,
+				Version: secatest.ProviderVersion1,
 			},
 		},
 	})
@@ -45,8 +46,11 @@ func TestListRegionsV1(t *testing.T) {
 	require.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
-	assert.Len(t, resp[0].Spec.Providers, 1)
-	assert.Equal(t, secatest.ProviderNetworkName, resp[0].Spec.Providers[0].Name)
+
+	require.Len(t, resp[0].Spec.Providers, 1)
+	assert.Contains(t, resp[0].Spec.Providers[0].Name, secatest.ProviderNetworkName)
+	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
+	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
 }
 
 func TestGetRegionV1(t *testing.T) {
@@ -55,11 +59,12 @@ func TestGetRegionV1(t *testing.T) {
 
 	sim := mockregion.NewMockServerInterface(t)
 	secatest.MockGetRegionV1(sim, secatest.RegionResponseV1{
-		Name: secatest.Region1Name,
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
 		Providers: []secatest.RegionResponseProviderV1{
 			{
 				Name: secatest.ProviderNetworkName,
 				URL:  secatest.ProviderNetworkEndpoint,
+				Version: secatest.ProviderVersion1,
 			},
 		},
 	})
@@ -74,6 +79,9 @@ func TestGetRegionV1(t *testing.T) {
 	resp, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
 	require.NoError(t, err)
 
-	assert.Len(t, resp.Spec.Providers, 1)
-	assert.Equal(t, secatest.ProviderNetworkName, resp.Spec.Providers[0].Name)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Name)
+
+	assert.Contains(t, resp.Spec.Providers[0].Name, secatest.ProviderNetworkName)
+	assert.Contains(t, resp.Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
+	assert.Equal(t, secatest.ProviderVersion1, resp.Spec.Providers[0].Version)
 }
