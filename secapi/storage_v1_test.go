@@ -24,24 +24,32 @@ func TestListStorageSkus(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockListStorageSkusV1(sim, secatest.StorageSkuResponseV1{})
+	secatest.MockListStorageSkusV1(sim, secatest.StorageSkuResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		Tier:     secatest.StorageSku1Tier,
+		Iops:     secatest.StorageSku1Iops,
+	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
 	resp, err := iter.All(ctx)
 	require.NoError(t, err)
-	require.Len(t, resp, 1)
+
+	require.NotEmpty(t, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
 
 	require.NotEmpty(t, resp[0].Labels)
+	assert.Equal(t, secatest.StorageSku1Tier, (*resp[0].Labels)["tier"])
+
 	require.NotEmpty(t, resp[0].Spec.Iops)
-	require.NotEmpty(t, resp[0].Spec.MinVolumeSize)
+	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
 }
 
 func TestGetStorageSku(t *testing.T) {
@@ -51,13 +59,17 @@ func TestGetStorageSku(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockGetStorageSkusV1(sim, secatest.StorageSkuResponseV1{})
+	secatest.MockGetStorageSkusV1(sim, secatest.StorageSkuResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		Tier:     secatest.StorageSku1Tier,
+		Iops:     secatest.StorageSku1Iops,
+	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	resp, err := regionalClient.StorageV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -66,7 +78,14 @@ func TestGetStorageSku(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, resp)
 
+	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
+
+	require.NotEmpty(t, resp.Labels)
+	assert.Equal(t, secatest.StorageSku1Tier, (*resp.Labels)["tier"])
+
+	require.NotEmpty(t, resp.Spec.Iops)
+	assert.Equal(t, secatest.StorageSku1Iops, resp.Spec.Iops)
 }
 
 // Block Storage
@@ -78,13 +97,17 @@ func TestListBlockStorages(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockListBlockStoragesV1(sim, secatest.BlockStorageResponseV1{})
+	secatest.MockListBlockStoragesV1(sim, secatest.BlockStorageResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		SkuRef:   secatest.StorageSku1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -93,10 +116,14 @@ func TestListBlockStorages(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, resp[0].Metadata.Zone)
+	require.NotEmpty(t, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
+
+	require.NotEmpty(t, resp[0].Spec.SkuRef)
+	assert.Equal(t, secatest.StorageSku1Ref, resp[0].Spec.SkuRef)
+
+	require.NotEmpty(t, resp[0].Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetBlockStorage(t *testing.T) {
@@ -106,13 +133,17 @@ func TestGetBlockStorage(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockGetBlockStorageV1(sim, secatest.BlockStorageResponseV1{})
+	secatest.MockGetBlockStorageV1(sim, secatest.BlockStorageResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		SkuRef:   secatest.StorageSku1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
@@ -123,10 +154,14 @@ func TestGetBlockStorage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.Storage1Name, resp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
-	assert.Equal(t, secatest.ZoneA, resp.Metadata.Zone)
+	require.NotEmpty(t, resp.Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
+
+	require.NotEmpty(t, resp.Spec.SkuRef)
+	assert.Equal(t, secatest.StorageSku1Ref, resp.Spec.SkuRef)
+
+	require.NotEmpty(t, resp.Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateBlockStorage(t *testing.T) {
@@ -142,7 +177,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	block := &storage.BlockStorage{
 		Metadata: &storage.ZonalResourceMetadata{
@@ -168,7 +203,7 @@ func TestDeleteBlockStorage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	block := &storage.BlockStorage{
 		Metadata: &storage.ZonalResourceMetadata{
@@ -190,13 +225,17 @@ func TestListImages(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockListStorageImagesV1(sim, secatest.ImageResponseV1{})
+	secatest.MockListStorageImagesV1(sim, secatest.ImageResponseV1{
+		Metadata:        secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		BlockStorageRef: secatest.BlockStorage1Ref,
+		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	iter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -205,10 +244,14 @@ func TestListImages(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, resp)
 
-	assert.Equal(t, secatest.Image1Name, resp[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
+	require.NotEmpty(t, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
+
+	require.NotEmpty(t, resp[0].Spec.BlockStorageRef)
+	assert.Equal(t, secatest.BlockStorage1Ref, resp[0].Spec.BlockStorageRef)
+
+	require.NotEmpty(t, resp[0].Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetImage(t *testing.T) {
@@ -219,13 +262,16 @@ func TestGetImage(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockGetStorageImageV1(sim, secatest.ImageResponseV1{
+		Metadata:        secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		BlockStorageRef: secatest.BlockStorage1Ref,
+		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	tref := TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -235,10 +281,14 @@ func TestGetImage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+	require.NotEmpty(t, resp.Metadata.Name)
+	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
+
+	require.NotEmpty(t, resp.Spec.BlockStorageRef)
+	assert.Equal(t, secatest.BlockStorage1Ref, resp.Spec.BlockStorageRef)
+
+	require.NotEmpty(t, resp.Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateImage(t *testing.T) {
@@ -248,14 +298,13 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateImageV1(sim, secatest.ImageResponseV1{
-	})
+	secatest.MockCreateOrUpdateImageV1(sim, secatest.ImageResponseV1{})
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	image := &storage.Image{
 		Metadata: &storage.RegionalResourceMetadata{
@@ -280,7 +329,7 @@ func TestDeleteImage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
 
 	image := &storage.Image{
 		Metadata: &storage.RegionalResourceMetadata{

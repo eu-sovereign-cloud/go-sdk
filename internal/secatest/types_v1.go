@@ -87,8 +87,8 @@ type RegionResponseProviderV1 struct {
 // Storage
 type StorageSkuResponseV1 struct {
 	Metadata MetadataResponseV1
-	Type     string
-	Status   StatusResponseV1
+	Tier     string
+	Iops     int
 }
 type BlockStorageResponseV1 struct {
 	Metadata MetadataResponseV1

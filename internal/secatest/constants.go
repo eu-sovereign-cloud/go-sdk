@@ -77,6 +77,7 @@ const (
 	AuthorizationPermissionVerb         = "get"
 
 	/// Storage
+	StorageSku1Ref           = "storage/skus-1"
 	StorageSku1Name          = "sku-1"
 	StorageSku1Provider      = "seca"
 	StorageSku1Tier          = "DXS"
@@ -84,8 +85,9 @@ const (
 	StorageSku1MinVolumeSize = 50
 	StorageSku1Type          = "remote-durable"
 
-	Storage1Name = "storage-1"
-	Image1Name   = "image-1"
+	BlockStorage1Ref = "storage/block-storage-1"
+	Storage1Name     = "storage-1"
+	Image1Name       = "image-1"
 
 	/// Status
 	StatusStateActive    = "active"

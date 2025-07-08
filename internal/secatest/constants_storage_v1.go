@@ -9,11 +9,11 @@ const (
 				"metadata": {
 					"name": "{{.Metadata.Name}}"
 				},
-				"spec": {
-					"type": "{{.Type}}"
+				"labels": {
+					"iops": "{{.Iops}}"
 				},
-				"status": {
-					"state": "{{.Status.State}}"
+				"spec": {
+					"vCPU": {{.VCPU}}
 				}
 			}
 		]
@@ -52,6 +52,7 @@ const (
 	{
 		"metadata": {
 			"name": "{{.Metadata.Name}}"
+		},	
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
 		},
