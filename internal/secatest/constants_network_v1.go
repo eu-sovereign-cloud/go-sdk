@@ -39,7 +39,9 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
         			"routeTableRef": "{{.RouteTableRef}}"
@@ -53,12 +55,14 @@ const (
 	networkResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"routeTableRef": "{{.RouteTableRef}}"
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -69,7 +73,9 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
@@ -83,12 +89,14 @@ const (
 	subnetResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -99,7 +107,9 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"localRef": "{{.LocalRef}}"
@@ -113,12 +123,14 @@ const (
 	routeTableResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"localRef": "{{.LocalRef}}"
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -129,7 +141,9 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"egressOnly": {{.EgressOnly}}
@@ -143,12 +157,14 @@ const (
 	internetGatewayResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"egressOnly": {{.EgressOnly}}
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -159,7 +175,9 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"rules": [
@@ -177,7 +195,9 @@ const (
 	securityGroupResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"rules": [
@@ -186,7 +206,7 @@ const (
 				}
 			]
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -197,12 +217,14 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"subnetRef": "{{.SubnetRef}}"
 				},
-				status": {
+				"status": {
 					"state": "{{.Status.State}}"
 				}
 			}
@@ -211,12 +233,14 @@ const (
 	nicResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"subnetRef": "{{.SubnetRef}}"
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`
@@ -227,12 +251,14 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}",
+					"workspace": "{{.Metadata.Workspace}}"
 				},
 				"spec": {
 					"address": "{{.Address}}"
 				},
-				status": {
+				"status": {
 					"state": "{{.Status.State}}"
 				}
 			}
@@ -241,12 +267,14 @@ const (
 	publicIpResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}",
+			"workspace": "{{.Metadata.Workspace}}"
 		},
 		"spec": {
 			"address": "{{.Address}}"
 		},
-		status": {
+		"status": {
 			"state": "{{.Status.State}}"
 		}
 	}`

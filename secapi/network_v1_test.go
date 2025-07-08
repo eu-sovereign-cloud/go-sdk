@@ -96,7 +96,15 @@ func TestListNetworksV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListNetworksV1(sim, secatest.NetworkResponseV1{})
+	secatest.MockListNetworksV1(sim, secatest.NetworkResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Network1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RouteTableRef: secatest.RouteTable1Ref,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -111,9 +119,11 @@ func TestListNetworksV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Network1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.RouteTable1Ref, resp[0].Spec.RouteTableRef)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp[0].Status.State))
 }
 
 func TestGetNetworkV1(t *testing.T) {
@@ -123,7 +133,15 @@ func TestGetNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{})
+	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Network1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RouteTableRef: secatest.RouteTable1Ref,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -134,9 +152,11 @@ func TestGetNetworkV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetNetwork(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name})
 	require.NoError(t, err)
 
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.RouteTable1Ref, resp.Spec.RouteTableRef)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
@@ -146,7 +166,15 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateNetworkV1(sim, secatest.NetworkResponseV1{})
+	secatest.MockCreateOrUpdateNetworkV1(sim, secatest.NetworkResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Network1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RouteTableRef: secatest.RouteTable1Ref,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -169,9 +197,11 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, net)
 	require.NoError(t, err)
 
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.RouteTable1Ref, resp.Spec.RouteTableRef)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteNetworkV1(t *testing.T) {
@@ -181,7 +211,15 @@ func TestDeleteNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{})
+	secatest.MockGetNetworkV1(sim, secatest.NetworkResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Network1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RouteTableRef: secatest.RouteTable1Ref,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteNetworkV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -211,7 +249,11 @@ func TestListSubnetsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListSubnetsV1(sim, secatest.SubnetResponseV1{})
+	secatest.MockListSubnetsV1(sim, secatest.SubnetResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Subnet1Name},
+		SkuRef:   secatest.NetworkSku1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -226,9 +268,13 @@ func TestListSubnetsV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.Subnet1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.Subnet1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.NetworkSku1Ref, *resp[0].Spec.SkuRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetSubnetV1(t *testing.T) {
@@ -238,7 +284,11 @@ func TestGetSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{})
+	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Subnet1Name},
+		SkuRef:   secatest.NetworkSku1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -249,9 +299,11 @@ func TestGetSubnetV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetSubnet(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Subnet1Name})
 	require.NoError(t, err)
 
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Subnet1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.NetworkSku1Ref, *resp.Spec.SkuRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateSubnetV1(t *testing.T) {
@@ -261,7 +313,15 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateSubnetV1(sim, secatest.SubnetResponseV1{})
+	secatest.MockCreateOrUpdateSubnetV1(sim, secatest.SubnetResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Subnet1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.NetworkSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -273,7 +333,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 		Metadata: &network.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
+			Name:      secatest.Subnet1Name,
 		},
 		Spec: network.SubnetSpec{
 			Cidr: network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
@@ -283,9 +343,11 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, sub)
 	require.NoError(t, err)
 
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Subnet1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.NetworkSku1Ref, *resp.Spec.SkuRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeleteSubnetV1(t *testing.T) {
@@ -295,7 +357,15 @@ func TestDeleteSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{})
+	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Subnet1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.NetworkSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteSubnetV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -321,7 +391,15 @@ func TestListRouteTablesV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListRouteTablesV1(sim, secatest.RouteTableResponseV1{})
+	secatest.MockListRouteTablesV1(sim, secatest.RouteTableResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.RouteTable1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		LocalRef: secatest.Network1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -336,9 +414,13 @@ func TestListRouteTablesV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.RouteTable1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.RouteTable1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.Network1Ref, resp[0].Spec.LocalRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetRouteTableV1(t *testing.T) {
@@ -348,7 +430,15 @@ func TestGetRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{})
+	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.RouteTable1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		LocalRef: secatest.Network1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -359,9 +449,13 @@ func TestGetRouteTableV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetRouteTable(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.RouteTable1Name})
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Network1Ref, resp.Spec.LocalRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateRouteTableV1(t *testing.T) {
@@ -371,7 +465,15 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRouteTableV1(sim, secatest.RouteTableResponseV1{})
+	secatest.MockCreateOrUpdateRouteTableV1(sim, secatest.RouteTableResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.RouteTable1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		LocalRef: secatest.Network1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -398,9 +500,13 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, route)
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Network1Ref, resp.Spec.LocalRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeleteRouteTableV1(t *testing.T) {
@@ -410,7 +516,15 @@ func TestDeleteRouteTableV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{})
+	secatest.MockGetRouteTableV1(sim, secatest.RouteTableResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.RouteTable1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		LocalRef: secatest.Network1Ref,
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteRouteTableV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -436,7 +550,15 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListInternetGatewaysV1(sim, secatest.InternetGatewayResponseV1{})
+	secatest.MockListInternetGatewaysV1(sim, secatest.InternetGatewayResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		EgressOnly: false,
+		Status:     secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -451,9 +573,13 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.InternetGateway1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, false, *resp[0].Spec.EgressOnly)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetInternetGatewayV1(t *testing.T) {
@@ -463,7 +589,15 @@ func TestGetInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
+	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		EgressOnly: false,
+		Status:     secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -474,9 +608,13 @@ func TestGetInternetGatewayV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetInternetGateway(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name})
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
+
+	assert.Equal(t, false, *resp.Spec.EgressOnly)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
@@ -486,7 +624,15 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
+	secatest.MockCreateOrUpdateInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		EgressOnly: false,
+		Status:     secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -505,9 +651,13 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, gtw)
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, false, *resp.Spec.EgressOnly)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeleteInternetGatewayV1(t *testing.T) {
@@ -517,7 +667,15 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{})
+	secatest.MockGetInternetGatewayV1(sim, secatest.InternetGatewayResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		EgressOnly: false,
+		Status:     secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteInternetGatewayV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -543,7 +701,15 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListSecurityGroupsV1(sim, secatest.SecurityGroupResponseV1{})
+	secatest.MockListSecurityGroupsV1(sim, secatest.SecurityGroupResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RuleDirection: secatest.SecurityGroupRuleDirectionIngress,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -558,9 +724,13 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.SecurityGroup1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Rules[0].Direction))
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetSecurityGroupV1(t *testing.T) {
@@ -570,7 +740,15 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
+	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RuleDirection: secatest.SecurityGroupRuleDirectionIngress,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -581,9 +759,13 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetSecurityGroup(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name})
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.SecurityGroup1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
@@ -593,7 +775,15 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
+	secatest.MockCreateOrUpdateSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RuleDirection: secatest.SecurityGroupRuleDirectionIngress,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -624,9 +814,13 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, group)
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeleteSecurityGroupV1(t *testing.T) {
@@ -636,7 +830,15 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{})
+	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		RuleDirection: secatest.SecurityGroupRuleDirectionIngress,
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteSecurityGroupV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -662,7 +864,15 @@ func TestListNicsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListNicsV1(sim, secatest.NicResponseV1{})
+	secatest.MockListNicsV1(sim, secatest.NicResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Nic1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SubnetRef: secatest.Subnet1Ref,
+		Status:    secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -677,9 +887,13 @@ func TestListNicsV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.Nic1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.Nic1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.Subnet1Ref, *&resp[0].Spec.SubnetRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetNicV1(t *testing.T) {
@@ -689,7 +903,15 @@ func TestGetNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNicV1(sim, secatest.NicResponseV1{})
+	secatest.MockGetNicV1(sim, secatest.NicResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Nic1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SubnetRef: secatest.Subnet1Ref,
+		Status:    secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -700,9 +922,13 @@ func TestGetNicV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetNic(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name})
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Subnet1Ref, *&resp.Spec.SubnetRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateNicV1(t *testing.T) {
@@ -712,7 +938,15 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateNicV1(sim, secatest.NicResponseV1{})
+	secatest.MockCreateOrUpdateNicV1(sim, secatest.NicResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Nic1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SubnetRef: secatest.Subnet1Ref,
+		Status:    secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -731,9 +965,13 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, nic)
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Subnet1Ref, *&resp.Spec.SubnetRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeleteNicV1(t *testing.T) {
@@ -743,7 +981,15 @@ func TestDeleteNicV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetNicV1(sim, secatest.NicResponseV1{})
+	secatest.MockGetNicV1(sim, secatest.NicResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.InternetGateway1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SubnetRef: secatest.Subnet1Ref,
+		Status:    secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteNicV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -769,7 +1015,15 @@ func TestListPublicIpsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListPublicIpsV1(sim, secatest.PublicIpResponseV1{})
+	secatest.MockListPublicIpsV1(sim, secatest.PublicIpResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.PublicIp1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		Address: secatest.Address1,
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -784,9 +1038,13 @@ func TestListPublicIpsV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	assert.Equal(t, secatest.PublicIp1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
-	assert.Equal(t, secatest.PublicIp1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, secatest.Address1, *resp[0].Spec.Address)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetPublicIpV1(t *testing.T) {
@@ -796,7 +1054,15 @@ func TestGetPublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{})
+	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.PublicIp1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		Address: secatest.Address1,
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -807,9 +1073,13 @@ func TestGetPublicIpV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetPublicIp(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name})
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdatePublicIpV1(t *testing.T) {
@@ -819,7 +1089,15 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdatePublicIpV1(sim, secatest.PublicIpResponseV1{})
+	secatest.MockCreateOrUpdatePublicIpV1(sim, secatest.PublicIpResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.PublicIp1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		Address: secatest.Address1,
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -838,9 +1116,13 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, ip)
 	require.NoError(t, err)
 
+	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
-	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
+
+	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestDeletePublicIpV1(t *testing.T) {
@@ -850,7 +1132,15 @@ func TestDeletePublicIpV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{})
+	secatest.MockGetPublicIpV1(sim, secatest.PublicIpResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.PublicIp1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		Address: secatest.Address1,
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeletePublicIpV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
 

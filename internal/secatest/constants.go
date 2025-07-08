@@ -48,6 +48,7 @@ const (
 	Network1Ref  = "networks/network-1"
 
 	Subnet1Name = "subnet-1"
+	Subnet1Ref  = "subnets/subnet-1"
 
 	RouteTable1Name = "route-table-1"
 	RouteTable1Ref  = "route-tables/route-table-1"
@@ -63,6 +64,10 @@ const (
 	PublicIp1Name = "public-ip-1"
 
 	CidrIpv4 = "0.0.0.0/16"
+
+	Address1 = "0.0.0.0"
+
+	SecurityGroupRuleDirectionIngress = "ingress"
 
 	/// Compute
 	InstanceSku1Ref  = "skus/sku-1"

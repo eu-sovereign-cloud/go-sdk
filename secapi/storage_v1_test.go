@@ -226,7 +226,7 @@ func TestListImages(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockListStorageImagesV1(sim, secatest.ImageResponseV1{
-		Metadata:        secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		Metadata:        secatest.MetadataResponseV1{Name: secatest.Image1Name},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -245,7 +245,7 @@ func TestListImages(t *testing.T) {
 	require.NotEmpty(t, resp)
 
 	require.NotEmpty(t, resp[0].Metadata.Name)
-	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Image1Name, resp[0].Metadata.Name)
 
 	require.NotEmpty(t, resp[0].Spec.BlockStorageRef)
 	assert.Equal(t, secatest.BlockStorage1Ref, resp[0].Spec.BlockStorageRef)
@@ -262,7 +262,7 @@ func TestGetImage(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockGetStorageImageV1(sim, secatest.ImageResponseV1{
-		Metadata:        secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		Metadata:        secatest.MetadataResponseV1{Name: secatest.Image1Name},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -282,7 +282,7 @@ func TestGetImage(t *testing.T) {
 	require.NotNil(t, resp)
 
 	require.NotEmpty(t, resp.Metadata.Name)
-	assert.Equal(t, secatest.StorageSku1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
 
 	require.NotEmpty(t, resp.Spec.BlockStorageRef)
 	assert.Equal(t, secatest.BlockStorage1Ref, resp.Spec.BlockStorageRef)

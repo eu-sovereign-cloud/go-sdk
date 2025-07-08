@@ -1,7 +1,9 @@
 package secatest
 
 type MetadataResponseV1 struct {
-	Name string
+	Name      string
+	Tenant    string
+	Workspace string
 }
 type StatusResponseV1 struct {
 	State string
