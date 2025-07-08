@@ -19,7 +19,9 @@ func MockListRegionsV1(sim *mockregion.MockServerInterface, resp RegionResponseV
 				resp.Providers[i].URL = "http://" + r.Host + resp.Providers[i].URL
 			}
 
-			processTemplate(w, regionsTemplateV1, resp)
+			if err := processTemplate(w, regionsTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 func MockGetRegionV1(sim *mockregion.MockServerInterface, resp RegionResponseV1) {
@@ -31,6 +33,8 @@ func MockGetRegionV1(sim *mockregion.MockServerInterface, resp RegionResponseV1)
 				resp.Providers[i].URL = "http://" + r.Host + resp.Providers[i].URL
 			}
 
-			processTemplate(w, regionResponseTemplateV1, resp)
+			if err := processTemplate(w, regionResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }

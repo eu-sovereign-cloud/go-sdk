@@ -13,13 +13,17 @@ import (
 func MockListInstanceSkusV1(sim *mockcompute.MockServerInterface, resp InstanceSkuResponseV1) {
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, params compute.ListSkusParams) {
-			configGetHttpResponse(w, instanceSkusResponseTemplateV1, resp)
+			if err := configGetHttpResponse(w, instanceSkusResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 func MockGetInstanceSkuV1(sim *mockcompute.MockServerInterface, resp InstanceSkuResponseV1) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, name compute.ResourceName) {
-			configGetHttpResponse(w, instanceSkuResponseTemplateV1, resp)
+			if err := configGetHttpResponse(w, instanceSkuResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 
@@ -27,19 +31,25 @@ func MockGetInstanceSkuV1(sim *mockcompute.MockServerInterface, resp InstanceSku
 func MockListInstancesV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
 	sim.EXPECT().ListInstances(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, params compute.ListInstancesParams) {
-			configGetHttpResponse(w, instancesResponseTemplateV1, resp)
+			if err := configGetHttpResponse(w, instancesResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
 	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName) {
-			configGetHttpResponse(w, instanceResponseTemplateV1, resp)
+			if err := configGetHttpResponse(w, instanceResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
 	sim.EXPECT().CreateOrUpdateInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.Tenant, lwp compute.CreateOrUpdateInstanceParams) {
-			configPutHttpResponse(w, instanceResponseTemplateV1, resp)
+			if err := configPutHttpResponse(w, instanceResponseTemplateV1, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 }
 func MockDeleteInstanceV1(sim *mockcompute.MockServerInterface) {
