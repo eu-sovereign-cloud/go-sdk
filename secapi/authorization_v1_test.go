@@ -41,15 +41,12 @@ func TestListRoles(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	require.NotNil(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.AuthorizationRole1Name, resp[0].Metadata.Name)
 
 	require.Len(t, resp[0].Spec.Permissions, 1)
 	require.Len(t, resp[0].Spec.Permissions[0].Verb, 1)
-	require.NotNil(t, resp[0].Spec.Permissions[0].Verb[0])
 	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
 
-	require.NotNil(t, resp[0].Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
@@ -76,15 +73,12 @@ func TestGetRole(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	require.NotNil(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.AuthorizationRole1Name, resp.Metadata.Name)
 
 	require.Len(t, resp.Spec.Permissions, 1)
 	require.Len(t, resp.Spec.Permissions[0].Verb, 1)
-	require.NotNil(t, resp.Spec.Permissions[0].Verb[0])
 	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
-	require.NotNil(t, resp.Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
@@ -168,13 +162,11 @@ func TestListRoleAssignments(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	require.NotNil(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.AuthorizationRoleAssignment1Name, resp[0].Metadata.Name)
 
 	require.Len(t, resp[0].Spec.Subs, 1)
 	assert.Equal(t, secatest.AuthorizationRoleAssignment1Subject, resp[0].Spec.Subs[0])
 
-	require.NotNil(t, resp[0].Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
@@ -201,13 +193,11 @@ func TestGetRoleAssignment(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	require.NotNil(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.AuthorizationRoleAssignment1Name, resp.Metadata.Name)
 
 	require.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.AuthorizationRoleAssignment1Subject, resp.Spec.Subs[0])
 
-	require.NotNil(t, resp.Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
