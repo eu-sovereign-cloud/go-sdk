@@ -65,40 +65,35 @@ const (
 	CidrIpv4 = "0.0.0.0/16"
 
 	/// Compute
-	InstanceSku1Ref          = "skus/sku-1"
-	InstanceSku1Name         = "sku-1"
-	InstanceSku1Tier         = "D2XS"
-	InstanceSku1VCPU         = 16
-	InstanceSku1RAM          = 32
+	InstanceSku1Ref  = "skus/sku-1"
+	InstanceSku1Name = "sku-1"
+	InstanceSku1Tier = "D2XS"
+	InstanceSku1VCPU = 16
+	InstanceSku1RAM  = 32
 
 	Instance1Ref  = "instances/instance-1"
 	Instance1Name = "instance-1"
 
 	/// Authorization
-	AuthorizationRole1Name = "role-1"
+	Role1Name           = "role-1"
+	Role1PermissionVerb = "get"
 
-	AuthorizationRoleAssignment1Name    = "role-assignment-1"
-	AuthorizationRoleAssignment1Subject = "sub@secapi.com"
-	AuthorizationPermissionVerb         = "get"
+	RoleAssignment1Name    = "role-assignment-1"
+	RoleAssignment1Subject = "sub@secapi.com"
 
 	/// Storage
-	StorageSku1Ref           = "storage/skus-1"
-	StorageSku1Name          = "sku-1"
-	StorageSku1Provider      = "seca"
-	StorageSku1Tier          = "DXS"
-	StorageSku1Iops          = 100
-	StorageSku1MinVolumeSize = 50
-	StorageSku1Type          = "remote-durable"
+	StorageSku1Ref  = "storage/skus-1"
+	StorageSku1Name = "sku-1"
+	StorageSku1Tier = "DXS"
+	StorageSku1Iops = 100
 
-	Storage1Name = "storage-1"
-	Image1Name   = "image-1"
+	BlockStorage1Ref  = "storages/storage-1"
+	BlockStorage1Name = "storage-1"
+
+	Image1Name = "image-1"
 
 	/// Status
-	StatusStateActive    = "active"
-	StatusStateCreating  = "creating"
-	StatusStateDeleting  = "deleting"
-	StatusStateError     = "error"
-	StatusStatePending   = "pending"
-	StatusStateSuspended = "suspended"
-	StatusStateUpdating  = "updating"
+	StatusStateActive   = "active"
+	StatusStateCreating = "creating"
+	StatusStateDeleting = "deleting"
 )

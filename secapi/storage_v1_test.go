@@ -98,7 +98,7 @@ func TestListBlockStorages(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockListBlockStoragesV1(sim, secatest.BlockStorageResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.StorageSku1Name},
+		Metadata: secatest.MetadataResponseV1{Name: secatest.BlockStorage1Name},
 		SkuRef:   secatest.StorageSku1Ref,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -117,7 +117,7 @@ func TestListBlockStorages(t *testing.T) {
 	require.Len(t, resp, 1)
 
 	require.NotEmpty(t, resp[0].Metadata.Name)
-	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.BlockStorage1Name, resp[0].Metadata.Name)
 
 	require.NotEmpty(t, resp[0].Spec.SkuRef)
 	assert.Equal(t, secatest.StorageSku1Ref, resp[0].Spec.SkuRef)
@@ -148,7 +148,7 @@ func TestGetBlockStorage(t *testing.T) {
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Storage1Name,
+		Name:      secatest.BlockStorage1Name,
 	}
 	resp, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
 	require.NoError(t, err)

@@ -22,8 +22,8 @@ func TestListRoles(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockListRolesV1(sim, secatest.RoleResponseV1{
-		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
-		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.Role1Name},
+		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -41,11 +41,11 @@ func TestListRoles(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.AuthorizationRole1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Role1Name, resp[0].Metadata.Name)
 
 	require.Len(t, resp[0].Spec.Permissions, 1)
 	require.Len(t, resp[0].Spec.Permissions[0].Verb, 1)
-	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
+	assert.Equal(t, secatest.Role1PermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
@@ -56,8 +56,8 @@ func TestGetRole(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
-		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
-		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.Role1Name},
+		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -68,16 +68,16 @@ func TestGetRole(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.AuthorizationRole1Name}
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
 	resp, err := client.AuthorizationV1.GetRole(ctx, tref)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.AuthorizationRole1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
 
 	require.Len(t, resp.Spec.Permissions, 1)
 	require.Len(t, resp.Spec.Permissions[0].Verb, 1)
-	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp.Spec.Permissions[0].Verb[0])
+	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
@@ -88,8 +88,8 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateRoleV1(sim, secatest.RoleResponseV1{
-		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
-		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.Role1Name},
+		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -103,7 +103,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	role := authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   secatest.AuthorizationRole1Name,
+			Name:   secatest.Role1Name,
 		},
 	}
 	err = client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
@@ -127,7 +127,7 @@ func TestDeleteRole(t *testing.T) {
 	role := &authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   secatest.AuthorizationRole1Name,
+			Name:   secatest.Role1Name,
 		},
 	}
 	err = client.AuthorizationV1.DeleteRole(ctx, role)
@@ -142,8 +142,8 @@ func TestListRoleAssignments(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockListRoleAssignmentsV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.AuthorizationRoleAssignment1Name},
-		Subject:  secatest.AuthorizationRoleAssignment1Subject,
+		Metadata: secatest.MetadataResponseV1{Name: secatest.RoleAssignment1Name},
+		Subject:  secatest.RoleAssignment1Subject,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -162,10 +162,10 @@ func TestListRoleAssignments(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.AuthorizationRoleAssignment1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.RoleAssignment1Name, resp[0].Metadata.Name)
 
 	require.Len(t, resp[0].Spec.Subs, 1)
-	assert.Equal(t, secatest.AuthorizationRoleAssignment1Subject, resp[0].Spec.Subs[0])
+	assert.Equal(t, secatest.RoleAssignment1Subject, resp[0].Spec.Subs[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
@@ -176,8 +176,8 @@ func TestGetRoleAssignment(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockGetRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.AuthorizationRoleAssignment1Name},
-		Subject:  secatest.AuthorizationRoleAssignment1Subject,
+		Metadata: secatest.MetadataResponseV1{Name: secatest.RoleAssignment1Name},
+		Subject:  secatest.RoleAssignment1Subject,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -188,15 +188,15 @@ func TestGetRoleAssignment(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.AuthorizationRoleAssignment1Name}
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
 	resp, err := client.AuthorizationV1.GetRoleAssignment(ctx, tref)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.AuthorizationRoleAssignment1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
 
 	require.Len(t, resp.Spec.Subs, 1)
-	assert.Equal(t, secatest.AuthorizationRoleAssignment1Subject, resp.Spec.Subs[0])
+	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
@@ -207,8 +207,8 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.AuthorizationRoleAssignment1Name},
-		Subject:  secatest.AuthorizationRoleAssignment1Subject,
+		Metadata: secatest.MetadataResponseV1{Name: secatest.RoleAssignment1Name},
+		Subject:  secatest.RoleAssignment1Subject,
 		Status:   secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
@@ -222,7 +222,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	assign := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   secatest.AuthorizationRoleAssignment1Name,
+			Name:   secatest.RoleAssignment1Name,
 		},
 	}
 	err = client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
@@ -246,7 +246,7 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	assign := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
-			Name:   secatest.AuthorizationRoleAssignment1Name,
+			Name:   secatest.RoleAssignment1Name,
 		},
 	}
 	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, assign)
