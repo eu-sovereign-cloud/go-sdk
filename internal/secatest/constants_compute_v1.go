@@ -9,11 +9,11 @@ const (
 				"metadata": {
 					"name": "{{.Metadata.Name}}"
 				},
-				"spec: {
+				"labels": {
 					"tier": "{{.Tier}}"
 				},
-				"status": {
-					"state": "{{.Status.State}}"
+				"spec": {
+					"vCPU": {{.VCPU}}
 				}
 			}
 		]
@@ -23,12 +23,12 @@ const (
 		"metadata": {
 			"name": "{{.Metadata.Name}}"
 		},
-		"spec": {
+		"labels": {
 			"tier": "{{.Tier}}"
 		},
-		"status": {
-			"state": "{{.Status.State}}"
-		}
+		"spec": {
+			"vCPU": {{.VCPU}}
+		} 
 	}`
 
 	// Instance

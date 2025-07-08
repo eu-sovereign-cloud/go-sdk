@@ -23,7 +23,7 @@ type RoleAssignmentResponseV1 struct {
 type InstanceSkuResponseV1 struct {
 	Metadata MetadataResponseV1
 	Tier     string
-	Status   StatusResponseV1
+	VCPU     int
 }
 type InstanceResponseV1 struct {
 	Metadata MetadataResponseV1
