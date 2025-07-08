@@ -7,13 +7,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec: {
 					"tier": "{{.Tier}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -21,13 +21,13 @@ const (
 	instanceSkuResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"tier": "{{.Tier}}"
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -37,13 +37,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -51,13 +51,13 @@ const (
 	instanceResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )

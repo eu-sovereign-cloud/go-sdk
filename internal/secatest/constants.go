@@ -74,6 +74,7 @@ const (
 	Authorization1Name               = "authorization-1"
 	AuthorizationRole1Name           = "role-1"
 	AuthorizationRoleAssignment1Name = "role-assignment-1"
+	AuthorizationRoleAssignment1Subject = "sub@secapi.com"
 	AuthorizationPermissionVerb      = "get"
 
 	/// Storage
@@ -88,6 +89,11 @@ const (
 	Image1Name   = "image-1"
 
 	/// Status
-	StatusStateActive   = "active"
-	StatusStateCreating = "creating"
+	StatusStateActive    = "active"
+	StatusStateCreating  = "creating"
+	StatusStateDeleting  = "deleting"
+	StatusStateError     = "error"
+	StatusStatePending   = "pending"
+	StatusStateSuspended = "suspended"
+	StatusStateUpdating  = "updating"
 )

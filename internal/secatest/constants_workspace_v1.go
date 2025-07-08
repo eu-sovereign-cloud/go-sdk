@@ -7,7 +7,7 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 				},
@@ -20,7 +20,7 @@ const (
 	workspaceResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 		},

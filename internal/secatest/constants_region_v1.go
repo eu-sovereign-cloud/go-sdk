@@ -7,7 +7,7 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"providers": [
@@ -21,7 +21,7 @@ const (
 					]
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -29,7 +29,7 @@ const (
 	regionResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"providers": [
@@ -43,7 +43,7 @@ const (
 			]
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )

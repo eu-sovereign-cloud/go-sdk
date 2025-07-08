@@ -7,13 +7,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"type": "{{.Type}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -21,13 +21,13 @@ const (
 	storageSkuResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"type": "{{.Type}}"
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -37,13 +37,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -51,12 +51,12 @@ const (
 	blockStorageResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -66,13 +66,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"blockStorageRef": "{{.BlockStorageRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -80,13 +80,13 @@ const (
 	imageResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"blockStorageRef": "{{.BlockStorageRef}}"
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )

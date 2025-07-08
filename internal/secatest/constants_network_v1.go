@@ -7,13 +7,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"bandwidth": {{.Bandwidth}}
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -21,13 +21,13 @@ const (
 	networkSkuResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"bandwidth": {{.Bandwidth}}
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -37,13 +37,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
         			"routeTableRef": "{{.RouteTableRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -51,13 +51,13 @@ const (
 	networkResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"routeTableRef": "{{.RouteTableRef}}"
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -67,13 +67,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -81,13 +81,13 @@ const (
 	subnetResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -97,13 +97,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"localRef": "{{.LocalRef}}"
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -111,13 +111,13 @@ const (
 	routeTableResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"localRef": "{{.LocalRef}}"
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -127,13 +127,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"egressOnly": {{.EgressOnly}}
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -141,13 +141,13 @@ const (
 	internetGatewayResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"egressOnly": {{.EgressOnly}}
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -157,7 +157,7 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"rules": [
@@ -167,7 +167,7 @@ const (
         			]
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -175,7 +175,7 @@ const (
 	securityGroupResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"rules": [
@@ -185,7 +185,7 @@ const (
 			]
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -195,13 +195,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"subnetRef": "{{.SubnetRef}}"
 				},
 				status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -209,13 +209,13 @@ const (
 	nicResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"subnetRef": "{{.SubnetRef}}"
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -225,13 +225,13 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"address": "{{.Address}}"
 				},
 				status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
     	]
@@ -239,13 +239,13 @@ const (
 	publicIpResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"address": "{{.Address}}"
 		},
 		status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )

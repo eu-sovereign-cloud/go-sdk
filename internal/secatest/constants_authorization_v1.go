@@ -8,7 +8,7 @@ const (
 			{
 				"metadata": {
 					"name": "{{.Metadata.Name}}"
-				}
+				},
 				"spec": {
 					"permissions": [
 						{
@@ -25,7 +25,7 @@ const (
 	roleResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"permissions": [
@@ -35,7 +35,7 @@ const (
 			]
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 
@@ -45,13 +45,13 @@ const (
 		"items": [
 			{
 				"metadata": {
-					"name": "{{.Name}}"
+					"name": "{{.Metadata.Name}}"
 				},
 				"spec": {
 					"subs": [ "{{.Subject}}" ]
 				},
 				"status": {
-					"state": "{{.Status}}"
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
@@ -59,13 +59,13 @@ const (
 	roleAssignmentResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Name}}"
+			"name": "{{.Metadata.Name}}"
 		},
 		"spec": {
 			"subs": [ "{{.Subject}}" ]
 		},
 		"status": {
-			"state": "{{.Status}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )
