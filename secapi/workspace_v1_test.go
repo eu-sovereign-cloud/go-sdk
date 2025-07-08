@@ -24,8 +24,11 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	sim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockListWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Workspace1Name},
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Workspace1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -43,6 +46,7 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
 	require.NotEmpty(t, resp[0].Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
@@ -56,8 +60,11 @@ func TestGetWorkspaces(t *testing.T) {
 
 	sim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockGetWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Workspace1Name},
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Workspace1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -66,16 +73,13 @@ func TestGetWorkspaces(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
-	tref := TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Workspace1Name,
-	}
-	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
+	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
 	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 
 	require.NotEmpty(t, resp.Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
@@ -114,6 +118,13 @@ func TestDeleteWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockGetWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Workspace1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
 	secatest.MockDeleteWorkspaceV1(sim)
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -122,13 +133,10 @@ func TestDeleteWorkspace(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
-	ws := &workspace.Workspace{
-		Metadata: &workspace.RegionalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.Workspace1Name,
-		},
-		Spec: workspace.WorkspaceSpec{},
-	}
-	err := regionalClient.WorkspaceV1.DeleteWorkspace(ctx, ws)
+	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp)
 	require.NoError(t, err)
 }
