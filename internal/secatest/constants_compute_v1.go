@@ -1,134 +1,63 @@
 package secatest
 
 const (
-	ListInstancesSkusResponseTemplateV1 = `{
-			"items": [
-				{{- range $i, $d := .Skus }}
-						{{if $i}},{{end}}
-						{
-							"labels": {
-								"provider": "{{$d.Provider}}",
-								"tier": "{{$d.Tier}}",
-								"architecture": "{{$d.Architecture}}"
-							},
-							"metadata": {
-								"name": "{{$d.Provider}}.{{$d.Tier}}"
-							},
-							"spec": {
-								"ram": {{$d.Ram}},
-								"vCPU": {{$d.VCPU}}
-							}
-						}
-						{{- end}}
-			],
-			"metadata": {
-				"provider": "seca.compute/v1",
-				"resource": "tenants/1/skus",
-				"verb": "list"
-			}
-	}`
-
-	GetInstanceSkuResponseTemplateV1 = `
+	// Instance Sku
+	instanceSkusResponseTemplateV1 = `
 	{
-
+		"items": [
+			{
+				"metadata": {
+					"name": "{{.Name}}"
+				},
+				"spec: {
+					"tier": "{{.Tier}}"
+				},
+				"status": {
+					"state": "{{.Status}}"
+				}
+			}
+		]
+	}`
+	instanceSkuResponseTemplateV1 = `
+	{
 		"metadata": {
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"vCPU": {{.VCPU}},
-			"ram": {{.Ram}}
+			"tier": "{{.Tier}}"
+		},
+		"status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
-	ListInstancesResponseV1 = `
-		{
-			"items": [
-				{
-					"extensions": {},
-					"metadata": {
-						"name": "{{.Name}}",
-						"tenant": "{{.Tenant}}",
-						"workspace": "{{.Workspace}}",
-						"region": "{{.Region}}",
-						"zone": "{{.Zone}}",		
-						"provider": "seca.compute/v1",
-						"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-						"verb": "get"
-					},
-					"spec": {
-						"skuRef": "skus/seca.s",
-						"zone": "a",
-						"bootVolume": {
-						"deviceRef": {
-							"provider": "seca.storage/v1",
-							"resource": "block-storages/block-123"
-						},
-						"type": "virtio"
-						}
-					},
-					"status": {
-						"state": "active",
-						"conditions": [
-						{
-							"state": "active",
-							"lastTransitionAt": "2024-11-21T14:39:22Z"
-						}
-						]
-					}
+	// Instance
+	instancesResponseTemplateV1 = `
+	{
+		"items": [
+			{
+				"metadata": {
+					"name": "{{.Name}}"
+				},
+				"spec": {
+					"skuRef": "{{.SkuRef}}"
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
-			],
-			"metadata": {
-				"provider": "seca.compute/v1",
-				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-				"verb": "get"
 			}
-		}`
-	InstancesResponseV1 = `
-		{
-			"items": [
-				{
-					"extensions": {},
-					"metadata": {
-						"name": "{{.Name}}",
-						"tenant": "{{.Tenant}}",
-						"workspace": "{{.Workspace}}",
-						"region": "{{.Region}}",
-						"zone": "{{.Zone}}",		
-						"provider": "seca.compute/v1",
-						"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-						"verb": "get"
-					},
-					"spec": {
-						"skuRef": "skus/seca.s",
-						"zone": "a",
-						"bootVolume": {
-						"deviceRef": {
-							"provider": "seca.storage/v1",
-							"resource": "block-storages/block-123"
-						},
-						"type": "virtio"
-						}
-					},
-					"status": {
-						"state": "active",
-						"conditions": [
-						{
-							"state": "active",
-							"lastTransitionAt": "2024-11-21T14:39:22Z"
-						}
-						]
-					}
-				}
-			],
-			"metadata": {
-				"name": "{{.Name}}",
-				"tenant": "{{.Tenant}}",
-				"workspace": "{{.Workspace}}",
-				"region": "{{.Region}}",
-				"zone": "{{.Zone}}",
-				"provider": "seca.compute/v1",
-				"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-				"verb": "get"
-			}
-		}`
+		]
+	}`
+	instanceResponseTemplateV1 = `
+	{
+		"metadata": {
+			"name": "{{.Name}}"
+		},
+		"spec": {
+			"skuRef": "{{.SkuRef}}"
+		},
+		"status": {
+			"state": "{{.Status}}"
+		}
+	}`
 )

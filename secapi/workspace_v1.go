@@ -3,14 +3,16 @@ package secapi
 import (
 	"context"
 
-	"k8s.io/utils/ptr"
-
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+
+	"k8s.io/utils/ptr"
 )
 
 type WorkspaceV1 struct {
 	workspace workspace.ClientWithResponsesInterface
 }
+
+// Workspace
 
 func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	iter := Iterator[workspace.Workspace]{
@@ -30,6 +32,10 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 }
 
 func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err

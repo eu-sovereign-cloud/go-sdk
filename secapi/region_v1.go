@@ -3,14 +3,16 @@ package secapi
 import (
 	"context"
 
-	"k8s.io/utils/ptr"
-
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+
+	"k8s.io/utils/ptr"
 )
 
 type RegionV1 struct {
 	region region.ClientWithResponsesInterface
 }
+
+// Region
 
 func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region], error) {
 	iter := Iterator[region.Region]{

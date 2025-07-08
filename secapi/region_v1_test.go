@@ -7,32 +7,30 @@ import (
 	"testing"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
-	"github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
+// Region
+
 func TestListRegionsV1(t *testing.T) {
 	ctx := context.Background()
+	sm := http.NewServeMux()
 
 	sim := mockregion.NewMockServerInterface(t)
-	secatest.MockListRegionsV1(sim, secatest.ListRegionsResponseV1{
-		Name: secatest.RegionName,
-		Providers: []secatest.ListRegionsResponseProviderV1{
+	secatest.MockListRegionsV1(sim, secatest.RegionResponseV1{
+		Name: secatest.Region1Name,
+		Providers: []secatest.RegionResponseProviderV1{
 			{
 				Name: secatest.ProviderNetworkName,
 				URL:  secatest.ProviderNetworkEndpoint,
 			},
 		},
 	})
+	secatest.ConfigureRegionHandler(sim, sm)
 
-	sm := http.NewServeMux()
-	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderRegionEndpoint,
-		BaseRouter: sm,
-	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
@@ -44,40 +42,36 @@ func TestListRegionsV1(t *testing.T) {
 
 	region, err := regionIter.All(ctx)
 	require.NoError(t, err)
-
 	require.Len(t, region, 1)
 
-	assert.Equal(t, secatest.RegionName, region[0].Metadata.Name)
+	assert.Equal(t, secatest.Region1Name, region[0].Metadata.Name)
 	assert.Len(t, region[0].Spec.Providers, 1)
 	assert.Equal(t, secatest.ProviderNetworkName, region[0].Spec.Providers[0].Name)
 }
 
 func TestGetRegionV1(t *testing.T) {
 	ctx := context.Background()
+	sm := http.NewServeMux()
 
 	sim := mockregion.NewMockServerInterface(t)
-	secatest.MockGetRegionV1(sim, secatest.GetRegionResponseV1{
-		Name: secatest.RegionName,
-		Providers: []secatest.GetRegionResponseProviderV1{
+	secatest.MockGetRegionV1(sim, secatest.RegionResponseV1{
+		Name: secatest.Region1Name,
+		Providers: []secatest.RegionResponseProviderV1{
 			{
 				Name: secatest.ProviderNetworkName,
 				URL:  secatest.ProviderNetworkEndpoint,
 			},
 		},
 	})
+	secatest.ConfigureRegionHandler(sim, sm)
 
-	sm := http.NewServeMux()
-	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderRegionEndpoint,
-		BaseRouter: sm,
-	})
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
 	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
 	require.NoError(t, err)
 
-	region, err := client.RegionV1.GetRegion(ctx, "test")
+	region, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
 	require.NoError(t, err)
 
 	assert.Len(t, region.Spec.Providers, 1)

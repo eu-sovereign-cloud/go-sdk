@@ -3,14 +3,16 @@ package secapi
 import (
 	"context"
 
-	"k8s.io/utils/ptr"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 
-	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	"k8s.io/utils/ptr"
 )
 
 type StorageV1 struct {
 	storage storage.ClientWithResponsesInterface
 }
+
+// Storage Sku
 
 func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[storage.StorageSku], error) {
 	iter := Iterator[storage.StorageSku]{
@@ -30,6 +32,10 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sto
 }
 
 func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storage.StorageSku, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.storage.GetSkuWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name)
 	if err != nil {
 		return nil, err
@@ -37,6 +43,8 @@ func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storag
 
 	return resp.JSON200, nil
 }
+
+// Block Storage
 
 func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.BlockStorage], error) {
 	iter := Iterator[storage.BlockStorage]{
@@ -56,6 +64,10 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 }
 
 func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*storage.BlockStorage, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.storage.GetBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -103,6 +115,8 @@ func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.Blo
 	return nil
 }
 
+// Image
+
 func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[storage.Image], error) {
 	iter := Iterator[storage.Image]{
 		fn: func(ctx context.Context, skipToken *string) ([]storage.Image, *string, error) {
@@ -121,6 +135,10 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 }
 
 func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*storage.Image, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.storage.GetImageWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name)
 	if err != nil {
 		return nil, err

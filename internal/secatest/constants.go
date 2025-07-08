@@ -9,6 +9,9 @@ const (
 	ProviderRegionName     = "seca.region/v1"
 	ProviderRegionEndpoint = "/providers/seca.regions"
 
+	ProviderAuthorizationName     = "seca.authorization"
+	ProviderAuthorizationEndpoint = "/providers/seca.authorization"
+
 	ProviderWorkspaceName     = "seca.workspace"
 	ProviderWorkspaceEndpoint = "/providers/seca.workspace"
 
@@ -21,22 +24,18 @@ const (
 	ProviderStorageName     = "seca.storage"
 	ProviderStorageEndpoint = "/providers/seca.storage"
 
-	ProviderAuthorizationName     = "seca.authorization"
-	ProviderAuthorizationEndpoint = "/providers/seca.authorization"
-
 	// Test Data
 
-	// Metadata
+	/// Metadata
 	Tenant1Name = "tenant-1"
 
 	Workspace1Name = "woskpace-1"
 
-	RegionName  = "eu-central-1"
 	Region1Name = "region-1"
 
 	ZoneA = "a"
 
-	// Network
+	/// Network
 	NetworkSku1Name = "sku-1"
 	NetworkSku1Ref  = "skus/sku-1"
 
@@ -50,7 +49,9 @@ const (
 
 	InternetGateway1Name = "internet-gateway-1"
 
-	SecurityGroup1Name = "security-group-1"
+	SecurityGroup1Name     = "security-group-1"
+	SecurityGroup1PortFrom = 80
+	SecurityGroup1PortTo   = 80
 
 	Nic1Name = "nic-1"
 
@@ -58,20 +59,35 @@ const (
 
 	CidrIpv4 = "0.0.0.0/16"
 
-	// Compute
+	/// Compute
+	InstanceSku1Name         = "sku-1"
+	InstanceSku1Provider     = "seca"
+	InstanceSku1Tier         = "D2XS"
+	InstanceSku1VCPU         = 16
+	InstanceSku1Ram          = 32
+	InstanceSku1Architecture = "amd64"
+
 	Instance1Ref  = "instances/instance-1"
 	Instance1Name = "instance-1"
 
-	// Authorization
+	/// Authorization
 	Authorization1Name               = "authorization-1"
 	AuthorizationRole1Name           = "role-1"
 	AuthorizationRoleAssignment1Name = "role-assignment-1"
+	AuthorizationPermissionVerb      = "get"
 
-	// Storage
+	/// Storage
+	StorageSku1Name          = "sku-1"
+	StorageSku1Provider      = "seca"
+	StorageSku1Tier          = "DXS"
+	StorageSku1Iops          = 100
+	StorageSku1MinVolumeSize = 50
+	StorageSku1Type          = "remote-durable"
+
 	Storage1Name = "storage-1"
 	Image1Name   = "image-1"
 
-	// Workspace
-	State1Active   = "active"
-	State1Creating = "creating"
+	/// Status
+	StatusStateActive   = "active"
+	StatusStateCreating = "creating"
 )

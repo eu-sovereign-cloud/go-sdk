@@ -6,20 +6,51 @@ import (
 	"text/template"
 )
 
-func processTemplateResponse(w http.ResponseWriter, name string, data any) {
+func processTemplate(w http.ResponseWriter, name string, data any) error {
 	tmpl := template.Must(template.New("response").Parse(name))
 
 	var buffer bytes.Buffer
-	_ = tmpl.Execute(&buffer, data)
-	_, _ = w.Write(buffer.Bytes())
+	if err := tmpl.Execute(&buffer, data); err != nil {
+		return err;
+	}
+
+	_, err  := w.Write(buffer.Bytes())
+	if err != nil {
+		return err;
+	}
+
+	return nil
 }
 
-func configMockResponse(w http.ResponseWriter, statusCode int) {
+func configHttpResponse(w http.ResponseWriter, statusCode int) {
 	w.Header().Set(ContentTypeHeader, ContentTypeJSON)
 	w.WriteHeader(statusCode)
 }
 
-func configTemplateMockResponse(w http.ResponseWriter, statusCode int, template string, data any) {
-	configMockResponse(w, statusCode)
-	processTemplateResponse(w, template, data)
+func configGetHttpResponse(w http.ResponseWriter, template string, data any) error {
+	configHttpResponse(w, http.StatusOK)
+	
+	if err := processTemplate(w, template, data); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func configPutHttpResponse(w http.ResponseWriter, template string, data any) error {
+	configHttpResponse(w, http.StatusOK)
+
+	if err := processTemplate(w, template, data); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func configPostHttpResponse(w http.ResponseWriter) {
+	configHttpResponse(w, http.StatusAccepted)
+}
+
+func configDeleteHttpResponse(w http.ResponseWriter) {
+	configHttpResponse(w, http.StatusAccepted)
 }

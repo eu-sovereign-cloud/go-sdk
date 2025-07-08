@@ -1,315 +1,251 @@
 package secatest
 
 const (
-	// Sku
-	networkSkusResponseV1 = `
+	// Network Sku
+	networkSkusResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"bandwidth": 1000,
-					"packets": 10000
+					"bandwidth": {{.Bandwidth}}
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	networkSkuResponseV1 = `
+	networkSkuResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"bandwidth": 1000,
-			"packets": 10000
+			"bandwidth": {{.Bandwidth}}
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Network
-	networksResponseV1 = `
+	networksResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"skuRef": "skus/sku-1",
-        			"routeTableRef": "route-tables/route-table-1",
-        			"cidr": {
-          				"ipv4": "0.0.0.0/16",
-          				"ipv6": "::/56"
-        			}
+        			"routeTableRef": "{{.RouteTableRef}}"
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	networkResponseV1 = `
+	networkResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"skuRef": "skus/sku-1",
-			"routeTableRef": "route-tables/route-table-1",
-			"cidr": {
-				"ipv4": "0.0.0.0/16",
-				"ipv6": "::/56"
-			}
-		}	
+			"routeTableRef": "{{.RouteTableRef}}"
+		},
+		status": {
+			"state": "{{.Status}}"
+		}
 	}`
 
 	// Subnet
-	subnetsResponseV1 = `
+	subnetsResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"cidr": {
-						"ipv4": "0.0.0.0/24",
-						"ipv6": "::/64"
-					},
-					"zone": "a",
-					"skuRef": "skus/sku-1",
-					"routeTableRef": "route-tables/route-table-1"
+					"skuRef": "{{.SkuRef}}"
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	subnetResponseV1 = `
+	subnetResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"cidr": {
-				"ipv4": "0.0.0.0/24",
-				"ipv6": "::/64"
-			},
-			"zone": "a",
-			"skuRef": "skus/sku-1",
-			"routeTableRef": "route-tables/route-table-1"
+			"skuRef": "{{.SkuRef}}"
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Route Table
-	routeTablesResponseV1 = `
+	routeTablesResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"localRef": "networks/network-1",
-					"routes": [
-						{
-							"destinationCidrBlock": "0.0.0.0/0",
-							"targetRef": "internet-gateways/internet-gateway-1"
-						},
-						{
-							"destinationCidrBlock": "::/0",
-							"targetRef": "internet-gateways/internet-gateway-1"
-						}
-					]
+					"localRef": "{{.LocalRef}}"
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	routeTableResponseV1 = `
+	routeTableResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"localRef": "networks/network-1",
-			"routes": [
-				{
-					"destinationCidrBlock": "0.0.0.0/0",
-					"targetRef": "internet-gateways/internet-gateway-1"
-				},
-				{
-					"destinationCidrBlock": "::/0",
-					"targetRef": "internet-gateways/internet-gateway-1"
-				}
-			]
+			"localRef": "{{.LocalRef}}"
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Internet Gateway
-	internetGatewaysResponseV1 = `
+	internetGatewaysResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"egressOnly": false
+					"egressOnly": {{.EgressOnly}}
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	internetGatewayResponseV1 = `
+	internetGatewayResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"egressOnly": false
+			"egressOnly": {{.EgressOnly}}
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Security Group
-	securityGroupsResponseV1 = `
+	securityGroupsResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
 					"rules": [
           				{
-							"direction": "ingress",
-							"protocol": "tcp",
-							"ports": {
-								"list": [80, 443]
-							}
+							"direction": "{{.RuleDirection}}"
           				}
         			]
+				},
+				"status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	securityGroupResponseV1 = `
+	securityGroupResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
 			"rules": [
 				{
-					"direction": "ingress",
-					"protocol": "tcp",
-					"ports": {
-						"list": [80, 443]
-					}
+					"direction": "{{.RuleDirection}}"
 				}
 			]
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Nic
-	nicsResponseV1 = `
+	nicsResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"addresses": [
-						"10.0.0.1",
-						"0.0.0.0",
-						"::"
-					],
-					"skuRef": "skus/sku-1",
-					"subnetRef": "seca.networks/subnet-1"
+					"subnetRef": "{{.SubnetRef}}"
+				},
+				status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	nicResponseV1 = `
+	nicResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"addresses": [
-				"10.0.0.1",
-				"0.0.0.0",
-				"::"
-			],
-			"skuRef": "skus/sku-1",
-			"subnetRef": "seca.networks/subnet-1"
+			"subnetRef": "{{.SubnetRef}}"
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 
 	// Public Ip
-	publicIpsResponseV1 = `
+	publicIpsResponseTemplateV1 = `
 	{
 		"items": [
         	{
 				"metadata": {
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"version": "IPv4",
-					"address": "10.0.0.1"
+					"address": "{{.Address}}"
+				},
+				status": {
+					"state": "{{.Status}}"
 				}
 			}
-    	],
-    	"metadata": {
-    	}
+    	]
 	}`
-	publicIpResponseV1 = `
+	publicIpResponseTemplateV1 = `
 	{
 		"metadata": {
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"version": "IPv4",
-			"address": "10.0.0.1"
+			"address": "{{.Address}}"
+		},
+		status": {
+			"state": "{{.Status}}"
 		}
 	}`
 )

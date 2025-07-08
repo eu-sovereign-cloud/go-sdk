@@ -3,14 +3,16 @@ package secapi
 import (
 	"context"
 
-	"k8s.io/utils/ptr"
-
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+
+	"k8s.io/utils/ptr"
 )
 
 type ComputeV1 struct {
 	compute compute.ClientWithResponsesInterface
 }
+
+// Instance Sku
 
 func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[compute.InstanceSku], error) {
 	iter := Iterator[compute.InstanceSku]{
@@ -30,6 +32,10 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[com
 }
 
 func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*compute.InstanceSku, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.compute.GetSkuWithResponse(ctx, compute.Tenant(tref.Tenant), tref.Name)
 	if err != nil {
 		return nil, err
@@ -37,6 +43,8 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*comput
 
 	return resp.JSON200, nil
 }
+
+// Instance
 
 func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
 	iter := Iterator[compute.Instance]{
@@ -56,6 +64,10 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name)
 	if err != nil {
 		return nil, err
@@ -174,12 +186,12 @@ func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {
 		return ErrNoMetatada
 	}
 
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
 	if metadata.Tenant == "" {
 		return ErrNoMetatadaTenant
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
 	}
 
 	return nil

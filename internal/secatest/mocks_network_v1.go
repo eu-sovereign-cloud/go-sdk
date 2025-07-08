@@ -9,198 +9,198 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// Sku
-func MockListSkusV1(sim *mocknetwork.MockServerInterface, resp NetworkSkusResponseV1) {
+// Network Sku
+func MockListNetworkSkusV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, params network.ListSkusParams) {
-			configTemplateMockResponse(w, http.StatusOK, networkSkusResponseV1, resp)
+			configGetHttpResponse(w, networkSkusResponseTemplateV1, resp)
 		})
 }
-func MockGetSkuV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
+func MockGetNetworkSkuV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, networkSkuResponseV1, resp)
+			configGetHttpResponse(w, networkSkuResponseTemplateV1, resp)
 		})
 }
 
 // Network
-func MockListNetworksV1(sim *mocknetwork.MockServerInterface, resp NetworksResponseV1) {
+func MockListNetworksV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
 	sim.EXPECT().ListNetworks(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListNetworksParams) {
-			configTemplateMockResponse(w, http.StatusOK, networksResponseV1, resp)
+			configGetHttpResponse(w, networksResponseTemplateV1, resp)
 		})
 }
 func MockGetNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
 	sim.EXPECT().GetNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, networkResponseV1, resp)
+			configGetHttpResponse(w, networkResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
 	sim.EXPECT().CreateOrUpdateNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNetworkParams) {
-			configTemplateMockResponse(w, http.StatusCreated, networkResponseV1, resp)
+			configPutHttpResponse(w, networkResponseTemplateV1, resp)
 		})
 }
 func MockDeleteNetworkV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteNetworkParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Subnet
-func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetsResponseV1) {
+func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
 	sim.EXPECT().ListSubnets(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListSubnetsParams) {
-			configTemplateMockResponse(w, http.StatusOK, subnetsResponseV1, resp)
+			configGetHttpResponse(w, subnetsResponseTemplateV1, resp)
 		})
 }
 func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
 	sim.EXPECT().GetSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, subnetResponseV1, resp)
+			configGetHttpResponse(w, subnetResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
 	sim.EXPECT().CreateOrUpdateSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSubnetParams) {
-			configTemplateMockResponse(w, http.StatusCreated, subnetResponseV1, resp)
+			configPutHttpResponse(w, subnetResponseTemplateV1, resp)
 		})
 }
 func MockDeleteSubnetV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSubnetParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Route Table
-func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTablesResponseV1) {
+func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
 	sim.EXPECT().ListRouteTables(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListRouteTablesParams) {
-			configTemplateMockResponse(w, http.StatusOK, routeTablesResponseV1, resp)
+			configGetHttpResponse(w, routeTablesResponseTemplateV1, resp)
 		})
 }
 func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
 	sim.EXPECT().GetRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, routeTableResponseV1, resp)
+			configGetHttpResponse(w, routeTableResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
 	sim.EXPECT().CreateOrUpdateRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateRouteTableParams) {
-			configTemplateMockResponse(w, http.StatusCreated, routeTableResponseV1, resp)
+			configPutHttpResponse(w, routeTableResponseTemplateV1, resp)
 		})
 }
 func MockDeleteRouteTableV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteRouteTableParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Internet Gateway
-func MockListInternetGatewaysV1(sim *mocknetwork.MockServerInterface, resp InternetGatewaysResponseV1) {
+func MockListInternetGatewaysV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
 	sim.EXPECT().ListInternetGateways(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListInternetGatewaysParams) {
-			configTemplateMockResponse(w, http.StatusOK, internetGatewaysResponseV1, resp)
+			configGetHttpResponse(w, internetGatewaysResponseTemplateV1, resp)
 		})
 }
 func MockGetInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
 	sim.EXPECT().GetInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, internetGatewayResponseV1, resp)
+			configGetHttpResponse(w, internetGatewayResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
 	sim.EXPECT().CreateOrUpdateInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateInternetGatewayParams) {
-			configTemplateMockResponse(w, http.StatusCreated, internetGatewayResponseV1, resp)
+			configPutHttpResponse(w, internetGatewayResponseTemplateV1, resp)
 		})
 }
 func MockDeleteInternetGatewayV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteInternetGatewayParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Security Group
-func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupsResponseV1) {
+func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
 	sim.EXPECT().ListSecurityGroups(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListSecurityGroupsParams) {
-			configTemplateMockResponse(w, http.StatusOK, securityGroupsResponseV1, resp)
+			configGetHttpResponse(w, securityGroupsResponseTemplateV1, resp)
 		})
 }
 func MockGetSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
 	sim.EXPECT().GetSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, securityGroupResponseV1, resp)
+			configGetHttpResponse(w, securityGroupResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
 	sim.EXPECT().CreateOrUpdateSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSecurityGroupParams) {
-			configTemplateMockResponse(w, http.StatusCreated, securityGroupResponseV1, resp)
+			configPutHttpResponse(w, securityGroupResponseTemplateV1, resp)
 		})
 }
 func MockDeleteSecurityGroupV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSecurityGroupParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Nic
-func MockListNicsV1(sim *mocknetwork.MockServerInterface, resp NicsResponseV1) {
+func MockListNicsV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 	sim.EXPECT().ListNics(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListNicsParams) {
-			configTemplateMockResponse(w, http.StatusOK, nicsResponseV1, resp)
+			configGetHttpResponse(w, nicsResponseTemplateV1, resp)
 		})
 }
 func MockGetNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 	sim.EXPECT().GetNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, nicResponseV1, resp)
+			configGetHttpResponse(w, nicResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdateNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 	sim.EXPECT().CreateOrUpdateNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNicParams) {
-			configTemplateMockResponse(w, http.StatusCreated, nicResponseV1, resp)
+			configPutHttpResponse(w, nicResponseTemplateV1, resp)
 		})
 }
 func MockDeleteNicV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteNicParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }
 
 // Public Ip
-func MockListPublicIpsV1(sim *mocknetwork.MockServerInterface, resp PublicIpsResponseV1) {
+func MockListPublicIpsV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
 	sim.EXPECT().ListPublicIps(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListPublicIpsParams) {
-			configTemplateMockResponse(w, http.StatusOK, publicIpsResponseV1, resp)
+			configGetHttpResponse(w, publicIpsResponseTemplateV1, resp)
 		})
 }
 func MockGetPublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
 	sim.EXPECT().GetPublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			configTemplateMockResponse(w, http.StatusOK, publicIpResponseV1, resp)
+			configGetHttpResponse(w, publicIpResponseTemplateV1, resp)
 		})
 }
 func MockCreateOrUpdatePublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
 	sim.EXPECT().CreateOrUpdatePublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace, name string, params network.CreateOrUpdatePublicIpParams) {
-			configTemplateMockResponse(w, http.StatusCreated, publicIpResponseV1, resp)
+			configPutHttpResponse(w, publicIpResponseTemplateV1, resp)
 		})
 }
 func MockDeletePublicIpV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeletePublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace, name string, params network.DeletePublicIpParams) {
-			configMockResponse(w, http.StatusAccepted)
+			configDeleteHttpResponse(w)
 		})
 }

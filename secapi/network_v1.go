@@ -4,14 +4,16 @@ import (
 	"context"
 	"net/http"
 
-	"k8s.io/utils/ptr"
+	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	"k8s.io/utils/ptr"
 )
 
 type NetworkV1 struct {
 	network network.ClientWithResponsesInterface
 }
+
+// Network Sku
 
 func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[network.NetworkSku], error) {
 	iter := Iterator[network.NetworkSku]{
@@ -43,6 +45,8 @@ func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*networ
 	return resp.JSON200, nil
 }
 
+// Network
+
 func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Network], error) {
 	iter := Iterator[network.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Network, *string, error) {
@@ -73,8 +77,8 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network) (*network.Network, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Network) (*network.Network, error) {
+	if err := validateNetworkRegionalMetadataV1(net.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -116,6 +120,8 @@ func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) e
 	return nil
 }
 
+// Subnet
+
 func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Subnet], error) {
 	iter := Iterator[network.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Subnet, *string, error) {
@@ -146,12 +152,12 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet) (*network.Subnet, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Subnet) (*network.Subnet, error) {
+	if err := validateNetworkZonalMetadataV1(sub.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name,
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name,
 		&network.CreateOrUpdateSubnetParams{
 			IfUnmodifiedSince: &sub.Metadata.ResourceVersion,
 		}, *sub)
@@ -189,6 +195,8 @@ func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) err
 	return nil
 }
 
+// Route Table
+
 func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.RouteTable], error) {
 	iter := Iterator[network.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.RouteTable, *string, error) {
@@ -219,8 +227,8 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable) (*network.RouteTable, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *network.RouteTable) (*network.RouteTable, error) {
+	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -262,6 +270,8 @@ func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.Route
 	return nil
 }
 
+// Internet Gateway
+
 func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.InternetGateway], error) {
 	iter := Iterator[network.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.InternetGateway, *string, error) {
@@ -292,12 +302,12 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway) (*network.InternetGateway, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *network.InternetGateway) (*network.InternetGateway, error) {
+	if err := validateNetworkRegionalMetadataV1(gtw.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name,
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name,
 		&network.CreateOrUpdateInternetGatewayParams{
 			IfUnmodifiedSince: &gtw.Metadata.ResourceVersion,
 		}, *gtw)
@@ -335,6 +345,8 @@ func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.In
 	return nil
 }
 
+// Security Group
+
 func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.SecurityGroup], error) {
 	iter := Iterator[network.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.SecurityGroup, *string, error) {
@@ -365,8 +377,8 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup) (*network.SecurityGroup, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *network.SecurityGroup) (*network.SecurityGroup, error) {
+	if err := validateNetworkRegionalMetadataV1(group.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -408,6 +420,8 @@ func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.Se
 	return nil
 }
 
+// Nic
+
 func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Nic], error) {
 	iter := Iterator[network.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Nic, *string, error) {
@@ -438,8 +452,8 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic) (*network.Nic, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) (*network.Nic, error) {
+	if err := validateNetworkZonalMetadataV1(nic.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -481,6 +495,8 @@ func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
 	return nil
 }
 
+// Public Ip
+
 func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.PublicIp], error) {
 	iter := Iterator[network.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.PublicIp, *string, error) {
@@ -499,6 +515,8 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*network.PublicIp, error) {
+
+	
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -511,8 +529,8 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	return resp.JSON200, nil
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp) (*network.PublicIp, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.PublicIp) (*network.PublicIp, error) {
+	if err := validateNetworkRegionalMetadataV1(ip.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -568,12 +586,12 @@ func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) err
 		return ErrNoMetatada
 	}
 
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
+	if metadata.Tenant == "" {
+		return ErrNoMetatadaTenant		
 	}
 
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
 	}
 
 	return nil
@@ -584,12 +602,12 @@ func validateNetworkRegionalMetadataV1(metadata *network.RegionalResourceMetadat
 		return ErrNoMetatada
 	}
 
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
 	if metadata.Tenant == "" {
 		return ErrNoMetatadaTenant
+	}
+
+	if metadata.Workspace == nil {
+		return ErrNoMetatadaWorkspace
 	}
 
 	return nil

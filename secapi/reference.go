@@ -15,26 +15,24 @@ type TenantReference struct {
 }
 
 type WorkspaceReference struct {
-	Tenant TenantID	
+	Tenant    TenantID
 	Workspace WorkspaceID
-	Name   string
+	Name      string
 }
 
 func validateTenantReference(tref TenantReference) error {
-
 	if tref.Tenant == "" {
 		return ErrNoMetatadaTenant
 	}
 
 	if tref.Name == "" {
 		return ErrNoMetatadaName
-	}	
+	}
 
 	return nil
 }
 
 func validateWorkspaceReference(wref WorkspaceReference) error {
-
 	if wref.Tenant == "" {
 		return ErrNoMetatadaTenant
 	}
@@ -45,7 +43,7 @@ func validateWorkspaceReference(wref WorkspaceReference) error {
 
 	if wref.Name == "" {
 		return ErrNoMetatadaName
-	}	
+	}
 
 	return nil
 }

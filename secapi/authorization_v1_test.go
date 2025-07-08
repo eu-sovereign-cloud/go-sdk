@@ -7,27 +7,26 @@ import (
 	"testing"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
-	mockAuthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
-
+	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
+// Role
+
 func TestListRoles(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockListRolesV1(authSim, secatest.NameAndTenantResponseV1{
-		Name:   secatest.AuthorizationRole1Name,
-		Tenant: secatest.Tenant1Name})
-
 	sm := http.NewServeMux()
 
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockListRolesV1(sim, secatest.RoleResponseV1{
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
+		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -35,30 +34,29 @@ func TestListRoles(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	authIter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
+	respIter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
 
-	auth, err := authIter.All(ctx)
+	resp, err := respIter.All(ctx)
 	require.NoError(t, err)
+	require.Len(t, resp, 1)
 
-	require.Len(t, auth, 1)
-	assert.Equal(t, secatest.AuthorizationRole1Name, auth[0].Metadata.Name)
+	assert.Equal(t, secatest.AuthorizationRole1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp[0].Spec.Permissions[0].Verb)
+	assert.Equal(t, secatest.StatusStateActive, resp[0].Status.State)
 }
 
 func TestGetRole(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-
-	secatest.MockGetRoleV1(authSim, secatest.NameAndTenantResponseV1{
-		Name:   secatest.AuthorizationRole1Name,
-		Tenant: secatest.Tenant1Name})
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
+		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -67,36 +65,33 @@ func TestGetRole(t *testing.T) {
 	require.NoError(t, err)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.AuthorizationRole1Name}
-	role, err := client.AuthorizationV1.GetRole(ctx, tref)
+	resp, err := client.AuthorizationV1.GetRole(ctx, tref)
 	require.NoError(t, err)
-	require.NotNil(t, role)
+	require.NotNil(t, resp)
 
-	assert.Equal(t, secatest.AuthorizationRole1Name, role.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, role.Metadata.Tenant)
-
+	assert.Equal(t, secatest.AuthorizationRole1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.AuthorizationPermissionVerb, resp.Spec.Permissions[0].Verb)
+	assert.Equal(t, secatest.StatusStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateRole(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-
-	secatest.MockCreateOrUpdateRoleV1(authSim, secatest.NameAndTenantResponseV1{
-		Name:   secatest.AuthorizationRole1Name,
-		Tenant: secatest.Tenant1Name,
-	})
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockCreateOrUpdateRoleV1(sim, secatest.RoleResponseV1{
+		Metadata:       secatest.MetadataResponseV1{Name: secatest.AuthorizationRole1Name},
+		PermissionVerb: secatest.AuthorizationPermissionVerb,
+		Status:         secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
+
 	role := authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
@@ -106,17 +101,14 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	err = client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
 	require.NoError(t, err)
 }
+
 func TestDeleteRole(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockDeleteRoleV1(authSim)
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
-	})
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockDeleteRoleV1(sim)
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -135,22 +127,16 @@ func TestDeleteRole(t *testing.T) {
 	require.NoError(t, err)
 }
 
+// Role Assignment
+
 func TestListRoleAssignments(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-
-	secatest.MockListRoleAssignmentsV1(authSim, secatest.RoleAssignmentResponseV1{
-		Tenant:    secatest.Tenant1Name,
-		Region:    secatest.Region1Name,
-		Workspace: secatest.Workspace1Name,
-	})
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockListRoleAssignmentsV1(sim, secatest.RoleAssignmentResponseV1{
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -167,27 +153,17 @@ func TestListRoleAssignments(t *testing.T) {
 	require.Len(t, assignments, 1)
 
 	assert.Equal(t, secatest.Tenant1Name, assignments[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Network1Name, assignments[0].Metadata.Name)
-
+	assert.Equal(t, secatest.AuthorizationRoleAssignment1Name, assignments[0].Metadata.Name)
 }
 
 func TestGetRoleAssignment(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-
-	secatest.MockGetRoleAssignmentV1(authSim, secatest.RoleAssignmentResponseV1{
-		Tenant:    secatest.Tenant1Name,
-		Name:      secatest.AuthorizationRoleAssignment1Name,
-		Region:    secatest.Region1Name,
-		Workspace: secatest.Workspace1Name,
-	})
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockGetRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -206,20 +182,12 @@ func TestGetRoleAssignment(t *testing.T) {
 
 func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRoleAssignmentV1(authSim, secatest.RoleAssignmentResponseV1{
-		Tenant:    secatest.Tenant1Name,
-		Name:      secatest.AuthorizationRoleAssignment1Name,
-		Region:    secatest.Region1Name,
-		Workspace: secatest.Workspace1Name,
-	})
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockCreateOrUpdateRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
 	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
@@ -239,15 +207,11 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 func TestDeleteRoleAssignment(t *testing.T) {
 	ctx := context.Background()
-
-	authSim := mockAuthorization.NewMockServerInterface(t)
-	secatest.MockDeleteRoleAssignmentV1(authSim)
-
 	sm := http.NewServeMux()
-	authorization.HandlerWithOptions(authSim, authorization.StdHTTPServerOptions{
-		BaseURL:    secatest.ProviderAuthorizationEndpoint,
-		BaseRouter: sm,
-	})
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockDeleteRoleAssignmentV1(sim)
+	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()

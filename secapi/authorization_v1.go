@@ -3,14 +3,16 @@ package secapi
 import (
 	"context"
 
-	"k8s.io/utils/ptr"
+	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+	"k8s.io/utils/ptr"
 )
 
 type AuthorizationV1 struct {
 	authorization authorization.ClientWithResponsesInterface
 }
+
+// Role
 
 func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
 	iter := Iterator[authorization.Role]{
@@ -30,6 +32,10 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 }
 
 func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (*authorization.Role, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err
@@ -77,6 +83,8 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 	return nil
 }
 
+// Role Assignment
+
 func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[authorization.RoleAssignment], error) {
 	iter := Iterator[authorization.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.RoleAssignment, *string, error) {
@@ -95,6 +103,10 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 }
 
 func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantReference) (*authorization.RoleAssignment, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
+
 	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
 	if err != nil {
 		return nil, err

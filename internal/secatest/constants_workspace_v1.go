@@ -1,59 +1,31 @@
 package secatest
 
 const (
-	// Response Templates
-
-	ItemsWorkspaceResponseV1 = `
+	// Workspace
+	workspacesResponseTemplateV1 = `
 	{
 		"items": [
 			{
-				"apiVersion": "v1",
-				"kind": "workspace",
 				"metadata": {
-					"name": "{{.Name}}",
-					"tenant": "{{.Tenant}}",
-					"workspace": "{{.Workspace}}",
-					"region": "{{.Region}}"
+					"name": "{{.Name}}"
 				},
-				"spec": {},
+				"spec": {
+				},
 				"status": {
 					"state": "{{.State}}",
-					"conditions": [
-						{
-							"status": "Ready"
-						}
-					]
-				},
-				"resourcesCount": 1
-			}
-		],
-		"metadata": {
-		    "provider": "seca.compute/v1",
-    		"resource": "tenants/1/workspaces/ws-1/instances/my-server",
-    		"verb": "get"
-		}
-	}`
-
-	WorkspaceResponseV1 = `
-	{
-
-		"metadata": {
-			"name": "{{.Name}}",
-			"tenant": "{{.Tenant}}",
-			"workspace": "{{.Workspace}}",
-			"region": "{{.Region}}",
-			"apiVersion": "v1",
-			"kind": "workspace"
-		},
-		"spec": {},
-		"status": {
-			"state": "{{.State}}",
-			"conditions": [
-				{
-					"status": "Ready"
 				}
-			]
+			}
+		]
+	}`
+	workspaceResponseTemplateV1 = `
+	{
+		"metadata": {
+			"name": "{{.Name}}"
 		},
-		"resourcesCount": 1
+		"spec": {
+		},
+		"status": {
+			"state": "{{.State}}"
+		}
 	}`
 )

@@ -1,19 +1,15 @@
 package secatest
 
 const (
-	// Response Templates
-
-	ListRegionsResponseTemplateV1 = `
+	// Region
+	regionsTemplateV1 = `
 	{
 		"items": [
 			{
 				"metadata": {
-					"apiVersion": "v1",
-					"kind": "region",
 					"name": "{{.Name}}"
 				},
 				"spec": {
-					"availableZones": [ "A", "B" ],
 					"providers": [
 						{{- range $i, $p := .Providers }}
 						{{if $i}},{{end}}
@@ -25,24 +21,17 @@ const (
 					]
 				},
 				"status": {
-					"conditions": [ { "status": "Ready" } ]
+					"state": "{{.Status}}"
 				}
 			}
-		],
-		"metadata": {
-			"skipToken": null
-		}
+		]
 	}`
-
-	GetRegionResponseTemplateV1 = `
+	regionResponseTemplateV1 = `
 	{
 		"metadata": {
-			"apiVersion": "v1",
-			"kind": "region",
 			"name": "{{.Name}}"
 		},
 		"spec": {
-			"availableZones": [ "A", "B" ],
 			"providers": [
 				{{- range $i, $p := .Providers }}
 				{{if $i}},{{end}}
@@ -54,7 +43,7 @@ const (
 			]
 		},
 		"status": {
-			"conditions": [ { "status": "Ready" } ]
+			"state": "{{.Status}}"
 		}
 	}`
 )
