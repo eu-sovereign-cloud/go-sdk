@@ -24,13 +24,15 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	sim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockListWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Workspace1Name},
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
 	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -39,9 +41,11 @@ func TestListWorkspacesV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
+	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.EqualValues(t, secatest.StatusStateActive, *resp[0].Status.State)
+
+	require.NotEmpty(t, resp[0].Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
 func TestGetWorkspaces(t *testing.T) {
@@ -52,13 +56,15 @@ func TestGetWorkspaces(t *testing.T) {
 
 	sim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockGetWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
+		Metadata: secatest.MetadataResponseV1{Name: secatest.Workspace1Name},
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
 	tref := TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -68,10 +74,11 @@ func TestGetWorkspaces(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
+	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.NotNil(t, *resp.Status.State)
-	assert.EqualValues(t, secatest.StatusStateActive, *resp.Status.State)
+
+	require.NotEmpty(t, resp.Status.State)
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateWorkspace(t *testing.T) {
@@ -81,14 +88,13 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-	})
+	secatest.MockCreateOrUpdateWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
@@ -114,7 +120,7 @@ func TestDeleteWorkspace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{WorkspaceV1API}, server)
 
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{

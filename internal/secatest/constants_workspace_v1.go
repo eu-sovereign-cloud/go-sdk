@@ -12,11 +12,12 @@ const (
 				"spec": {
 				},
 				"status": {
-					"state": "{{.State}}",
+					"state": "{{.Status.State}}"
 				}
 			}
 		]
 	}`
+
 	workspaceResponseTemplateV1 = `
 	{
 		"metadata": {
@@ -25,7 +26,7 @@ const (
 		"spec": {
 		},
 		"status": {
-			"state": "{{.State}}"
+			"state": "{{.Status.State}}"
 		}
 	}`
 )
