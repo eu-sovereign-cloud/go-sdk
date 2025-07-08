@@ -135,7 +135,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	network := &network.Network{
+	net := &network.Network{
 		Metadata: &network.RegionalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
@@ -147,7 +147,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 			SkuRef:        secatest.NetworkSku1Ref,
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, network)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, net)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)

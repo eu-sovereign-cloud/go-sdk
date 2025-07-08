@@ -229,13 +229,13 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	roleAssignment := &authorization.RoleAssignment{
+	assign := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.AuthorizationRoleAssignment1Name,
 		},
 	}
-	err = client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, roleAssignment)
+	err = client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
 	require.NoError(t, err)
 }
 
@@ -253,13 +253,12 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
 	require.NoError(t, err)
 
-	roleAssignment := &authorization.RoleAssignment{
+	assign := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.AuthorizationRoleAssignment1Name,
 		},
 	}
-
-	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, roleAssignment)
+	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, assign)
 	require.NoError(t, err)
 }

@@ -115,15 +115,15 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	return resp.JSON200, nil
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
-	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) error {
+	if err := validateAuthorizationMetadataV1(assign.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
+	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name,
 		&authorization.CreateOrUpdateRoleAssignmentParams{
-			IfUnmodifiedSince: &role.Metadata.ResourceVersion,
-		}, *role)
+			IfUnmodifiedSince: &assign.Metadata.ResourceVersion,
+		}, *assign)
 	if err != nil {
 		return err
 	}
@@ -135,13 +135,13 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, ro
 	return nil
 }
 
-func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, role *authorization.RoleAssignment) error {
-	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) error {
+	if err := validateAuthorizationMetadataV1(assign.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.authorization.DeleteRoleAssignmentWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleAssignmentParams{
-		IfUnmodifiedSince: &role.Metadata.ResourceVersion,
+	resp, err := api.authorization.DeleteRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name, &authorization.DeleteRoleAssignmentParams{
+		IfUnmodifiedSince: &assign.Metadata.ResourceVersion,
 	})
 	if err != nil {
 		return err

@@ -150,7 +150,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp := &compute.Instance{
+	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
@@ -159,7 +159,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, cp)
+	err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -178,14 +178,14 @@ func TestStartInstanace(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp := &compute.Instance{
+	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StartInstance(ctx, cp)
+	err := regionalClient.ComputeV1.StartInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -204,14 +204,14 @@ func TestRestartInstanace(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp := &compute.Instance{
+	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.RestartInstance(ctx, cp)
+	err := regionalClient.ComputeV1.RestartInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -230,14 +230,14 @@ func TestStopInstanace(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp := &compute.Instance{
+	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StopInstance(ctx, cp)
+	err := regionalClient.ComputeV1.StopInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -256,13 +256,13 @@ func TestDeleteInstance(t *testing.T) {
 
 	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{NetworkV1API}, server)
 
-	cp := &compute.Instance{
+	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.DeleteInstance(ctx, cp)
+	err := regionalClient.ComputeV1.DeleteInstance(ctx, inst)
 	require.NoError(t, err)
 }

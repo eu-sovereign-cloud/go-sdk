@@ -15,6 +15,7 @@ import (
 )
 
 // Workspace
+
 func TestListWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -42,6 +43,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.EqualValues(t, secatest.StatusStateActive, *resp[0].Status.State)
 }
+
 func TestGetWorkspaces(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -71,6 +73,7 @@ func TestGetWorkspaces(t *testing.T) {
 	assert.NotNil(t, *resp.Status.State)
 	assert.EqualValues(t, secatest.StatusStateActive, *resp.Status.State)
 }
+
 func TestCreateOrUpdateWorkspace(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
