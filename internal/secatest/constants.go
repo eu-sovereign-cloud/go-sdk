@@ -80,8 +80,10 @@ const (
 	Instance1Name = "instance-1"
 
 	/// Authorization
-	Role1Name           = "role-1"
-	Role1PermissionVerb = "get"
+	Role1Name               = "role-1"
+	Role1PermissionProvider = "seca.compute"
+	Role1PermissionResource = "instances/*"
+	Role1PermissionVerb     = "get"
 
 	RoleAssignment1Name    = "role-assignment-1"
 	RoleAssignment1Subject = "sub@secapi.com"
@@ -92,13 +94,14 @@ const (
 	StorageSku1Tier = "DXS"
 	StorageSku1Iops = 100
 
-	BlockStorage1Ref  = "storages/storage-1"
-	BlockStorage1Name = "storage-1"
+	BlockStorage1Ref    = "storages/storage-1"
+	BlockStorage1Name   = "storage-1"
+	BlockStorage1SizeGB = 10
 
-	Image1Name = "image-1"
+	Image1Name    = "image-1"
+	Image1CpuArch = "amd64"
 
 	/// Status
 	StatusStateActive   = "active"
 	StatusStateCreating = "creating"
-	StatusStateDeleting = "deleting"
 )

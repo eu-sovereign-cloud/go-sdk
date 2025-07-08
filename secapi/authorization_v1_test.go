@@ -96,7 +96,10 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	sim := mockauthorization.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateRoleV1(sim, secatest.RoleResponseV1{
-		Metadata:       secatest.MetadataResponseV1{Name: secatest.Role1Name},
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Role1Name,
+			Tenant: secatest.Tenant1Name,
+		},
 		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
@@ -113,9 +116,28 @@ func TestCreateOrUpdateRole(t *testing.T) {
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
+		Spec: authorization.RoleSpec{
+			Permissions: []authorization.Permission{
+				{
+					Provider:  secatest.Role1PermissionProvider,
+					Resources: []string{secatest.Role1PermissionResource},
+					Verb:      []string{secatest.Role1PermissionVerb},
+				},
+			},
+		},
 	}
-	err = client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
 	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+
+	require.Len(t, resp.Spec.Permissions, 1)
+	require.Len(t, resp.Spec.Permissions[0].Verb, 1)
+	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteRole(t *testing.T) {
@@ -250,9 +272,27 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
+		Spec: authorization.RoleAssignmentSpec{
+			Roles: []string{secatest.Role1Name},
+			Scopes: []authorization.RoleAssignmentScope{
+				{
+					Tenants: &[]string{secatest.Tenant1Name},
+				},
+			},
+			Subs: []string{secatest.RoleAssignment1Subject},
+		},
 	}
-	err = client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
 	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+
+	require.Len(t, resp.Spec.Subs, 1)
+	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteRoleAssignment(t *testing.T) {

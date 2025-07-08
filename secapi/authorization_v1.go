@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 
@@ -44,9 +45,9 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	return resp.JSON200, nil
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) error {
+func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) (*authorization.Role, error) {
 	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
@@ -54,14 +55,18 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 			IfUnmodifiedSince: &role.Metadata.ResourceVersion,
 		}, *role)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
@@ -115,9 +120,9 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	return resp.JSON200, nil
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) error {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) (*authorization.RoleAssignment, error) {
 	if err := validateAuthorizationMetadataV1(assign.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name,
@@ -125,14 +130,18 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, as
 			IfUnmodifiedSince: &assign.Metadata.ResourceVersion,
 		}, *assign)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) error {

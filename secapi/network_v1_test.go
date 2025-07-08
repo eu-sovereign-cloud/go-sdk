@@ -324,7 +324,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		SkuRef: secatest.NetworkSku1Ref,
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -351,7 +351,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Ref, *resp.Spec.SkuRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteSubnetV1(t *testing.T) {
@@ -476,7 +476,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		LocalRef: secatest.Network1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status:   secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -510,7 +510,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Network1Ref, resp.Spec.LocalRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteRouteTableV1(t *testing.T) {
@@ -635,7 +635,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		EgressOnly: false,
-		Status:     secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status:     secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -661,7 +661,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteInternetGatewayV1(t *testing.T) {
@@ -786,7 +786,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		RuleDirection: secatest.SecurityGroupRuleDirectionIngress,
-		Status:        secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status:        secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -824,7 +824,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteSecurityGroupV1(t *testing.T) {
@@ -949,7 +949,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		SubnetRef: secatest.Subnet1Ref,
-		Status:    secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status:    secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -975,7 +975,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Subnet1Ref, resp.Spec.SubnetRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteNicV1(t *testing.T) {
@@ -1100,7 +1100,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 			Workspace: secatest.Workspace1Name,
 		},
 		Address: secatest.Address1,
-		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -1126,7 +1126,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeletePublicIpV1(t *testing.T) {

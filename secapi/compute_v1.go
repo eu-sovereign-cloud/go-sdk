@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 
@@ -76,9 +77,9 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	return resp.JSON200, nil
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) (*compute.Instance, error) {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name,
@@ -86,14 +87,18 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 			IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
 		}, *inst)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {

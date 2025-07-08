@@ -159,7 +159,7 @@ func TestGetInstance(t *testing.T) {
 	}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	require.NoError(t, err)
-	require.NotEmpty(t, resp)
+	require.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
@@ -178,9 +178,13 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateInstanceV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Instance1Name},
-		SkuRef:   secatest.InstanceSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+		},
+		SkuRef: secatest.InstanceSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -197,9 +201,22 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 			Zone:      secatest.ZoneA,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
+		Spec: compute.InstanceSpec{
+			SkuRef: secatest.InstanceSku1Ref,
+			Zone:   secatest.ZoneA,
+		},
 	}
-	err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
+	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
 	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+
+	assert.Equal(t, secatest.InstanceSku1Ref, resp.Spec.SkuRef)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestStartInstanace(t *testing.T) {

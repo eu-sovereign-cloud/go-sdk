@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
@@ -44,9 +45,9 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 	return resp.JSON200, nil
 }
 
-func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) (*workspace.Workspace, error) {
 	if err := validateWorkspaceMetadataV1(ws.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
@@ -54,14 +55,18 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspa
 			IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
 		}, *ws)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {

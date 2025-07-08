@@ -2,8 +2,9 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 
 	"k8s.io/utils/ptr"
 )
@@ -76,9 +77,9 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	return resp.JSON200, nil
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) (*storage.BlockStorage, error) {
 	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
@@ -86,14 +87,18 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 			IfUnmodifiedSince: &block.Metadata.ResourceVersion,
 		}, *block)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
@@ -147,9 +152,9 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 	return resp.JSON200, nil
 }
 
-func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) error {
+func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) (*storage.Image, error) {
 	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name,
@@ -157,14 +162,18 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Im
 			IfUnmodifiedSince: &image.Metadata.ResourceVersion,
 		}, *image)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
 }
 
 func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) error {

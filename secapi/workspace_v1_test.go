@@ -44,11 +44,9 @@ func TestListWorkspacesV1(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, resp, 1)
 
-	require.NotEmpty(t, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
-	require.NotEmpty(t, resp[0].Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
@@ -77,11 +75,9 @@ func TestGetWorkspaces(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	require.NotEmpty(t, resp.Metadata.Name)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 
-	require.NotEmpty(t, resp.Status.State)
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
@@ -92,7 +88,13 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{})
+	secatest.MockCreateOrUpdateWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Workspace1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
+	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -105,10 +107,15 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Workspace1Name,
 		},
-		Spec: workspace.WorkspaceSpec{},
 	}
-	err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
+	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
 	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
 func TestDeleteWorkspace(t *testing.T) {
