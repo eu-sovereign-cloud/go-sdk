@@ -24,6 +24,7 @@ func MockListRegionsV1(sim *mockregion.MockServerInterface, resp RegionResponseV
 			}
 		})
 }
+
 func MockGetRegionV1(sim *mockregion.MockServerInterface, resp RegionResponseV1) {
 	sim.EXPECT().GetRegion(mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, name string) {

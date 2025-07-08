@@ -18,6 +18,7 @@ func MockListNetworkSkusV1(sim *mocknetwork.MockServerInterface, resp NetworkSku
 			}
 		})
 }
+
 func MockGetNetworkSkuV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
@@ -36,6 +37,7 @@ func MockListNetworksV1(sim *mocknetwork.MockServerInterface, resp NetworkRespon
 			}
 		})
 }
+
 func MockGetNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
 	sim.EXPECT().GetNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -44,6 +46,7 @@ func MockGetNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponse
 			}
 		})
 }
+
 func MockCreateOrUpdateNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
 	sim.EXPECT().CreateOrUpdateNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNetworkParams) {
@@ -52,6 +55,7 @@ func MockCreateOrUpdateNetworkV1(sim *mocknetwork.MockServerInterface, resp Netw
 			}
 		})
 }
+
 func MockDeleteNetworkV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteNetworkParams) {
@@ -68,6 +72,7 @@ func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetResponse
 			}
 		})
 }
+
 func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
 	sim.EXPECT().GetSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -76,6 +81,7 @@ func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1
 			}
 		})
 }
+
 func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
 	sim.EXPECT().CreateOrUpdateSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSubnetParams) {
@@ -84,6 +90,7 @@ func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp Subne
 			}
 		})
 }
+
 func MockDeleteSubnetV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSubnetParams) {
@@ -100,6 +107,7 @@ func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTable
 			}
 		})
 }
+
 func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
 	sim.EXPECT().GetRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -108,6 +116,7 @@ func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableRe
 			}
 		})
 }
+
 func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
 	sim.EXPECT().CreateOrUpdateRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateRouteTableParams) {
@@ -116,6 +125,7 @@ func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp R
 			}
 		})
 }
+
 func MockDeleteRouteTableV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteRouteTableParams) {
@@ -132,6 +142,7 @@ func MockListInternetGatewaysV1(sim *mocknetwork.MockServerInterface, resp Inter
 			}
 		})
 }
+
 func MockGetInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
 	sim.EXPECT().GetInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -140,6 +151,7 @@ func MockGetInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp Interne
 			}
 		})
 }
+
 func MockCreateOrUpdateInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
 	sim.EXPECT().CreateOrUpdateInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateInternetGatewayParams) {
@@ -148,6 +160,7 @@ func MockCreateOrUpdateInternetGatewayV1(sim *mocknetwork.MockServerInterface, r
 			}
 		})
 }
+
 func MockDeleteInternetGatewayV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteInternetGatewayParams) {
@@ -164,6 +177,7 @@ func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp Securit
 			}
 		})
 }
+
 func MockGetSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
 	sim.EXPECT().GetSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -172,6 +186,7 @@ func MockGetSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityG
 			}
 		})
 }
+
 func MockCreateOrUpdateSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
 	sim.EXPECT().CreateOrUpdateSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSecurityGroupParams) {
@@ -180,6 +195,7 @@ func MockCreateOrUpdateSecurityGroupV1(sim *mocknetwork.MockServerInterface, res
 			}
 		})
 }
+
 func MockDeleteSecurityGroupV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSecurityGroupParams) {
@@ -196,6 +212,7 @@ func MockListNicsV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 			}
 		})
 }
+
 func MockGetNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 	sim.EXPECT().GetNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -204,6 +221,7 @@ func MockGetNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 			}
 		})
 }
+
 func MockCreateOrUpdateNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
 	sim.EXPECT().CreateOrUpdateNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNicParams) {
@@ -212,6 +230,7 @@ func MockCreateOrUpdateNicV1(sim *mocknetwork.MockServerInterface, resp NicRespo
 			}
 		})
 }
+
 func MockDeleteNicV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteNicParams) {
@@ -228,6 +247,7 @@ func MockListPublicIpsV1(sim *mocknetwork.MockServerInterface, resp PublicIpResp
 			}
 		})
 }
+
 func MockGetPublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
 	sim.EXPECT().GetPublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
@@ -236,6 +256,7 @@ func MockGetPublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpRespon
 			}
 		})
 }
+
 func MockCreateOrUpdatePublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
 	sim.EXPECT().CreateOrUpdatePublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace, name string, params network.CreateOrUpdatePublicIpParams) {
@@ -244,6 +265,7 @@ func MockCreateOrUpdatePublicIpV1(sim *mocknetwork.MockServerInterface, resp Pub
 			}
 		})
 }
+
 func MockDeletePublicIpV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeletePublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace, name string, params network.DeletePublicIpParams) {

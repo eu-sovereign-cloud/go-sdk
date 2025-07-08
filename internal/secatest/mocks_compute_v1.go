@@ -18,6 +18,7 @@ func MockListInstanceSkusV1(sim *mockcompute.MockServerInterface, resp InstanceS
 			}
 		})
 }
+
 func MockGetInstanceSkuV1(sim *mockcompute.MockServerInterface, resp InstanceSkuResponseV1) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, name compute.ResourceName) {
@@ -36,6 +37,7 @@ func MockListInstancesV1(sim *mockcompute.MockServerInterface, resp InstanceResp
 			}
 		})
 }
+
 func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
 	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName) {
@@ -44,6 +46,7 @@ func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceRespon
 			}
 		})
 }
+
 func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
 	sim.EXPECT().CreateOrUpdateInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.Tenant, lwp compute.CreateOrUpdateInstanceParams) {
@@ -52,24 +55,28 @@ func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp Ins
 			}
 		})
 }
+
 func MockDeleteInstanceV1(sim *mockcompute.MockServerInterface) {
 	sim.EXPECT().DeleteInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.DeleteInstanceParams) {
 			configDeleteHttpResponse(w)
 		})
 }
+
 func MockStartInstanceV1(sim *mockcompute.MockServerInterface) {
 	sim.EXPECT().StartInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StartInstanceParams) {
 			configPostHttpResponse(w)
 		})
 }
+
 func MockRestartInstanceV1(sim *mockcompute.MockServerInterface) {
 	sim.EXPECT().RestartInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.RestartInstanceParams) {
 			configPostHttpResponse(w)
 		})
 }
+
 func MockStopInstanceV1(sim *mockcompute.MockServerInterface) {
 	sim.EXPECT().StopInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StopInstanceParams) {

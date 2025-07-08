@@ -18,6 +18,7 @@ func MockListWorkspaceV1(sim *mockworkspace.MockServerInterface, resp WorkspaceT
 			}
 		})
 }
+
 func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp WorkspaceTypeResponseV1) {
 	sim.EXPECT().GetWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
@@ -26,6 +27,7 @@ func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp WorkspaceTy
 			}
 		})
 }
+
 func MockCreateOrUpdateWorkspaceV1(sim *mockworkspace.MockServerInterface, resp WorkspaceTypeResponseV1) {
 	sim.EXPECT().CreateOrUpdateWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params workspace.CreateOrUpdateWorkspaceParams) {
@@ -34,6 +36,7 @@ func MockCreateOrUpdateWorkspaceV1(sim *mockworkspace.MockServerInterface, resp 
 			}
 		})
 }
+
 func MockDeleteWorkspaceV1(sim *mockworkspace.MockServerInterface) {
 	sim.EXPECT().DeleteWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params workspace.DeleteWorkspaceParams) {

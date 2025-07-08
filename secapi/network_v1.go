@@ -515,8 +515,6 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*network.PublicIp, error) {
-
-	
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -587,7 +585,7 @@ func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) err
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant		
+		return ErrNoMetatadaTenant
 	}
 
 	if metadata.Workspace == nil {

@@ -18,6 +18,7 @@ func MockListRolesV1(sim *mockauthorization.MockServerInterface, resp RoleRespon
 			}
 		})
 }
+
 func MockGetRoleV1(sim *mockauthorization.MockServerInterface, resp RoleResponseV1) {
 	sim.EXPECT().GetRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
@@ -26,6 +27,7 @@ func MockGetRoleV1(sim *mockauthorization.MockServerInterface, resp RoleResponse
 			}
 		})
 }
+
 func MockCreateOrUpdateRoleV1(sim *mockauthorization.MockServerInterface, resp RoleResponseV1) {
 	sim.EXPECT().CreateOrUpdateRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.CreateOrUpdateRoleParams) {
@@ -34,6 +36,7 @@ func MockCreateOrUpdateRoleV1(sim *mockauthorization.MockServerInterface, resp R
 			}
 		})
 }
+
 func MockDeleteRoleV1(sim *mockauthorization.MockServerInterface) {
 	sim.EXPECT().DeleteRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.DeleteRoleParams) {
@@ -50,6 +53,7 @@ func MockListRoleAssignmentsV1(sim *mockauthorization.MockServerInterface, resp 
 			}
 		})
 }
+
 func MockGetRoleAssignmentV1(sim *mockauthorization.MockServerInterface, resp RoleAssignmentResponseV1) {
 	sim.EXPECT().GetRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
@@ -58,6 +62,7 @@ func MockGetRoleAssignmentV1(sim *mockauthorization.MockServerInterface, resp Ro
 			}
 		})
 }
+
 func MockCreateOrUpdateRoleAssignmentV1(sim *mockauthorization.MockServerInterface, resp RoleAssignmentResponseV1) {
 	sim.EXPECT().CreateOrUpdateRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.CreateOrUpdateRoleAssignmentParams) {
@@ -66,6 +71,7 @@ func MockCreateOrUpdateRoleAssignmentV1(sim *mockauthorization.MockServerInterfa
 			}
 		})
 }
+
 func MockDeleteRoleAssignmentV1(sim *mockauthorization.MockServerInterface) {
 	sim.EXPECT().DeleteRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.DeleteRoleAssignmentParams) {

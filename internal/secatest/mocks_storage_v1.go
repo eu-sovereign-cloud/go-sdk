@@ -18,6 +18,7 @@ func MockListStorageSkusV1(sim *mockstorage.MockServerInterface, resp StorageSku
 			}
 		})
 }
+
 func MockGetStorageSkusV1(sim *mockstorage.MockServerInterface, resp StorageSkuResponseV1) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName) {
@@ -36,6 +37,7 @@ func MockListBlockStoragesV1(sim *mockstorage.MockServerInterface, resp BlockSto
 			}
 		})
 }
+
 func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp BlockStorageResponseV1) {
 	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName) {
@@ -44,6 +46,7 @@ func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp BlockStora
 			}
 		})
 }
+
 func MockCreateOrUpdateBlockStorageV1(sim *mockstorage.MockServerInterface, resp BlockStorageResponseV1) {
 	sim.EXPECT().CreateOrUpdateBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName, params storage.CreateOrUpdateBlockStorageParams) {
@@ -52,6 +55,7 @@ func MockCreateOrUpdateBlockStorageV1(sim *mockstorage.MockServerInterface, resp
 			}
 		})
 }
+
 func MockDeleteBlockStorageV1(sim *mockstorage.MockServerInterface) {
 	sim.EXPECT().DeleteBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, workspace storage.Workspace, name storage.ResourceName, params storage.DeleteBlockStorageParams) {
@@ -68,6 +72,7 @@ func MockListStorageImagesV1(sim *mockstorage.MockServerInterface, resp ImageRes
 			}
 		})
 }
+
 func MockGetStorageImageV1(sim *mockstorage.MockServerInterface, resp ImageResponseV1) {
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName) {
@@ -76,6 +81,7 @@ func MockGetStorageImageV1(sim *mockstorage.MockServerInterface, resp ImageRespo
 			}
 		})
 }
+
 func MockCreateOrUpdateImageV1(sim *mockstorage.MockServerInterface, resp ImageResponseV1) {
 	sim.EXPECT().CreateOrUpdateImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName, params storage.CreateOrUpdateImageParams) {
@@ -84,6 +90,7 @@ func MockCreateOrUpdateImageV1(sim *mockstorage.MockServerInterface, resp ImageR
 			}
 		})
 }
+
 func MockDeleteImageV1(sim *mockstorage.MockServerInterface) {
 	sim.EXPECT().DeleteImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant storage.Tenant, name storage.ResourceName, params storage.DeleteImageParams) {

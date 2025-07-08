@@ -62,8 +62,8 @@ func TestGetRegionV1(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
 		Providers: []secatest.RegionResponseProviderV1{
 			{
-				Name: secatest.ProviderNetworkName,
-				URL:  secatest.ProviderNetworkEndpoint,
+				Name:    secatest.ProviderNetworkName,
+				URL:     secatest.ProviderNetworkEndpoint,
 				Version: secatest.ProviderVersion1,
 			},
 		},

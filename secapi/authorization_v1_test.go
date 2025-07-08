@@ -62,7 +62,8 @@ func TestGetRole(t *testing.T) {
 	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
 		Metadata: secatest.MetadataResponseV1{
 			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name},
+			Tenant: secatest.Tenant1Name,
+		},
 		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
@@ -125,7 +126,8 @@ func TestDeleteRole(t *testing.T) {
 	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
 		Metadata: secatest.MetadataResponseV1{
 			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name},
+			Tenant: secatest.Tenant1Name,
+		},
 		PermissionVerb: secatest.Role1PermissionVerb,
 		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
