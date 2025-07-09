@@ -34,7 +34,7 @@ func TestListStorageSkus(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -68,7 +68,7 @@ func TestGetStorageSku(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	resp, err := regionalClient.StorageV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -109,7 +109,7 @@ func TestListBlockStorages(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -148,7 +148,7 @@ func TestGetBlockStorage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
@@ -189,7 +189,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	block := &storage.BlockStorage{
 		Metadata: &storage.ZonalResourceMetadata{
@@ -237,7 +237,7 @@ func TestDeleteBlockStorage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
@@ -275,7 +275,7 @@ func TestListImages(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	iter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -314,7 +314,7 @@ func TestGetImage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	tref := TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -354,7 +354,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	image := &storage.Image{
 		Metadata: &storage.RegionalResourceMetadata{
@@ -401,7 +401,7 @@ func TestDeleteImage(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, []RegionalAPI{StorageV1API}, server)
+	regionalClient := getTestRegionalClient(t, ctx, server)
 
 	tref := TenantReference{
 		Tenant: secatest.Tenant1Name,
