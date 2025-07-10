@@ -2,31 +2,69 @@ package secapi
 
 import (
 	"context"
-
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 )
 
-type GlobalClient struct {
-	region region.ClientWithResponsesInterface
+type GlobalEndpoints struct {
+	RegionV1        string
+	AuthorizationV1 string
 }
 
-func NewGlobalClient(regionsUrl string) (*GlobalClient, error) {
+type GlobalClient struct {
+	RegionV1        *RegionV1
+	AuthorizationV1 *AuthorizationV1
+}
+
+func NewGlobalClient(endpoints *GlobalEndpoints) (*GlobalClient, error) {
 	client := &GlobalClient{}
 
-	regionClient, err := region.NewClientWithResponses(regionsUrl)
-	if err != nil {
-		return nil, err
+	if endpoints == nil {
+		return client, nil
 	}
-	client.region = regionClient
+
+	// Initializes regionsV1 API client
+	if endpoints.RegionV1 != "" {
+		if err := initGlobalAPI(endpoints.RegionV1, newRegionV1, client.setRegionV1); err != nil {
+			return nil, err
+		}
+	}
+
+	// Initializes authorizationV1 API client
+	if endpoints.AuthorizationV1 != "" {
+		if err := initGlobalAPI(endpoints.AuthorizationV1, newAuthorizationV1, client.setAuthorizationV1); err != nil {
+			return nil, err
+		}
+	}
 
 	return client, nil
 }
 
 func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string) (*RegionalClient, error) {
-	region, err := client.GetRegion(ctx, name)
+	if client.RegionV1 == nil {
+		return nil, ErrRegionRequiredToRegionalClient
+	}
+
+	region, err := client.RegionV1.GetRegion(ctx, name)
 	if err != nil {
 		return nil, err
 	}
 
-	return NewRegionalClient(region), nil
+	return NewRegionalClient(region)
+}
+
+func initGlobalAPI[T any](endpoint string, newFunc func(url string) (*T, error), setFunc func(*T)) error {
+	client, err := newFunc(endpoint)
+	if err != nil {
+		return err
+	}
+
+	setFunc(client)
+	return nil
+}
+
+func (client *GlobalClient) setRegionV1(region *RegionV1) {
+	client.RegionV1 = region
+}
+
+func (client *GlobalClient) setAuthorizationV1(authorization *AuthorizationV1) {
+	client.AuthorizationV1 = authorization
 }

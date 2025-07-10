@@ -40,7 +40,9 @@ build:
 
 .PHONY: test
 test:
-	$(GO) test -count=1 -cover -v ./...
+	$(GO) test -count=1 -cover -coverprofile=coverage.out -v ./...
+	$(GO) tool cover -html=coverage.out -o coverage.html
+	rm coverage.out
 
 .PHONY: fmt
 fmt:
