@@ -35,8 +35,7 @@ func TestListRegionsV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.RegionV1.ListRegions(ctx)
 	require.NoError(t, err)
@@ -73,8 +72,7 @@ func TestGetRegionV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{RegionV1: server.URL + secatest.ProviderRegionEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
 	require.NoError(t, err)

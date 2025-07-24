@@ -35,7 +35,7 @@ func TestListInstancesSku(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.ComputeV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -71,7 +71,7 @@ func TestGetInstanceSkU(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
@@ -112,7 +112,7 @@ func TestListInstances(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -150,7 +150,7 @@ func TestGetInstance(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
@@ -191,7 +191,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
@@ -232,7 +232,7 @@ func TestStartInstanace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
@@ -258,7 +258,7 @@ func TestRestartInstanace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
@@ -284,7 +284,7 @@ func TestStopInstanace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
 		Metadata: &compute.ZonalResourceMetadata{
@@ -320,7 +320,7 @@ func TestDeleteInstance(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,

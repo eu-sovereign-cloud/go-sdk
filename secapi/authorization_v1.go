@@ -10,6 +10,7 @@ import (
 )
 
 type AuthorizationV1 struct {
+	API
 	authorization authorization.ClientWithResponsesInterface
 }
 
@@ -20,7 +21,7 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRolesParams{
 				Accept: ptr.To(authorization.Applicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -37,7 +38,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
+	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +54,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *author
 	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name,
 		&authorization.CreateOrUpdateRoleParams{
 			IfUnmodifiedSince: &role.Metadata.ResourceVersion,
-		}, *role)
+		}, *role, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +77,7 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 
 	resp, err := api.authorization.DeleteRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, &authorization.DeleteRoleParams{
 		IfUnmodifiedSince: &role.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -95,7 +96,7 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRoleAssignmentsParams{
 				Accept: ptr.To(authorization.ListRoleAssignmentsParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -112,7 +113,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name))
+	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +129,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, as
 	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name,
 		&authorization.CreateOrUpdateRoleAssignmentParams{
 			IfUnmodifiedSince: &assign.Metadata.ResourceVersion,
-		}, *assign)
+		}, *assign, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +152,7 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *au
 
 	resp, err := api.authorization.DeleteRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name, &authorization.DeleteRoleAssignmentParams{
 		IfUnmodifiedSince: &assign.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -163,13 +164,13 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *au
 	return nil
 }
 
-func newAuthorizationV1(authorizationsUrl string) (*AuthorizationV1, error) {
+func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {
 	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &AuthorizationV1{authorization: authorization}, nil
+	return &AuthorizationV1{API: API{authToken: client.authToken}, authorization: authorization}, nil
 }
 
 func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) error {

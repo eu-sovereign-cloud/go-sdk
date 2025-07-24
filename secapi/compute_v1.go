@@ -10,6 +10,7 @@ import (
 )
 
 type ComputeV1 struct {
+	API
 	compute compute.ClientWithResponsesInterface
 }
 
@@ -20,7 +21,7 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[com
 		fn: func(ctx context.Context, skipToken *string) ([]compute.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, compute.Tenant(tid), &compute.ListSkusParams{
 				Accept: ptr.To(compute.ListSkusParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -37,7 +38,7 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*comput
 		return nil, err
 	}
 
-	resp, err := api.compute.GetSkuWithResponse(ctx, compute.Tenant(tref.Tenant), tref.Name)
+	resp, err := api.compute.GetSkuWithResponse(ctx, compute.Tenant(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +53,7 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 		fn: func(ctx context.Context, skipToken *string) ([]compute.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, compute.Tenant(tid), compute.Workspace(wid), &compute.ListInstancesParams{
 				Accept: ptr.To(compute.Applicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -69,7 +70,7 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 		return nil, err
 	}
 
-	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name)
+	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name,
 		&compute.CreateOrUpdateInstanceParams{
 			IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-		}, *inst)
+		}, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +109,7 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 
 	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.DeleteInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -127,7 +128,7 @@ func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance)
 
 	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StartInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -146,7 +147,7 @@ func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) 
 
 	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StopInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -165,7 +166,7 @@ func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instanc
 
 	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.RestartInstanceParams{
 		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -177,13 +178,13 @@ func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instanc
 	return nil
 }
 
-func newComputeV1(computeUrl string) (*ComputeV1, error) {
+func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {
 	compute, err := compute.NewClientWithResponses(computeUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ComputeV1{compute: compute}, nil
+	return &ComputeV1{API: API{authToken: client.authToken}, compute: compute}, nil
 }
 
 func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {

@@ -1,6 +1,9 @@
 package secapi
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 type TenantID string
 
@@ -24,7 +27,7 @@ func TenantIDFromContext(ctx context.Context) (TenantID, bool) {
 func MustTenantIDFromContext(ctx context.Context) (TenantID, error) {
 	tid, ok := TenantIDFromContext(ctx)
 	if !ok {
-		return "", ErrNoTenantID
+		return "",  fmt.Errorf("tenant ID not found in context")
 	}
 	return tid, nil
 }

@@ -10,6 +10,7 @@ import (
 )
 
 type StorageV1 struct {
+	API
 	storage storage.ClientWithResponsesInterface
 }
 
@@ -20,7 +21,7 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sto
 		fn: func(ctx context.Context, skipToken *string) ([]storage.StorageSku, *string, error) {
 			resp, err := api.storage.ListSkusWithResponse(ctx, storage.Tenant(tid), &storage.ListSkusParams{
 				Accept: ptr.To(storage.ListSkusParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -37,7 +38,7 @@ func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storag
 		return nil, err
 	}
 
-	resp, err := api.storage.GetSkuWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name)
+	resp, err := api.storage.GetSkuWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +53,7 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 		fn: func(ctx context.Context, skipToken *string) ([]storage.BlockStorage, *string, error) {
 			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, storage.Tenant(tid), storage.Workspace(wid), &storage.ListBlockStoragesParams{
 				Accept: ptr.To(storage.ListBlockStoragesParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -69,7 +70,7 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 		return nil, err
 	}
 
-	resp, err := api.storage.GetBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name)
+	resp, err := api.storage.GetBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
 		&storage.CreateOrUpdateBlockStorageParams{
 			IfUnmodifiedSince: &block.Metadata.ResourceVersion,
-		}, *block)
+		}, *block, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +109,7 @@ func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.Blo
 
 	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, &storage.DeleteBlockStorageParams{
 		IfUnmodifiedSince: &block.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -127,7 +128,7 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 		fn: func(ctx context.Context, skipToken *string) ([]storage.Image, *string, error) {
 			resp, err := api.storage.ListImagesWithResponse(ctx, storage.Tenant(tid), &storage.ListImagesParams{
 				Accept: ptr.To(storage.ListImagesParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -144,7 +145,7 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 		return nil, err
 	}
 
-	resp, err := api.storage.GetImageWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name)
+	resp, err := api.storage.GetImageWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name, api.loadRequestHeaders, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Im
 	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name,
 		&storage.CreateOrUpdateImageParams{
 			IfUnmodifiedSince: &image.Metadata.ResourceVersion,
-		}, *image)
+		}, *image, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) err
 
 	resp, err := api.storage.DeleteImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name, &storage.DeleteImageParams{
 		IfUnmodifiedSince: &image.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -195,13 +196,13 @@ func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) err
 	return nil
 }
 
-func newStorageV1(storageUrl string) (*StorageV1, error) {
+func newStorageV1(client *RegionalClient, storageUrl string) (*StorageV1, error) {
 	storage, err := storage.NewClientWithResponses(storageUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &StorageV1{storage: storage}, nil
+	return &StorageV1{API: API{authToken: client.authToken}, storage: storage}, nil
 }
 
 func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) error {
