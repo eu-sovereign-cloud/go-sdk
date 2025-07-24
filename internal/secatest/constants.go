@@ -24,11 +24,11 @@ const (
 
 	// Test Data
 
-	AuthToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30"
+	AuthToken = "test-token"
 
 	/// Metadata
 	Tenant1Name    = "tenant-1"
-	Workspace1Name = "woskpace-1"
+	Workspace1Name = "workspace-1"
 	Region1Name    = "region-1"
 	ZoneA          = "a"
 

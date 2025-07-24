@@ -5,12 +5,6 @@ import (
 	"net/http"
 )
 
-const (
-	headerKeyAuthorization = "Authorization"
-	headerKeyAccept        = "Accept"
-	headerValueAcceptJSON  = "application/json"
-)
-
 type httpResponse interface {
 	StatusCode() int
 }

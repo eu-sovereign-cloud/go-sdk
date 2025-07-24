@@ -33,7 +33,6 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region],
 }
 
 func (api *RegionV1) GetRegion(ctx context.Context, name string) (*region.Region, error) {
-
 	resp, err := api.region.GetRegionWithResponse(ctx, name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err

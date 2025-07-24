@@ -11,7 +11,6 @@ import (
 )
 
 func newTestGlobalClientV1(t *testing.T, server *httptest.Server) *GlobalClient {
-
 	config := &GlobalConfig{
 		AuthToken: secatest.AuthToken,
 		Endpoints: GlobalEndpoints{
@@ -27,7 +26,6 @@ func newTestGlobalClientV1(t *testing.T, server *httptest.Server) *GlobalClient 
 }
 
 func newTestRegionalClientV1(t *testing.T, ctx context.Context, server *httptest.Server) *RegionalClient {
-
 	globalClient := newTestGlobalClientV1(t, server)
 
 	regionalClient, err := globalClient.NewRegionalClient(ctx, secatest.Region1Name)

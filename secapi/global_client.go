@@ -23,7 +23,6 @@ type GlobalClient struct {
 }
 
 func NewGlobalClient(config *GlobalConfig) (*GlobalClient, error) {
-
 	if config == nil {
 		return nil, fmt.Errorf("GlobalConfig is required to create a global client")
 	}

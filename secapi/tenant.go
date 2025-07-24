@@ -27,7 +27,7 @@ func TenantIDFromContext(ctx context.Context) (TenantID, bool) {
 func MustTenantIDFromContext(ctx context.Context) (TenantID, error) {
 	tid, ok := TenantIDFromContext(ctx)
 	if !ok {
-		return "",  fmt.Errorf("tenant ID not found in context")
+		return "", fmt.Errorf("tenant ID not found in context")
 	}
 	return tid, nil
 }
