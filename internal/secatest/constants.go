@@ -1,10 +1,6 @@
 package secatest
 
 const (
-	// Http Headers
-	ContentTypeHeader = "Content-Type"
-	ContentTypeJSON   = "application/json"
-
 	// Providers
 	ProviderRegionName     = "seca.region/v1"
 	ProviderRegionEndpoint = "/providers/seca.regions"
@@ -28,9 +24,11 @@ const (
 
 	// Test Data
 
+	AuthToken = "test-token"
+
 	/// Metadata
 	Tenant1Name    = "tenant-1"
-	Workspace1Name = "woskpace-1"
+	Workspace1Name = "workspace-1"
 	Region1Name    = "region-1"
 	ZoneA          = "a"
 

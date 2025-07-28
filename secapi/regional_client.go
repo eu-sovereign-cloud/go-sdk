@@ -7,50 +7,54 @@ import (
 )
 
 type RegionalClient struct {
+	authToken string
+
 	ComputeV1   *ComputeV1
 	NetworkV1   *NetworkV1
 	StorageV1   *StorageV1
 	WorkspaceV1 *WorkspaceV1
 }
 
-func NewRegionalClient(region *region.Region) (*RegionalClient, error) {
-	client := &RegionalClient{}
+func newRegionalClient(authToken string, region *region.Region) (*RegionalClient, error) {
+	client := &RegionalClient{
+		authToken: authToken,
+	}
 
 	// Initializes computeV1 API client
-	if err := initRegionalAPI("seca.compute", region, newComputeV1, client.setComputeV1); err != nil {
+	if err := initRegionalAPI(client, "seca.compute", region, newComputeV1, client.setComputeV1); err != nil {
 		return nil, err
 	}
 
 	// Initializes networkV1 API client
-	if err := initRegionalAPI("seca.network", region, newNetworkV1, client.setNetworkV1); err != nil {
+	if err := initRegionalAPI(client, "seca.network", region, newNetworkV1, client.setNetworkV1); err != nil {
 		return nil, err
 	}
 
 	// Initializes storageV1 API client
-	if err := initRegionalAPI("seca.storage", region, newStorageV1, client.setStorageV1); err != nil {
+	if err := initRegionalAPI(client, "seca.storage", region, newStorageV1, client.setStorageV1); err != nil {
 		return nil, err
 	}
 
 	// Initializes workspaceV1 API client
-	if err := initRegionalAPI("seca.workspace", region, newWorkspaceV1, client.setWorkspaceV1); err != nil {
+	if err := initRegionalAPI(client, "seca.workspace", region, newWorkspaceV1, client.setWorkspaceV1); err != nil {
 		return nil, err
 	}
 
 	return client, nil
 }
 
-func initRegionalAPI[T any](name string, region *region.Region, newFunc func(url string) (*T, error), setFunc func(*T)) error {
+func initRegionalAPI[T any](client *RegionalClient, name string, region *region.Region, newFunc func(client *RegionalClient, url string) (*T, error), setFunc func(*T)) error {
 	provider, err := findRegionalProvider(name, region)
 	if err != nil {
 		return err
 	}
 
-	client, err := newFunc(provider.Url)
+	api, err := newFunc(client, provider.Url)
 	if err != nil {
 		return err
 	}
 
-	setFunc(client)
+	setFunc(api)
 	return nil
 }
 

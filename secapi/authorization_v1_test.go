@@ -34,8 +34,7 @@ func TestListRoles(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -72,8 +71,7 @@ func TestGetRole(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
 	resp, err := client.AuthorizationV1.GetRole(ctx, tref)
@@ -108,8 +106,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	role := authorization.Role{
 		Metadata: &authorization.GlobalResourceMetadata{
@@ -160,8 +157,7 @@ func TestDeleteRole(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.AuthorizationV1.GetRole(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name})
 	require.NoError(t, err)
@@ -191,8 +187,7 @@ func TestListRoleAssignments(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -229,8 +224,7 @@ func TestGetRoleAssignment(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
 	resp, err := client.AuthorizationV1.GetRoleAssignment(ctx, tref)
@@ -264,8 +258,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	assign := &authorization.RoleAssignment{
 		Metadata: &authorization.GlobalResourceMetadata{
@@ -315,8 +308,7 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	client, err := NewGlobalClient(&GlobalEndpoints{AuthorizationV1: server.URL + secatest.ProviderAuthorizationEndpoint})
-	require.NoError(t, err)
+	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.AuthorizationV1.GetRoleAssignment(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name})
 	require.NoError(t, err)

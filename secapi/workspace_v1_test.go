@@ -35,7 +35,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -69,7 +69,7 @@ func TestGetWorkspaces(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
 	require.NoError(t, err)
@@ -100,7 +100,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	ws := &workspace.Workspace{
 		Metadata: &workspace.RegionalResourceMetadata{
@@ -138,7 +138,7 @@ func TestDeleteWorkspace(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
 	require.NoError(t, err)

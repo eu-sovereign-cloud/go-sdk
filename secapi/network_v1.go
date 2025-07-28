@@ -10,6 +10,7 @@ import (
 )
 
 type NetworkV1 struct {
+	API
 	network network.ClientWithResponsesInterface
 }
 
@@ -570,13 +571,13 @@ func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) 
 	return nil
 }
 
-func newNetworkV1(networkUrl string) (*NetworkV1, error) {
+func newNetworkV1(client *RegionalClient, networkUrl string) (*NetworkV1, error) {
 	network, err := network.NewClientWithResponses(networkUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &NetworkV1{network: network}, nil
+	return &NetworkV1{API: API{authToken: client.authToken}, network: network}, nil
 }
 
 func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) error {

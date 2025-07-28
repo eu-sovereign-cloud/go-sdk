@@ -9,6 +9,7 @@ import (
 )
 
 type RegionV1 struct {
+	API
 	region region.ClientWithResponsesInterface
 }
 
@@ -19,7 +20,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region],
 		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -32,7 +33,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region],
 }
 
 func (api *RegionV1) GetRegion(ctx context.Context, name string) (*region.Region, error) {
-	resp, err := api.region.GetRegionWithResponse(ctx, name)
+	resp, err := api.region.GetRegionWithResponse(ctx, name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -40,11 +41,11 @@ func (api *RegionV1) GetRegion(ctx context.Context, name string) (*region.Region
 	return resp.JSON200, nil
 }
 
-func newRegionV1(regionsUrl string) (*RegionV1, error) {
+func newRegionV1(client *GlobalClient, regionsUrl string) (*RegionV1, error) {
 	region, err := region.NewClientWithResponses(regionsUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &RegionV1{region: region}, nil
+	return &RegionV1{API: API{authToken: client.authToken}, region: region}, nil
 }

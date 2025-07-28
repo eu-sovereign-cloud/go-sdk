@@ -6,6 +6,11 @@ import (
 	"text/template"
 )
 
+const (
+	headerContentTypeKey  = "Content-Type"
+	headerContentTypeJSON = "application/json"
+)
+
 func processTemplate(w http.ResponseWriter, name string, data any) error {
 	tmpl := template.Must(template.New("response").Parse(name))
 
@@ -23,7 +28,7 @@ func processTemplate(w http.ResponseWriter, name string, data any) error {
 }
 
 func configHttpResponse(w http.ResponseWriter, statusCode int) {
-	w.Header().Set(ContentTypeHeader, ContentTypeJSON)
+	w.Header().Set(headerContentTypeKey, headerContentTypeJSON)
 	w.WriteHeader(statusCode)
 }
 

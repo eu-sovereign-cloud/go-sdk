@@ -10,6 +10,7 @@ import (
 )
 
 type WorkspaceV1 struct {
+	API
 	workspace workspace.ClientWithResponsesInterface
 }
 
@@ -20,7 +21,7 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
-			})
+			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -37,7 +38,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 		return nil, err
 	}
 
-	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name))
+	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +54,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspa
 	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name,
 		&workspace.CreateOrUpdateWorkspaceParams{
 			IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
-		}, *ws)
+		}, *ws, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +77,7 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 
 	resp, err := api.workspace.DeleteWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, &workspace.DeleteWorkspaceParams{
 		IfUnmodifiedSince: &ws.Metadata.ResourceVersion,
-	})
+	}, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -88,13 +89,13 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 	return nil
 }
 
-func newWorkspaceV1(workspaceUrl string) (*WorkspaceV1, error) {
+func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {
 	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &WorkspaceV1{workspace: workspace}, nil
+	return &WorkspaceV1{API: API{authToken: client.authToken}, workspace: workspace}, nil
 }
 
 func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) error {

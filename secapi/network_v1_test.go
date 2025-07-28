@@ -35,7 +35,7 @@ func TestListNetworkSkusV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListSkus(ctx, secatest.Tenant1Name)
 	require.NoError(t, err)
@@ -72,7 +72,7 @@ func TestGetNetworkSkuV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetSku(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.NetworkSku1Name})
 	require.NoError(t, err)
@@ -110,7 +110,7 @@ func TestListNetworksV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -147,7 +147,7 @@ func TestGetNetworkV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetNetwork(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name})
 	require.NoError(t, err)
@@ -180,7 +180,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	net := &network.Network{
 		Metadata: &network.RegionalResourceMetadata{
@@ -226,7 +226,7 @@ func TestDeleteNetworkV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
@@ -263,7 +263,7 @@ func TestListSubnetsV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -298,7 +298,7 @@ func TestGetSubnetV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetSubnet(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Subnet1Name})
 	require.NoError(t, err)
@@ -331,7 +331,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	sub := &network.Subnet{
 		Metadata: &network.ZonalResourceMetadata{
@@ -376,7 +376,7 @@ func TestDeleteSubnetV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetSubnet(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Subnet1Name})
 	require.NoError(t, err)
@@ -409,7 +409,7 @@ func TestListRouteTablesV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -448,7 +448,7 @@ func TestGetRouteTableV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetRouteTable(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.RouteTable1Name})
 	require.NoError(t, err)
@@ -483,7 +483,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	route := &network.RouteTable{
 		Metadata: &network.RegionalResourceMetadata{
@@ -535,7 +535,7 @@ func TestDeleteRouteTableV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetRouteTable(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.RouteTable1Name})
 	require.NoError(t, err)
@@ -568,7 +568,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -607,7 +607,7 @@ func TestGetInternetGatewayV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetInternetGateway(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name})
 	require.NoError(t, err)
@@ -642,7 +642,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	gtw := &network.InternetGateway{
 		Metadata: &network.RegionalResourceMetadata{
@@ -686,7 +686,7 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetInternetGateway(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name})
 	require.NoError(t, err)
@@ -719,7 +719,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -758,7 +758,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetSecurityGroup(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name})
 	require.NoError(t, err)
@@ -793,7 +793,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	group := &network.SecurityGroup{
 		Metadata: &network.RegionalResourceMetadata{
@@ -849,7 +849,7 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetSecurityGroup(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name})
 	require.NoError(t, err)
@@ -882,7 +882,7 @@ func TestListNicsV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListNics(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -921,7 +921,7 @@ func TestGetNicV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetNic(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name})
 	require.NoError(t, err)
@@ -956,7 +956,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	nic := &network.Nic{
 		Metadata: &network.ZonalResourceMetadata{
@@ -1000,7 +1000,7 @@ func TestDeleteNicV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetNic(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name})
 	require.NoError(t, err)
@@ -1033,7 +1033,7 @@ func TestListPublicIpsV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	require.NoError(t, err)
@@ -1072,7 +1072,7 @@ func TestGetPublicIpV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetPublicIp(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name})
 	require.NoError(t, err)
@@ -1107,7 +1107,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	ip := &network.PublicIp{
 		Metadata: &network.RegionalResourceMetadata{
@@ -1151,7 +1151,7 @@ func TestDeletePublicIpV1(t *testing.T) {
 	server := httptest.NewServer(sm)
 	defer server.Close()
 
-	regionalClient := getTestRegionalClient(t, ctx, server)
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.NetworkV1.GetPublicIp(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name})
 	require.NoError(t, err)
