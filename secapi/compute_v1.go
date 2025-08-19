@@ -43,7 +43,11 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*comput
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 // Instance
@@ -75,7 +79,11 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) (*compute.Instance, error) {

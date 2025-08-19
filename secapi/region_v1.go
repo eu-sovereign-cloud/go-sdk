@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 
@@ -38,7 +39,11 @@ func (api *RegionV1) GetRegion(ctx context.Context, name string) (*region.Region
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func newRegionV1(client *GlobalClient, regionsUrl string) (*RegionV1, error) {

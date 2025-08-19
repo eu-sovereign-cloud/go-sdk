@@ -43,7 +43,11 @@ func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*networ
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 // Network
@@ -75,7 +79,11 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Network) (*network.Network, error) {
@@ -150,7 +158,11 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Subnet) (*network.Subnet, error) {
@@ -225,7 +237,11 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *network.RouteTable) (*network.RouteTable, error) {
@@ -300,7 +316,11 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *network.InternetGateway) (*network.InternetGateway, error) {
@@ -375,7 +395,11 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *network.SecurityGroup) (*network.SecurityGroup, error) {
@@ -450,7 +474,11 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) (*network.Nic, error) {
@@ -525,7 +553,11 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.PublicIp) (*network.PublicIp, error) {

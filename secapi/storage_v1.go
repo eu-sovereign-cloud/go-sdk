@@ -43,7 +43,11 @@ func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storag
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 // Block Storage
@@ -75,7 +79,11 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) (*storage.BlockStorage, error) {
@@ -150,7 +158,11 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) (*storage.Image, error) {

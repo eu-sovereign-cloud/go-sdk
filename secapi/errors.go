@@ -7,4 +7,6 @@ var (
 	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
 	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
 	ErrNoMetatadaName      = errors.New("metadata name is empty")
+
+	ErrResourceNotFound = errors.New("resource not found")
 )
