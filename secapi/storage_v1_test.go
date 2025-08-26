@@ -12,7 +12,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"k8s.io/utils/ptr"
 )
 
 // Storage Sku
@@ -191,18 +190,18 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.BlockStorage1Name,
+	}
 	block := &storage.BlockStorage{
-		Metadata: &storage.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Name:      secatest.Workspace1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
 		Spec: storage.BlockStorageSpec{
 			SkuRef: secatest.StorageSku1Ref,
 			SizeGB: secatest.BlockStorage1SizeGB,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, block)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, wref, block, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -248,7 +247,7 @@ func TestDeleteBlockStorage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.StorageV1.DeleteBlockStorage(ctx, resp)
+	err = regionalClient.StorageV1.DeleteBlockStorage(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -356,17 +355,17 @@ func TestCreateOrUpdateImage(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	tref := TenantReference{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Image1Name,
+	}
 	image := &storage.Image{
-		Metadata: &storage.RegionalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.Image1Name,
-		},
 		Spec: storage.ImageSpec{
 			BlockStorageRef: secatest.BlockStorage1Ref,
 			CpuArchitecture: secatest.Image1CpuArch,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, image)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, tref, image, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -411,6 +410,6 @@ func TestDeleteImage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.StorageV1.DeleteImage(ctx, resp)
+	err = regionalClient.StorageV1.DeleteImage(ctx, resp, nil)
 	require.NoError(t, err)
 }

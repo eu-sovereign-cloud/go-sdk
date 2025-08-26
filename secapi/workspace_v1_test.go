@@ -102,13 +102,12 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	ws := &workspace.Workspace{
-		Metadata: &workspace.RegionalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.Workspace1Name,
-		},
+	tref := TenantReference{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Workspace1Name,
 	}
-	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
+	ws := &workspace.Workspace{}
+	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, tref, ws, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -144,6 +143,6 @@ func TestDeleteWorkspace(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp)
+	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp, nil)
 	require.NoError(t, err)
 }

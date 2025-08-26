@@ -182,19 +182,19 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Network1Name,
+	}
 	net := &network.Network{
-		Metadata: &network.RegionalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
 		Spec: network.NetworkSpec{
 			Cidr:          network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
 			RouteTableRef: secatest.RouteTable1Ref,
 			SkuRef:        secatest.NetworkSku1Ref,
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, net)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, wref, net, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
@@ -237,7 +237,7 @@ func TestDeleteNetworkV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteNetwork(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteNetwork(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -333,18 +333,18 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Subnet1Name,
+	}
 	sub := &network.Subnet{
-		Metadata: &network.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Subnet1Name,
-		},
 		Spec: network.SubnetSpec{
 			Cidr: network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
 			Zone: network.Zone(secatest.ZoneA),
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, sub)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, wref, sub, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Subnet1Name, resp.Metadata.Name)
@@ -382,7 +382,7 @@ func TestDeleteSubnetV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteSubnet(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteSubnet(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -485,12 +485,12 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Network1Name,
+	}
 	route := &network.RouteTable{
-		Metadata: &network.RegionalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
 		Spec: network.RouteTableSpec{
 			LocalRef: secatest.Network1Ref,
 			Routes: []network.RouteSpec{
@@ -501,7 +501,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, route)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, wref, route, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
@@ -541,7 +541,7 @@ func TestDeleteRouteTableV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteRouteTable(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteRouteTable(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -644,15 +644,13 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	gtw := &network.InternetGateway{
-		Metadata: &network.RegionalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
-		Spec: network.InternetGatewaySpec{},
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.InternetGateway1Name,
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, gtw)
+	gtw := &network.InternetGateway{}
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, wref, gtw, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
@@ -692,7 +690,7 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteInternetGateway(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteInternetGateway(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -795,12 +793,12 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.SecurityGroup1Name,
+	}
 	group := &network.SecurityGroup{
-		Metadata: &network.RegionalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
 		Spec: network.SecurityGroupSpec{
 			Rules: []network.SecurityGroupRuleSpec{
 				{
@@ -815,7 +813,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, group)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, wref, group, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
@@ -855,7 +853,7 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteSecurityGroup(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteSecurityGroup(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -958,15 +956,13 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	nic := &network.Nic{
-		Metadata: &network.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
-		Spec: network.NicSpec{},
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Nic1Name,
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, nic)
+	nic := &network.Nic{}
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, wref, nic, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
@@ -1006,7 +1002,7 @@ func TestDeleteNicV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteNic(ctx, resp)
+	err = regionalClient.NetworkV1.DeleteNic(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -1109,15 +1105,13 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	ip := &network.PublicIp{
-		Metadata: &network.RegionalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-			Name:      secatest.Network1Name,
-		},
-		Spec: network.PublicIpSpec{},
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.PublicIp1Name,
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, ip)
+	ip := &network.PublicIp{}
+	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, wref, ip, nil)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
@@ -1157,6 +1151,6 @@ func TestDeletePublicIpV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeletePublicIp(ctx, resp)
+	err = regionalClient.NetworkV1.DeletePublicIp(ctx, resp, nil)
 	require.NoError(t, err)
 }

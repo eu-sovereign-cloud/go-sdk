@@ -193,20 +193,18 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Instance1Name,
+	}
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
-			Name:      secatest.Instance1Name,
-			Region:    secatest.Region1Name,
-			Zone:      secatest.ZoneA,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
 		Spec: compute.InstanceSpec{
 			SkuRef: secatest.InstanceSku1Ref,
 			Zone:   secatest.ZoneA,
 		},
 	}
-	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
+	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, wref, inst, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -241,7 +239,7 @@ func TestStartInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StartInstance(ctx, inst)
+	err := regionalClient.ComputeV1.StartInstance(ctx, inst, nil)
 	require.NoError(t, err)
 }
 
@@ -267,7 +265,7 @@ func TestRestartInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.RestartInstance(ctx, inst)
+	err := regionalClient.ComputeV1.RestartInstance(ctx, inst, nil)
 	require.NoError(t, err)
 }
 
@@ -293,7 +291,7 @@ func TestStopInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StopInstance(ctx, inst)
+	err := regionalClient.ComputeV1.StopInstance(ctx, inst, nil)
 	require.NoError(t, err)
 }
 
@@ -330,6 +328,6 @@ func TestDeleteInstance(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp)
+	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp, nil)
 	require.NoError(t, err)
 }

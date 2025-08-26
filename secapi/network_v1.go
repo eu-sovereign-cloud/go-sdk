@@ -86,15 +86,9 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Network) (*network.Network, error) {
-	if err := validateNetworkRegionalMetadataV1(net.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network, params *network.CreateOrUpdateNetworkParams) (*network.Network, error) {
 
-	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name,
-		&network.CreateOrUpdateNetworkParams{
-			IfUnmodifiedSince: &net.Metadata.ResourceVersion,
-		}, *net)
+	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *net)
 	if err != nil {
 		return nil, err
 	}
@@ -110,14 +104,12 @@ func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *network.Ne
 	}
 }
 
-func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) error {
+func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network, params *network.DeleteNetworkParams) error {
 	if err := validateNetworkRegionalMetadataV1(net.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name, &network.DeleteNetworkParams{
-		IfUnmodifiedSince: &net.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -165,15 +157,9 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Subnet) (*network.Subnet, error) {
-	if err := validateNetworkZonalMetadataV1(sub.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name,
-		&network.CreateOrUpdateSubnetParams{
-			IfUnmodifiedSince: &sub.Metadata.ResourceVersion,
-		}, *sub)
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *sub)
 	if err != nil {
 		return nil, err
 	}
@@ -189,14 +175,12 @@ func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Sub
 	}
 }
 
-func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) error {
+func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet, params *network.DeleteSubnetParams) error {
 	if err := validateNetworkZonalMetadataV1(sub.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name, &network.DeleteSubnetParams{
-		IfUnmodifiedSince: &sub.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -244,15 +228,9 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *network.RouteTable) (*network.RouteTable, error) {
-	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
 
-	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name,
-		&network.CreateOrUpdateRouteTableParams{
-			IfUnmodifiedSince: &route.Metadata.ResourceVersion,
-		}, *route)
+	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *route)
 	if err != nil {
 		return nil, err
 	}
@@ -268,14 +246,12 @@ func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *netwo
 	}
 }
 
-func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.RouteTable) error {
+func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.RouteTable, params *network.DeleteRouteTableParams) error {
 	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, &network.DeleteRouteTableParams{
-		IfUnmodifiedSince: &route.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -323,15 +299,9 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *network.InternetGateway) (*network.InternetGateway, error) {
-	if err := validateNetworkRegionalMetadataV1(gtw.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*network.InternetGateway, error) {
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name,
-		&network.CreateOrUpdateInternetGatewayParams{
-			IfUnmodifiedSince: &gtw.Metadata.ResourceVersion,
-		}, *gtw)
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *gtw)
 	if err != nil {
 		return nil, err
 	}
@@ -347,14 +317,12 @@ func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *ne
 	}
 }
 
-func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.InternetGateway) error {
+func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.InternetGateway, params *network.DeleteInternetGatewayParams) error {
 	if err := validateNetworkRegionalMetadataV1(gtw.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name, &network.DeleteInternetGatewayParams{
-		IfUnmodifiedSince: &gtw.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -402,15 +370,10 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *network.SecurityGroup) (*network.SecurityGroup, error) {
-	if err := validateNetworkRegionalMetadataV1(group.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup,
+	params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
 
-	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, group.Metadata.Tenant, *group.Metadata.Workspace, group.Metadata.Name,
-		&network.CreateOrUpdateSecurityGroupParams{
-			IfUnmodifiedSince: &group.Metadata.ResourceVersion,
-		}, *group)
+	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *group)
 	if err != nil {
 		return nil, err
 	}
@@ -426,14 +389,12 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *ne
 	}
 }
 
-func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.SecurityGroup) error {
+func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
 	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, &network.DeleteSecurityGroupParams{
-		IfUnmodifiedSince: &route.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -481,15 +442,9 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) (*network.Nic, error) {
-	if err := validateNetworkZonalMetadataV1(nic.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
 
-	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, nic.Metadata.Tenant, *nic.Metadata.Workspace, nic.Metadata.Name,
-		&network.CreateOrUpdateNicParams{
-			IfUnmodifiedSince: &nic.Metadata.ResourceVersion,
-		}, *nic)
+	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *nic)
 	if err != nil {
 		return nil, err
 	}
@@ -505,14 +460,12 @@ func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) (
 	}
 }
 
-func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
+func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic, params *network.DeleteNicParams) error {
 	if err := validateNetworkZonalMetadataV1(nic.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteNicWithResponse(ctx, nic.Metadata.Tenant, *nic.Metadata.Workspace, nic.Metadata.Name, &network.DeleteNicParams{
-		IfUnmodifiedSince: &nic.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeleteNicWithResponse(ctx, nic.Metadata.Tenant, *nic.Metadata.Workspace, nic.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -560,15 +513,9 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.PublicIp) (*network.PublicIp, error) {
-	if err := validateNetworkRegionalMetadataV1(ip.Metadata); err != nil {
-		return nil, err
-	}
+func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*network.PublicIp, error) {
 
-	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, ip.Metadata.Tenant, *ip.Metadata.Workspace, ip.Metadata.Name,
-		&network.CreateOrUpdatePublicIpParams{
-			IfUnmodifiedSince: &ip.Metadata.ResourceVersion,
-		}, *ip)
+	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *ip)
 	if err != nil {
 		return nil, err
 	}
@@ -584,14 +531,12 @@ func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *network.Pu
 	}
 }
 
-func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) error {
+func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp, params *network.DeletePublicIpParams) error {
 	if err := validateNetworkRegionalMetadataV1(ip.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeletePublicIpWithResponse(ctx, ip.Metadata.Tenant, *ip.Metadata.Workspace, ip.Metadata.Name, &network.DeletePublicIpParams{
-		IfUnmodifiedSince: &ip.Metadata.ResourceVersion,
-	})
+	resp, err := api.network.DeletePublicIpWithResponse(ctx, ip.Metadata.Tenant, *ip.Metadata.Workspace, ip.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}

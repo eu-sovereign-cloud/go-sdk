@@ -86,15 +86,10 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) (*storage.BlockStorage, error) {
-	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
-		return nil, err
-	}
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage,
+	params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
 
-	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name,
-		&storage.CreateOrUpdateBlockStorageParams{
-			IfUnmodifiedSince: &block.Metadata.ResourceVersion,
-		}, *block, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name, params, *block, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -110,14 +105,12 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 	}
 }
 
-func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
 	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, &storage.DeleteBlockStorageParams{
-		IfUnmodifiedSince: &block.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -165,15 +158,9 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) (*storage.Image, error) {
-	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
-		return nil, err
-	}
+func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantReference, image *storage.Image, params *storage.CreateOrUpdateImageParams) (*storage.Image, error) {
 
-	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name,
-		&storage.CreateOrUpdateImageParams{
-			IfUnmodifiedSince: &image.Metadata.ResourceVersion,
-		}, *image, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name, params, *image, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -189,14 +176,12 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Im
 	}
 }
 
-func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) error {
+func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image, params *storage.DeleteImageParams) error {
 	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.storage.DeleteImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name, &storage.DeleteImageParams{
-		IfUnmodifiedSince: &image.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.storage.DeleteImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}

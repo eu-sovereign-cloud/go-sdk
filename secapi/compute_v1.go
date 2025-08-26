@@ -86,15 +86,10 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) (*compute.Instance, error) {
-	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
-		return nil, err
-	}
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance,
+	params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name,
-		&compute.CreateOrUpdateInstanceParams{
-			IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-		}, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -110,14 +105,12 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.
 	}
 }
 
-func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.DeleteInstanceParams{
-		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -129,14 +122,12 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 	return nil
 }
 
-func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance, params *compute.StartInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StartInstanceParams{
-		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -148,14 +139,12 @@ func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance)
 	return nil
 }
 
-func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance, params *compute.StopInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.StopInstanceParams{
-		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -167,14 +156,12 @@ func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) 
 	return nil
 }
 
-func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance, params *compute.RestartInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, &compute.RestartInstanceParams{
-		IfUnmodifiedSince: &inst.Metadata.ResourceVersion,
-	}, api.loadRequestHeaders)
+	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}

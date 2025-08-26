@@ -108,11 +108,11 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
+	tref := TenantReference{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.Role1Name,
+	}
 	role := authorization.Role{
-		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.Role1Name,
-		},
 		Spec: authorization.RoleSpec{
 			Permissions: []authorization.Permission{
 				{
@@ -123,7 +123,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 			},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, tref, &role, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -163,7 +163,7 @@ func TestDeleteRole(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = client.AuthorizationV1.DeleteRole(ctx, resp)
+	err = client.AuthorizationV1.DeleteRole(ctx, resp, nil)
 	require.NoError(t, err)
 }
 
@@ -260,11 +260,11 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
+	tref := TenantReference{
+		Tenant: secatest.Tenant1Name,
+		Name:   secatest.RoleAssignment1Name,
+	}
 	assign := &authorization.RoleAssignment{
-		Metadata: &authorization.GlobalResourceMetadata{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.RoleAssignment1Name,
-		},
 		Spec: authorization.RoleAssignmentSpec{
 			Roles: []string{secatest.Role1Name},
 			Scopes: []authorization.RoleAssignmentScope{
@@ -275,7 +275,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 			Subs: []string{secatest.RoleAssignment1Subject},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, tref, assign, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -314,6 +314,6 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp)
+	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp, nil)
 	require.NoError(t, err)
 }
