@@ -50,8 +50,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantReference, role *authorization.Role,
-	params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
+func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantReference, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}
@@ -125,8 +124,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment,
-	params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}

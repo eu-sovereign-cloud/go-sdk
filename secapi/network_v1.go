@@ -459,7 +459,7 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
-	}	
+	}
 
 	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *nic)
 	if err != nil {
