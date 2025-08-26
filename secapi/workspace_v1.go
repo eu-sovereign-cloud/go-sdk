@@ -50,8 +50,10 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 	}
 }
 
-func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref TenantReference, ws *workspace.Workspace,
-	params *workspace.CreateOrUpdateWorkspaceParams) (*workspace.Workspace, error) {
+func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref TenantReference, ws *workspace.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*workspace.Workspace, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name), params, *ws, api.loadRequestHeaders)
 	if err != nil {

@@ -87,6 +87,9 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 }
 
 func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network, params *network.CreateOrUpdateNetworkParams) (*network.Network, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *net)
 	if err != nil {
@@ -158,6 +161,9 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 }
 
 func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *sub)
 	if err != nil {
@@ -229,6 +235,9 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 }
 
 func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *route)
 	if err != nil {
@@ -300,6 +309,9 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 }
 
 func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*network.InternetGateway, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *gtw)
 	if err != nil {
@@ -370,8 +382,10 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup,
-	params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
+func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *group)
 	if err != nil {
@@ -443,6 +457,9 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 }
 
 func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}	
 
 	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *nic)
 	if err != nil {
@@ -514,6 +531,9 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 }
 
 func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*network.PublicIp, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *ip)
 	if err != nil {

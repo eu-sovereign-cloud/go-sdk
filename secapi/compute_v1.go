@@ -86,8 +86,10 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance,
-	params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {

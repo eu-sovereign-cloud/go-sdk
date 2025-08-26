@@ -86,8 +86,10 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage,
-	params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
+	if err := validateWorkspaceReference(wref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, storage.Tenant(wref.Tenant), storage.Workspace(wref.Workspace), wref.Name, params, *block, api.loadRequestHeaders)
 	if err != nil {
@@ -159,6 +161,9 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 }
 
 func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantReference, image *storage.Image, params *storage.CreateOrUpdateImageParams) (*storage.Image, error) {
+	if err := validateTenantReference(tref); err != nil {
+		return nil, err
+	}
 
 	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, storage.Tenant(tref.Tenant), tref.Name, params, *image, api.loadRequestHeaders)
 	if err != nil {
