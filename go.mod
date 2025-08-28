@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/oapi-codegen/runtime v1.1.2
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	k8s.io/utils v0.0.0-20241210054802-24370beab758
 )
 
