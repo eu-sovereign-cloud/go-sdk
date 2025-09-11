@@ -43,7 +43,11 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *workspace.Workspace) (*workspace.Workspace, error) {

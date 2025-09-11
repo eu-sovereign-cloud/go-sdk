@@ -43,7 +43,11 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) (*authorization.Role, error) {
@@ -118,7 +122,11 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) (*authorization.RoleAssignment, error) {
