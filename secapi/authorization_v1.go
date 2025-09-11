@@ -50,7 +50,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantReference, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
+func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, tref TenantReference, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}
@@ -71,7 +71,11 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantR
 	}
 }
 
-func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role, params *authorization.DeleteRoleParams) error {
+func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantReference, role *authorization.Role) (*authorization.Role, error) {
+	return api.CreateOrUpdateRoleWithParams(ctx, tref, role, nil)
+}
+
+func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *authorization.Role, params *authorization.DeleteRoleParams) error {
 	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
 		return err
 	}
@@ -86,6 +90,10 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 	}
 
 	return nil
+}
+
+func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.Role) error {
+	return api.DeleteRoleWithParams(ctx, role, nil)
 }
 
 // Role Assignment
@@ -124,7 +132,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}
@@ -145,7 +153,11 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tr
 	}
 }
 
-func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment) (*authorization.RoleAssignment, error) {
+	return api.CreateOrUpdateRoleAssignmentWithParams(ctx, tref, assign, nil)
+}
+
+func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, assign *authorization.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
 	if err := validateAuthorizationMetadataV1(assign.Metadata); err != nil {
 		return err
 	}
@@ -160,6 +172,10 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *au
 	}
 
 	return nil
+}
+
+func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) error {
+	return api.DeleteRoleAssignmentWithParams(ctx, assign, nil)
 }
 
 func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {

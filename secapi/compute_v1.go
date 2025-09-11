@@ -86,7 +86,7 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
+func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, wref WorkspaceReference, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -107,7 +107,11 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref Workspace
 	}
 }
 
-func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance) (*compute.Instance, error) {
+	return api.CreateOrUpdateInstanceWithParams(ctx, wref, inst, nil)
+}
+
+func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
@@ -124,7 +128,11 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 	return nil
 }
 
-func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance, params *compute.StartInstanceParams) error {
+func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
+	return api.DeleteInstanceWithParams(ctx, inst, nil)
+}
+
+func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StartInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
@@ -141,7 +149,11 @@ func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance,
 	return nil
 }
 
-func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance, params *compute.StopInstanceParams) error {
+func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance) error {
+	return api.StartInstanceWithParams(ctx, inst, nil)
+}
+
+func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StopInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
@@ -158,7 +170,11 @@ func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance, 
 	return nil
 }
 
-func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance, params *compute.RestartInstanceParams) error {
+func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) error {
+	return api.StopInstanceWithParams(ctx, inst, nil)
+}
+
+func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.RestartInstanceParams) error {
 	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
 		return err
 	}
@@ -173,6 +189,10 @@ func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instanc
 	}
 
 	return nil
+}
+
+func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance) error {
+	return api.RestartInstanceWithParams(ctx, inst, nil)
 }
 
 func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {

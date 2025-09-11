@@ -50,7 +50,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 	}
 }
 
-func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref TenantReference, ws *workspace.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*workspace.Workspace, error) {
+func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, tref TenantReference, ws *workspace.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*workspace.Workspace, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}
@@ -71,7 +71,11 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref Tenant
 	}
 }
 
-func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace, params *workspace.DeleteWorkspaceParams) error {
+func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref TenantReference, ws *workspace.Workspace) (*workspace.Workspace, error) {
+	return api.CreateOrUpdateWorkspaceWithParams(ctx, tref, ws, nil)
+}
+
+func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *workspace.Workspace, params *workspace.DeleteWorkspaceParams) error {
 	if err := validateWorkspaceMetadataV1(ws.Metadata); err != nil {
 		return err
 	}
@@ -86,6 +90,10 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 	}
 
 	return nil
+}
+
+func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Workspace) error {
+	return api.DeleteWorkspaceWithParams(ctx, ws, nil)
 }
 
 func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {

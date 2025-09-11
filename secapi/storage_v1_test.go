@@ -201,7 +201,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 			SizeGB: secatest.BlockStorage1SizeGB,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, wref, block, nil)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, wref, block)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -247,7 +247,7 @@ func TestDeleteBlockStorage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.StorageV1.DeleteBlockStorage(ctx, resp, nil)
+	err = regionalClient.StorageV1.DeleteBlockStorage(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -365,7 +365,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 			CpuArchitecture: secatest.Image1CpuArch,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, tref, image, nil)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, tref, image)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -410,6 +410,6 @@ func TestDeleteImage(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.StorageV1.DeleteImage(ctx, resp, nil)
+	err = regionalClient.StorageV1.DeleteImage(ctx, resp)
 	require.NoError(t, err)
 }

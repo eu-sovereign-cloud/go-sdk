@@ -204,7 +204,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 			Zone:   secatest.ZoneA,
 		},
 	}
-	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, wref, inst, nil)
+	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, wref, inst)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -239,7 +239,7 @@ func TestStartInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StartInstance(ctx, inst, nil)
+	err := regionalClient.ComputeV1.StartInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -265,7 +265,7 @@ func TestRestartInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.RestartInstance(ctx, inst, nil)
+	err := regionalClient.ComputeV1.RestartInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -291,7 +291,7 @@ func TestStopInstanace(t *testing.T) {
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 	}
-	err := regionalClient.ComputeV1.StopInstance(ctx, inst, nil)
+	err := regionalClient.ComputeV1.StopInstance(ctx, inst)
 	require.NoError(t, err)
 }
 
@@ -328,6 +328,6 @@ func TestDeleteInstance(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp, nil)
+	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp)
 	require.NoError(t, err)
 }

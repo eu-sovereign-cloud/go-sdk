@@ -86,7 +86,7 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network, params *network.CreateOrUpdateNetworkParams) (*network.Network, error) {
+func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, wref WorkspaceReference, net *network.Network, params *network.CreateOrUpdateNetworkParams) (*network.Network, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -107,7 +107,11 @@ func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceR
 	}
 }
 
-func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network, params *network.DeleteNetworkParams) error {
+func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, wref WorkspaceReference, net *network.Network) (*network.Network, error) {
+	return api.CreateOrUpdateNetworkWithParams(ctx, wref, net, nil)
+}
+
+func (api *NetworkV1) DeleteNetworkWithParams(ctx context.Context, net *network.Network, params *network.DeleteNetworkParams) error {
 	if err := validateNetworkRegionalMetadataV1(net.Metadata); err != nil {
 		return err
 	}
@@ -122,6 +126,10 @@ func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network, p
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) error {
+	return api.DeleteNetworkWithParams(ctx, net, nil)
 }
 
 // Subnet
@@ -160,7 +168,7 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
+func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, wref WorkspaceReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -181,7 +189,11 @@ func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceRe
 	}
 }
 
-func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet, params *network.DeleteSubnetParams) error {
+func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet) (*network.Subnet, error) {
+	return api.CreateOrUpdateSubnetWithParams(ctx, wref, sub, nil)
+}
+
+func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *network.Subnet, params *network.DeleteSubnetParams) error {
 	if err := validateNetworkZonalMetadataV1(sub.Metadata); err != nil {
 		return err
 	}
@@ -196,6 +208,10 @@ func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet, par
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) error {
+	return api.DeleteSubnetWithParams(ctx, sub, nil)
 }
 
 // Route Table
@@ -234,7 +250,7 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
+func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, wref WorkspaceReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -255,7 +271,11 @@ func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref Workspa
 	}
 }
 
-func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.RouteTable, params *network.DeleteRouteTableParams) error {
+func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable) (*network.RouteTable, error) {
+	return api.CreateOrUpdateRouteTableWithParams(ctx, wref, route, nil)
+}
+
+func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *network.RouteTable, params *network.DeleteRouteTableParams) error {
 	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
 		return err
 	}
@@ -270,6 +290,10 @@ func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.Route
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.RouteTable) error {
+	return api.DeleteRouteTableWithParams(ctx, route, nil)
 }
 
 // Internet Gateway
@@ -308,7 +332,7 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*network.InternetGateway, error) {
+func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*network.InternetGateway, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -329,7 +353,11 @@ func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref Wo
 	}
 }
 
-func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.InternetGateway, params *network.DeleteInternetGatewayParams) error {
+func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway) (*network.InternetGateway, error) {
+	return api.CreateOrUpdateInternetGatewayWithParams(ctx, wref, gtw, nil)
+}
+
+func (api *NetworkV1) DeleteInternetGatewayWithParams(ctx context.Context, gtw *network.InternetGateway, params *network.DeleteInternetGatewayParams) error {
 	if err := validateNetworkRegionalMetadataV1(gtw.Metadata); err != nil {
 		return err
 	}
@@ -344,6 +372,10 @@ func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.In
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.InternetGateway) error {
+	return api.DeleteInternetGatewayWithParams(ctx, gtw, nil)
 }
 
 // Security Group
@@ -382,7 +414,7 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
+func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -403,7 +435,11 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref Work
 	}
 }
 
-func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup) (*network.SecurityGroup, error) {
+	return api.CreateOrUpdateSecurityGroupWithParams(ctx, wref, group, nil)
+}
+
+func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *network.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
 	if err := validateNetworkRegionalMetadataV1(route.Metadata); err != nil {
 		return err
 	}
@@ -418,6 +454,10 @@ func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.Se
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.SecurityGroup) error {
+	return api.DeleteSecurityGroupWithParams(ctx, route, nil)
 }
 
 // Nic
@@ -456,7 +496,7 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
+func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -477,7 +517,11 @@ func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceRefer
 	}
 }
 
-func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic, params *network.DeleteNicParams) error {
+func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, wref WorkspaceReference, nic *network.Nic) (*network.Nic, error) {
+	return api.CreateOrUpdateNicWithParams(ctx, wref, nic, nil)
+}
+
+func (api *NetworkV1) DeleteNicWithParams(ctx context.Context, nic *network.Nic, params *network.DeleteNicParams) error {
 	if err := validateNetworkZonalMetadataV1(nic.Metadata); err != nil {
 		return err
 	}
@@ -492,6 +536,10 @@ func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic, params *n
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
+	return api.DeleteNicWithParams(ctx, nic, nil)
 }
 
 // Public Ip
@@ -530,7 +578,7 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*network.PublicIp, error) {
+func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*network.PublicIp, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -551,7 +599,11 @@ func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref Workspace
 	}
 }
 
-func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp, params *network.DeletePublicIpParams) error {
+func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp) (*network.PublicIp, error) {
+	return api.CreateOrUpdatePublicIpWithParams(ctx, wref, ip, nil)
+}
+
+func (api *NetworkV1) DeletePublicIpWithParams(ctx context.Context, ip *network.PublicIp, params *network.DeletePublicIpParams) error {
 	if err := validateNetworkRegionalMetadataV1(ip.Metadata); err != nil {
 		return err
 	}
@@ -566,6 +618,10 @@ func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp, 
 	}
 
 	return nil
+}
+
+func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *network.PublicIp) error {
+	return api.DeletePublicIpWithParams(ctx, ip, nil)
 }
 
 func newNetworkV1(client *RegionalClient, networkUrl string) (*NetworkV1, error) {

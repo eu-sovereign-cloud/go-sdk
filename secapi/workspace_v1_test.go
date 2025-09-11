@@ -107,7 +107,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 		Name:   secatest.Workspace1Name,
 	}
 	ws := &workspace.Workspace{}
-	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, tref, ws, nil)
+	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, tref, ws)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -143,6 +143,6 @@ func TestDeleteWorkspace(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp, nil)
+	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp)
 	require.NoError(t, err)
 }

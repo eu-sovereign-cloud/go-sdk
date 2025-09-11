@@ -86,7 +86,7 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
+func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
 	if err := validateWorkspaceReference(wref); err != nil {
 		return nil, err
 	}
@@ -107,7 +107,11 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref Works
 	}
 }
 
-func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref WorkspaceReference, block *storage.BlockStorage) (*storage.BlockStorage, error) {
+	return api.CreateOrUpdateBlockStorageWithParams(ctx, wref, block, nil)
+}
+
+func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
 	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
 		return err
 	}
@@ -122,6 +126,10 @@ func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.Blo
 	}
 
 	return nil
+}
+
+func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+	return api.DeleteBlockStorageWithParams(ctx, block, nil)
 }
 
 // Image
@@ -160,7 +168,7 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantReference, image *storage.Image, params *storage.CreateOrUpdateImageParams) (*storage.Image, error) {
+func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, tref TenantReference, image *storage.Image, params *storage.CreateOrUpdateImageParams) (*storage.Image, error) {
 	if err := validateTenantReference(tref); err != nil {
 		return nil, err
 	}
@@ -181,7 +189,11 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantRefere
 	}
 }
 
-func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image, params *storage.DeleteImageParams) error {
+func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantReference, image *storage.Image) (*storage.Image, error) {
+	return api.CreateOrUpdateImageWithParams(ctx, tref, image, nil)
+}
+
+func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *storage.Image, params *storage.DeleteImageParams) error {
 	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
 		return err
 	}
@@ -196,6 +208,10 @@ func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image, par
 	}
 
 	return nil
+}
+
+func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) error {
+	return api.DeleteImageWithParams(ctx, image, nil)
 }
 
 func newStorageV1(client *RegionalClient, storageUrl string) (*StorageV1, error) {

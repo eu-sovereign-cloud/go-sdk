@@ -123,7 +123,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 			},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, tref, &role, nil)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, tref, &role)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -163,7 +163,7 @@ func TestDeleteRole(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = client.AuthorizationV1.DeleteRole(ctx, resp, nil)
+	err = client.AuthorizationV1.DeleteRole(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -275,7 +275,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 			Subs: []string{secatest.RoleAssignment1Subject},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, tref, assign, nil)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, tref, assign)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
@@ -314,6 +314,6 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp, nil)
+	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp)
 	require.NoError(t, err)
 }

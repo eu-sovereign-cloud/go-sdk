@@ -194,7 +194,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 			SkuRef:        secatest.NetworkSku1Ref,
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, wref, net, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, wref, net)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
@@ -237,7 +237,7 @@ func TestDeleteNetworkV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteNetwork(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteNetwork(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -344,7 +344,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 			Zone: network.Zone(secatest.ZoneA),
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, wref, sub, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, wref, sub)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Subnet1Name, resp.Metadata.Name)
@@ -382,7 +382,7 @@ func TestDeleteSubnetV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteSubnet(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteSubnet(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -501,7 +501,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, wref, route, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, wref, route)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
@@ -541,7 +541,7 @@ func TestDeleteRouteTableV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteRouteTable(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteRouteTable(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -650,7 +650,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 		Name:      secatest.InternetGateway1Name,
 	}
 	gtw := &network.InternetGateway{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, wref, gtw, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, wref, gtw)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
@@ -690,7 +690,7 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteInternetGateway(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteInternetGateway(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -813,7 +813,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, wref, group, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, wref, group)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
@@ -853,7 +853,7 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteSecurityGroup(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteSecurityGroup(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -962,7 +962,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 		Name:      secatest.Nic1Name,
 	}
 	nic := &network.Nic{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, wref, nic, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, wref, nic)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
@@ -1002,7 +1002,7 @@ func TestDeleteNicV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeleteNic(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeleteNic(ctx, resp)
 	require.NoError(t, err)
 }
 
@@ -1111,7 +1111,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 		Name:      secatest.PublicIp1Name,
 	}
 	ip := &network.PublicIp{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, wref, ip, nil)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, wref, ip)
 	require.NoError(t, err)
 
 	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
@@ -1151,6 +1151,6 @@ func TestDeletePublicIpV1(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	err = regionalClient.NetworkV1.DeletePublicIp(ctx, resp, nil)
+	err = regionalClient.NetworkV1.DeletePublicIp(ctx, resp)
 	require.NoError(t, err)
 }
