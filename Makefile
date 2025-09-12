@@ -21,8 +21,9 @@ spec:
 	@echo "Generating spec..."
 	sh -c "cd spec && make build"
 
-.PHONY: generate
-generate: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
+.PHONY: schemas
+schemas: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
+	@echo "Generating schemas..."
 
 $(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
 	make -C spec dist/specs/$(shell basename $@)
@@ -33,7 +34,7 @@ $(PKG)/%/api.go: $(SPEC_DIST)/%.yaml
 		-package $(shell basename $(shell dirname $@) | cut -d '.' -f 2) -o $@ $<
 
 .PHONY: mock
-mock: generate
+mock: schemas
 	@echo "Generating mocks..."
 	$(GO_TOOL) github.com/vektra/mockery/v2
 
@@ -76,3 +77,6 @@ lint: fmt golint vet sec
 clean:
 	@echo "Cleaning..."
 	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
+
+.PHONY: generate
+generate: clean spec schemas mock

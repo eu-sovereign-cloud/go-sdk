@@ -26,7 +26,7 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 }
 
 // CreateOrUpdateRoleAssignmentWithBodyWithResponse provides a mock function with given fields: ctx, tenant, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -42,10 +42,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithBody
 
 	var r0 *authorization.CreateOrUpdateRoleAssignmentResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)); ok {
 		return rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleAssignmentResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleAssignmentResponse); ok {
 		r0 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -53,7 +53,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithBody
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -69,8 +69,8 @@ type MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithRe
 
 // CreateOrUpdateRoleAssignmentWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.CreateOrUpdateRoleAssignmentParams
 //   - contentType string
 //   - body io.Reader
@@ -80,7 +80,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRoleAssignmen
 		append([]interface{}{ctx, tenant, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -88,7 +88,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyW
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.CreateOrUpdateRoleAssignmentParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.CreateOrUpdateRoleAssignmentParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -98,13 +98,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyW
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateRoleAssignmentWithResponse provides a mock function with given fields: ctx, tenant, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleAssignmentParams, body authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleAssignmentParams, body authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -120,10 +120,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithResp
 
 	var r0 *authorization.CreateOrUpdateRoleAssignmentResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)); ok {
 		return rf(ctx, tenant, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleAssignmentResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleAssignmentResponse); ok {
 		r0 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -131,7 +131,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleAssignmentWithResp
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -147,8 +147,8 @@ type MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_C
 
 // CreateOrUpdateRoleAssignmentWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.CreateOrUpdateRoleAssignmentParams
 //   - body authorization.CreateOrUpdateRoleAssignmentJSONRequestBody
 //   - reqEditors ...authorization.RequestEditorFn
@@ -157,7 +157,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRoleAssignmen
 		append([]interface{}{ctx, tenant, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleAssignmentParams, body authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleAssignmentParams, body authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -165,7 +165,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithRespo
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.CreateOrUpdateRoleAssignmentParams), args[4].(authorization.CreateOrUpdateRoleAssignmentJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.CreateOrUpdateRoleAssignmentParams), args[4].(authorization.CreateOrUpdateRoleAssignmentJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -175,13 +175,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithRespo
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleAssignmentParams, authorization.CreateOrUpdateRoleAssignmentJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleAssignmentWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateRoleWithBodyWithResponse provides a mock function with given fields: ctx, tenant, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -197,10 +197,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithBodyWithRespon
 
 	var r0 *authorization.CreateOrUpdateRoleResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)); ok {
 		return rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleResponse); ok {
 		r0 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -208,7 +208,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithBodyWithRespon
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -224,8 +224,8 @@ type MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Cal
 
 // CreateOrUpdateRoleWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.CreateOrUpdateRoleParams
 //   - contentType string
 //   - body io.Reader
@@ -235,7 +235,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRoleWithBodyW
 		append([]interface{}{ctx, tenant, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -243,7 +243,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithRespons
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.CreateOrUpdateRoleParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.CreateOrUpdateRoleParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -253,13 +253,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithRespons
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, string, io.Reader, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateRoleWithResponse provides a mock function with given fields: ctx, tenant, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleParams, body authorization.CreateOrUpdateRoleJSONRequestBody, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleParams, body authorization.CreateOrUpdateRoleJSONRequestBody, reqEditors ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -275,10 +275,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithResponse(ctx c
 
 	var r0 *authorization.CreateOrUpdateRoleResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)); ok {
 		return rf(ctx, tenant, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) *authorization.CreateOrUpdateRoleResponse); ok {
 		r0 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -286,7 +286,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRoleWithResponse(ctx c
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -302,8 +302,8 @@ type MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call struct
 
 // CreateOrUpdateRoleWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.CreateOrUpdateRoleParams
 //   - body authorization.CreateOrUpdateRoleJSONRequestBody
 //   - reqEditors ...authorization.RequestEditorFn
@@ -312,7 +312,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRoleWithRespo
 		append([]interface{}{ctx, tenant, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.CreateOrUpdateRoleParams, body authorization.CreateOrUpdateRoleJSONRequestBody, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.CreateOrUpdateRoleParams, body authorization.CreateOrUpdateRoleJSONRequestBody, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -320,7 +320,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) 
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.CreateOrUpdateRoleParams), args[4].(authorization.CreateOrUpdateRoleJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.CreateOrUpdateRoleParams), args[4].(authorization.CreateOrUpdateRoleJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -330,13 +330,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) 
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.CreateOrUpdateRoleParams, authorization.CreateOrUpdateRoleJSONRequestBody, ...authorization.RequestEditorFn) (*authorization.CreateOrUpdateRoleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRoleWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteRoleAssignmentWithResponse provides a mock function with given fields: ctx, tenant, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteRoleAssignmentWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.DeleteRoleAssignmentParams, reqEditors ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteRoleAssignmentWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.DeleteRoleAssignmentParams, reqEditors ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -352,10 +352,10 @@ func (_m *MockClientWithResponsesInterface) DeleteRoleAssignmentWithResponse(ctx
 
 	var r0 *authorization.DeleteRoleAssignmentResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error)); ok {
 		return rf(ctx, tenant, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) *authorization.DeleteRoleAssignmentResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) *authorization.DeleteRoleAssignmentResponse); ok {
 		r0 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -363,7 +363,7 @@ func (_m *MockClientWithResponsesInterface) DeleteRoleAssignmentWithResponse(ctx
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -379,8 +379,8 @@ type MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call stru
 
 // DeleteRoleAssignmentWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.DeleteRoleAssignmentParams
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteRoleAssignmentWithResponse(ctx interface{}, tenant interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call {
@@ -388,7 +388,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteRoleAssignmentWithRes
 		append([]interface{}{ctx, tenant, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.DeleteRoleAssignmentParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.DeleteRoleAssignmentParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -396,7 +396,7 @@ func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.DeleteRoleAssignmentParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.DeleteRoleAssignmentParams), variadicArgs...)
 	})
 	return _c
 }
@@ -406,13 +406,13 @@ func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleAssignmentParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_DeleteRoleAssignmentWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteRoleWithResponse provides a mock function with given fields: ctx, tenant, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteRoleWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.DeleteRoleParams, reqEditors ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteRoleWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.DeleteRoleParams, reqEditors ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -428,10 +428,10 @@ func (_m *MockClientWithResponsesInterface) DeleteRoleWithResponse(ctx context.C
 
 	var r0 *authorization.DeleteRoleResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error)); ok {
 		return rf(ctx, tenant, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) *authorization.DeleteRoleResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) *authorization.DeleteRoleResponse); ok {
 		r0 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -439,7 +439,7 @@ func (_m *MockClientWithResponsesInterface) DeleteRoleWithResponse(ctx context.C
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -455,8 +455,8 @@ type MockClientWithResponsesInterface_DeleteRoleWithResponse_Call struct {
 
 // DeleteRoleWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params *authorization.DeleteRoleParams
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteRoleWithResponse(ctx interface{}, tenant interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call {
@@ -464,7 +464,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteRoleWithResponse(ctx 
 		append([]interface{}{ctx, tenant, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, params *authorization.DeleteRoleParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params *authorization.DeleteRoleParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -472,7 +472,7 @@ func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) Run(run 
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), args[3].(*authorization.DeleteRoleParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), args[3].(*authorization.DeleteRoleParams), variadicArgs...)
 	})
 	return _c
 }
@@ -482,13 +482,13 @@ func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) Return(_
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error)) *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, *authorization.DeleteRoleParams, ...authorization.RequestEditorFn) (*authorization.DeleteRoleResponse, error)) *MockClientWithResponsesInterface_DeleteRoleWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetRoleAssignmentWithResponse provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetRoleAssignmentWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, reqEditors ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetRoleAssignmentWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, reqEditors ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -504,10 +504,10 @@ func (_m *MockClientWithResponsesInterface) GetRoleAssignmentWithResponse(ctx co
 
 	var r0 *authorization.GetRoleAssignmentResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) *authorization.GetRoleAssignmentResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) *authorization.GetRoleAssignmentResponse); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -515,7 +515,7 @@ func (_m *MockClientWithResponsesInterface) GetRoleAssignmentWithResponse(ctx co
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -531,15 +531,15 @@ type MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call struct 
 
 // GetRoleAssignmentWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetRoleAssignmentWithResponse(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call{Call: _e.mock.On("GetRoleAssignmentWithResponse",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -547,7 +547,7 @@ func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) R
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -557,13 +557,13 @@ func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) R
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) (*authorization.GetRoleAssignmentResponse, error)) *MockClientWithResponsesInterface_GetRoleAssignmentWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetRoleWithResponse provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetRoleWithResponse(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, reqEditors ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetRoleWithResponse(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, reqEditors ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -579,10 +579,10 @@ func (_m *MockClientWithResponsesInterface) GetRoleWithResponse(ctx context.Cont
 
 	var r0 *authorization.GetRoleResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) *authorization.GetRoleResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) *authorization.GetRoleResponse); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -590,7 +590,7 @@ func (_m *MockClientWithResponsesInterface) GetRoleWithResponse(ctx context.Cont
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -606,15 +606,15 @@ type MockClientWithResponsesInterface_GetRoleWithResponse_Call struct {
 
 // GetRoleWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetRoleWithResponse(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRoleWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetRoleWithResponse_Call{Call: _e.mock.On("GetRoleWithResponse",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, name authorization.ResourceName, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_GetRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_GetRoleWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -622,7 +622,7 @@ func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) Run(run fun
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(authorization.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(authorization.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -632,13 +632,13 @@ func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) Return(_a0 
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, authorization.ResourceName, ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error)) *MockClientWithResponsesInterface_GetRoleWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRoleWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, authorization.ResourcePathParam, ...authorization.RequestEditorFn) (*authorization.GetRoleResponse, error)) *MockClientWithResponsesInterface_GetRoleWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListRoleAssignmentsWithResponse provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListRoleAssignmentsWithResponse(ctx context.Context, tenant authorization.Tenant, params *authorization.ListRoleAssignmentsParams, reqEditors ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListRoleAssignmentsWithResponse(ctx context.Context, tenant authorization.TenantPathParam, params *authorization.ListRoleAssignmentsParams, reqEditors ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -654,10 +654,10 @@ func (_m *MockClientWithResponsesInterface) ListRoleAssignmentsWithResponse(ctx 
 
 	var r0 *authorization.ListRoleAssignmentsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) *authorization.ListRoleAssignmentsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) *authorization.ListRoleAssignmentsResponse); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -665,7 +665,7 @@ func (_m *MockClientWithResponsesInterface) ListRoleAssignmentsWithResponse(ctx 
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -681,7 +681,7 @@ type MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call struc
 
 // ListRoleAssignmentsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
+//   - tenant authorization.TenantPathParam
 //   - params *authorization.ListRoleAssignmentsParams
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListRoleAssignmentsWithResponse(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call {
@@ -689,7 +689,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListRoleAssignmentsWithResp
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, params *authorization.ListRoleAssignmentsParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, params *authorization.ListRoleAssignmentsParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -697,7 +697,7 @@ func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call)
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(*authorization.ListRoleAssignmentsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(*authorization.ListRoleAssignmentsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -707,13 +707,13 @@ func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call)
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error)) *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, *authorization.ListRoleAssignmentsParams, ...authorization.RequestEditorFn) (*authorization.ListRoleAssignmentsResponse, error)) *MockClientWithResponsesInterface_ListRoleAssignmentsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListRolesWithResponse provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListRolesWithResponse(ctx context.Context, tenant authorization.Tenant, params *authorization.ListRolesParams, reqEditors ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListRolesWithResponse(ctx context.Context, tenant authorization.TenantPathParam, params *authorization.ListRolesParams, reqEditors ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -729,10 +729,10 @@ func (_m *MockClientWithResponsesInterface) ListRolesWithResponse(ctx context.Co
 
 	var r0 *authorization.ListRolesResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, *authorization.ListRolesParams, ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, *authorization.ListRolesParams, ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, authorization.Tenant, *authorization.ListRolesParams, ...authorization.RequestEditorFn) *authorization.ListRolesResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, authorization.TenantPathParam, *authorization.ListRolesParams, ...authorization.RequestEditorFn) *authorization.ListRolesResponse); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -740,7 +740,7 @@ func (_m *MockClientWithResponsesInterface) ListRolesWithResponse(ctx context.Co
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, authorization.Tenant, *authorization.ListRolesParams, ...authorization.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, authorization.TenantPathParam, *authorization.ListRolesParams, ...authorization.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -756,7 +756,7 @@ type MockClientWithResponsesInterface_ListRolesWithResponse_Call struct {
 
 // ListRolesWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant authorization.Tenant
+//   - tenant authorization.TenantPathParam
 //   - params *authorization.ListRolesParams
 //   - reqEditors ...authorization.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListRolesWithResponse(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRolesWithResponse_Call {
@@ -764,7 +764,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListRolesWithResponse(ctx i
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.Tenant, params *authorization.ListRolesParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_ListRolesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) Run(run func(ctx context.Context, tenant authorization.TenantPathParam, params *authorization.ListRolesParams, reqEditors ...authorization.RequestEditorFn)) *MockClientWithResponsesInterface_ListRolesWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]authorization.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -772,7 +772,7 @@ func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) Run(run f
 				variadicArgs[i] = a.(authorization.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(authorization.Tenant), args[2].(*authorization.ListRolesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(authorization.TenantPathParam), args[2].(*authorization.ListRolesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -782,7 +782,7 @@ func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) Return(_a
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) RunAndReturn(run func(context.Context, authorization.Tenant, *authorization.ListRolesParams, ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error)) *MockClientWithResponsesInterface_ListRolesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRolesWithResponse_Call) RunAndReturn(run func(context.Context, authorization.TenantPathParam, *authorization.ListRolesParams, ...authorization.RequestEditorFn) (*authorization.ListRolesResponse, error)) *MockClientWithResponsesInterface_ListRolesWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }

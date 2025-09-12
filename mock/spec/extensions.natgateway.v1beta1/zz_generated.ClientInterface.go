@@ -27,7 +27,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateInternetNatGatewayInstance provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstance(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, body natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstance(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, body natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -43,10 +43,10 @@ func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstance(ctx cont
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -54,7 +54,7 @@ func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstance(ctx cont
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -70,9 +70,9 @@ type MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call struct {
 
 // CreateOrUpdateInternetNatGatewayInstance is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant natgateway.Tenant
-//   - workspace natgateway.Workspace
-//   - name natgateway.ResourceName
+//   - tenant natgateway.TenantPathParam
+//   - workspace natgateway.WorkspacePathParam
+//   - name natgateway.ResourcePathParam
 //   - params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams
 //   - body natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody
 //   - reqEditors ...natgateway.RequestEditorFn
@@ -81,7 +81,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateInternetNatGatewayInstance
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, body natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, body natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]natgateway.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -89,7 +89,7 @@ func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Run
 				variadicArgs[i] = a.(natgateway.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(natgateway.Tenant), args[2].(natgateway.Workspace), args[3].(natgateway.ResourceName), args[4].(*natgateway.CreateOrUpdateInternetNatGatewayInstanceParams), args[5].(natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(natgateway.TenantPathParam), args[2].(natgateway.WorkspacePathParam), args[3].(natgateway.ResourcePathParam), args[4].(*natgateway.CreateOrUpdateInternetNatGatewayInstanceParams), args[5].(natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -99,13 +99,13 @@ func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Ret
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, natgateway.CreateOrUpdateInternetNatGatewayInstanceJSONRequestBody, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateInternetNatGatewayInstanceWithBody provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstanceWithBody(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, contentType string, body io.Reader, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstanceWithBody(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, contentType string, body io.Reader, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -121,10 +121,10 @@ func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstanceWithBody(
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -132,7 +132,7 @@ func (_m *MockClientInterface) CreateOrUpdateInternetNatGatewayInstanceWithBody(
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -148,9 +148,9 @@ type MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call s
 
 // CreateOrUpdateInternetNatGatewayInstanceWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant natgateway.Tenant
-//   - workspace natgateway.Workspace
-//   - name natgateway.ResourceName
+//   - tenant natgateway.TenantPathParam
+//   - workspace natgateway.WorkspacePathParam
+//   - name natgateway.ResourcePathParam
 //   - params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams
 //   - contentType string
 //   - body io.Reader
@@ -160,7 +160,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateInternetNatGatewayInstance
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call) Run(run func(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, contentType string, body io.Reader, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call) Run(run func(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, contentType string, body io.Reader, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]natgateway.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -168,7 +168,7 @@ func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_C
 				variadicArgs[i] = a.(natgateway.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(natgateway.Tenant), args[2].(natgateway.Workspace), args[3].(natgateway.ResourceName), args[4].(*natgateway.CreateOrUpdateInternetNatGatewayInstanceParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(natgateway.TenantPathParam), args[2].(natgateway.WorkspacePathParam), args[3].(natgateway.ResourcePathParam), args[4].(*natgateway.CreateOrUpdateInternetNatGatewayInstanceParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -178,13 +178,13 @@ func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_C
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call) RunAndReturn(run func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call) RunAndReturn(run func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.CreateOrUpdateInternetNatGatewayInstanceParams, string, io.Reader, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateInternetNatGatewayInstanceWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteInternetNatGatewayInstance provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientInterface) DeleteInternetNatGatewayInstance(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.DeleteInternetNatGatewayInstanceParams, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteInternetNatGatewayInstance(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.DeleteInternetNatGatewayInstanceParams, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -200,10 +200,10 @@ func (_m *MockClientInterface) DeleteInternetNatGatewayInstance(ctx context.Cont
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -211,7 +211,7 @@ func (_m *MockClientInterface) DeleteInternetNatGatewayInstance(ctx context.Cont
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -227,9 +227,9 @@ type MockClientInterface_DeleteInternetNatGatewayInstance_Call struct {
 
 // DeleteInternetNatGatewayInstance is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant natgateway.Tenant
-//   - workspace natgateway.Workspace
-//   - name natgateway.ResourceName
+//   - tenant natgateway.TenantPathParam
+//   - workspace natgateway.WorkspacePathParam
+//   - name natgateway.ResourcePathParam
 //   - params *natgateway.DeleteInternetNatGatewayInstanceParams
 //   - reqEditors ...natgateway.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteInternetNatGatewayInstance(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteInternetNatGatewayInstance_Call {
@@ -237,7 +237,7 @@ func (_e *MockClientInterface_Expecter) DeleteInternetNatGatewayInstance(ctx int
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, params *natgateway.DeleteInternetNatGatewayInstanceParams, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_DeleteInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params *natgateway.DeleteInternetNatGatewayInstanceParams, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_DeleteInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]natgateway.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -245,7 +245,7 @@ func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) Run(run fun
 				variadicArgs[i] = a.(natgateway.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(natgateway.Tenant), args[2].(natgateway.Workspace), args[3].(natgateway.ResourceName), args[4].(*natgateway.DeleteInternetNatGatewayInstanceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(natgateway.TenantPathParam), args[2].(natgateway.WorkspacePathParam), args[3].(natgateway.ResourcePathParam), args[4].(*natgateway.DeleteInternetNatGatewayInstanceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -255,13 +255,13 @@ func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) Return(_a0 
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_DeleteInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, *natgateway.DeleteInternetNatGatewayInstanceParams, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteInternetNatGatewayInstance_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetInternetNatGatewayInstance provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientInterface) GetInternetNatGatewayInstance(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetInternetNatGatewayInstance(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -277,10 +277,10 @@ func (_m *MockClientInterface) GetInternetNatGatewayInstance(ctx context.Context
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, ...natgateway.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, ...natgateway.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -288,7 +288,7 @@ func (_m *MockClientInterface) GetInternetNatGatewayInstance(ctx context.Context
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, ...natgateway.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, ...natgateway.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -304,16 +304,16 @@ type MockClientInterface_GetInternetNatGatewayInstance_Call struct {
 
 // GetInternetNatGatewayInstance is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant natgateway.Tenant
-//   - workspace natgateway.Workspace
-//   - name natgateway.ResourceName
+//   - tenant natgateway.TenantPathParam
+//   - workspace natgateway.WorkspacePathParam
+//   - name natgateway.ResourcePathParam
 //   - reqEditors ...natgateway.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetInternetNatGatewayInstance(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetInternetNatGatewayInstance_Call {
 	return &MockClientInterface_GetInternetNatGatewayInstance_Call{Call: _e.mock.On("GetInternetNatGatewayInstance",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, name natgateway.ResourceName, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_GetInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) Run(run func(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_GetInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]natgateway.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -321,7 +321,7 @@ func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) Run(run func(c
 				variadicArgs[i] = a.(natgateway.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(natgateway.Tenant), args[2].(natgateway.Workspace), args[3].(natgateway.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(natgateway.TenantPathParam), args[2].(natgateway.WorkspacePathParam), args[3].(natgateway.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -331,13 +331,13 @@ func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) Return(_a0 *ht
 	return _c
 }
 
-func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.Tenant, natgateway.Workspace, natgateway.ResourceName, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetInternetNatGatewayInstance_Call {
+func (_c *MockClientInterface_GetInternetNatGatewayInstance_Call) RunAndReturn(run func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetInternetNatGatewayInstance_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListInternetNatGatewayInstances provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListInternetNatGatewayInstances(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, params *natgateway.ListInternetNatGatewayInstancesParams, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListInternetNatGatewayInstances(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, params *natgateway.ListInternetNatGatewayInstancesParams, reqEditors ...natgateway.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -353,10 +353,10 @@ func (_m *MockClientInterface) ListInternetNatGatewayInstances(ctx context.Conte
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, natgateway.Tenant, natgateway.Workspace, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -364,7 +364,7 @@ func (_m *MockClientInterface) ListInternetNatGatewayInstances(ctx context.Conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, natgateway.Tenant, natgateway.Workspace, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -380,8 +380,8 @@ type MockClientInterface_ListInternetNatGatewayInstances_Call struct {
 
 // ListInternetNatGatewayInstances is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant natgateway.Tenant
-//   - workspace natgateway.Workspace
+//   - tenant natgateway.TenantPathParam
+//   - workspace natgateway.WorkspacePathParam
 //   - params *natgateway.ListInternetNatGatewayInstancesParams
 //   - reqEditors ...natgateway.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListInternetNatGatewayInstances(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListInternetNatGatewayInstances_Call {
@@ -389,7 +389,7 @@ func (_e *MockClientInterface_Expecter) ListInternetNatGatewayInstances(ctx inte
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) Run(run func(ctx context.Context, tenant natgateway.Tenant, workspace natgateway.Workspace, params *natgateway.ListInternetNatGatewayInstancesParams, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_ListInternetNatGatewayInstances_Call {
+func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) Run(run func(ctx context.Context, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, params *natgateway.ListInternetNatGatewayInstancesParams, reqEditors ...natgateway.RequestEditorFn)) *MockClientInterface_ListInternetNatGatewayInstances_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]natgateway.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -397,7 +397,7 @@ func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) Run(run func
 				variadicArgs[i] = a.(natgateway.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(natgateway.Tenant), args[2].(natgateway.Workspace), args[3].(*natgateway.ListInternetNatGatewayInstancesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(natgateway.TenantPathParam), args[2].(natgateway.WorkspacePathParam), args[3].(*natgateway.ListInternetNatGatewayInstancesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -407,7 +407,7 @@ func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) Return(_a0 *
 	return _c
 }
 
-func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) RunAndReturn(run func(context.Context, natgateway.Tenant, natgateway.Workspace, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListInternetNatGatewayInstances_Call {
+func (_c *MockClientInterface_ListInternetNatGatewayInstances_Call) RunAndReturn(run func(context.Context, natgateway.TenantPathParam, natgateway.WorkspacePathParam, *natgateway.ListInternetNatGatewayInstancesParams, ...natgateway.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListInternetNatGatewayInstances_Call {
 	_c.Call.Return(run)
 	return _c
 }

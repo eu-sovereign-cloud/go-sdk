@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
@@ -19,7 +20,7 @@ type NetworkV1 struct {
 func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[network.NetworkSku], error) {
 	iter := Iterator[network.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.NetworkSku, *string, error) {
-			resp, err := api.network.ListSkusWithResponse(ctx, network.Tenant(tid), &network.ListSkusParams{
+			resp, err := api.network.ListSkusWithResponse(ctx, network.TenantPathParam(tid), &network.ListSkusParams{
 				Accept: ptr.To(network.ListSkusParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -34,11 +35,11 @@ func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[net
 }
 
 func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*network.NetworkSku, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetSkuWithResponse(ctx, network.Tenant(tref.Tenant), tref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetSkuWithResponse(ctx, network.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +56,7 @@ func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*networ
 func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Network], error) {
 	iter := Iterator[network.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Network, *string, error) {
-			resp, err := api.network.ListNetworksWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListNetworksParams{
+			resp, err := api.network.ListNetworksWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), &network.ListNetworksParams{
 				Accept: ptr.To(network.ListNetworksParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -70,11 +71,11 @@ func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid Worksp
 }
 
 func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*network.Network, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetNetworkWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -87,11 +88,11 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 }
 
 func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, wref WorkspaceReference, net *network.Network, params *network.CreateOrUpdateNetworkParams) (*network.Network, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *net, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, params, *net, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -134,11 +135,11 @@ func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *network.Network) e
 
 // Subnet
 
-func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Subnet], error) {
+func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[network.Subnet], error) {
 	iter := Iterator[network.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Subnet, *string, error) {
-			resp, err := api.network.ListSubnetsWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListSubnetsParams{
-				Accept: ptr.To(network.Applicationjson),
+			resp, err := api.network.ListSubnetsWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), network.NetworkPathParam(nid), &network.ListSubnetsParams{
+				Accept: ptr.To(network.ListSubnetsParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -151,12 +152,12 @@ func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid Workspa
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*network.Subnet, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*network.Subnet, error) {
+	if err := nref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetSubnetWithResponse(ctx, network.TenantPathParam(nref.Tenant), network.WorkspacePathParam(nref.Workspace), network.NetworkPathParam(nref.Network), network.ResourcePathParam(nref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -168,12 +169,12 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, wref WorkspaceReference) (*
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, wref WorkspaceReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, nref NetworkReference, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
+	if err := nref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *sub, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.TenantPathParam(nref.Tenant), network.WorkspacePathParam(nref.Workspace), network.NetworkPathParam(nref.Network), network.ResourcePathParam(nref.Name), params, *sub, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -189,8 +190,8 @@ func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, wref W
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, wref WorkspaceReference, sub *network.Subnet) (*network.Subnet, error) {
-	return api.CreateOrUpdateSubnetWithParams(ctx, wref, sub, nil)
+func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, nref NetworkReference, sub *network.Subnet) (*network.Subnet, error) {
+	return api.CreateOrUpdateSubnetWithParams(ctx, nref, sub, nil)
 }
 
 func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *network.Subnet, params *network.DeleteSubnetParams) error {
@@ -198,7 +199,8 @@ func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *network.S
 		return err
 	}
 
-	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Name, params, api.loadRequestHeaders)
+	// TODO Read network from metadata
+	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, network.ResourcePathParam(""), sub.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -216,10 +218,10 @@ func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *network.Subnet) err
 
 // Route Table
 
-func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.RouteTable], error) {
+func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[network.RouteTable], error) {
 	iter := Iterator[network.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.RouteTable, *string, error) {
-			resp, err := api.network.ListRouteTablesWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListRouteTablesParams{
+			resp, err := api.network.ListRouteTablesWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), network.NetworkPathParam(nid), &network.ListRouteTablesParams{
 				Accept: ptr.To(network.ListRouteTablesParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -233,12 +235,12 @@ func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid Wor
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference) (*network.RouteTable, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) (*network.RouteTable, error) {
+	if err := nref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetRouteTableWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetRouteTableWithResponse(ctx, network.TenantPathParam(nref.Tenant), network.WorkspacePathParam(nref.Workspace), network.NetworkPathParam(nref.Network), network.ResourcePathParam(nref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -250,12 +252,12 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, wref WorkspaceReference
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, wref WorkspaceReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, nref NetworkReference, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
+	if err := nref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *route, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.TenantPathParam(nref.Tenant), network.WorkspacePathParam(nref.Workspace), network.NetworkPathParam(nref.Network), network.ResourcePathParam(nref.Name), params, *route, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -271,8 +273,8 @@ func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, wr
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, wref WorkspaceReference, route *network.RouteTable) (*network.RouteTable, error) {
-	return api.CreateOrUpdateRouteTableWithParams(ctx, wref, route, nil)
+func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, nref NetworkReference, route *network.RouteTable) (*network.RouteTable, error) {
+	return api.CreateOrUpdateRouteTableWithParams(ctx, nref, route, nil)
 }
 
 func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *network.RouteTable, params *network.DeleteRouteTableParams) error {
@@ -280,7 +282,8 @@ func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *net
 		return err
 	}
 
-	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
+	// TODO Read network from metadata
+	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, network.ResourcePathParam(""), route.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -301,7 +304,7 @@ func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *network.Route
 func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.InternetGateway], error) {
 	iter := Iterator[network.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.InternetGateway, *string, error) {
-			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListInternetGatewaysParams{
+			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
 				Accept: ptr.To(network.ListInternetGatewaysParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -316,11 +319,11 @@ func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wi
 }
 
 func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*network.InternetGateway, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetInternetGatewayWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -333,11 +336,11 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 }
 
 func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, wref WorkspaceReference, gtw *network.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*network.InternetGateway, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *gtw, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, params, *gtw, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -383,8 +386,8 @@ func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *network.In
 func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.SecurityGroup], error) {
 	iter := Iterator[network.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.SecurityGroup, *string, error) {
-			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListSecurityGroupsParams{
-				Accept: ptr.To(network.ListSecurityGroupsParamsAcceptApplicationjson),
+			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
+				Accept: ptr.To(network.Applicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -398,11 +401,11 @@ func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid 
 }
 
 func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*network.SecurityGroup, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetSecurityGroupWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetSecurityGroupWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -415,11 +418,11 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 }
 
 func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, wref WorkspaceReference, group *network.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*network.SecurityGroup, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *group, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, params, *group, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +468,7 @@ func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *network.Se
 func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.Nic], error) {
 	iter := Iterator[network.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.Nic, *string, error) {
-			resp, err := api.network.ListNicsWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListNicsParams{
+			resp, err := api.network.ListNicsWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), &network.ListNicsParams{
 				Accept: ptr.To(network.ListNicsParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -480,11 +483,11 @@ func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceI
 }
 
 func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*network.Nic, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetNicWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -497,11 +500,11 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 }
 
 func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, wref WorkspaceReference, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *nic, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, params, *nic, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -547,7 +550,7 @@ func (api *NetworkV1) DeleteNic(ctx context.Context, nic *network.Nic) error {
 func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[network.PublicIp], error) {
 	iter := Iterator[network.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]network.PublicIp, *string, error) {
-			resp, err := api.network.ListPublicIpsWithResponse(ctx, network.Tenant(tid), network.Workspace(wid), &network.ListPublicIpsParams{
+			resp, err := api.network.ListPublicIpsWithResponse(ctx, network.TenantPathParam(tid), network.WorkspacePathParam(wid), &network.ListPublicIpsParams{
 				Accept: ptr.To(network.ListPublicIpsParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -562,11 +565,11 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*network.PublicIp, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.GetPublicIpWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.network.GetPublicIpWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -579,11 +582,11 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 }
 
 func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, wref WorkspaceReference, ip *network.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*network.PublicIp, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.Tenant(wref.Tenant), network.Workspace(wref.Workspace), wref.Name, params, *ip, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.TenantPathParam(wref.Tenant), network.WorkspacePathParam(wref.Workspace), wref.Name, params, *ip, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -631,6 +634,17 @@ func newNetworkV1(client *RegionalClient, networkUrl string) (*NetworkV1, error)
 	}
 
 	return &NetworkV1{API: API{authToken: client.authToken}, network: network}, nil
+}
+
+func (api *NetworkV1) BuildReferenceURN(urn string) (*network.Reference, error) {
+	urnRef := network.ReferenceURN(urn)
+
+	ref := &network.Reference{}
+	if err := ref.FromReferenceURN(urnRef); err != nil {
+		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
+	}
+
+	return ref, nil
 }
 
 func validateNetworkZonalMetadataV1(metadata *network.ZonalResourceMetadata) error {

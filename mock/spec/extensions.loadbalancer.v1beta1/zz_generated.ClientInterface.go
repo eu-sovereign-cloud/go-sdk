@@ -26,7 +26,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateNetworkLoadBalancer provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, body loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, body loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -42,10 +42,10 @@ func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancer(ctx context.Con
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -53,7 +53,7 @@ func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancer(ctx context.Con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -69,9 +69,9 @@ type MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call struct {
 
 // CreateOrUpdateNetworkLoadBalancer is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams
 //   - body loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody
 //   - reqEditors ...loadbalancer.RequestEditorFn
@@ -80,7 +80,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateNetworkLoadBalancer(ctx in
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, body loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, body loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]loadbalancer.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -88,7 +88,7 @@ func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) Run(run fu
 				variadicArgs[i] = a.(loadbalancer.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(loadbalancer.Tenant), args[2].(loadbalancer.Workspace), args[3].(loadbalancer.ResourceName), args[4].(*loadbalancer.CreateOrUpdateNetworkLoadBalancerParams), args[5].(loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(loadbalancer.TenantPathParam), args[2].(loadbalancer.WorkspacePathParam), args[3].(loadbalancer.ResourcePathParam), args[4].(*loadbalancer.CreateOrUpdateNetworkLoadBalancerParams), args[5].(loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -98,13 +98,13 @@ func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) Return(_a0
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, loadbalancer.CreateOrUpdateNetworkLoadBalancerJSONRequestBody, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancer_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNetworkLoadBalancerWithBody provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -120,10 +120,10 @@ func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancerWithBody(ctx con
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -131,7 +131,7 @@ func (_m *MockClientInterface) CreateOrUpdateNetworkLoadBalancerWithBody(ctx con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -147,9 +147,9 @@ type MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call struct {
 
 // CreateOrUpdateNetworkLoadBalancerWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams
 //   - contentType string
 //   - body io.Reader
@@ -159,7 +159,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateNetworkLoadBalancerWithBod
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) Run(run func(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) Run(run func(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]loadbalancer.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -167,7 +167,7 @@ func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) Ru
 				variadicArgs[i] = a.(loadbalancer.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(loadbalancer.Tenant), args[2].(loadbalancer.Workspace), args[3].(loadbalancer.ResourceName), args[4].(*loadbalancer.CreateOrUpdateNetworkLoadBalancerParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(loadbalancer.TenantPathParam), args[2].(loadbalancer.WorkspacePathParam), args[3].(loadbalancer.ResourcePathParam), args[4].(*loadbalancer.CreateOrUpdateNetworkLoadBalancerParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -177,13 +177,13 @@ func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) Re
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) RunAndReturn(run func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call) RunAndReturn(run func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.CreateOrUpdateNetworkLoadBalancerParams, string, io.Reader, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNetworkLoadBalancerWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteNetworkLoadBalancer provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientInterface) DeleteNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.DeleteNetworkLoadBalancerParams, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.DeleteNetworkLoadBalancerParams, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -199,10 +199,10 @@ func (_m *MockClientInterface) DeleteNetworkLoadBalancer(ctx context.Context, te
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -210,7 +210,7 @@ func (_m *MockClientInterface) DeleteNetworkLoadBalancer(ctx context.Context, te
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -226,9 +226,9 @@ type MockClientInterface_DeleteNetworkLoadBalancer_Call struct {
 
 // DeleteNetworkLoadBalancer is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - params *loadbalancer.DeleteNetworkLoadBalancerParams
 //   - reqEditors ...loadbalancer.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteNetworkLoadBalancer(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteNetworkLoadBalancer_Call {
@@ -236,7 +236,7 @@ func (_e *MockClientInterface_Expecter) DeleteNetworkLoadBalancer(ctx interface{
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params *loadbalancer.DeleteNetworkLoadBalancerParams, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_DeleteNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params *loadbalancer.DeleteNetworkLoadBalancerParams, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_DeleteNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]loadbalancer.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -244,7 +244,7 @@ func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) Run(run func(ctx c
 				variadicArgs[i] = a.(loadbalancer.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(loadbalancer.Tenant), args[2].(loadbalancer.Workspace), args[3].(loadbalancer.ResourceName), args[4].(*loadbalancer.DeleteNetworkLoadBalancerParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(loadbalancer.TenantPathParam), args[2].(loadbalancer.WorkspacePathParam), args[3].(loadbalancer.ResourcePathParam), args[4].(*loadbalancer.DeleteNetworkLoadBalancerParams), variadicArgs...)
 	})
 	return _c
 }
@@ -254,13 +254,13 @@ func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) Return(_a0 *http.R
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_DeleteNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, *loadbalancer.DeleteNetworkLoadBalancerParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteNetworkLoadBalancer_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetNetworkLoadBalancer provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientInterface) GetNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetNetworkLoadBalancer(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -276,10 +276,10 @@ func (_m *MockClientInterface) GetNetworkLoadBalancer(ctx context.Context, tenan
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, ...loadbalancer.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, ...loadbalancer.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -287,7 +287,7 @@ func (_m *MockClientInterface) GetNetworkLoadBalancer(ctx context.Context, tenan
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, ...loadbalancer.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, ...loadbalancer.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -303,16 +303,16 @@ type MockClientInterface_GetNetworkLoadBalancer_Call struct {
 
 // GetNetworkLoadBalancer is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - reqEditors ...loadbalancer.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetNetworkLoadBalancer(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetNetworkLoadBalancer_Call {
 	return &MockClientInterface_GetNetworkLoadBalancer_Call{Call: _e.mock.On("GetNetworkLoadBalancer",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_GetNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) Run(run func(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_GetNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]loadbalancer.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -320,7 +320,7 @@ func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) Run(run func(ctx cont
 				variadicArgs[i] = a.(loadbalancer.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(loadbalancer.Tenant), args[2].(loadbalancer.Workspace), args[3].(loadbalancer.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(loadbalancer.TenantPathParam), args[2].(loadbalancer.WorkspacePathParam), args[3].(loadbalancer.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -330,13 +330,13 @@ func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) Return(_a0 *http.Resp
 	return _c
 }
 
-func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetNetworkLoadBalancer_Call {
+func (_c *MockClientInterface_GetNetworkLoadBalancer_Call) RunAndReturn(run func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetNetworkLoadBalancer_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListNetworkLoadBalancers provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListNetworkLoadBalancers(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, params *loadbalancer.ListNetworkLoadBalancersParams, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListNetworkLoadBalancers(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, params *loadbalancer.ListNetworkLoadBalancersParams, reqEditors ...loadbalancer.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -352,10 +352,10 @@ func (_m *MockClientInterface) ListNetworkLoadBalancers(ctx context.Context, ten
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -363,7 +363,7 @@ func (_m *MockClientInterface) ListNetworkLoadBalancers(ctx context.Context, ten
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -379,8 +379,8 @@ type MockClientInterface_ListNetworkLoadBalancers_Call struct {
 
 // ListNetworkLoadBalancers is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
 //   - params *loadbalancer.ListNetworkLoadBalancersParams
 //   - reqEditors ...loadbalancer.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListNetworkLoadBalancers(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListNetworkLoadBalancers_Call {
@@ -388,7 +388,7 @@ func (_e *MockClientInterface_Expecter) ListNetworkLoadBalancers(ctx interface{}
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) Run(run func(ctx context.Context, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, params *loadbalancer.ListNetworkLoadBalancersParams, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_ListNetworkLoadBalancers_Call {
+func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) Run(run func(ctx context.Context, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, params *loadbalancer.ListNetworkLoadBalancersParams, reqEditors ...loadbalancer.RequestEditorFn)) *MockClientInterface_ListNetworkLoadBalancers_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]loadbalancer.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -396,7 +396,7 @@ func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) Run(run func(ctx co
 				variadicArgs[i] = a.(loadbalancer.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(loadbalancer.Tenant), args[2].(loadbalancer.Workspace), args[3].(*loadbalancer.ListNetworkLoadBalancersParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(loadbalancer.TenantPathParam), args[2].(loadbalancer.WorkspacePathParam), args[3].(*loadbalancer.ListNetworkLoadBalancersParams), variadicArgs...)
 	})
 	return _c
 }
@@ -406,7 +406,7 @@ func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) Return(_a0 *http.Re
 	return _c
 }
 
-func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) RunAndReturn(run func(context.Context, loadbalancer.Tenant, loadbalancer.Workspace, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListNetworkLoadBalancers_Call {
+func (_c *MockClientInterface_ListNetworkLoadBalancers_Call) RunAndReturn(run func(context.Context, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, *loadbalancer.ListNetworkLoadBalancersParams, ...loadbalancer.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListNetworkLoadBalancers_Call {
 	_c.Call.Return(run)
 	return _c
 }

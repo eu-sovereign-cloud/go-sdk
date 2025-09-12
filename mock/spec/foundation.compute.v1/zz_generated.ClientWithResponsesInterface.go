@@ -26,7 +26,7 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 }
 
 // CreateOrUpdateInstanceWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithBodyWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -42,10 +42,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithBodyWithRe
 
 	var r0 *compute.CreateOrUpdateInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) *compute.CreateOrUpdateInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) *compute.CreateOrUpdateInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -53,7 +53,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithBodyWithRe
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -69,9 +69,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse
 
 // CreateOrUpdateInstanceWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.CreateOrUpdateInstanceParams
 //   - contentType string
 //   - body io.Reader
@@ -81,7 +81,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateInstanceWithB
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.CreateOrUpdateInstanceParams, contentType string, body io.Reader, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -89,7 +89,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithRes
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.CreateOrUpdateInstanceParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.CreateOrUpdateInstanceParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -99,13 +99,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithRes
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, string, io.Reader, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.CreateOrUpdateInstanceParams, body compute.CreateOrUpdateInstanceJSONRequestBody, reqEditors ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.CreateOrUpdateInstanceParams, body compute.CreateOrUpdateInstanceJSONRequestBody, reqEditors ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -121,10 +121,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithResponse(c
 
 	var r0 *compute.CreateOrUpdateInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) *compute.CreateOrUpdateInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) *compute.CreateOrUpdateInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -132,7 +132,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInstanceWithResponse(c
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -148,9 +148,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call st
 
 // CreateOrUpdateInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.CreateOrUpdateInstanceParams
 //   - body compute.CreateOrUpdateInstanceJSONRequestBody
 //   - reqEditors ...compute.RequestEditorFn
@@ -159,7 +159,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateInstanceWithR
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.CreateOrUpdateInstanceParams, body compute.CreateOrUpdateInstanceJSONRequestBody, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.CreateOrUpdateInstanceParams, body compute.CreateOrUpdateInstanceJSONRequestBody, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -167,7 +167,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Ca
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.CreateOrUpdateInstanceParams), args[5].(compute.CreateOrUpdateInstanceJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.CreateOrUpdateInstanceParams), args[5].(compute.CreateOrUpdateInstanceJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -177,13 +177,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Ca
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.CreateOrUpdateInstanceParams, compute.CreateOrUpdateInstanceJSONRequestBody, ...compute.RequestEditorFn) (*compute.CreateOrUpdateInstanceResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.DeleteInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.DeleteInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -199,10 +199,10 @@ func (_m *MockClientWithResponsesInterface) DeleteInstanceWithResponse(ctx conte
 
 	var r0 *compute.DeleteInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) *compute.DeleteInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) *compute.DeleteInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -210,7 +210,7 @@ func (_m *MockClientWithResponsesInterface) DeleteInstanceWithResponse(ctx conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -226,9 +226,9 @@ type MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call struct {
 
 // DeleteInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.DeleteInstanceParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteInstanceWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call {
@@ -236,7 +236,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteInstanceWithResponse(
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.DeleteInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.DeleteInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -244,7 +244,7 @@ func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) Run(
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.DeleteInstanceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.DeleteInstanceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -254,13 +254,13 @@ func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) Retu
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error)) *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.DeleteInstanceParams, ...compute.RequestEditorFn) (*compute.DeleteInstanceResponse, error)) *MockClientWithResponsesInterface_DeleteInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, reqEditors ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, reqEditors ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -276,10 +276,10 @@ func (_m *MockClientWithResponsesInterface) GetInstanceWithResponse(ctx context.
 
 	var r0 *compute.GetInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, ...compute.RequestEditorFn) *compute.GetInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) *compute.GetInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -287,7 +287,7 @@ func (_m *MockClientWithResponsesInterface) GetInstanceWithResponse(ctx context.
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -303,16 +303,16 @@ type MockClientWithResponsesInterface_GetInstanceWithResponse_Call struct {
 
 // GetInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetInstanceWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetInstanceWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetInstanceWithResponse_Call{Call: _e.mock.On("GetInstanceWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_GetInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_GetInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -320,7 +320,7 @@ func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) Run(run
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -330,13 +330,13 @@ func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) Return(
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error)) *MockClientWithResponsesInterface_GetInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) (*compute.GetInstanceResponse, error)) *MockClientWithResponsesInterface_GetInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetSkuWithResponse provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Context, tenant compute.Tenant, name compute.ResourceName, reqEditors ...compute.RequestEditorFn) (*compute.GetSkuResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Context, tenant compute.TenantPathParam, name compute.ResourcePathParam, reqEditors ...compute.RequestEditorFn) (*compute.GetSkuResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -352,10 +352,10 @@ func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Conte
 
 	var r0 *compute.GetSkuResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.ResourceName, ...compute.RequestEditorFn) (*compute.GetSkuResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) (*compute.GetSkuResponse, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.ResourceName, ...compute.RequestEditorFn) *compute.GetSkuResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) *compute.GetSkuResponse); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -363,7 +363,7 @@ func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.ResourceName, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -379,15 +379,15 @@ type MockClientWithResponsesInterface_GetSkuWithResponse_Call struct {
 
 // GetSkuWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - name compute.ResourcePathParam
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetSkuWithResponse(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetSkuWithResponse_Call{Call: _e.mock.On("GetSkuWithResponse",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, name compute.ResourceName, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, name compute.ResourcePathParam, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -395,7 +395,7 @@ func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -405,13 +405,13 @@ func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Return(_a0 *
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.ResourceName, ...compute.RequestEditorFn) (*compute.GetSkuResponse, error)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.ResourcePathParam, ...compute.RequestEditorFn) (*compute.GetSkuResponse, error)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListInstancesWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListInstancesWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, params *compute.ListInstancesParams, reqEditors ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListInstancesWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, params *compute.ListInstancesParams, reqEditors ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -427,10 +427,10 @@ func (_m *MockClientWithResponsesInterface) ListInstancesWithResponse(ctx contex
 
 	var r0 *compute.ListInstancesResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, *compute.ListInstancesParams, ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, *compute.ListInstancesParams, ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, *compute.ListInstancesParams, ...compute.RequestEditorFn) *compute.ListInstancesResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, *compute.ListInstancesParams, ...compute.RequestEditorFn) *compute.ListInstancesResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -438,7 +438,7 @@ func (_m *MockClientWithResponsesInterface) ListInstancesWithResponse(ctx contex
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, *compute.ListInstancesParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, *compute.ListInstancesParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -454,8 +454,8 @@ type MockClientWithResponsesInterface_ListInstancesWithResponse_Call struct {
 
 // ListInstancesWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
 //   - params *compute.ListInstancesParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListInstancesWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListInstancesWithResponse_Call {
@@ -463,7 +463,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListInstancesWithResponse(c
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, params *compute.ListInstancesParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_ListInstancesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, params *compute.ListInstancesParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_ListInstancesWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -471,7 +471,7 @@ func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) Run(r
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(*compute.ListInstancesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(*compute.ListInstancesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -481,13 +481,13 @@ func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) Retur
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, *compute.ListInstancesParams, ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error)) *MockClientWithResponsesInterface_ListInstancesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListInstancesWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, *compute.ListInstancesParams, ...compute.RequestEditorFn) (*compute.ListInstancesResponse, error)) *MockClientWithResponsesInterface_ListInstancesWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListSkusWithResponse provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Context, tenant compute.Tenant, params *compute.ListSkusParams, reqEditors ...compute.RequestEditorFn) (*compute.ListSkusResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Context, tenant compute.TenantPathParam, params *compute.ListSkusParams, reqEditors ...compute.RequestEditorFn) (*compute.ListSkusResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -503,10 +503,10 @@ func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Con
 
 	var r0 *compute.ListSkusResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, *compute.ListSkusParams, ...compute.RequestEditorFn) (*compute.ListSkusResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, *compute.ListSkusParams, ...compute.RequestEditorFn) (*compute.ListSkusResponse, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, *compute.ListSkusParams, ...compute.RequestEditorFn) *compute.ListSkusResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, *compute.ListSkusParams, ...compute.RequestEditorFn) *compute.ListSkusResponse); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -514,7 +514,7 @@ func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, *compute.ListSkusParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, *compute.ListSkusParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -530,7 +530,7 @@ type MockClientWithResponsesInterface_ListSkusWithResponse_Call struct {
 
 // ListSkusWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
+//   - tenant compute.TenantPathParam
 //   - params *compute.ListSkusParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListSkusWithResponse(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
@@ -538,7 +538,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListSkusWithResponse(ctx in
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, params *compute.ListSkusParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, params *compute.ListSkusParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -546,7 +546,7 @@ func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run fu
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(*compute.ListSkusParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(*compute.ListSkusParams), variadicArgs...)
 	})
 	return _c
 }
@@ -556,13 +556,13 @@ func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Return(_a0
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, *compute.ListSkusParams, ...compute.RequestEditorFn) (*compute.ListSkusResponse, error)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, *compute.ListSkusParams, ...compute.RequestEditorFn) (*compute.ListSkusResponse, error)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // RestartInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) RestartInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.RestartInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) RestartInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.RestartInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -578,10 +578,10 @@ func (_m *MockClientWithResponsesInterface) RestartInstanceWithResponse(ctx cont
 
 	var r0 *compute.RestartInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.RestartInstanceParams, ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.RestartInstanceParams, ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.RestartInstanceParams, ...compute.RequestEditorFn) *compute.RestartInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.RestartInstanceParams, ...compute.RequestEditorFn) *compute.RestartInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -589,7 +589,7 @@ func (_m *MockClientWithResponsesInterface) RestartInstanceWithResponse(ctx cont
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.RestartInstanceParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.RestartInstanceParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -605,9 +605,9 @@ type MockClientWithResponsesInterface_RestartInstanceWithResponse_Call struct {
 
 // RestartInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.RestartInstanceParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) RestartInstanceWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call {
@@ -615,7 +615,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) RestartInstanceWithResponse
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.RestartInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.RestartInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -623,7 +623,7 @@ func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) Run
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.RestartInstanceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.RestartInstanceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -633,13 +633,13 @@ func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) Ret
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.RestartInstanceParams, ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error)) *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.RestartInstanceParams, ...compute.RequestEditorFn) (*compute.RestartInstanceResponse, error)) *MockClientWithResponsesInterface_RestartInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // StartInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) StartInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.StartInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) StartInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.StartInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -655,10 +655,10 @@ func (_m *MockClientWithResponsesInterface) StartInstanceWithResponse(ctx contex
 
 	var r0 *compute.StartInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StartInstanceParams, ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StartInstanceParams, ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StartInstanceParams, ...compute.RequestEditorFn) *compute.StartInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StartInstanceParams, ...compute.RequestEditorFn) *compute.StartInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -666,7 +666,7 @@ func (_m *MockClientWithResponsesInterface) StartInstanceWithResponse(ctx contex
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StartInstanceParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StartInstanceParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -682,9 +682,9 @@ type MockClientWithResponsesInterface_StartInstanceWithResponse_Call struct {
 
 // StartInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.StartInstanceParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) StartInstanceWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_StartInstanceWithResponse_Call {
@@ -692,7 +692,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) StartInstanceWithResponse(c
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.StartInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_StartInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.StartInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_StartInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -700,7 +700,7 @@ func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) Run(r
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.StartInstanceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.StartInstanceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -710,13 +710,13 @@ func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) Retur
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StartInstanceParams, ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error)) *MockClientWithResponsesInterface_StartInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_StartInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StartInstanceParams, ...compute.RequestEditorFn) (*compute.StartInstanceResponse, error)) *MockClientWithResponsesInterface_StartInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // StopInstanceWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) StopInstanceWithResponse(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.StopInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error) {
+func (_m *MockClientWithResponsesInterface) StopInstanceWithResponse(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.StopInstanceParams, reqEditors ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -732,10 +732,10 @@ func (_m *MockClientWithResponsesInterface) StopInstanceWithResponse(ctx context
 
 	var r0 *compute.StopInstanceResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StopInstanceParams, ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StopInstanceParams, ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StopInstanceParams, ...compute.RequestEditorFn) *compute.StopInstanceResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StopInstanceParams, ...compute.RequestEditorFn) *compute.StopInstanceResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -743,7 +743,7 @@ func (_m *MockClientWithResponsesInterface) StopInstanceWithResponse(ctx context
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StopInstanceParams, ...compute.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StopInstanceParams, ...compute.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -759,9 +759,9 @@ type MockClientWithResponsesInterface_StopInstanceWithResponse_Call struct {
 
 // StopInstanceWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params *compute.StopInstanceParams
 //   - reqEditors ...compute.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) StopInstanceWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_StopInstanceWithResponse_Call {
@@ -769,7 +769,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) StopInstanceWithResponse(ct
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params *compute.StopInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_StopInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) Run(run func(ctx context.Context, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params *compute.StopInstanceParams, reqEditors ...compute.RequestEditorFn)) *MockClientWithResponsesInterface_StopInstanceWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]compute.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -777,7 +777,7 @@ func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) Run(ru
 				variadicArgs[i] = a.(compute.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(compute.Tenant), args[2].(compute.Workspace), args[3].(compute.ResourceName), args[4].(*compute.StopInstanceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(compute.TenantPathParam), args[2].(compute.WorkspacePathParam), args[3].(compute.ResourcePathParam), args[4].(*compute.StopInstanceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -787,7 +787,7 @@ func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) Return
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.Tenant, compute.Workspace, compute.ResourceName, *compute.StopInstanceParams, ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error)) *MockClientWithResponsesInterface_StopInstanceWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_StopInstanceWithResponse_Call) RunAndReturn(run func(context.Context, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, *compute.StopInstanceParams, ...compute.RequestEditorFn) (*compute.StopInstanceResponse, error)) *MockClientWithResponsesInterface_StopInstanceWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }

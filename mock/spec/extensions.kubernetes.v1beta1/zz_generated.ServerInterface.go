@@ -23,7 +23,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateCluster provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params kubernetes.CreateOrUpdateClusterParams) {
+func (_m *MockServerInterface) CreateOrUpdateCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params kubernetes.CreateOrUpdateClusterParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -35,17 +35,17 @@ type MockServerInterface_CreateOrUpdateCluster_Call struct {
 // CreateOrUpdateCluster is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - params kubernetes.CreateOrUpdateClusterParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateCluster(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateCluster_Call {
 	return &MockServerInterface_CreateOrUpdateCluster_Call{Call: _e.mock.On("CreateOrUpdateCluster", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params kubernetes.CreateOrUpdateClusterParams)) *MockServerInterface_CreateOrUpdateCluster_Call {
+func (_c *MockServerInterface_CreateOrUpdateCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params kubernetes.CreateOrUpdateClusterParams)) *MockServerInterface_CreateOrUpdateCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.ResourceName), args[5].(kubernetes.CreateOrUpdateClusterParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ResourcePathParam), args[5].(kubernetes.CreateOrUpdateClusterParams))
 	})
 	return _c
 }
@@ -55,13 +55,13 @@ func (_c *MockServerInterface_CreateOrUpdateCluster_Call) Return() *MockServerIn
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, kubernetes.CreateOrUpdateClusterParams)) *MockServerInterface_CreateOrUpdateCluster_Call {
+func (_c *MockServerInterface_CreateOrUpdateCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, kubernetes.CreateOrUpdateClusterParams)) *MockServerInterface_CreateOrUpdateCluster_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdateNodePool provides a mock function with given fields: w, r, tenant, workspace, cluster, name, params
-func (_m *MockServerInterface) CreateOrUpdateNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params kubernetes.CreateOrUpdateNodePoolParams) {
+func (_m *MockServerInterface) CreateOrUpdateNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params kubernetes.CreateOrUpdateNodePoolParams) {
 	_m.Called(w, r, tenant, workspace, cluster, name, params)
 }
 
@@ -73,18 +73,18 @@ type MockServerInterface_CreateOrUpdateNodePool_Call struct {
 // CreateOrUpdateNodePool is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - params kubernetes.CreateOrUpdateNodePoolParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateNodePool(w interface{}, r interface{}, tenant interface{}, workspace interface{}, cluster interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateNodePool_Call {
 	return &MockServerInterface_CreateOrUpdateNodePool_Call{Call: _e.mock.On("CreateOrUpdateNodePool", w, r, tenant, workspace, cluster, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params kubernetes.CreateOrUpdateNodePoolParams)) *MockServerInterface_CreateOrUpdateNodePool_Call {
+func (_c *MockServerInterface_CreateOrUpdateNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params kubernetes.CreateOrUpdateNodePoolParams)) *MockServerInterface_CreateOrUpdateNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.Cluster), args[5].(kubernetes.ResourceName), args[6].(kubernetes.CreateOrUpdateNodePoolParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ClusterPathParam), args[5].(kubernetes.ResourcePathParam), args[6].(kubernetes.CreateOrUpdateNodePoolParams))
 	})
 	return _c
 }
@@ -94,13 +94,13 @@ func (_c *MockServerInterface_CreateOrUpdateNodePool_Call) Return() *MockServerI
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, kubernetes.CreateOrUpdateNodePoolParams)) *MockServerInterface_CreateOrUpdateNodePool_Call {
+func (_c *MockServerInterface_CreateOrUpdateNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, kubernetes.CreateOrUpdateNodePoolParams)) *MockServerInterface_CreateOrUpdateNodePool_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteCluster provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params kubernetes.DeleteClusterParams) {
+func (_m *MockServerInterface) DeleteCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params kubernetes.DeleteClusterParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -112,17 +112,17 @@ type MockServerInterface_DeleteCluster_Call struct {
 // DeleteCluster is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - params kubernetes.DeleteClusterParams
 func (_e *MockServerInterface_Expecter) DeleteCluster(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteCluster_Call {
 	return &MockServerInterface_DeleteCluster_Call{Call: _e.mock.On("DeleteCluster", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params kubernetes.DeleteClusterParams)) *MockServerInterface_DeleteCluster_Call {
+func (_c *MockServerInterface_DeleteCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params kubernetes.DeleteClusterParams)) *MockServerInterface_DeleteCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.ResourceName), args[5].(kubernetes.DeleteClusterParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ResourcePathParam), args[5].(kubernetes.DeleteClusterParams))
 	})
 	return _c
 }
@@ -132,13 +132,13 @@ func (_c *MockServerInterface_DeleteCluster_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, kubernetes.DeleteClusterParams)) *MockServerInterface_DeleteCluster_Call {
+func (_c *MockServerInterface_DeleteCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, kubernetes.DeleteClusterParams)) *MockServerInterface_DeleteCluster_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteNodePool provides a mock function with given fields: w, r, tenant, workspace, cluster, name, params
-func (_m *MockServerInterface) DeleteNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params kubernetes.DeleteNodePoolParams) {
+func (_m *MockServerInterface) DeleteNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params kubernetes.DeleteNodePoolParams) {
 	_m.Called(w, r, tenant, workspace, cluster, name, params)
 }
 
@@ -150,18 +150,18 @@ type MockServerInterface_DeleteNodePool_Call struct {
 // DeleteNodePool is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - params kubernetes.DeleteNodePoolParams
 func (_e *MockServerInterface_Expecter) DeleteNodePool(w interface{}, r interface{}, tenant interface{}, workspace interface{}, cluster interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteNodePool_Call {
 	return &MockServerInterface_DeleteNodePool_Call{Call: _e.mock.On("DeleteNodePool", w, r, tenant, workspace, cluster, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params kubernetes.DeleteNodePoolParams)) *MockServerInterface_DeleteNodePool_Call {
+func (_c *MockServerInterface_DeleteNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params kubernetes.DeleteNodePoolParams)) *MockServerInterface_DeleteNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.Cluster), args[5].(kubernetes.ResourceName), args[6].(kubernetes.DeleteNodePoolParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ClusterPathParam), args[5].(kubernetes.ResourcePathParam), args[6].(kubernetes.DeleteNodePoolParams))
 	})
 	return _c
 }
@@ -171,13 +171,13 @@ func (_c *MockServerInterface_DeleteNodePool_Call) Return() *MockServerInterface
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, kubernetes.DeleteNodePoolParams)) *MockServerInterface_DeleteNodePool_Call {
+func (_c *MockServerInterface_DeleteNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, kubernetes.DeleteNodePoolParams)) *MockServerInterface_DeleteNodePool_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetCluster provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName) {
+func (_m *MockServerInterface) GetCluster(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -189,16 +189,16 @@ type MockServerInterface_GetCluster_Call struct {
 // GetCluster is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetCluster(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetCluster_Call {
 	return &MockServerInterface_GetCluster_Call{Call: _e.mock.On("GetCluster", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName)) *MockServerInterface_GetCluster_Call {
+func (_c *MockServerInterface_GetCluster_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam)) *MockServerInterface_GetCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ResourcePathParam))
 	})
 	return _c
 }
@@ -208,13 +208,13 @@ func (_c *MockServerInterface_GetCluster_Call) Return() *MockServerInterface_Get
 	return _c
 }
 
-func (_c *MockServerInterface_GetCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName)) *MockServerInterface_GetCluster_Call {
+func (_c *MockServerInterface_GetCluster_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam)) *MockServerInterface_GetCluster_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetNodePool provides a mock function with given fields: w, r, tenant, workspace, cluster, name
-func (_m *MockServerInterface) GetNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName) {
+func (_m *MockServerInterface) GetNodePool(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, cluster, name)
 }
 
@@ -226,17 +226,17 @@ type MockServerInterface_GetNodePool_Call struct {
 // GetNodePool is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetNodePool(w interface{}, r interface{}, tenant interface{}, workspace interface{}, cluster interface{}, name interface{}) *MockServerInterface_GetNodePool_Call {
 	return &MockServerInterface_GetNodePool_Call{Call: _e.mock.On("GetNodePool", w, r, tenant, workspace, cluster, name)}
 }
 
-func (_c *MockServerInterface_GetNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName)) *MockServerInterface_GetNodePool_Call {
+func (_c *MockServerInterface_GetNodePool_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam)) *MockServerInterface_GetNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.Cluster), args[5].(kubernetes.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ClusterPathParam), args[5].(kubernetes.ResourcePathParam))
 	})
 	return _c
 }
@@ -246,13 +246,13 @@ func (_c *MockServerInterface_GetNodePool_Call) Return() *MockServerInterface_Ge
 	return _c
 }
 
-func (_c *MockServerInterface_GetNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName)) *MockServerInterface_GetNodePool_Call {
+func (_c *MockServerInterface_GetNodePool_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam)) *MockServerInterface_GetNodePool_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListClusters provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListClusters(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, params kubernetes.ListClustersParams) {
+func (_m *MockServerInterface) ListClusters(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, params kubernetes.ListClustersParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -264,16 +264,16 @@ type MockServerInterface_ListClusters_Call struct {
 // ListClusters is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
 //   - params kubernetes.ListClustersParams
 func (_e *MockServerInterface_Expecter) ListClusters(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListClusters_Call {
 	return &MockServerInterface_ListClusters_Call{Call: _e.mock.On("ListClusters", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListClusters_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, params kubernetes.ListClustersParams)) *MockServerInterface_ListClusters_Call {
+func (_c *MockServerInterface_ListClusters_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, params kubernetes.ListClustersParams)) *MockServerInterface_ListClusters_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.ListClustersParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ListClustersParams))
 	})
 	return _c
 }
@@ -283,13 +283,13 @@ func (_c *MockServerInterface_ListClusters_Call) Return() *MockServerInterface_L
 	return _c
 }
 
-func (_c *MockServerInterface_ListClusters_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ListClustersParams)) *MockServerInterface_ListClusters_Call {
+func (_c *MockServerInterface_ListClusters_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ListClustersParams)) *MockServerInterface_ListClusters_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListNodePools provides a mock function with given fields: w, r, tenant, workspace, cluster, params
-func (_m *MockServerInterface) ListNodePools(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, params kubernetes.ListNodePoolsParams) {
+func (_m *MockServerInterface) ListNodePools(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, params kubernetes.ListNodePoolsParams) {
 	_m.Called(w, r, tenant, workspace, cluster, params)
 }
 
@@ -301,17 +301,17 @@ type MockServerInterface_ListNodePools_Call struct {
 // ListNodePools is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
 //   - params kubernetes.ListNodePoolsParams
 func (_e *MockServerInterface_Expecter) ListNodePools(w interface{}, r interface{}, tenant interface{}, workspace interface{}, cluster interface{}, params interface{}) *MockServerInterface_ListNodePools_Call {
 	return &MockServerInterface_ListNodePools_Call{Call: _e.mock.On("ListNodePools", w, r, tenant, workspace, cluster, params)}
 }
 
-func (_c *MockServerInterface_ListNodePools_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, params kubernetes.ListNodePoolsParams)) *MockServerInterface_ListNodePools_Call {
+func (_c *MockServerInterface_ListNodePools_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, params kubernetes.ListNodePoolsParams)) *MockServerInterface_ListNodePools_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.Tenant), args[3].(kubernetes.Workspace), args[4].(kubernetes.Cluster), args[5].(kubernetes.ListNodePoolsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(kubernetes.TenantPathParam), args[3].(kubernetes.WorkspacePathParam), args[4].(kubernetes.ClusterPathParam), args[5].(kubernetes.ListNodePoolsParams))
 	})
 	return _c
 }
@@ -321,7 +321,7 @@ func (_c *MockServerInterface_ListNodePools_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_ListNodePools_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ListNodePoolsParams)) *MockServerInterface_ListNodePools_Call {
+func (_c *MockServerInterface_ListNodePools_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ListNodePoolsParams)) *MockServerInterface_ListNodePools_Call {
 	_c.Run(run)
 	return _c
 }

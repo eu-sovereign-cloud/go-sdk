@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
@@ -19,7 +20,7 @@ type ComputeV1 struct {
 func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[compute.InstanceSku], error) {
 	iter := Iterator[compute.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]compute.InstanceSku, *string, error) {
-			resp, err := api.compute.ListSkusWithResponse(ctx, compute.Tenant(tid), &compute.ListSkusParams{
+			resp, err := api.compute.ListSkusWithResponse(ctx, compute.TenantPathParam(tid), &compute.ListSkusParams{
 				Accept: ptr.To(compute.ListSkusParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -34,11 +35,11 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[com
 }
 
 func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*compute.InstanceSku, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.GetSkuWithResponse(ctx, compute.Tenant(tref.Tenant), tref.Name, api.loadRequestHeaders)
+	resp, err := api.compute.GetSkuWithResponse(ctx, compute.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +56,7 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*comput
 func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
 	iter := Iterator[compute.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]compute.Instance, *string, error) {
-			resp, err := api.compute.ListInstancesWithResponse(ctx, compute.Tenant(tid), compute.Workspace(wid), &compute.ListInstancesParams{
+			resp, err := api.compute.ListInstancesWithResponse(ctx, compute.TenantPathParam(tid), compute.WorkspacePathParam(wid), &compute.ListInstancesParams{
 				Accept: ptr.To(compute.Applicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -70,11 +71,11 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 }
 
 func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.TenantPathParam(wref.Tenant), compute.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -87,11 +88,11 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 }
 
 func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, wref WorkspaceReference, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
-	if err := validateWorkspaceReference(wref); err != nil {
+	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.Tenant(wref.Tenant), compute.Workspace(wref.Workspace), wref.Name, params, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(wref.Tenant), compute.WorkspacePathParam(wref.Workspace), wref.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -193,6 +194,17 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compu
 
 func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance) error {
 	return api.RestartInstanceWithParams(ctx, inst, nil)
+}
+
+func (api *ComputeV1) BuildReferenceURN(urn string) (*compute.Reference, error) {
+	urnRef := compute.ReferenceURN(urn)
+
+	ref := &compute.Reference{}
+	if err := ref.FromReferenceURN(urnRef); err != nil {
+		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
+	}
+
+	return ref, nil
 }
 
 func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {

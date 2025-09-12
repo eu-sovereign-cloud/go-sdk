@@ -25,7 +25,7 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 }
 
 // CreateOrUpdateInternetGatewayWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -41,10 +41,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithBod
 
 	var r0 *network.CreateOrUpdateInternetGatewayResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateInternetGatewayResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateInternetGatewayResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -52,7 +52,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithBod
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -68,9 +68,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithR
 
 // CreateOrUpdateInternetGatewayWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateInternetGatewayParams
 //   - contentType string
 //   - body io.Reader
@@ -80,7 +80,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateInternetGatew
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -88,7 +88,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBody
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateInternetGatewayParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateInternetGatewayParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -98,13 +98,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBody
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateInternetGatewayWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateInternetGatewayParams, body network.CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateInternetGatewayParams, body network.CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -120,10 +120,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithRes
 
 	var r0 *network.CreateOrUpdateInternetGatewayResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateInternetGatewayResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateInternetGatewayResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -131,7 +131,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateInternetGatewayWithRes
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -147,9 +147,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_
 
 // CreateOrUpdateInternetGatewayWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateInternetGatewayParams
 //   - body network.CreateOrUpdateInternetGatewayJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
@@ -158,7 +158,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateInternetGatew
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateInternetGatewayParams, body network.CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateInternetGatewayParams, body network.CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -166,7 +166,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResp
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateInternetGatewayParams), args[5].(network.CreateOrUpdateInternetGatewayJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateInternetGatewayParams), args[5].(network.CreateOrUpdateInternetGatewayJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -176,13 +176,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResp
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateInternetGatewayParams, network.CreateOrUpdateInternetGatewayJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateInternetGatewayResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateInternetGatewayWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNetworkWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -198,10 +198,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithBodyWithRes
 
 	var r0 *network.CreateOrUpdateNetworkResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateNetworkResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateNetworkResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -209,7 +209,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithBodyWithRes
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -225,9 +225,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_
 
 // CreateOrUpdateNetworkWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateNetworkParams
 //   - contentType string
 //   - body io.Reader
@@ -237,7 +237,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateNetworkWithBo
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -245,7 +245,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResp
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateNetworkParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateNetworkParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -255,13 +255,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResp
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNetworkWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNetworkParams, body network.CreateOrUpdateNetworkJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNetworkParams, body network.CreateOrUpdateNetworkJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -277,10 +277,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithResponse(ct
 
 	var r0 *network.CreateOrUpdateNetworkResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateNetworkResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateNetworkResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -288,7 +288,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNetworkWithResponse(ct
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -304,9 +304,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call str
 
 // CreateOrUpdateNetworkWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateNetworkParams
 //   - body network.CreateOrUpdateNetworkJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
@@ -315,7 +315,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateNetworkWithRe
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNetworkParams, body network.CreateOrUpdateNetworkJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNetworkParams, body network.CreateOrUpdateNetworkJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -323,7 +323,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Cal
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateNetworkParams), args[5].(network.CreateOrUpdateNetworkJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateNetworkParams), args[5].(network.CreateOrUpdateNetworkJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -333,13 +333,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Cal
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNetworkParams, network.CreateOrUpdateNetworkJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNetworkResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNetworkWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNicWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -355,10 +355,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithBodyWithRespons
 
 	var r0 *network.CreateOrUpdateNicResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateNicResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateNicResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -366,7 +366,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithBodyWithRespons
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -382,9 +382,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call
 
 // CreateOrUpdateNicWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateNicParams
 //   - contentType string
 //   - body io.Reader
@@ -394,7 +394,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateNicWithBodyWi
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -402,7 +402,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateNicParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateNicParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -412,13 +412,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNicWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNicParams, body network.CreateOrUpdateNicJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNicParams, body network.CreateOrUpdateNicJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -434,10 +434,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithResponse(ctx co
 
 	var r0 *network.CreateOrUpdateNicResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateNicResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateNicResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -445,7 +445,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateNicWithResponse(ctx co
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -461,9 +461,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call struct 
 
 // CreateOrUpdateNicWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateNicParams
 //   - body network.CreateOrUpdateNicJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
@@ -472,7 +472,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateNicWithRespon
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateNicParams, body network.CreateOrUpdateNicJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateNicParams, body network.CreateOrUpdateNicJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -480,7 +480,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) R
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateNicParams), args[5].(network.CreateOrUpdateNicJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateNicParams), args[5].(network.CreateOrUpdateNicJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -490,13 +490,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) R
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateNicParams, network.CreateOrUpdateNicJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateNicResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateNicWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdatePublicIpWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -512,10 +512,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithBodyWithRe
 
 	var r0 *network.CreateOrUpdatePublicIpResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdatePublicIpResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdatePublicIpResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -523,7 +523,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithBodyWithRe
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -539,9 +539,9 @@ type MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse
 
 // CreateOrUpdatePublicIpWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdatePublicIpParams
 //   - contentType string
 //   - body io.Reader
@@ -551,7 +551,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdatePublicIpWithB
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -559,7 +559,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithRes
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdatePublicIpParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdatePublicIpParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -569,13 +569,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithRes
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdatePublicIpWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdatePublicIpParams, body network.CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdatePublicIpParams, body network.CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -591,10 +591,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithResponse(c
 
 	var r0 *network.CreateOrUpdatePublicIpResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdatePublicIpResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdatePublicIpResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -602,7 +602,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdatePublicIpWithResponse(c
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -618,9 +618,9 @@ type MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call st
 
 // CreateOrUpdatePublicIpWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdatePublicIpParams
 //   - body network.CreateOrUpdatePublicIpJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
@@ -629,7 +629,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdatePublicIpWithR
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdatePublicIpParams, body network.CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdatePublicIpParams, body network.CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -637,7 +637,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Ca
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdatePublicIpParams), args[5].(network.CreateOrUpdatePublicIpJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdatePublicIpParams), args[5].(network.CreateOrUpdatePublicIpJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -647,19 +647,19 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Ca
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdatePublicIpParams, network.CreateOrUpdatePublicIpJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdatePublicIpResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdatePublicIpWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// CreateOrUpdateRouteTableWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error) {
+// CreateOrUpdateRouteTableWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params, contentType, body)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params, contentType, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -669,19 +669,19 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithBodyWith
 
 	var r0 *network.CreateOrUpdateRouteTableResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateRouteTableResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateRouteTableResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.CreateOrUpdateRouteTableResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -696,27 +696,28 @@ type MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithRespon
 
 // CreateOrUpdateRouteTableWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateRouteTableParams
 //   - contentType string
 //   - body io.Reader
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRouteTableWithBodyWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRouteTableWithBodyWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call{Call: _e.mock.On("CreateOrUpdateRouteTableWithBodyWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
-		for i, a := range args[7:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-8)
+		for i, a := range args[8:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateRouteTableParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.CreateOrUpdateRouteTableParams), args[6].(string), args[7].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -726,19 +727,19 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithR
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// CreateOrUpdateRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateRouteTableParams, body network.CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error) {
+// CreateOrUpdateRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateRouteTableParams, body network.CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params, body)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -748,19 +749,19 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateRouteTableWithResponse
 
 	var r0 *network.CreateOrUpdateRouteTableResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateRouteTableResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateRouteTableResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.CreateOrUpdateRouteTableResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -775,26 +776,27 @@ type MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call 
 
 // CreateOrUpdateRouteTableWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateRouteTableParams
 //   - body network.CreateOrUpdateRouteTableJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call{Call: _e.mock.On("CreateOrUpdateRouteTableWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateRouteTableParams, body network.CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateRouteTableParams, body network.CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
-		for i, a := range args[6:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
+		for i, a := range args[7:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateRouteTableParams), args[5].(network.CreateOrUpdateRouteTableJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.CreateOrUpdateRouteTableParams), args[6].(network.CreateOrUpdateRouteTableJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -804,13 +806,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateRouteTableParams, network.CreateOrUpdateRouteTableJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateRouteTableResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateSecurityGroupWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -826,10 +828,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithBodyW
 
 	var r0 *network.CreateOrUpdateSecurityGroupResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -837,7 +839,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithBodyW
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -853,9 +855,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithRes
 
 // CreateOrUpdateSecurityGroupWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateSecurityGroupParams
 //   - contentType string
 //   - body io.Reader
@@ -865,7 +867,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSecurityGroup
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -873,7 +875,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWi
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateSecurityGroupParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateSecurityGroupParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -883,13 +885,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWi
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateSecurityGroupWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSecurityGroupParams, body network.CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error) {
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupParams, body network.CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -905,10 +907,10 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithRespo
 
 	var r0 *network.CreateOrUpdateSecurityGroupResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -916,7 +918,7 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithRespo
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -932,9 +934,9 @@ type MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Ca
 
 // CreateOrUpdateSecurityGroupWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateSecurityGroupParams
 //   - body network.CreateOrUpdateSecurityGroupJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
@@ -943,7 +945,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSecurityGroup
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSecurityGroupParams, body network.CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupParams, body network.CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -951,7 +953,7 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithRespon
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateSecurityGroupParams), args[5].(network.CreateOrUpdateSecurityGroupJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.CreateOrUpdateSecurityGroupParams), args[5].(network.CreateOrUpdateSecurityGroupJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -961,19 +963,19 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithRespon
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.CreateOrUpdateSecurityGroupParams, network.CreateOrUpdateSecurityGroupJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// CreateOrUpdateSubnetWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error) {
+// CreateOrUpdateSubnetWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params, contentType, body)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params, contentType, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -983,19 +985,19 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithBodyWithResp
 
 	var r0 *network.CreateOrUpdateSubnetResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateSubnetResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateSubnetResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.CreateOrUpdateSubnetResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -1010,27 +1012,28 @@ type MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_C
 
 // CreateOrUpdateSubnetWithBodyWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateSubnetParams
 //   - contentType string
 //   - body io.Reader
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSubnetWithBodyWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSubnetWithBodyWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call{Call: _e.mock.On("CreateOrUpdateSubnetWithBodyWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
-		for i, a := range args[7:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-8)
+		for i, a := range args[8:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateSubnetParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.CreateOrUpdateSubnetParams), args[6].(string), args[7].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -1040,19 +1043,19 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithRespo
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithBodyWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// CreateOrUpdateSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSubnetParams, body network.CreateOrUpdateSubnetJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error) {
+// CreateOrUpdateSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSubnetParams, body network.CreateOrUpdateSubnetJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params, body)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -1062,19 +1065,19 @@ func (_m *MockClientWithResponsesInterface) CreateOrUpdateSubnetWithResponse(ctx
 
 	var r0 *network.CreateOrUpdateSubnetResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateSubnetResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateSubnetResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.CreateOrUpdateSubnetResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -1089,26 +1092,27 @@ type MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call stru
 
 // CreateOrUpdateSubnetWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.CreateOrUpdateSubnetParams
 //   - body network.CreateOrUpdateSubnetJSONRequestBody
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
 	return &MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call{Call: _e.mock.On("CreateOrUpdateSubnetWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.CreateOrUpdateSubnetParams, body network.CreateOrUpdateSubnetJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.CreateOrUpdateSubnetParams, body network.CreateOrUpdateSubnetJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
-		for i, a := range args[6:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
+		for i, a := range args[7:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.CreateOrUpdateSubnetParams), args[5].(network.CreateOrUpdateSubnetJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.CreateOrUpdateSubnetParams), args[6].(network.CreateOrUpdateSubnetJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -1118,13 +1122,13 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.CreateOrUpdateSubnetParams, network.CreateOrUpdateSubnetJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSubnetResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSubnetWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteInternetGatewayWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteInternetGatewayWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteInternetGatewayParams, reqEditors ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteInternetGatewayWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteInternetGatewayParams, reqEditors ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1140,10 +1144,10 @@ func (_m *MockClientWithResponsesInterface) DeleteInternetGatewayWithResponse(ct
 
 	var r0 *network.DeleteInternetGatewayResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) *network.DeleteInternetGatewayResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) *network.DeleteInternetGatewayResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1151,7 +1155,7 @@ func (_m *MockClientWithResponsesInterface) DeleteInternetGatewayWithResponse(ct
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1167,9 +1171,9 @@ type MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call str
 
 // DeleteInternetGatewayWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteInternetGatewayParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteInternetGatewayWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call {
@@ -1177,7 +1181,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteInternetGatewayWithRe
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteInternetGatewayParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteInternetGatewayParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -1185,7 +1189,7 @@ func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Cal
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteInternetGatewayParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.DeleteInternetGatewayParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1195,13 +1199,13 @@ func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Cal
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error)) *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteInternetGatewayParams, ...network.RequestEditorFn) (*network.DeleteInternetGatewayResponse, error)) *MockClientWithResponsesInterface_DeleteInternetGatewayWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteNetworkWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteNetworkWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteNetworkParams, reqEditors ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteNetworkWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteNetworkParams, reqEditors ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1217,10 +1221,10 @@ func (_m *MockClientWithResponsesInterface) DeleteNetworkWithResponse(ctx contex
 
 	var r0 *network.DeleteNetworkResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNetworkParams, ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNetworkParams, ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNetworkParams, ...network.RequestEditorFn) *network.DeleteNetworkResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNetworkParams, ...network.RequestEditorFn) *network.DeleteNetworkResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1228,7 +1232,7 @@ func (_m *MockClientWithResponsesInterface) DeleteNetworkWithResponse(ctx contex
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNetworkParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNetworkParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1244,9 +1248,9 @@ type MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call struct {
 
 // DeleteNetworkWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteNetworkParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteNetworkWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call {
@@ -1254,7 +1258,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteNetworkWithResponse(c
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteNetworkParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteNetworkParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -1262,7 +1266,7 @@ func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) Run(r
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteNetworkParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.DeleteNetworkParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1272,13 +1276,13 @@ func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) Retur
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNetworkParams, ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error)) *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNetworkParams, ...network.RequestEditorFn) (*network.DeleteNetworkResponse, error)) *MockClientWithResponsesInterface_DeleteNetworkWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteNicWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteNicWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteNicParams, reqEditors ...network.RequestEditorFn) (*network.DeleteNicResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteNicWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteNicParams, reqEditors ...network.RequestEditorFn) (*network.DeleteNicResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1294,10 +1298,10 @@ func (_m *MockClientWithResponsesInterface) DeleteNicWithResponse(ctx context.Co
 
 	var r0 *network.DeleteNicResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNicParams, ...network.RequestEditorFn) (*network.DeleteNicResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNicParams, ...network.RequestEditorFn) (*network.DeleteNicResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNicParams, ...network.RequestEditorFn) *network.DeleteNicResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNicParams, ...network.RequestEditorFn) *network.DeleteNicResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1305,7 +1309,7 @@ func (_m *MockClientWithResponsesInterface) DeleteNicWithResponse(ctx context.Co
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNicParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNicParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1321,9 +1325,9 @@ type MockClientWithResponsesInterface_DeleteNicWithResponse_Call struct {
 
 // DeleteNicWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteNicParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteNicWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteNicWithResponse_Call {
@@ -1331,7 +1335,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteNicWithResponse(ctx i
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteNicParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteNicParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteNicWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -1339,7 +1343,7 @@ func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) Run(run f
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteNicParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.DeleteNicParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1349,13 +1353,13 @@ func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) Return(_a
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteNicParams, ...network.RequestEditorFn) (*network.DeleteNicResponse, error)) *MockClientWithResponsesInterface_DeleteNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteNicWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteNicParams, ...network.RequestEditorFn) (*network.DeleteNicResponse, error)) *MockClientWithResponsesInterface_DeleteNicWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeletePublicIpWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeletePublicIpWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeletePublicIpParams, reqEditors ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeletePublicIpWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeletePublicIpParams, reqEditors ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1371,10 +1375,10 @@ func (_m *MockClientWithResponsesInterface) DeletePublicIpWithResponse(ctx conte
 
 	var r0 *network.DeletePublicIpResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeletePublicIpParams, ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeletePublicIpParams, ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeletePublicIpParams, ...network.RequestEditorFn) *network.DeletePublicIpResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeletePublicIpParams, ...network.RequestEditorFn) *network.DeletePublicIpResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1382,7 +1386,7 @@ func (_m *MockClientWithResponsesInterface) DeletePublicIpWithResponse(ctx conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeletePublicIpParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeletePublicIpParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1398,9 +1402,9 @@ type MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call struct {
 
 // DeletePublicIpWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeletePublicIpParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeletePublicIpWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call {
@@ -1408,7 +1412,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeletePublicIpWithResponse(
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeletePublicIpParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeletePublicIpParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -1416,7 +1420,7 @@ func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) Run(
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeletePublicIpParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.DeletePublicIpParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1426,19 +1430,19 @@ func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) Retu
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeletePublicIpParams, ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error)) *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeletePublicIpParams, ...network.RequestEditorFn) (*network.DeletePublicIpResponse, error)) *MockClientWithResponsesInterface_DeletePublicIpWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// DeleteRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteRouteTableWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteRouteTableParams, reqEditors ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error) {
+// DeleteRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, reqEditors
+func (_m *MockClientWithResponsesInterface) DeleteRouteTableWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.DeleteRouteTableParams, reqEditors ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -1448,19 +1452,19 @@ func (_m *MockClientWithResponsesInterface) DeleteRouteTableWithResponse(ctx con
 
 	var r0 *network.DeleteRouteTableResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteRouteTableParams, ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteRouteTableParams, ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteRouteTableParams, ...network.RequestEditorFn) *network.DeleteRouteTableResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteRouteTableParams, ...network.RequestEditorFn) *network.DeleteRouteTableResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.DeleteRouteTableResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteRouteTableParams, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteRouteTableParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -1475,25 +1479,26 @@ type MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call struct {
 
 // DeleteRouteTableWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteRouteTableParams
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) DeleteRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) DeleteRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
 	return &MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call{Call: _e.mock.On("DeleteRouteTableWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteRouteTableParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.DeleteRouteTableParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
-		for i, a := range args[5:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
+		for i, a := range args[6:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteRouteTableParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.DeleteRouteTableParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1503,13 +1508,13 @@ func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) Re
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteRouteTableParams, ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error)) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteRouteTableParams, ...network.RequestEditorFn) (*network.DeleteRouteTableResponse, error)) *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteSecurityGroupWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteSecurityGroupParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error) {
+func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteSecurityGroupParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1525,10 +1530,10 @@ func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupWithResponse(ctx 
 
 	var r0 *network.DeleteSecurityGroupResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) *network.DeleteSecurityGroupResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) *network.DeleteSecurityGroupResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1536,7 +1541,7 @@ func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupWithResponse(ctx 
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1552,9 +1557,9 @@ type MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call struc
 
 // DeleteSecurityGroupWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteSecurityGroupParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) DeleteSecurityGroupWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call {
@@ -1562,7 +1567,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) DeleteSecurityGroupWithResp
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteSecurityGroupParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params *network.DeleteSecurityGroupParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -1570,7 +1575,7 @@ func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call)
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteSecurityGroupParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), args[4].(*network.DeleteSecurityGroupParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1580,19 +1585,19 @@ func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call)
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error)) *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, *network.DeleteSecurityGroupParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error)) *MockClientWithResponsesInterface_DeleteSecurityGroupWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// DeleteSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientWithResponsesInterface) DeleteSubnetWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteSubnetParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error) {
+// DeleteSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, params, reqEditors
+func (_m *MockClientWithResponsesInterface) DeleteSubnetWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.DeleteSubnetParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name, params)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -1602,19 +1607,19 @@ func (_m *MockClientWithResponsesInterface) DeleteSubnetWithResponse(ctx context
 
 	var r0 *network.DeleteSubnetResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSubnetParams, ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteSubnetParams, ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSubnetParams, ...network.RequestEditorFn) *network.DeleteSubnetResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteSubnetParams, ...network.RequestEditorFn) *network.DeleteSubnetResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.DeleteSubnetResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSubnetParams, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteSubnetParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -1629,25 +1634,26 @@ type MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call struct {
 
 // DeleteSubnetWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params *network.DeleteSubnetParams
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) DeleteSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) DeleteSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
 	return &MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call{Call: _e.mock.On("DeleteSubnetWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params *network.DeleteSubnetParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, params *network.DeleteSubnetParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
-		for i, a := range args[5:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
+		for i, a := range args[6:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), args[4].(*network.DeleteSubnetParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), args[5].(*network.DeleteSubnetParams), variadicArgs...)
 	})
 	return _c
 }
@@ -1657,13 +1663,13 @@ func (_c *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call) Return
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, *network.DeleteSubnetParams, ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error)) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, *network.DeleteSubnetParams, ...network.RequestEditorFn) (*network.DeleteSubnetResponse, error)) *MockClientWithResponsesInterface_DeleteSubnetWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetInternetGatewayWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetInternetGatewayWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetInternetGatewayWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1679,10 +1685,10 @@ func (_m *MockClientWithResponsesInterface) GetInternetGatewayWithResponse(ctx c
 
 	var r0 *network.GetInternetGatewayResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetInternetGatewayResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetInternetGatewayResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1690,7 +1696,7 @@ func (_m *MockClientWithResponsesInterface) GetInternetGatewayWithResponse(ctx c
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1706,16 +1712,16 @@ type MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call struct
 
 // GetInternetGatewayWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetInternetGatewayWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call{Call: _e.mock.On("GetInternetGatewayWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -1723,7 +1729,7 @@ func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) 
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -1733,13 +1739,13 @@ func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) 
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error)) *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetInternetGatewayResponse, error)) *MockClientWithResponsesInterface_GetInternetGatewayWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetNetworkWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetNetworkWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetNetworkResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetNetworkWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetNetworkResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1755,10 +1761,10 @@ func (_m *MockClientWithResponsesInterface) GetNetworkWithResponse(ctx context.C
 
 	var r0 *network.GetNetworkResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetNetworkResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetNetworkResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetNetworkResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetNetworkResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1766,7 +1772,7 @@ func (_m *MockClientWithResponsesInterface) GetNetworkWithResponse(ctx context.C
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1782,16 +1788,16 @@ type MockClientWithResponsesInterface_GetNetworkWithResponse_Call struct {
 
 // GetNetworkWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetNetworkWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetNetworkWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetNetworkWithResponse_Call{Call: _e.mock.On("GetNetworkWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetNetworkWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -1799,7 +1805,7 @@ func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) Run(run 
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -1809,13 +1815,13 @@ func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) Return(_
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetNetworkResponse, error)) *MockClientWithResponsesInterface_GetNetworkWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetNetworkWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetNetworkResponse, error)) *MockClientWithResponsesInterface_GetNetworkWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetNicWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetNicWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetNicResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetNicWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetNicResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1831,10 +1837,10 @@ func (_m *MockClientWithResponsesInterface) GetNicWithResponse(ctx context.Conte
 
 	var r0 *network.GetNicResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetNicResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetNicResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetNicResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetNicResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1842,7 +1848,7 @@ func (_m *MockClientWithResponsesInterface) GetNicWithResponse(ctx context.Conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1858,16 +1864,16 @@ type MockClientWithResponsesInterface_GetNicWithResponse_Call struct {
 
 // GetNicWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetNicWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetNicWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetNicWithResponse_Call{Call: _e.mock.On("GetNicWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetNicWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -1875,7 +1881,7 @@ func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) Run(run func
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -1885,13 +1891,13 @@ func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) Return(_a0 *
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetNicResponse, error)) *MockClientWithResponsesInterface_GetNicWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetNicWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetNicResponse, error)) *MockClientWithResponsesInterface_GetNicWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetPublicIpWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetPublicIpWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetPublicIpResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetPublicIpWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetPublicIpResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -1907,10 +1913,10 @@ func (_m *MockClientWithResponsesInterface) GetPublicIpWithResponse(ctx context.
 
 	var r0 *network.GetPublicIpResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetPublicIpResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetPublicIpResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetPublicIpResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetPublicIpResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -1918,7 +1924,7 @@ func (_m *MockClientWithResponsesInterface) GetPublicIpWithResponse(ctx context.
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -1934,16 +1940,16 @@ type MockClientWithResponsesInterface_GetPublicIpWithResponse_Call struct {
 
 // GetPublicIpWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetPublicIpWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetPublicIpWithResponse_Call{Call: _e.mock.On("GetPublicIpWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -1951,7 +1957,7 @@ func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) Run(run
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -1961,19 +1967,19 @@ func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) Return(
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetPublicIpResponse, error)) *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetPublicIpResponse, error)) *MockClientWithResponsesInterface_GetPublicIpWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// GetRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetRouteTableWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetRouteTableResponse, error) {
+// GetRouteTableWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, reqEditors
+func (_m *MockClientWithResponsesInterface) GetRouteTableWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetRouteTableResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -1983,19 +1989,19 @@ func (_m *MockClientWithResponsesInterface) GetRouteTableWithResponse(ctx contex
 
 	var r0 *network.GetRouteTableResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetRouteTableResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetRouteTableResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetRouteTableResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetRouteTableResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.GetRouteTableResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2010,24 +2016,25 @@ type MockClientWithResponsesInterface_GetRouteTableWithResponse_Call struct {
 
 // GetRouteTableWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) GetRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) GetRouteTableWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetRouteTableWithResponse_Call{Call: _e.mock.On("GetRouteTableWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
-		for i, a := range args[4:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -2037,13 +2044,13 @@ func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) Retur
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetRouteTableResponse, error)) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetRouteTableResponse, error)) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetSecurityGroupWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetSecurityGroupWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetSecurityGroupWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2059,10 +2066,10 @@ func (_m *MockClientWithResponsesInterface) GetSecurityGroupWithResponse(ctx con
 
 	var r0 *network.GetSecurityGroupResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetSecurityGroupResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetSecurityGroupResponse); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2070,7 +2077,7 @@ func (_m *MockClientWithResponsesInterface) GetSecurityGroupWithResponse(ctx con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2086,16 +2093,16 @@ type MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call struct {
 
 // GetSecurityGroupWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetSecurityGroupWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call{Call: _e.mock.On("GetSecurityGroupWithResponse",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2103,7 +2110,7 @@ func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) Ru
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -2113,13 +2120,13 @@ func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) Re
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error)) *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSecurityGroupResponse, error)) *MockClientWithResponsesInterface_GetSecurityGroupWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetSkuWithResponse provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Context, tenant network.Tenant, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetSkuResponse, error) {
+func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Context, tenant network.TenantPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetSkuResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2135,10 +2142,10 @@ func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Conte
 
 	var r0 *network.GetSkuResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.ResourceName, ...network.RequestEditorFn) (*network.GetSkuResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSkuResponse, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.ResourceName, ...network.RequestEditorFn) *network.GetSkuResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetSkuResponse); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2146,7 +2153,7 @@ func (_m *MockClientWithResponsesInterface) GetSkuWithResponse(ctx context.Conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.ResourceName, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2162,15 +2169,15 @@ type MockClientWithResponsesInterface_GetSkuWithResponse_Call struct {
 
 // GetSkuWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) GetSkuWithResponse(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetSkuWithResponse_Call{Call: _e.mock.On("GetSkuWithResponse",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -2178,7 +2185,7 @@ func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Run(run func
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -2188,19 +2195,19 @@ func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) Return(_a0 *
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.ResourceName, ...network.RequestEditorFn) (*network.GetSkuResponse, error)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSkuWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSkuResponse, error)) *MockClientWithResponsesInterface_GetSkuWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// GetSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientWithResponsesInterface) GetSubnetWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn) (*network.GetSubnetResponse, error) {
+// GetSubnetWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, name, reqEditors
+func (_m *MockClientWithResponsesInterface) GetSubnetWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetSubnetResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, name)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, name)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -2210,19 +2217,19 @@ func (_m *MockClientWithResponsesInterface) GetSubnetWithResponse(ctx context.Co
 
 	var r0 *network.GetSubnetResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetSubnetResponse, error)); ok {
-		return rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSubnetResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) *network.GetSubnetResponse); ok {
-		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) *network.GetSubnetResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.GetSubnetResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2237,24 +2244,25 @@ type MockClientWithResponsesInterface_GetSubnetWithResponse_Call struct {
 
 // GetSubnetWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) GetSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) GetSubnetWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
 	return &MockClientWithResponsesInterface_GetSubnetWithResponse_Call{Call: _e.mock.On("GetSubnetWithResponse",
-		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_GetSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSubnetWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, name network.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
-		for i, a := range args[4:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(network.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(network.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -2264,13 +2272,13 @@ func (_c *MockClientWithResponsesInterface_GetSubnetWithResponse_Call) Return(_a
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_GetSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, network.ResourceName, ...network.RequestEditorFn) (*network.GetSubnetResponse, error)) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_GetSubnetWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSubnetResponse, error)) *MockClientWithResponsesInterface_GetSubnetWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListInternetGatewaysWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListInternetGatewaysWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListInternetGatewaysParams, reqEditors ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListInternetGatewaysWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListInternetGatewaysParams, reqEditors ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2286,10 +2294,10 @@ func (_m *MockClientWithResponsesInterface) ListInternetGatewaysWithResponse(ctx
 
 	var r0 *network.ListInternetGatewaysResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) *network.ListInternetGatewaysResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) *network.ListInternetGatewaysResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2297,7 +2305,7 @@ func (_m *MockClientWithResponsesInterface) ListInternetGatewaysWithResponse(ctx
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2313,8 +2321,8 @@ type MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call stru
 
 // ListInternetGatewaysWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params *network.ListInternetGatewaysParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListInternetGatewaysWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call {
@@ -2322,7 +2330,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListInternetGatewaysWithRes
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListInternetGatewaysParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListInternetGatewaysParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2330,7 +2338,7 @@ func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListInternetGatewaysParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(*network.ListInternetGatewaysParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2340,13 +2348,13 @@ func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error)) *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListInternetGatewaysParams, ...network.RequestEditorFn) (*network.ListInternetGatewaysResponse, error)) *MockClientWithResponsesInterface_ListInternetGatewaysWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListNetworksWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListNetworksWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListNetworksParams, reqEditors ...network.RequestEditorFn) (*network.ListNetworksResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListNetworksWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListNetworksParams, reqEditors ...network.RequestEditorFn) (*network.ListNetworksResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2362,10 +2370,10 @@ func (_m *MockClientWithResponsesInterface) ListNetworksWithResponse(ctx context
 
 	var r0 *network.ListNetworksResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListNetworksParams, ...network.RequestEditorFn) (*network.ListNetworksResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNetworksParams, ...network.RequestEditorFn) (*network.ListNetworksResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListNetworksParams, ...network.RequestEditorFn) *network.ListNetworksResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNetworksParams, ...network.RequestEditorFn) *network.ListNetworksResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2373,7 +2381,7 @@ func (_m *MockClientWithResponsesInterface) ListNetworksWithResponse(ctx context
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListNetworksParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNetworksParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2389,8 +2397,8 @@ type MockClientWithResponsesInterface_ListNetworksWithResponse_Call struct {
 
 // ListNetworksWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params *network.ListNetworksParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListNetworksWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListNetworksWithResponse_Call {
@@ -2398,7 +2406,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListNetworksWithResponse(ct
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListNetworksParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListNetworksWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListNetworksParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListNetworksWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2406,7 +2414,7 @@ func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) Run(ru
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListNetworksParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(*network.ListNetworksParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2416,13 +2424,13 @@ func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) Return
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListNetworksParams, ...network.RequestEditorFn) (*network.ListNetworksResponse, error)) *MockClientWithResponsesInterface_ListNetworksWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListNetworksWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNetworksParams, ...network.RequestEditorFn) (*network.ListNetworksResponse, error)) *MockClientWithResponsesInterface_ListNetworksWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListNicsWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListNicsWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListNicsParams, reqEditors ...network.RequestEditorFn) (*network.ListNicsResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListNicsWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListNicsParams, reqEditors ...network.RequestEditorFn) (*network.ListNicsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2438,10 +2446,10 @@ func (_m *MockClientWithResponsesInterface) ListNicsWithResponse(ctx context.Con
 
 	var r0 *network.ListNicsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListNicsParams, ...network.RequestEditorFn) (*network.ListNicsResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNicsParams, ...network.RequestEditorFn) (*network.ListNicsResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListNicsParams, ...network.RequestEditorFn) *network.ListNicsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNicsParams, ...network.RequestEditorFn) *network.ListNicsResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2449,7 +2457,7 @@ func (_m *MockClientWithResponsesInterface) ListNicsWithResponse(ctx context.Con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListNicsParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNicsParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2465,8 +2473,8 @@ type MockClientWithResponsesInterface_ListNicsWithResponse_Call struct {
 
 // ListNicsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params *network.ListNicsParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListNicsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListNicsWithResponse_Call {
@@ -2474,7 +2482,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListNicsWithResponse(ctx in
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListNicsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListNicsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListNicsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListNicsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2482,7 +2490,7 @@ func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) Run(run fu
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListNicsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(*network.ListNicsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2492,13 +2500,13 @@ func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) Return(_a0
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListNicsParams, ...network.RequestEditorFn) (*network.ListNicsResponse, error)) *MockClientWithResponsesInterface_ListNicsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListNicsWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListNicsParams, ...network.RequestEditorFn) (*network.ListNicsResponse, error)) *MockClientWithResponsesInterface_ListNicsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListPublicIpsWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListPublicIpsWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListPublicIpsParams, reqEditors ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListPublicIpsWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListPublicIpsParams, reqEditors ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2514,10 +2522,10 @@ func (_m *MockClientWithResponsesInterface) ListPublicIpsWithResponse(ctx contex
 
 	var r0 *network.ListPublicIpsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListPublicIpsParams, ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListPublicIpsParams, ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListPublicIpsParams, ...network.RequestEditorFn) *network.ListPublicIpsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListPublicIpsParams, ...network.RequestEditorFn) *network.ListPublicIpsResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2525,7 +2533,7 @@ func (_m *MockClientWithResponsesInterface) ListPublicIpsWithResponse(ctx contex
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListPublicIpsParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListPublicIpsParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2541,8 +2549,8 @@ type MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call struct {
 
 // ListPublicIpsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params *network.ListPublicIpsParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListPublicIpsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call {
@@ -2550,7 +2558,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListPublicIpsWithResponse(c
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListPublicIpsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListPublicIpsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2558,7 +2566,7 @@ func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) Run(r
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListPublicIpsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(*network.ListPublicIpsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2568,19 +2576,19 @@ func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) Retur
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListPublicIpsParams, ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error)) *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListPublicIpsParams, ...network.RequestEditorFn) (*network.ListPublicIpsResponse, error)) *MockClientWithResponsesInterface_ListPublicIpsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// ListRouteTablesWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListRouteTablesWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListRouteTablesParams, reqEditors ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error) {
+// ListRouteTablesWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, params, reqEditors
+func (_m *MockClientWithResponsesInterface) ListRouteTablesWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, params *network.ListRouteTablesParams, reqEditors ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, params)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -2590,19 +2598,19 @@ func (_m *MockClientWithResponsesInterface) ListRouteTablesWithResponse(ctx cont
 
 	var r0 *network.ListRouteTablesResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListRouteTablesParams, ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error)); ok {
-		return rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListRouteTablesParams, ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListRouteTablesParams, ...network.RequestEditorFn) *network.ListRouteTablesResponse); ok {
-		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListRouteTablesParams, ...network.RequestEditorFn) *network.ListRouteTablesResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.ListRouteTablesResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListRouteTablesParams, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListRouteTablesParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2617,24 +2625,25 @@ type MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call struct {
 
 // ListRouteTablesWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
 //   - params *network.ListRouteTablesParams
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) ListRouteTablesWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) ListRouteTablesWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
 	return &MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call{Call: _e.mock.On("ListRouteTablesWithResponse",
-		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListRouteTablesParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, params *network.ListRouteTablesParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
-		for i, a := range args[4:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListRouteTablesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(*network.ListRouteTablesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2644,13 +2653,13 @@ func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) Ret
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListRouteTablesParams, ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error)) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListRouteTablesParams, ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error)) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListSecurityGroupsWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListSecurityGroupsWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListSecurityGroupsParams, reqEditors ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListSecurityGroupsWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListSecurityGroupsParams, reqEditors ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2666,10 +2675,10 @@ func (_m *MockClientWithResponsesInterface) ListSecurityGroupsWithResponse(ctx c
 
 	var r0 *network.ListSecurityGroupsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) *network.ListSecurityGroupsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) *network.ListSecurityGroupsResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2677,7 +2686,7 @@ func (_m *MockClientWithResponsesInterface) ListSecurityGroupsWithResponse(ctx c
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2693,8 +2702,8 @@ type MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call struct
 
 // ListSecurityGroupsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params *network.ListSecurityGroupsParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListSecurityGroupsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call {
@@ -2702,7 +2711,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListSecurityGroupsWithRespo
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListSecurityGroupsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params *network.ListSecurityGroupsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2710,7 +2719,7 @@ func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) 
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListSecurityGroupsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(*network.ListSecurityGroupsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2720,13 +2729,13 @@ func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) 
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error)) *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, *network.ListSecurityGroupsParams, ...network.RequestEditorFn) (*network.ListSecurityGroupsResponse, error)) *MockClientWithResponsesInterface_ListSecurityGroupsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListSkusWithResponse provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Context, tenant network.Tenant, params *network.ListSkusParams, reqEditors ...network.RequestEditorFn) (*network.ListSkusResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Context, tenant network.TenantPathParam, params *network.ListSkusParams, reqEditors ...network.RequestEditorFn) (*network.ListSkusResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -2742,10 +2751,10 @@ func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Con
 
 	var r0 *network.ListSkusResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, *network.ListSkusParams, ...network.RequestEditorFn) (*network.ListSkusResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, *network.ListSkusParams, ...network.RequestEditorFn) (*network.ListSkusResponse, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, *network.ListSkusParams, ...network.RequestEditorFn) *network.ListSkusResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, *network.ListSkusParams, ...network.RequestEditorFn) *network.ListSkusResponse); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -2753,7 +2762,7 @@ func (_m *MockClientWithResponsesInterface) ListSkusWithResponse(ctx context.Con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, *network.ListSkusParams, ...network.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, *network.ListSkusParams, ...network.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -2769,7 +2778,7 @@ type MockClientWithResponsesInterface_ListSkusWithResponse_Call struct {
 
 // ListSkusWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
+//   - tenant network.TenantPathParam
 //   - params *network.ListSkusParams
 //   - reqEditors ...network.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListSkusWithResponse(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
@@ -2777,7 +2786,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListSkusWithResponse(ctx in
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, params *network.ListSkusParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, params *network.ListSkusParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]network.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -2785,7 +2794,7 @@ func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Run(run fu
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(*network.ListSkusParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(*network.ListSkusParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2795,19 +2804,19 @@ func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) Return(_a0
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, *network.ListSkusParams, ...network.RequestEditorFn) (*network.ListSkusResponse, error)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSkusWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, *network.ListSkusParams, ...network.RequestEditorFn) (*network.ListSkusResponse, error)) *MockClientWithResponsesInterface_ListSkusWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
-// ListSubnetsWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListSubnetsWithResponse(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListSubnetsParams, reqEditors ...network.RequestEditorFn) (*network.ListSubnetsResponse, error) {
+// ListSubnetsWithResponse provides a mock function with given fields: ctx, tenant, workspace, _a3, params, reqEditors
+func (_m *MockClientWithResponsesInterface) ListSubnetsWithResponse(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, params *network.ListSubnetsParams, reqEditors ...network.RequestEditorFn) (*network.ListSubnetsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, tenant, workspace, params)
+	_ca = append(_ca, ctx, tenant, workspace, _a3, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
@@ -2817,19 +2826,19 @@ func (_m *MockClientWithResponsesInterface) ListSubnetsWithResponse(ctx context.
 
 	var r0 *network.ListSubnetsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListSubnetsParams, ...network.RequestEditorFn) (*network.ListSubnetsResponse, error)); ok {
-		return rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListSubnetsParams, ...network.RequestEditorFn) (*network.ListSubnetsResponse, error)); ok {
+		return rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, network.Tenant, network.Workspace, *network.ListSubnetsParams, ...network.RequestEditorFn) *network.ListSubnetsResponse); ok {
-		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListSubnetsParams, ...network.RequestEditorFn) *network.ListSubnetsResponse); ok {
+		r0 = rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*network.ListSubnetsResponse)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, network.Tenant, network.Workspace, *network.ListSubnetsParams, ...network.RequestEditorFn) error); ok {
-		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListSubnetsParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, _a3, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2844,24 +2853,25 @@ type MockClientWithResponsesInterface_ListSubnetsWithResponse_Call struct {
 
 // ListSubnetsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a3 network.NetworkPathParam
 //   - params *network.ListSubnetsParams
 //   - reqEditors ...network.RequestEditorFn
-func (_e *MockClientWithResponsesInterface_Expecter) ListSubnetsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
+func (_e *MockClientWithResponsesInterface_Expecter) ListSubnetsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, _a3 interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
 	return &MockClientWithResponsesInterface_ListSubnetsWithResponse_Call{Call: _e.mock.On("ListSubnetsWithResponse",
-		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
+		append([]interface{}{ctx, tenant, workspace, _a3, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call) Run(run func(ctx context.Context, tenant network.Tenant, workspace network.Workspace, params *network.ListSubnetsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call) Run(run func(ctx context.Context, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a3 network.NetworkPathParam, params *network.ListSubnetsParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
-		for i, a := range args[4:] {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
 			if a != nil {
 				variadicArgs[i] = a.(network.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(network.Tenant), args[2].(network.Workspace), args[3].(*network.ListSubnetsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(network.TenantPathParam), args[2].(network.WorkspacePathParam), args[3].(network.NetworkPathParam), args[4].(*network.ListSubnetsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -2871,7 +2881,7 @@ func (_c *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call) Return(
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call) RunAndReturn(run func(context.Context, network.Tenant, network.Workspace, *network.ListSubnetsParams, ...network.RequestEditorFn) (*network.ListSubnetsResponse, error)) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call) RunAndReturn(run func(context.Context, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, *network.ListSubnetsParams, ...network.RequestEditorFn) (*network.ListSubnetsResponse, error)) *MockClientWithResponsesInterface_ListSubnetsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }

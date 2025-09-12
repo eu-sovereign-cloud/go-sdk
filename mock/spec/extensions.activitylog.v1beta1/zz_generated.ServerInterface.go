@@ -24,7 +24,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // ListActivityLogs provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListActivityLogs(w http.ResponseWriter, r *http.Request, tenant activitylog.Tenant, workspace activitylog.Workspace, params activitylog.ListActivityLogsParams) {
+func (_m *MockServerInterface) ListActivityLogs(w http.ResponseWriter, r *http.Request, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params activitylog.ListActivityLogsParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -36,16 +36,16 @@ type MockServerInterface_ListActivityLogs_Call struct {
 // ListActivityLogs is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant activitylog.Tenant
-//   - workspace activitylog.Workspace
+//   - tenant activitylog.TenantPathParam
+//   - workspace activitylog.WorkspacePathParam
 //   - params activitylog.ListActivityLogsParams
 func (_e *MockServerInterface_Expecter) ListActivityLogs(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListActivityLogs_Call {
 	return &MockServerInterface_ListActivityLogs_Call{Call: _e.mock.On("ListActivityLogs", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListActivityLogs_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant activitylog.Tenant, workspace activitylog.Workspace, params activitylog.ListActivityLogsParams)) *MockServerInterface_ListActivityLogs_Call {
+func (_c *MockServerInterface_ListActivityLogs_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params activitylog.ListActivityLogsParams)) *MockServerInterface_ListActivityLogs_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(activitylog.Tenant), args[3].(activitylog.Workspace), args[4].(activitylog.ListActivityLogsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(activitylog.TenantPathParam), args[3].(activitylog.WorkspacePathParam), args[4].(activitylog.ListActivityLogsParams))
 	})
 	return _c
 }
@@ -55,7 +55,7 @@ func (_c *MockServerInterface_ListActivityLogs_Call) Return() *MockServerInterfa
 	return _c
 }
 
-func (_c *MockServerInterface_ListActivityLogs_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, activitylog.Tenant, activitylog.Workspace, activitylog.ListActivityLogsParams)) *MockServerInterface_ListActivityLogs_Call {
+func (_c *MockServerInterface_ListActivityLogs_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, activitylog.TenantPathParam, activitylog.WorkspacePathParam, activitylog.ListActivityLogsParams)) *MockServerInterface_ListActivityLogs_Call {
 	_c.Run(run)
 	return _c
 }

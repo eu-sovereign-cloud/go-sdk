@@ -193,6 +193,11 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	instanceSku1Ref, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
@@ -200,7 +205,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	}
 	inst := &compute.Instance{
 		Spec: compute.InstanceSpec{
-			SkuRef: secatest.InstanceSku1Ref,
+			SkuRef: *instanceSku1Ref,
 			Zone:   secatest.ZoneA,
 		},
 	}

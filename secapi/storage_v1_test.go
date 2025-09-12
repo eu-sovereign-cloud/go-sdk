@@ -190,6 +190,11 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	storageSku1Ref, err := regionalClient.StorageV1.BuildReferenceURN(secatest.StorageSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
@@ -197,7 +202,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	}
 	block := &storage.BlockStorage{
 		Spec: storage.BlockStorageSpec{
-			SkuRef: secatest.StorageSku1Ref,
+			SkuRef: *storageSku1Ref,
 			SizeGB: secatest.BlockStorage1SizeGB,
 		},
 	}
@@ -355,13 +360,18 @@ func TestCreateOrUpdateImage(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	blockStorage1Ref, err := regionalClient.StorageV1.BuildReferenceURN(secatest.BlockStorage1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	tref := TenantReference{
 		Tenant: secatest.Tenant1Name,
 		Name:   secatest.Image1Name,
 	}
 	image := &storage.Image{
 		Spec: storage.ImageSpec{
-			BlockStorageRef: secatest.BlockStorage1Ref,
+			BlockStorageRef: *blockStorage1Ref,
 			CpuArchitecture: secatest.Image1CpuArch,
 		},
 	}

@@ -26,7 +26,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // ListActivityLogs provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListActivityLogs(ctx context.Context, tenant activitylog.Tenant, workspace activitylog.Workspace, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListActivityLogs(ctx context.Context, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -42,10 +42,10 @@ func (_m *MockClientInterface) ListActivityLogs(ctx context.Context, tenant acti
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -53,7 +53,7 @@ func (_m *MockClientInterface) ListActivityLogs(ctx context.Context, tenant acti
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -69,8 +69,8 @@ type MockClientInterface_ListActivityLogs_Call struct {
 
 // ListActivityLogs is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant activitylog.Tenant
-//   - workspace activitylog.Workspace
+//   - tenant activitylog.TenantPathParam
+//   - workspace activitylog.WorkspacePathParam
 //   - params *activitylog.ListActivityLogsParams
 //   - reqEditors ...activitylog.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListActivityLogs(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListActivityLogs_Call {
@@ -78,7 +78,7 @@ func (_e *MockClientInterface_Expecter) ListActivityLogs(ctx interface{}, tenant
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListActivityLogs_Call) Run(run func(ctx context.Context, tenant activitylog.Tenant, workspace activitylog.Workspace, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn)) *MockClientInterface_ListActivityLogs_Call {
+func (_c *MockClientInterface_ListActivityLogs_Call) Run(run func(ctx context.Context, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn)) *MockClientInterface_ListActivityLogs_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]activitylog.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -86,7 +86,7 @@ func (_c *MockClientInterface_ListActivityLogs_Call) Run(run func(ctx context.Co
 				variadicArgs[i] = a.(activitylog.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(activitylog.Tenant), args[2].(activitylog.Workspace), args[3].(*activitylog.ListActivityLogsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(activitylog.TenantPathParam), args[2].(activitylog.WorkspacePathParam), args[3].(*activitylog.ListActivityLogsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -96,7 +96,7 @@ func (_c *MockClientInterface_ListActivityLogs_Call) Return(_a0 *http.Response, 
 	return _c
 }
 
-func (_c *MockClientInterface_ListActivityLogs_Call) RunAndReturn(run func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListActivityLogs_Call {
+func (_c *MockClientInterface_ListActivityLogs_Call) RunAndReturn(run func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListActivityLogs_Call {
 	_c.Call.Return(run)
 	return _c
 }

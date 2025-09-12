@@ -23,7 +23,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateAccount provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params objectstorage.CreateOrUpdateAccountParams) {
+func (_m *MockServerInterface) CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params objectstorage.CreateOrUpdateAccountParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -35,17 +35,17 @@ type MockServerInterface_CreateOrUpdateAccount_Call struct {
 // CreateOrUpdateAccount is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - params objectstorage.CreateOrUpdateAccountParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateAccount(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateAccount_Call {
 	return &MockServerInterface_CreateOrUpdateAccount_Call{Call: _e.mock.On("CreateOrUpdateAccount", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params objectstorage.CreateOrUpdateAccountParams)) *MockServerInterface_CreateOrUpdateAccount_Call {
+func (_c *MockServerInterface_CreateOrUpdateAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params objectstorage.CreateOrUpdateAccountParams)) *MockServerInterface_CreateOrUpdateAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.Tenant), args[3].(objectstorage.Workspace), args[4].(objectstorage.ResourceName), args[5].(objectstorage.CreateOrUpdateAccountParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.TenantPathParam), args[3].(objectstorage.WorkspacePathParam), args[4].(objectstorage.ResourcePathParam), args[5].(objectstorage.CreateOrUpdateAccountParams))
 	})
 	return _c
 }
@@ -55,13 +55,13 @@ func (_c *MockServerInterface_CreateOrUpdateAccount_Call) Return() *MockServerIn
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, objectstorage.CreateOrUpdateAccountParams)) *MockServerInterface_CreateOrUpdateAccount_Call {
+func (_c *MockServerInterface_CreateOrUpdateAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, objectstorage.CreateOrUpdateAccountParams)) *MockServerInterface_CreateOrUpdateAccount_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteAccount provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params objectstorage.DeleteAccountParams) {
+func (_m *MockServerInterface) DeleteAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params objectstorage.DeleteAccountParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -73,17 +73,17 @@ type MockServerInterface_DeleteAccount_Call struct {
 // DeleteAccount is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - params objectstorage.DeleteAccountParams
 func (_e *MockServerInterface_Expecter) DeleteAccount(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteAccount_Call {
 	return &MockServerInterface_DeleteAccount_Call{Call: _e.mock.On("DeleteAccount", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params objectstorage.DeleteAccountParams)) *MockServerInterface_DeleteAccount_Call {
+func (_c *MockServerInterface_DeleteAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params objectstorage.DeleteAccountParams)) *MockServerInterface_DeleteAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.Tenant), args[3].(objectstorage.Workspace), args[4].(objectstorage.ResourceName), args[5].(objectstorage.DeleteAccountParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.TenantPathParam), args[3].(objectstorage.WorkspacePathParam), args[4].(objectstorage.ResourcePathParam), args[5].(objectstorage.DeleteAccountParams))
 	})
 	return _c
 }
@@ -93,13 +93,13 @@ func (_c *MockServerInterface_DeleteAccount_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, objectstorage.DeleteAccountParams)) *MockServerInterface_DeleteAccount_Call {
+func (_c *MockServerInterface_DeleteAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, objectstorage.DeleteAccountParams)) *MockServerInterface_DeleteAccount_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetAccount provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName) {
+func (_m *MockServerInterface) GetAccount(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -111,16 +111,16 @@ type MockServerInterface_GetAccount_Call struct {
 // GetAccount is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetAccount(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetAccount_Call {
 	return &MockServerInterface_GetAccount_Call{Call: _e.mock.On("GetAccount", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName)) *MockServerInterface_GetAccount_Call {
+func (_c *MockServerInterface_GetAccount_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam)) *MockServerInterface_GetAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.Tenant), args[3].(objectstorage.Workspace), args[4].(objectstorage.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.TenantPathParam), args[3].(objectstorage.WorkspacePathParam), args[4].(objectstorage.ResourcePathParam))
 	})
 	return _c
 }
@@ -130,13 +130,13 @@ func (_c *MockServerInterface_GetAccount_Call) Return() *MockServerInterface_Get
 	return _c
 }
 
-func (_c *MockServerInterface_GetAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName)) *MockServerInterface_GetAccount_Call {
+func (_c *MockServerInterface_GetAccount_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam)) *MockServerInterface_GetAccount_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListAccounts provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListAccounts(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, params objectstorage.ListAccountsParams) {
+func (_m *MockServerInterface) ListAccounts(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, params objectstorage.ListAccountsParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -148,16 +148,16 @@ type MockServerInterface_ListAccounts_Call struct {
 // ListAccounts is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
 //   - params objectstorage.ListAccountsParams
 func (_e *MockServerInterface_Expecter) ListAccounts(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListAccounts_Call {
 	return &MockServerInterface_ListAccounts_Call{Call: _e.mock.On("ListAccounts", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListAccounts_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.Tenant, workspace objectstorage.Workspace, params objectstorage.ListAccountsParams)) *MockServerInterface_ListAccounts_Call {
+func (_c *MockServerInterface_ListAccounts_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, params objectstorage.ListAccountsParams)) *MockServerInterface_ListAccounts_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.Tenant), args[3].(objectstorage.Workspace), args[4].(objectstorage.ListAccountsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(objectstorage.TenantPathParam), args[3].(objectstorage.WorkspacePathParam), args[4].(objectstorage.ListAccountsParams))
 	})
 	return _c
 }
@@ -167,7 +167,7 @@ func (_c *MockServerInterface_ListAccounts_Call) Return() *MockServerInterface_L
 	return _c
 }
 
-func (_c *MockServerInterface_ListAccounts_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ListAccountsParams)) *MockServerInterface_ListAccounts_Call {
+func (_c *MockServerInterface_ListAccounts_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ListAccountsParams)) *MockServerInterface_ListAccounts_Call {
 	_c.Run(run)
 	return _c
 }

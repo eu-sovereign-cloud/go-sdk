@@ -27,7 +27,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateAccount provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateAccount(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.CreateOrUpdateAccountParams, body objectstorage.CreateOrUpdateAccountJSONRequestBody, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateAccount(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.CreateOrUpdateAccountParams, body objectstorage.CreateOrUpdateAccountJSONRequestBody, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -43,10 +43,10 @@ func (_m *MockClientInterface) CreateOrUpdateAccount(ctx context.Context, tenant
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -54,7 +54,7 @@ func (_m *MockClientInterface) CreateOrUpdateAccount(ctx context.Context, tenant
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -70,9 +70,9 @@ type MockClientInterface_CreateOrUpdateAccount_Call struct {
 
 // CreateOrUpdateAccount is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - params *objectstorage.CreateOrUpdateAccountParams
 //   - body objectstorage.CreateOrUpdateAccountJSONRequestBody
 //   - reqEditors ...objectstorage.RequestEditorFn
@@ -81,7 +81,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateAccount(ctx interface{}, t
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.CreateOrUpdateAccountParams, body objectstorage.CreateOrUpdateAccountJSONRequestBody, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateAccount_Call {
+func (_c *MockClientInterface_CreateOrUpdateAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.CreateOrUpdateAccountParams, body objectstorage.CreateOrUpdateAccountJSONRequestBody, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]objectstorage.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -89,7 +89,7 @@ func (_c *MockClientInterface_CreateOrUpdateAccount_Call) Run(run func(ctx conte
 				variadicArgs[i] = a.(objectstorage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(objectstorage.Tenant), args[2].(objectstorage.Workspace), args[3].(objectstorage.ResourceName), args[4].(*objectstorage.CreateOrUpdateAccountParams), args[5].(objectstorage.CreateOrUpdateAccountJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(objectstorage.TenantPathParam), args[2].(objectstorage.WorkspacePathParam), args[3].(objectstorage.ResourcePathParam), args[4].(*objectstorage.CreateOrUpdateAccountParams), args[5].(objectstorage.CreateOrUpdateAccountJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -99,13 +99,13 @@ func (_c *MockClientInterface_CreateOrUpdateAccount_Call) Return(_a0 *http.Respo
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateAccount_Call) RunAndReturn(run func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateAccount_Call {
+func (_c *MockClientInterface_CreateOrUpdateAccount_Call) RunAndReturn(run func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, objectstorage.CreateOrUpdateAccountJSONRequestBody, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateAccountWithBody provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateAccountWithBody(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateAccountWithBody(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -121,10 +121,10 @@ func (_m *MockClientInterface) CreateOrUpdateAccountWithBody(ctx context.Context
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -132,7 +132,7 @@ func (_m *MockClientInterface) CreateOrUpdateAccountWithBody(ctx context.Context
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -148,9 +148,9 @@ type MockClientInterface_CreateOrUpdateAccountWithBody_Call struct {
 
 // CreateOrUpdateAccountWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - params *objectstorage.CreateOrUpdateAccountParams
 //   - contentType string
 //   - body io.Reader
@@ -160,7 +160,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateAccountWithBody(ctx interf
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) Run(run func(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateAccountWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) Run(run func(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateAccountWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]objectstorage.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -168,7 +168,7 @@ func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) Run(run func(c
 				variadicArgs[i] = a.(objectstorage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(objectstorage.Tenant), args[2].(objectstorage.Workspace), args[3].(objectstorage.ResourceName), args[4].(*objectstorage.CreateOrUpdateAccountParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(objectstorage.TenantPathParam), args[2].(objectstorage.WorkspacePathParam), args[3].(objectstorage.ResourcePathParam), args[4].(*objectstorage.CreateOrUpdateAccountParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -178,13 +178,13 @@ func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) Return(_a0 *ht
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) RunAndReturn(run func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateAccountWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateAccountWithBody_Call) RunAndReturn(run func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.CreateOrUpdateAccountParams, string, io.Reader, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateAccountWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteAccount provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientInterface) DeleteAccount(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.DeleteAccountParams, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteAccount(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.DeleteAccountParams, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -200,10 +200,10 @@ func (_m *MockClientInterface) DeleteAccount(ctx context.Context, tenant objects
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -211,7 +211,7 @@ func (_m *MockClientInterface) DeleteAccount(ctx context.Context, tenant objects
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -227,9 +227,9 @@ type MockClientInterface_DeleteAccount_Call struct {
 
 // DeleteAccount is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - params *objectstorage.DeleteAccountParams
 //   - reqEditors ...objectstorage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteAccount(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteAccount_Call {
@@ -237,7 +237,7 @@ func (_e *MockClientInterface_Expecter) DeleteAccount(ctx interface{}, tenant in
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, params *objectstorage.DeleteAccountParams, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_DeleteAccount_Call {
+func (_c *MockClientInterface_DeleteAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, params *objectstorage.DeleteAccountParams, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_DeleteAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]objectstorage.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -245,7 +245,7 @@ func (_c *MockClientInterface_DeleteAccount_Call) Run(run func(ctx context.Conte
 				variadicArgs[i] = a.(objectstorage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(objectstorage.Tenant), args[2].(objectstorage.Workspace), args[3].(objectstorage.ResourceName), args[4].(*objectstorage.DeleteAccountParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(objectstorage.TenantPathParam), args[2].(objectstorage.WorkspacePathParam), args[3].(objectstorage.ResourcePathParam), args[4].(*objectstorage.DeleteAccountParams), variadicArgs...)
 	})
 	return _c
 }
@@ -255,13 +255,13 @@ func (_c *MockClientInterface_DeleteAccount_Call) Return(_a0 *http.Response, _a1
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteAccount_Call) RunAndReturn(run func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteAccount_Call {
+func (_c *MockClientInterface_DeleteAccount_Call) RunAndReturn(run func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, *objectstorage.DeleteAccountParams, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccount provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientInterface) GetAccount(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetAccount(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -277,10 +277,10 @@ func (_m *MockClientInterface) GetAccount(ctx context.Context, tenant objectstor
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, ...objectstorage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, ...objectstorage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -288,7 +288,7 @@ func (_m *MockClientInterface) GetAccount(ctx context.Context, tenant objectstor
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, ...objectstorage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, ...objectstorage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -304,16 +304,16 @@ type MockClientInterface_GetAccount_Call struct {
 
 // GetAccount is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
-//   - name objectstorage.ResourceName
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
+//   - name objectstorage.ResourcePathParam
 //   - reqEditors ...objectstorage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetAccount(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetAccount_Call {
 	return &MockClientInterface_GetAccount_Call{Call: _e.mock.On("GetAccount",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, name objectstorage.ResourceName, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_GetAccount_Call {
+func (_c *MockClientInterface_GetAccount_Call) Run(run func(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, name objectstorage.ResourcePathParam, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_GetAccount_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]objectstorage.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -321,7 +321,7 @@ func (_c *MockClientInterface_GetAccount_Call) Run(run func(ctx context.Context,
 				variadicArgs[i] = a.(objectstorage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(objectstorage.Tenant), args[2].(objectstorage.Workspace), args[3].(objectstorage.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(objectstorage.TenantPathParam), args[2].(objectstorage.WorkspacePathParam), args[3].(objectstorage.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -331,13 +331,13 @@ func (_c *MockClientInterface_GetAccount_Call) Return(_a0 *http.Response, _a1 er
 	return _c
 }
 
-func (_c *MockClientInterface_GetAccount_Call) RunAndReturn(run func(context.Context, objectstorage.Tenant, objectstorage.Workspace, objectstorage.ResourceName, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetAccount_Call {
+func (_c *MockClientInterface_GetAccount_Call) RunAndReturn(run func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, objectstorage.ResourcePathParam, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListAccounts provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListAccounts(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, params *objectstorage.ListAccountsParams, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListAccounts(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, params *objectstorage.ListAccountsParams, reqEditors ...objectstorage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -353,10 +353,10 @@ func (_m *MockClientInterface) ListAccounts(ctx context.Context, tenant objectst
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -364,7 +364,7 @@ func (_m *MockClientInterface) ListAccounts(ctx context.Context, tenant objectst
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.Tenant, objectstorage.Workspace, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -380,8 +380,8 @@ type MockClientInterface_ListAccounts_Call struct {
 
 // ListAccounts is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant objectstorage.Tenant
-//   - workspace objectstorage.Workspace
+//   - tenant objectstorage.TenantPathParam
+//   - workspace objectstorage.WorkspacePathParam
 //   - params *objectstorage.ListAccountsParams
 //   - reqEditors ...objectstorage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListAccounts(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListAccounts_Call {
@@ -389,7 +389,7 @@ func (_e *MockClientInterface_Expecter) ListAccounts(ctx interface{}, tenant int
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListAccounts_Call) Run(run func(ctx context.Context, tenant objectstorage.Tenant, workspace objectstorage.Workspace, params *objectstorage.ListAccountsParams, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_ListAccounts_Call {
+func (_c *MockClientInterface_ListAccounts_Call) Run(run func(ctx context.Context, tenant objectstorage.TenantPathParam, workspace objectstorage.WorkspacePathParam, params *objectstorage.ListAccountsParams, reqEditors ...objectstorage.RequestEditorFn)) *MockClientInterface_ListAccounts_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]objectstorage.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -397,7 +397,7 @@ func (_c *MockClientInterface_ListAccounts_Call) Run(run func(ctx context.Contex
 				variadicArgs[i] = a.(objectstorage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(objectstorage.Tenant), args[2].(objectstorage.Workspace), args[3].(*objectstorage.ListAccountsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(objectstorage.TenantPathParam), args[2].(objectstorage.WorkspacePathParam), args[3].(*objectstorage.ListAccountsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -407,7 +407,7 @@ func (_c *MockClientInterface_ListAccounts_Call) Return(_a0 *http.Response, _a1 
 	return _c
 }
 
-func (_c *MockClientInterface_ListAccounts_Call) RunAndReturn(run func(context.Context, objectstorage.Tenant, objectstorage.Workspace, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListAccounts_Call {
+func (_c *MockClientInterface_ListAccounts_Call) RunAndReturn(run func(context.Context, objectstorage.TenantPathParam, objectstorage.WorkspacePathParam, *objectstorage.ListAccountsParams, ...objectstorage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListAccounts_Call {
 	_c.Call.Return(run)
 	return _c
 }

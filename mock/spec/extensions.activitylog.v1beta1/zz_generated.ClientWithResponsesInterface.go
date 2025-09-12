@@ -24,7 +24,7 @@ func (_m *MockClientWithResponsesInterface) EXPECT() *MockClientWithResponsesInt
 }
 
 // ListActivityLogsWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientWithResponsesInterface) ListActivityLogsWithResponse(ctx context.Context, tenant activitylog.Tenant, workspace activitylog.Workspace, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error) {
+func (_m *MockClientWithResponsesInterface) ListActivityLogsWithResponse(ctx context.Context, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -40,10 +40,10 @@ func (_m *MockClientWithResponsesInterface) ListActivityLogsWithResponse(ctx con
 
 	var r0 *activitylog.ListActivityLogsResponse
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) *activitylog.ListActivityLogsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) *activitylog.ListActivityLogsResponse); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -51,7 +51,7 @@ func (_m *MockClientWithResponsesInterface) ListActivityLogsWithResponse(ctx con
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -67,8 +67,8 @@ type MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call struct {
 
 // ListActivityLogsWithResponse is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant activitylog.Tenant
-//   - workspace activitylog.Workspace
+//   - tenant activitylog.TenantPathParam
+//   - workspace activitylog.WorkspacePathParam
 //   - params *activitylog.ListActivityLogsParams
 //   - reqEditors ...activitylog.RequestEditorFn
 func (_e *MockClientWithResponsesInterface_Expecter) ListActivityLogsWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call {
@@ -76,7 +76,7 @@ func (_e *MockClientWithResponsesInterface_Expecter) ListActivityLogsWithRespons
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) Run(run func(ctx context.Context, tenant activitylog.Tenant, workspace activitylog.Workspace, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn)) *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) Run(run func(ctx context.Context, tenant activitylog.TenantPathParam, workspace activitylog.WorkspacePathParam, params *activitylog.ListActivityLogsParams, reqEditors ...activitylog.RequestEditorFn)) *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]activitylog.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -84,7 +84,7 @@ func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) Ru
 				variadicArgs[i] = a.(activitylog.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(activitylog.Tenant), args[2].(activitylog.Workspace), args[3].(*activitylog.ListActivityLogsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(activitylog.TenantPathParam), args[2].(activitylog.WorkspacePathParam), args[3].(*activitylog.ListActivityLogsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -94,7 +94,7 @@ func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) Re
 	return _c
 }
 
-func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) RunAndReturn(run func(context.Context, activitylog.Tenant, activitylog.Workspace, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error)) *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call {
+func (_c *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call) RunAndReturn(run func(context.Context, activitylog.TenantPathParam, activitylog.WorkspacePathParam, *activitylog.ListActivityLogsParams, ...activitylog.RequestEditorFn) (*activitylog.ListActivityLogsResponse, error)) *MockClientWithResponsesInterface_ListActivityLogsWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }

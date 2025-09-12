@@ -19,7 +19,7 @@ type WorkspaceV1 struct {
 func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[workspace.Workspace], error) {
 	iter := Iterator[workspace.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]workspace.Workspace, *string, error) {
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, workspace.Tenant(tid), &workspace.ListWorkspacesParams{
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, workspace.TenantPathParam(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -34,11 +34,11 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 }
 
 func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*workspace.Workspace, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, workspace.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -51,11 +51,11 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 }
 
 func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, tref TenantReference, ws *workspace.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*workspace.Workspace, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, workspace.Tenant(tref.Tenant), string(tref.Name), params, *ws, api.loadRequestHeaders)
+	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, workspace.TenantPathParam(tref.Tenant), string(tref.Name), params, *ws, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}

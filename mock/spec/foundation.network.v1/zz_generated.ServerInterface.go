@@ -23,7 +23,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateInternetGateway provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateInternetGatewayParams) {
+func (_m *MockServerInterface) CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateInternetGatewayParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -35,17 +35,17 @@ type MockServerInterface_CreateOrUpdateInternetGateway_Call struct {
 // CreateOrUpdateInternetGateway is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateInternetGatewayParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateInternetGateway(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateInternetGateway_Call {
 	return &MockServerInterface_CreateOrUpdateInternetGateway_Call{Call: _e.mock.On("CreateOrUpdateInternetGateway", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateInternetGatewayParams)) *MockServerInterface_CreateOrUpdateInternetGateway_Call {
+func (_c *MockServerInterface_CreateOrUpdateInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateInternetGatewayParams)) *MockServerInterface_CreateOrUpdateInternetGateway_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateInternetGatewayParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.CreateOrUpdateInternetGatewayParams))
 	})
 	return _c
 }
@@ -55,13 +55,13 @@ func (_c *MockServerInterface_CreateOrUpdateInternetGateway_Call) Return() *Mock
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateInternetGatewayParams)) *MockServerInterface_CreateOrUpdateInternetGateway_Call {
+func (_c *MockServerInterface_CreateOrUpdateInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.CreateOrUpdateInternetGatewayParams)) *MockServerInterface_CreateOrUpdateInternetGateway_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdateNetwork provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateNetworkParams) {
+func (_m *MockServerInterface) CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateNetworkParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -73,17 +73,17 @@ type MockServerInterface_CreateOrUpdateNetwork_Call struct {
 // CreateOrUpdateNetwork is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateNetworkParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateNetwork(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateNetwork_Call {
 	return &MockServerInterface_CreateOrUpdateNetwork_Call{Call: _e.mock.On("CreateOrUpdateNetwork", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateNetworkParams)) *MockServerInterface_CreateOrUpdateNetwork_Call {
+func (_c *MockServerInterface_CreateOrUpdateNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateNetworkParams)) *MockServerInterface_CreateOrUpdateNetwork_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateNetworkParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.CreateOrUpdateNetworkParams))
 	})
 	return _c
 }
@@ -93,13 +93,13 @@ func (_c *MockServerInterface_CreateOrUpdateNetwork_Call) Return() *MockServerIn
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateNetworkParams)) *MockServerInterface_CreateOrUpdateNetwork_Call {
+func (_c *MockServerInterface_CreateOrUpdateNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.CreateOrUpdateNetworkParams)) *MockServerInterface_CreateOrUpdateNetwork_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdateNic provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateNicParams) {
+func (_m *MockServerInterface) CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateNicParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -111,17 +111,17 @@ type MockServerInterface_CreateOrUpdateNic_Call struct {
 // CreateOrUpdateNic is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateNicParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateNic(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateNic_Call {
 	return &MockServerInterface_CreateOrUpdateNic_Call{Call: _e.mock.On("CreateOrUpdateNic", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateNicParams)) *MockServerInterface_CreateOrUpdateNic_Call {
+func (_c *MockServerInterface_CreateOrUpdateNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateNicParams)) *MockServerInterface_CreateOrUpdateNic_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateNicParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.CreateOrUpdateNicParams))
 	})
 	return _c
 }
@@ -131,13 +131,13 @@ func (_c *MockServerInterface_CreateOrUpdateNic_Call) Return() *MockServerInterf
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateNicParams)) *MockServerInterface_CreateOrUpdateNic_Call {
+func (_c *MockServerInterface_CreateOrUpdateNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.CreateOrUpdateNicParams)) *MockServerInterface_CreateOrUpdateNic_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdatePublicIp provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdatePublicIpParams) {
+func (_m *MockServerInterface) CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdatePublicIpParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -149,17 +149,17 @@ type MockServerInterface_CreateOrUpdatePublicIp_Call struct {
 // CreateOrUpdatePublicIp is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdatePublicIpParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdatePublicIp(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdatePublicIp_Call {
 	return &MockServerInterface_CreateOrUpdatePublicIp_Call{Call: _e.mock.On("CreateOrUpdatePublicIp", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdatePublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdatePublicIpParams)) *MockServerInterface_CreateOrUpdatePublicIp_Call {
+func (_c *MockServerInterface_CreateOrUpdatePublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdatePublicIpParams)) *MockServerInterface_CreateOrUpdatePublicIp_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdatePublicIpParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.CreateOrUpdatePublicIpParams))
 	})
 	return _c
 }
@@ -169,14 +169,14 @@ func (_c *MockServerInterface_CreateOrUpdatePublicIp_Call) Return() *MockServerI
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdatePublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdatePublicIpParams)) *MockServerInterface_CreateOrUpdatePublicIp_Call {
+func (_c *MockServerInterface_CreateOrUpdatePublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.CreateOrUpdatePublicIpParams)) *MockServerInterface_CreateOrUpdatePublicIp_Call {
 	_c.Run(run)
 	return _c
 }
 
-// CreateOrUpdateRouteTable provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateRouteTableParams) {
-	_m.Called(w, r, tenant, workspace, name, params)
+// CreateOrUpdateRouteTable provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
+func (_m *MockServerInterface) CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateRouteTableParams) {
+	_m.Called(w, r, tenant, workspace, _a4, name, params)
 }
 
 // MockServerInterface_CreateOrUpdateRouteTable_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateRouteTable'
@@ -187,17 +187,18 @@ type MockServerInterface_CreateOrUpdateRouteTable_Call struct {
 // CreateOrUpdateRouteTable is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateRouteTableParams
-func (_e *MockServerInterface_Expecter) CreateOrUpdateRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateRouteTable_Call {
-	return &MockServerInterface_CreateOrUpdateRouteTable_Call{Call: _e.mock.On("CreateOrUpdateRouteTable", w, r, tenant, workspace, name, params)}
+func (_e *MockServerInterface_Expecter) CreateOrUpdateRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateRouteTable_Call {
+	return &MockServerInterface_CreateOrUpdateRouteTable_Call{Call: _e.mock.On("CreateOrUpdateRouteTable", w, r, tenant, workspace, _a4, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateRouteTableParams)) *MockServerInterface_CreateOrUpdateRouteTable_Call {
+func (_c *MockServerInterface_CreateOrUpdateRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateRouteTableParams)) *MockServerInterface_CreateOrUpdateRouteTable_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateRouteTableParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam), args[6].(network.CreateOrUpdateRouteTableParams))
 	})
 	return _c
 }
@@ -207,13 +208,13 @@ func (_c *MockServerInterface_CreateOrUpdateRouteTable_Call) Return() *MockServe
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateRouteTableParams)) *MockServerInterface_CreateOrUpdateRouteTable_Call {
+func (_c *MockServerInterface_CreateOrUpdateRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, network.CreateOrUpdateRouteTableParams)) *MockServerInterface_CreateOrUpdateRouteTable_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdateSecurityGroup provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateSecurityGroupParams) {
+func (_m *MockServerInterface) CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateSecurityGroupParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -225,17 +226,17 @@ type MockServerInterface_CreateOrUpdateSecurityGroup_Call struct {
 // CreateOrUpdateSecurityGroup is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateSecurityGroupParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateSecurityGroup(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateSecurityGroup_Call {
 	return &MockServerInterface_CreateOrUpdateSecurityGroup_Call{Call: _e.mock.On("CreateOrUpdateSecurityGroup", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateSecurityGroupParams)) *MockServerInterface_CreateOrUpdateSecurityGroup_Call {
+func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.CreateOrUpdateSecurityGroupParams)) *MockServerInterface_CreateOrUpdateSecurityGroup_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateSecurityGroupParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.CreateOrUpdateSecurityGroupParams))
 	})
 	return _c
 }
@@ -245,14 +246,14 @@ func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) Return() *MockSe
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateSecurityGroupParams)) *MockServerInterface_CreateOrUpdateSecurityGroup_Call {
+func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.CreateOrUpdateSecurityGroupParams)) *MockServerInterface_CreateOrUpdateSecurityGroup_Call {
 	_c.Run(run)
 	return _c
 }
 
-// CreateOrUpdateSubnet provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateSubnetParams) {
-	_m.Called(w, r, tenant, workspace, name, params)
+// CreateOrUpdateSubnet provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
+func (_m *MockServerInterface) CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateSubnetParams) {
+	_m.Called(w, r, tenant, workspace, _a4, name, params)
 }
 
 // MockServerInterface_CreateOrUpdateSubnet_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateSubnet'
@@ -263,17 +264,18 @@ type MockServerInterface_CreateOrUpdateSubnet_Call struct {
 // CreateOrUpdateSubnet is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params network.CreateOrUpdateSubnetParams
-func (_e *MockServerInterface_Expecter) CreateOrUpdateSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateSubnet_Call {
-	return &MockServerInterface_CreateOrUpdateSubnet_Call{Call: _e.mock.On("CreateOrUpdateSubnet", w, r, tenant, workspace, name, params)}
+func (_e *MockServerInterface_Expecter) CreateOrUpdateSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateSubnet_Call {
+	return &MockServerInterface_CreateOrUpdateSubnet_Call{Call: _e.mock.On("CreateOrUpdateSubnet", w, r, tenant, workspace, _a4, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.CreateOrUpdateSubnetParams)) *MockServerInterface_CreateOrUpdateSubnet_Call {
+func (_c *MockServerInterface_CreateOrUpdateSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateSubnetParams)) *MockServerInterface_CreateOrUpdateSubnet_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.CreateOrUpdateSubnetParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam), args[6].(network.CreateOrUpdateSubnetParams))
 	})
 	return _c
 }
@@ -283,13 +285,13 @@ func (_c *MockServerInterface_CreateOrUpdateSubnet_Call) Return() *MockServerInt
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.CreateOrUpdateSubnetParams)) *MockServerInterface_CreateOrUpdateSubnet_Call {
+func (_c *MockServerInterface_CreateOrUpdateSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, network.CreateOrUpdateSubnetParams)) *MockServerInterface_CreateOrUpdateSubnet_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteInternetGateway provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteInternetGatewayParams) {
+func (_m *MockServerInterface) DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteInternetGatewayParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -301,17 +303,17 @@ type MockServerInterface_DeleteInternetGateway_Call struct {
 // DeleteInternetGateway is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteInternetGatewayParams
 func (_e *MockServerInterface_Expecter) DeleteInternetGateway(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteInternetGateway_Call {
 	return &MockServerInterface_DeleteInternetGateway_Call{Call: _e.mock.On("DeleteInternetGateway", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteInternetGatewayParams)) *MockServerInterface_DeleteInternetGateway_Call {
+func (_c *MockServerInterface_DeleteInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteInternetGatewayParams)) *MockServerInterface_DeleteInternetGateway_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteInternetGatewayParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.DeleteInternetGatewayParams))
 	})
 	return _c
 }
@@ -321,13 +323,13 @@ func (_c *MockServerInterface_DeleteInternetGateway_Call) Return() *MockServerIn
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteInternetGatewayParams)) *MockServerInterface_DeleteInternetGateway_Call {
+func (_c *MockServerInterface_DeleteInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.DeleteInternetGatewayParams)) *MockServerInterface_DeleteInternetGateway_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteNetwork provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteNetworkParams) {
+func (_m *MockServerInterface) DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteNetworkParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -339,17 +341,17 @@ type MockServerInterface_DeleteNetwork_Call struct {
 // DeleteNetwork is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteNetworkParams
 func (_e *MockServerInterface_Expecter) DeleteNetwork(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteNetwork_Call {
 	return &MockServerInterface_DeleteNetwork_Call{Call: _e.mock.On("DeleteNetwork", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteNetworkParams)) *MockServerInterface_DeleteNetwork_Call {
+func (_c *MockServerInterface_DeleteNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteNetworkParams)) *MockServerInterface_DeleteNetwork_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteNetworkParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.DeleteNetworkParams))
 	})
 	return _c
 }
@@ -359,13 +361,13 @@ func (_c *MockServerInterface_DeleteNetwork_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteNetworkParams)) *MockServerInterface_DeleteNetwork_Call {
+func (_c *MockServerInterface_DeleteNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.DeleteNetworkParams)) *MockServerInterface_DeleteNetwork_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteNic provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteNic(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteNicParams) {
+func (_m *MockServerInterface) DeleteNic(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteNicParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -377,17 +379,17 @@ type MockServerInterface_DeleteNic_Call struct {
 // DeleteNic is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteNicParams
 func (_e *MockServerInterface_Expecter) DeleteNic(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteNic_Call {
 	return &MockServerInterface_DeleteNic_Call{Call: _e.mock.On("DeleteNic", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteNicParams)) *MockServerInterface_DeleteNic_Call {
+func (_c *MockServerInterface_DeleteNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteNicParams)) *MockServerInterface_DeleteNic_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteNicParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.DeleteNicParams))
 	})
 	return _c
 }
@@ -397,13 +399,13 @@ func (_c *MockServerInterface_DeleteNic_Call) Return() *MockServerInterface_Dele
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteNicParams)) *MockServerInterface_DeleteNic_Call {
+func (_c *MockServerInterface_DeleteNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.DeleteNicParams)) *MockServerInterface_DeleteNic_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeletePublicIp provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeletePublicIpParams) {
+func (_m *MockServerInterface) DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeletePublicIpParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -415,17 +417,17 @@ type MockServerInterface_DeletePublicIp_Call struct {
 // DeletePublicIp is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.DeletePublicIpParams
 func (_e *MockServerInterface_Expecter) DeletePublicIp(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeletePublicIp_Call {
 	return &MockServerInterface_DeletePublicIp_Call{Call: _e.mock.On("DeletePublicIp", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeletePublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeletePublicIpParams)) *MockServerInterface_DeletePublicIp_Call {
+func (_c *MockServerInterface_DeletePublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeletePublicIpParams)) *MockServerInterface_DeletePublicIp_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeletePublicIpParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.DeletePublicIpParams))
 	})
 	return _c
 }
@@ -435,14 +437,14 @@ func (_c *MockServerInterface_DeletePublicIp_Call) Return() *MockServerInterface
 	return _c
 }
 
-func (_c *MockServerInterface_DeletePublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeletePublicIpParams)) *MockServerInterface_DeletePublicIp_Call {
+func (_c *MockServerInterface_DeletePublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.DeletePublicIpParams)) *MockServerInterface_DeletePublicIp_Call {
 	_c.Run(run)
 	return _c
 }
 
-// DeleteRouteTable provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteRouteTableParams) {
-	_m.Called(w, r, tenant, workspace, name, params)
+// DeleteRouteTable provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
+func (_m *MockServerInterface) DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteRouteTableParams) {
+	_m.Called(w, r, tenant, workspace, _a4, name, params)
 }
 
 // MockServerInterface_DeleteRouteTable_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteRouteTable'
@@ -453,17 +455,18 @@ type MockServerInterface_DeleteRouteTable_Call struct {
 // DeleteRouteTable is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteRouteTableParams
-func (_e *MockServerInterface_Expecter) DeleteRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteRouteTable_Call {
-	return &MockServerInterface_DeleteRouteTable_Call{Call: _e.mock.On("DeleteRouteTable", w, r, tenant, workspace, name, params)}
+func (_e *MockServerInterface_Expecter) DeleteRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteRouteTable_Call {
+	return &MockServerInterface_DeleteRouteTable_Call{Call: _e.mock.On("DeleteRouteTable", w, r, tenant, workspace, _a4, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteRouteTableParams)) *MockServerInterface_DeleteRouteTable_Call {
+func (_c *MockServerInterface_DeleteRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteRouteTableParams)) *MockServerInterface_DeleteRouteTable_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteRouteTableParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam), args[6].(network.DeleteRouteTableParams))
 	})
 	return _c
 }
@@ -473,13 +476,13 @@ func (_c *MockServerInterface_DeleteRouteTable_Call) Return() *MockServerInterfa
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteRouteTableParams)) *MockServerInterface_DeleteRouteTable_Call {
+func (_c *MockServerInterface_DeleteRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, network.DeleteRouteTableParams)) *MockServerInterface_DeleteRouteTable_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteSecurityGroup provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteSecurityGroupParams) {
+func (_m *MockServerInterface) DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteSecurityGroupParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -491,17 +494,17 @@ type MockServerInterface_DeleteSecurityGroup_Call struct {
 // DeleteSecurityGroup is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteSecurityGroupParams
 func (_e *MockServerInterface_Expecter) DeleteSecurityGroup(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteSecurityGroup_Call {
 	return &MockServerInterface_DeleteSecurityGroup_Call{Call: _e.mock.On("DeleteSecurityGroup", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteSecurityGroupParams)) *MockServerInterface_DeleteSecurityGroup_Call {
+func (_c *MockServerInterface_DeleteSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam, params network.DeleteSecurityGroupParams)) *MockServerInterface_DeleteSecurityGroup_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteSecurityGroupParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam), args[5].(network.DeleteSecurityGroupParams))
 	})
 	return _c
 }
@@ -511,14 +514,14 @@ func (_c *MockServerInterface_DeleteSecurityGroup_Call) Return() *MockServerInte
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteSecurityGroupParams)) *MockServerInterface_DeleteSecurityGroup_Call {
+func (_c *MockServerInterface_DeleteSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam, network.DeleteSecurityGroupParams)) *MockServerInterface_DeleteSecurityGroup_Call {
 	_c.Run(run)
 	return _c
 }
 
-// DeleteSubnet provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteSubnetParams) {
-	_m.Called(w, r, tenant, workspace, name, params)
+// DeleteSubnet provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
+func (_m *MockServerInterface) DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteSubnetParams) {
+	_m.Called(w, r, tenant, workspace, _a4, name, params)
 }
 
 // MockServerInterface_DeleteSubnet_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteSubnet'
@@ -529,17 +532,18 @@ type MockServerInterface_DeleteSubnet_Call struct {
 // DeleteSubnet is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
 //   - params network.DeleteSubnetParams
-func (_e *MockServerInterface_Expecter) DeleteSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteSubnet_Call {
-	return &MockServerInterface_DeleteSubnet_Call{Call: _e.mock.On("DeleteSubnet", w, r, tenant, workspace, name, params)}
+func (_e *MockServerInterface_Expecter) DeleteSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteSubnet_Call {
+	return &MockServerInterface_DeleteSubnet_Call{Call: _e.mock.On("DeleteSubnet", w, r, tenant, workspace, _a4, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName, params network.DeleteSubnetParams)) *MockServerInterface_DeleteSubnet_Call {
+func (_c *MockServerInterface_DeleteSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteSubnetParams)) *MockServerInterface_DeleteSubnet_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName), args[5].(network.DeleteSubnetParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam), args[6].(network.DeleteSubnetParams))
 	})
 	return _c
 }
@@ -549,13 +553,13 @@ func (_c *MockServerInterface_DeleteSubnet_Call) Return() *MockServerInterface_D
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName, network.DeleteSubnetParams)) *MockServerInterface_DeleteSubnet_Call {
+func (_c *MockServerInterface_DeleteSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam, network.DeleteSubnetParams)) *MockServerInterface_DeleteSubnet_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetInternetGateway provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
+func (_m *MockServerInterface) GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -567,16 +571,16 @@ type MockServerInterface_GetInternetGateway_Call struct {
 // GetInternetGateway is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetInternetGateway(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetInternetGateway_Call {
 	return &MockServerInterface_GetInternetGateway_Call{Call: _e.mock.On("GetInternetGateway", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetInternetGateway_Call {
+func (_c *MockServerInterface_GetInternetGateway_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam)) *MockServerInterface_GetInternetGateway_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -586,13 +590,13 @@ func (_c *MockServerInterface_GetInternetGateway_Call) Return() *MockServerInter
 	return _c
 }
 
-func (_c *MockServerInterface_GetInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetInternetGateway_Call {
+func (_c *MockServerInterface_GetInternetGateway_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam)) *MockServerInterface_GetInternetGateway_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetNetwork provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetNetwork(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
+func (_m *MockServerInterface) GetNetwork(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -604,16 +608,16 @@ type MockServerInterface_GetNetwork_Call struct {
 // GetNetwork is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetNetwork(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetNetwork_Call {
 	return &MockServerInterface_GetNetwork_Call{Call: _e.mock.On("GetNetwork", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetNetwork_Call {
+func (_c *MockServerInterface_GetNetwork_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam)) *MockServerInterface_GetNetwork_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -623,13 +627,13 @@ func (_c *MockServerInterface_GetNetwork_Call) Return() *MockServerInterface_Get
 	return _c
 }
 
-func (_c *MockServerInterface_GetNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetNetwork_Call {
+func (_c *MockServerInterface_GetNetwork_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam)) *MockServerInterface_GetNetwork_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetNic provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetNic(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
+func (_m *MockServerInterface) GetNic(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -641,16 +645,16 @@ type MockServerInterface_GetNic_Call struct {
 // GetNic is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetNic(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetNic_Call {
 	return &MockServerInterface_GetNic_Call{Call: _e.mock.On("GetNic", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetNic_Call {
+func (_c *MockServerInterface_GetNic_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam)) *MockServerInterface_GetNic_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -660,13 +664,13 @@ func (_c *MockServerInterface_GetNic_Call) Return() *MockServerInterface_GetNic_
 	return _c
 }
 
-func (_c *MockServerInterface_GetNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetNic_Call {
+func (_c *MockServerInterface_GetNic_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam)) *MockServerInterface_GetNic_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetPublicIp provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetPublicIp(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
+func (_m *MockServerInterface) GetPublicIp(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -678,16 +682,16 @@ type MockServerInterface_GetPublicIp_Call struct {
 // GetPublicIp is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetPublicIp(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetPublicIp_Call {
 	return &MockServerInterface_GetPublicIp_Call{Call: _e.mock.On("GetPublicIp", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetPublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetPublicIp_Call {
+func (_c *MockServerInterface_GetPublicIp_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam)) *MockServerInterface_GetPublicIp_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -697,14 +701,14 @@ func (_c *MockServerInterface_GetPublicIp_Call) Return() *MockServerInterface_Ge
 	return _c
 }
 
-func (_c *MockServerInterface_GetPublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetPublicIp_Call {
+func (_c *MockServerInterface_GetPublicIp_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam)) *MockServerInterface_GetPublicIp_Call {
 	_c.Run(run)
 	return _c
 }
 
-// GetRouteTable provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetRouteTable(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
-	_m.Called(w, r, tenant, workspace, name)
+// GetRouteTable provides a mock function with given fields: w, r, tenant, workspace, _a4, name
+func (_m *MockServerInterface) GetRouteTable(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam) {
+	_m.Called(w, r, tenant, workspace, _a4, name)
 }
 
 // MockServerInterface_GetRouteTable_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetRouteTable'
@@ -715,16 +719,17 @@ type MockServerInterface_GetRouteTable_Call struct {
 // GetRouteTable is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
-func (_e *MockServerInterface_Expecter) GetRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetRouteTable_Call {
-	return &MockServerInterface_GetRouteTable_Call{Call: _e.mock.On("GetRouteTable", w, r, tenant, workspace, name)}
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
+func (_e *MockServerInterface_Expecter) GetRouteTable(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}) *MockServerInterface_GetRouteTable_Call {
+	return &MockServerInterface_GetRouteTable_Call{Call: _e.mock.On("GetRouteTable", w, r, tenant, workspace, _a4, name)}
 }
 
-func (_c *MockServerInterface_GetRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetRouteTable_Call {
+func (_c *MockServerInterface_GetRouteTable_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam)) *MockServerInterface_GetRouteTable_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -734,13 +739,13 @@ func (_c *MockServerInterface_GetRouteTable_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_GetRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetRouteTable_Call {
+func (_c *MockServerInterface_GetRouteTable_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam)) *MockServerInterface_GetRouteTable_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetSecurityGroup provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
+func (_m *MockServerInterface) GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -752,16 +757,16 @@ type MockServerInterface_GetSecurityGroup_Call struct {
 // GetSecurityGroup is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetSecurityGroup(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetSecurityGroup_Call {
 	return &MockServerInterface_GetSecurityGroup_Call{Call: _e.mock.On("GetSecurityGroup", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetSecurityGroup_Call {
+func (_c *MockServerInterface_GetSecurityGroup_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, name network.ResourcePathParam)) *MockServerInterface_GetSecurityGroup_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -771,13 +776,13 @@ func (_c *MockServerInterface_GetSecurityGroup_Call) Return() *MockServerInterfa
 	return _c
 }
 
-func (_c *MockServerInterface_GetSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetSecurityGroup_Call {
+func (_c *MockServerInterface_GetSecurityGroup_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ResourcePathParam)) *MockServerInterface_GetSecurityGroup_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetSku provides a mock function with given fields: w, r, tenant, name
-func (_m *MockServerInterface) GetSku(w http.ResponseWriter, r *http.Request, tenant network.Tenant, name network.ResourceName) {
+func (_m *MockServerInterface) GetSku(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, name network.ResourcePathParam) {
 	_m.Called(w, r, tenant, name)
 }
 
@@ -789,15 +794,15 @@ type MockServerInterface_GetSku_Call struct {
 // GetSku is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - name network.ResourceName
+//   - tenant network.TenantPathParam
+//   - name network.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetSku(w interface{}, r interface{}, tenant interface{}, name interface{}) *MockServerInterface_GetSku_Call {
 	return &MockServerInterface_GetSku_Call{Call: _e.mock.On("GetSku", w, r, tenant, name)}
 }
 
-func (_c *MockServerInterface_GetSku_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, name network.ResourceName)) *MockServerInterface_GetSku_Call {
+func (_c *MockServerInterface_GetSku_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, name network.ResourcePathParam)) *MockServerInterface_GetSku_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -807,14 +812,14 @@ func (_c *MockServerInterface_GetSku_Call) Return() *MockServerInterface_GetSku_
 	return _c
 }
 
-func (_c *MockServerInterface_GetSku_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.ResourceName)) *MockServerInterface_GetSku_Call {
+func (_c *MockServerInterface_GetSku_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.ResourcePathParam)) *MockServerInterface_GetSku_Call {
 	_c.Run(run)
 	return _c
 }
 
-// GetSubnet provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetSubnet(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName) {
-	_m.Called(w, r, tenant, workspace, name)
+// GetSubnet provides a mock function with given fields: w, r, tenant, workspace, _a4, name
+func (_m *MockServerInterface) GetSubnet(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam) {
+	_m.Called(w, r, tenant, workspace, _a4, name)
 }
 
 // MockServerInterface_GetSubnet_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSubnet'
@@ -825,16 +830,17 @@ type MockServerInterface_GetSubnet_Call struct {
 // GetSubnet is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
-//   - name network.ResourceName
-func (_e *MockServerInterface_Expecter) GetSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetSubnet_Call {
-	return &MockServerInterface_GetSubnet_Call{Call: _e.mock.On("GetSubnet", w, r, tenant, workspace, name)}
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
+//   - name network.ResourcePathParam
+func (_e *MockServerInterface_Expecter) GetSubnet(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, name interface{}) *MockServerInterface_GetSubnet_Call {
+	return &MockServerInterface_GetSubnet_Call{Call: _e.mock.On("GetSubnet", w, r, tenant, workspace, _a4, name)}
 }
 
-func (_c *MockServerInterface_GetSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, name network.ResourceName)) *MockServerInterface_GetSubnet_Call {
+func (_c *MockServerInterface_GetSubnet_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, name network.ResourcePathParam)) *MockServerInterface_GetSubnet_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ResourcePathParam))
 	})
 	return _c
 }
@@ -844,13 +850,13 @@ func (_c *MockServerInterface_GetSubnet_Call) Return() *MockServerInterface_GetS
 	return _c
 }
 
-func (_c *MockServerInterface_GetSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ResourceName)) *MockServerInterface_GetSubnet_Call {
+func (_c *MockServerInterface_GetSubnet_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ResourcePathParam)) *MockServerInterface_GetSubnet_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListInternetGateways provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListInternetGatewaysParams) {
+func (_m *MockServerInterface) ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListInternetGatewaysParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -862,16 +868,16 @@ type MockServerInterface_ListInternetGateways_Call struct {
 // ListInternetGateways is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params network.ListInternetGatewaysParams
 func (_e *MockServerInterface_Expecter) ListInternetGateways(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListInternetGateways_Call {
 	return &MockServerInterface_ListInternetGateways_Call{Call: _e.mock.On("ListInternetGateways", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListInternetGateways_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListInternetGatewaysParams)) *MockServerInterface_ListInternetGateways_Call {
+func (_c *MockServerInterface_ListInternetGateways_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListInternetGatewaysParams)) *MockServerInterface_ListInternetGateways_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListInternetGatewaysParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ListInternetGatewaysParams))
 	})
 	return _c
 }
@@ -881,13 +887,13 @@ func (_c *MockServerInterface_ListInternetGateways_Call) Return() *MockServerInt
 	return _c
 }
 
-func (_c *MockServerInterface_ListInternetGateways_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListInternetGatewaysParams)) *MockServerInterface_ListInternetGateways_Call {
+func (_c *MockServerInterface_ListInternetGateways_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ListInternetGatewaysParams)) *MockServerInterface_ListInternetGateways_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListNetworks provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListNetworks(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListNetworksParams) {
+func (_m *MockServerInterface) ListNetworks(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListNetworksParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -899,16 +905,16 @@ type MockServerInterface_ListNetworks_Call struct {
 // ListNetworks is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params network.ListNetworksParams
 func (_e *MockServerInterface_Expecter) ListNetworks(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListNetworks_Call {
 	return &MockServerInterface_ListNetworks_Call{Call: _e.mock.On("ListNetworks", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListNetworks_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListNetworksParams)) *MockServerInterface_ListNetworks_Call {
+func (_c *MockServerInterface_ListNetworks_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListNetworksParams)) *MockServerInterface_ListNetworks_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListNetworksParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ListNetworksParams))
 	})
 	return _c
 }
@@ -918,13 +924,13 @@ func (_c *MockServerInterface_ListNetworks_Call) Return() *MockServerInterface_L
 	return _c
 }
 
-func (_c *MockServerInterface_ListNetworks_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListNetworksParams)) *MockServerInterface_ListNetworks_Call {
+func (_c *MockServerInterface_ListNetworks_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ListNetworksParams)) *MockServerInterface_ListNetworks_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListNics provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListNics(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListNicsParams) {
+func (_m *MockServerInterface) ListNics(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListNicsParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -936,16 +942,16 @@ type MockServerInterface_ListNics_Call struct {
 // ListNics is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params network.ListNicsParams
 func (_e *MockServerInterface_Expecter) ListNics(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListNics_Call {
 	return &MockServerInterface_ListNics_Call{Call: _e.mock.On("ListNics", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListNics_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListNicsParams)) *MockServerInterface_ListNics_Call {
+func (_c *MockServerInterface_ListNics_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListNicsParams)) *MockServerInterface_ListNics_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListNicsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ListNicsParams))
 	})
 	return _c
 }
@@ -955,13 +961,13 @@ func (_c *MockServerInterface_ListNics_Call) Return() *MockServerInterface_ListN
 	return _c
 }
 
-func (_c *MockServerInterface_ListNics_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListNicsParams)) *MockServerInterface_ListNics_Call {
+func (_c *MockServerInterface_ListNics_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ListNicsParams)) *MockServerInterface_ListNics_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListPublicIps provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListPublicIps(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListPublicIpsParams) {
+func (_m *MockServerInterface) ListPublicIps(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListPublicIpsParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -973,16 +979,16 @@ type MockServerInterface_ListPublicIps_Call struct {
 // ListPublicIps is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params network.ListPublicIpsParams
 func (_e *MockServerInterface_Expecter) ListPublicIps(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListPublicIps_Call {
 	return &MockServerInterface_ListPublicIps_Call{Call: _e.mock.On("ListPublicIps", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListPublicIps_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListPublicIpsParams)) *MockServerInterface_ListPublicIps_Call {
+func (_c *MockServerInterface_ListPublicIps_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListPublicIpsParams)) *MockServerInterface_ListPublicIps_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListPublicIpsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ListPublicIpsParams))
 	})
 	return _c
 }
@@ -992,14 +998,14 @@ func (_c *MockServerInterface_ListPublicIps_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_ListPublicIps_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListPublicIpsParams)) *MockServerInterface_ListPublicIps_Call {
+func (_c *MockServerInterface_ListPublicIps_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ListPublicIpsParams)) *MockServerInterface_ListPublicIps_Call {
 	_c.Run(run)
 	return _c
 }
 
-// ListRouteTables provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListRouteTables(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListRouteTablesParams) {
-	_m.Called(w, r, tenant, workspace, params)
+// ListRouteTables provides a mock function with given fields: w, r, tenant, workspace, _a4, params
+func (_m *MockServerInterface) ListRouteTables(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, params network.ListRouteTablesParams) {
+	_m.Called(w, r, tenant, workspace, _a4, params)
 }
 
 // MockServerInterface_ListRouteTables_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListRouteTables'
@@ -1010,16 +1016,17 @@ type MockServerInterface_ListRouteTables_Call struct {
 // ListRouteTables is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
 //   - params network.ListRouteTablesParams
-func (_e *MockServerInterface_Expecter) ListRouteTables(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListRouteTables_Call {
-	return &MockServerInterface_ListRouteTables_Call{Call: _e.mock.On("ListRouteTables", w, r, tenant, workspace, params)}
+func (_e *MockServerInterface_Expecter) ListRouteTables(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, params interface{}) *MockServerInterface_ListRouteTables_Call {
+	return &MockServerInterface_ListRouteTables_Call{Call: _e.mock.On("ListRouteTables", w, r, tenant, workspace, _a4, params)}
 }
 
-func (_c *MockServerInterface_ListRouteTables_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListRouteTablesParams)) *MockServerInterface_ListRouteTables_Call {
+func (_c *MockServerInterface_ListRouteTables_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, params network.ListRouteTablesParams)) *MockServerInterface_ListRouteTables_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListRouteTablesParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ListRouteTablesParams))
 	})
 	return _c
 }
@@ -1029,13 +1036,13 @@ func (_c *MockServerInterface_ListRouteTables_Call) Return() *MockServerInterfac
 	return _c
 }
 
-func (_c *MockServerInterface_ListRouteTables_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListRouteTablesParams)) *MockServerInterface_ListRouteTables_Call {
+func (_c *MockServerInterface_ListRouteTables_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ListRouteTablesParams)) *MockServerInterface_ListRouteTables_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListSecurityGroups provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListSecurityGroupsParams) {
+func (_m *MockServerInterface) ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListSecurityGroupsParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -1047,16 +1054,16 @@ type MockServerInterface_ListSecurityGroups_Call struct {
 // ListSecurityGroups is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
 //   - params network.ListSecurityGroupsParams
 func (_e *MockServerInterface_Expecter) ListSecurityGroups(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListSecurityGroups_Call {
 	return &MockServerInterface_ListSecurityGroups_Call{Call: _e.mock.On("ListSecurityGroups", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListSecurityGroups_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListSecurityGroupsParams)) *MockServerInterface_ListSecurityGroups_Call {
+func (_c *MockServerInterface_ListSecurityGroups_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, params network.ListSecurityGroupsParams)) *MockServerInterface_ListSecurityGroups_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListSecurityGroupsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.ListSecurityGroupsParams))
 	})
 	return _c
 }
@@ -1066,13 +1073,13 @@ func (_c *MockServerInterface_ListSecurityGroups_Call) Return() *MockServerInter
 	return _c
 }
 
-func (_c *MockServerInterface_ListSecurityGroups_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListSecurityGroupsParams)) *MockServerInterface_ListSecurityGroups_Call {
+func (_c *MockServerInterface_ListSecurityGroups_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.ListSecurityGroupsParams)) *MockServerInterface_ListSecurityGroups_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListSkus provides a mock function with given fields: w, r, tenant, params
-func (_m *MockServerInterface) ListSkus(w http.ResponseWriter, r *http.Request, tenant network.Tenant, params network.ListSkusParams) {
+func (_m *MockServerInterface) ListSkus(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, params network.ListSkusParams) {
 	_m.Called(w, r, tenant, params)
 }
 
@@ -1084,15 +1091,15 @@ type MockServerInterface_ListSkus_Call struct {
 // ListSkus is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
+//   - tenant network.TenantPathParam
 //   - params network.ListSkusParams
 func (_e *MockServerInterface_Expecter) ListSkus(w interface{}, r interface{}, tenant interface{}, params interface{}) *MockServerInterface_ListSkus_Call {
 	return &MockServerInterface_ListSkus_Call{Call: _e.mock.On("ListSkus", w, r, tenant, params)}
 }
 
-func (_c *MockServerInterface_ListSkus_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, params network.ListSkusParams)) *MockServerInterface_ListSkus_Call {
+func (_c *MockServerInterface_ListSkus_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, params network.ListSkusParams)) *MockServerInterface_ListSkus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.ListSkusParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.ListSkusParams))
 	})
 	return _c
 }
@@ -1102,14 +1109,14 @@ func (_c *MockServerInterface_ListSkus_Call) Return() *MockServerInterface_ListS
 	return _c
 }
 
-func (_c *MockServerInterface_ListSkus_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.ListSkusParams)) *MockServerInterface_ListSkus_Call {
+func (_c *MockServerInterface_ListSkus_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.ListSkusParams)) *MockServerInterface_ListSkus_Call {
 	_c.Run(run)
 	return _c
 }
 
-// ListSubnets provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListSubnets(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListSubnetsParams) {
-	_m.Called(w, r, tenant, workspace, params)
+// ListSubnets provides a mock function with given fields: w, r, tenant, workspace, _a4, params
+func (_m *MockServerInterface) ListSubnets(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, params network.ListSubnetsParams) {
+	_m.Called(w, r, tenant, workspace, _a4, params)
 }
 
 // MockServerInterface_ListSubnets_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListSubnets'
@@ -1120,16 +1127,17 @@ type MockServerInterface_ListSubnets_Call struct {
 // ListSubnets is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant network.Tenant
-//   - workspace network.Workspace
+//   - tenant network.TenantPathParam
+//   - workspace network.WorkspacePathParam
+//   - _a4 network.NetworkPathParam
 //   - params network.ListSubnetsParams
-func (_e *MockServerInterface_Expecter) ListSubnets(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListSubnets_Call {
-	return &MockServerInterface_ListSubnets_Call{Call: _e.mock.On("ListSubnets", w, r, tenant, workspace, params)}
+func (_e *MockServerInterface_Expecter) ListSubnets(w interface{}, r interface{}, tenant interface{}, workspace interface{}, _a4 interface{}, params interface{}) *MockServerInterface_ListSubnets_Call {
+	return &MockServerInterface_ListSubnets_Call{Call: _e.mock.On("ListSubnets", w, r, tenant, workspace, _a4, params)}
 }
 
-func (_c *MockServerInterface_ListSubnets_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.Tenant, workspace network.Workspace, params network.ListSubnetsParams)) *MockServerInterface_ListSubnets_Call {
+func (_c *MockServerInterface_ListSubnets_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, _a4 network.NetworkPathParam, params network.ListSubnetsParams)) *MockServerInterface_ListSubnets_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.Tenant), args[3].(network.Workspace), args[4].(network.ListSubnetsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(network.TenantPathParam), args[3].(network.WorkspacePathParam), args[4].(network.NetworkPathParam), args[5].(network.ListSubnetsParams))
 	})
 	return _c
 }
@@ -1139,7 +1147,7 @@ func (_c *MockServerInterface_ListSubnets_Call) Return() *MockServerInterface_Li
 	return _c
 }
 
-func (_c *MockServerInterface_ListSubnets_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.Tenant, network.Workspace, network.ListSubnetsParams)) *MockServerInterface_ListSubnets_Call {
+func (_c *MockServerInterface_ListSubnets_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, network.TenantPathParam, network.WorkspacePathParam, network.NetworkPathParam, network.ListSubnetsParams)) *MockServerInterface_ListSubnets_Call {
 	_c.Run(run)
 	return _c
 }

@@ -19,7 +19,7 @@ type AuthorizationV1 struct {
 func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[authorization.Role], error) {
 	iter := Iterator[authorization.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.Role, *string, error) {
-			resp, err := api.authorization.ListRolesWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRolesParams{
+			resp, err := api.authorization.ListRolesWithResponse(ctx, authorization.TenantPathParam(tid), &authorization.ListRolesParams{
 				Accept: ptr.To(authorization.Applicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -34,11 +34,11 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 }
 
 func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (*authorization.Role, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.authorization.GetRoleWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -51,11 +51,11 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, tref TenantReference, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), params, *role, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), params, *role, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *authorization.
 func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[authorization.RoleAssignment], error) {
 	iter := Iterator[authorization.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]authorization.RoleAssignment, *string, error) {
-			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, authorization.Tenant(tid), &authorization.ListRoleAssignmentsParams{
+			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, authorization.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
 				Accept: ptr.To(authorization.ListRoleAssignmentsParamsAcceptApplicationjson),
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -116,11 +116,11 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 }
 
 func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantReference) (*authorization.RoleAssignment, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -133,11 +133,11 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
-	if err := validateTenantReference(tref); err != nil {
+	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, authorization.Tenant(tref.Tenant), string(tref.Name), params, *assign, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), params, *assign, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}

@@ -23,7 +23,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // GetRegion provides a mock function with given fields: w, r, name
-func (_m *MockServerInterface) GetRegion(w http.ResponseWriter, r *http.Request, name region.ResourceName) {
+func (_m *MockServerInterface) GetRegion(w http.ResponseWriter, r *http.Request, name region.ResourcePathParam) {
 	_m.Called(w, r, name)
 }
 
@@ -35,14 +35,14 @@ type MockServerInterface_GetRegion_Call struct {
 // GetRegion is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - name region.ResourceName
+//   - name region.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetRegion(w interface{}, r interface{}, name interface{}) *MockServerInterface_GetRegion_Call {
 	return &MockServerInterface_GetRegion_Call{Call: _e.mock.On("GetRegion", w, r, name)}
 }
 
-func (_c *MockServerInterface_GetRegion_Call) Run(run func(w http.ResponseWriter, r *http.Request, name region.ResourceName)) *MockServerInterface_GetRegion_Call {
+func (_c *MockServerInterface_GetRegion_Call) Run(run func(w http.ResponseWriter, r *http.Request, name region.ResourcePathParam)) *MockServerInterface_GetRegion_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(region.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(region.ResourcePathParam))
 	})
 	return _c
 }
@@ -52,7 +52,7 @@ func (_c *MockServerInterface_GetRegion_Call) Return() *MockServerInterface_GetR
 	return _c
 }
 
-func (_c *MockServerInterface_GetRegion_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, region.ResourceName)) *MockServerInterface_GetRegion_Call {
+func (_c *MockServerInterface_GetRegion_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, region.ResourcePathParam)) *MockServerInterface_GetRegion_Call {
 	_c.Run(run)
 	return _c
 }
