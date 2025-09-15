@@ -11,7 +11,6 @@ import (
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 // Workspace
@@ -38,11 +37,11 @@ func TestListWorkspacesV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
-	require.Len(t, resp, 1)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
@@ -72,8 +71,8 @@ func TestGetWorkspaces(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
@@ -108,8 +107,8 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	}
 	ws := &workspace.Workspace{}
 	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, tref, ws)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
@@ -140,9 +139,9 @@ func TestDeleteWorkspace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }

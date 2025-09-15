@@ -76,7 +76,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, tref Tenant
 }
 
 func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *workspace.Workspace, params *workspace.DeleteWorkspaceParams) error {
-	if err := validateWorkspaceMetadataV1(ws.Metadata); err != nil {
+	if err := api.validateMetadata(ws.Metadata); err != nil {
 		return err
 	}
 
@@ -96,16 +96,7 @@ func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *workspace.Works
 	return api.DeleteWorkspaceWithParams(ctx, ws, nil)
 }
 
-func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {
-	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &WorkspaceV1{API: API{authToken: client.authToken}, workspace: workspace}, nil
-}
-
-func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) error {
+func (api *WorkspaceV1) validateMetadata(metadata *workspace.RegionalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -115,4 +106,13 @@ func validateWorkspaceMetadataV1(metadata *workspace.RegionalResourceMetadata) e
 	}
 
 	return nil
+}
+
+func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {
+	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &WorkspaceV1{API: API{authToken: client.authToken}, workspace: workspace}, nil
 }

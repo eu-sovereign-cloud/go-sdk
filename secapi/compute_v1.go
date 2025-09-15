@@ -113,7 +113,7 @@ func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref Workspace
 }
 
 func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {
-	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
+	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
 
@@ -134,7 +134,7 @@ func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance
 }
 
 func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StartInstanceParams) error {
-	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
+	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
 
@@ -155,7 +155,7 @@ func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance)
 }
 
 func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StopInstanceParams) error {
-	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
+	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
 
@@ -176,7 +176,7 @@ func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) 
 }
 
 func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.RestartInstanceParams) error {
-	if err := validateComputeMetadataV1(inst.Metadata); err != nil {
+	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
 
@@ -207,16 +207,7 @@ func (api *ComputeV1) BuildReferenceURN(urn string) (*compute.Reference, error) 
 	return ref, nil
 }
 
-func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {
-	compute, err := compute.NewClientWithResponses(computeUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ComputeV1{API: API{authToken: client.authToken}, compute: compute}, nil
-}
-
-func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {
+func (api *ComputeV1) validateMetadata(metadata *compute.ZonalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -230,4 +221,13 @@ func validateComputeMetadataV1(metadata *compute.ZonalResourceMetadata) error {
 	}
 
 	return nil
+}
+
+func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {
+	compute, err := compute.NewClientWithResponses(computeUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ComputeV1{API: API{authToken: client.authToken}, compute: compute}, nil
 }

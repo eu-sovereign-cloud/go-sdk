@@ -76,7 +76,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantR
 }
 
 func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *authorization.Role, params *authorization.DeleteRoleParams) error {
-	if err := validateAuthorizationMetadataV1(role.Metadata); err != nil {
+	if err := api.validateMetadata(role.Metadata); err != nil {
 		return err
 	}
 
@@ -158,7 +158,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tr
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, assign *authorization.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
-	if err := validateAuthorizationMetadataV1(assign.Metadata); err != nil {
+	if err := api.validateMetadata(assign.Metadata); err != nil {
 		return err
 	}
 
@@ -178,16 +178,7 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *au
 	return api.DeleteRoleAssignmentWithParams(ctx, assign, nil)
 }
 
-func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {
-	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &AuthorizationV1{API: API{authToken: client.authToken}, authorization: authorization}, nil
-}
-
-func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetadata) error {
+func (api *AuthorizationV1) validateMetadata(metadata *authorization.GlobalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -197,4 +188,13 @@ func validateAuthorizationMetadataV1(metadata *authorization.GlobalResourceMetad
 	}
 
 	return nil
+}
+
+func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {
+	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &AuthorizationV1{API: API{authToken: client.authToken}, authorization: authorization}, nil
 }

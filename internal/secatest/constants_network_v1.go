@@ -7,7 +7,8 @@ const (
 		"items": [
         	{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{.Metadata.Name}}",
+					"tenant": "{{.Metadata.Tenant}}"
 				},
 				"labels": {
 					"tier": "{{.Tier}}"
@@ -22,7 +23,8 @@ const (
 	networkSkuResponseTemplateV1 = `
 	{
 		"metadata": {
-			"name": "{{.Metadata.Name}}"
+			"name": "{{.Metadata.Name}}",
+			"tenant": "{{.Metadata.Tenant}}"
 		},
 		"labels": {
 					"tier": "{{.Tier}}"
@@ -75,7 +77,8 @@ const (
 				"metadata": {
 					"name": "{{.Metadata.Name}}",
 					"tenant": "{{.Metadata.Tenant}}",
-					"workspace": "{{.Metadata.Workspace}}"
+					"workspace": "{{.Metadata.Workspace}}",
+					"network": "{{.Metadata.Network}}"
 				},
 				"spec": {
 					"skuRef": "{{.SkuRef}}"
@@ -91,7 +94,8 @@ const (
 		"metadata": {
 			"name": "{{.Metadata.Name}}",
 			"tenant": "{{.Metadata.Tenant}}",
-			"workspace": "{{.Metadata.Workspace}}"
+			"workspace": "{{.Metadata.Workspace}}",
+			"network": "{{.Metadata.Network}}"
 		},
 		"spec": {
 			"skuRef": "{{.SkuRef}}"
@@ -109,10 +113,16 @@ const (
 				"metadata": {
 					"name": "{{.Metadata.Name}}",
 					"tenant": "{{.Metadata.Tenant}}",
-					"workspace": "{{.Metadata.Workspace}}"
+					"workspace": "{{.Metadata.Workspace}}",
+					"network": "{{.Metadata.Network}}"
 				},
 				"spec": {
-					"localRef": "{{.LocalRef}}"
+					"routes": [
+			  			{
+			    			"destinationCidrBlock": "{{.RouteCidrBlock}}",
+			    			"targetRef": "{{.RouteTargetRef}}"
+						}
+					]
 				},
 				"status": {
 					"state": "{{.Status.State}}"
@@ -125,10 +135,16 @@ const (
 		"metadata": {
 			"name": "{{.Metadata.Name}}",
 			"tenant": "{{.Metadata.Tenant}}",
-			"workspace": "{{.Metadata.Workspace}}"
+			"workspace": "{{.Metadata.Workspace}}",
+			"network": "{{.Metadata.Network}}"
 		},
 		"spec": {
-			"localRef": "{{.LocalRef}}"
+		  "routes": [
+            {
+              "destinationCidrBlock": "{{.RouteCidrBlock}}",
+              "targetRef": "{{.RouteTargetRef}}"
+            }
+          ]
 		},
 		"status": {
 			"state": "{{.Status.State}}"

@@ -113,7 +113,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, wref Works
 }
 
 func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
-	if err := validateStorageZonalMetadataV1(block.Metadata); err != nil {
+	if err := api.validateZonalMetadata(block.Metadata); err != nil {
 		return err
 	}
 
@@ -195,7 +195,7 @@ func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, tref TenantRefere
 }
 
 func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *storage.Image, params *storage.DeleteImageParams) error {
-	if err := validateStorageRegionalMetadataV1(image.Metadata); err != nil {
+	if err := api.validateRegionalMetadata(image.Metadata); err != nil {
 		return err
 	}
 
@@ -226,16 +226,7 @@ func (api *StorageV1) BuildReferenceURN(urn string) (*storage.Reference, error) 
 	return ref, nil
 }
 
-func newStorageV1(client *RegionalClient, storageUrl string) (*StorageV1, error) {
-	storage, err := storage.NewClientWithResponses(storageUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &StorageV1{API: API{authToken: client.authToken}, storage: storage}, nil
-}
-
-func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadata) error {
+func (api *StorageV1) validateRegionalMetadata(metadata *storage.RegionalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -247,7 +238,7 @@ func validateStorageRegionalMetadataV1(metadata *storage.RegionalResourceMetadat
 	return nil
 }
 
-func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) error {
+func (api *StorageV1) validateZonalMetadata(metadata *storage.ZonalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -261,4 +252,13 @@ func validateStorageZonalMetadataV1(metadata *storage.ZonalResourceMetadata) err
 	}
 
 	return nil
+}
+
+func newStorageV1(client *RegionalClient, storageUrl string) (*StorageV1, error) {
+	storage, err := storage.NewClientWithResponses(storageUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &StorageV1{API: API{authToken: client.authToken}, storage: storage}, nil
 }

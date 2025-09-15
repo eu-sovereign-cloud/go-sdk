@@ -29,6 +29,56 @@ const (
 	IPv6 IPVersion = "IPv6"
 )
 
+// Defines values for NetworkRegionalResourceMetadataKind.
+const (
+	NetworkRegionalResourceMetadataKindActivityLog          NetworkRegionalResourceMetadataKind = "activity-log"
+	NetworkRegionalResourceMetadataKindBlockStorage         NetworkRegionalResourceMetadataKind = "block-storage"
+	NetworkRegionalResourceMetadataKindImage                NetworkRegionalResourceMetadataKind = "image"
+	NetworkRegionalResourceMetadataKindInstance             NetworkRegionalResourceMetadataKind = "instance"
+	NetworkRegionalResourceMetadataKindInstanceSku          NetworkRegionalResourceMetadataKind = "instance-sku"
+	NetworkRegionalResourceMetadataKindInternetGateway      NetworkRegionalResourceMetadataKind = "internet-gateway"
+	NetworkRegionalResourceMetadataKindNetwork              NetworkRegionalResourceMetadataKind = "network"
+	NetworkRegionalResourceMetadataKindNetworkLoadBalancer  NetworkRegionalResourceMetadataKind = "network-load-balancer"
+	NetworkRegionalResourceMetadataKindNetworkSku           NetworkRegionalResourceMetadataKind = "network-sku"
+	NetworkRegionalResourceMetadataKindNic                  NetworkRegionalResourceMetadataKind = "nic"
+	NetworkRegionalResourceMetadataKindObjectStorageAccount NetworkRegionalResourceMetadataKind = "object-storage-account"
+	NetworkRegionalResourceMetadataKindPublicIp             NetworkRegionalResourceMetadataKind = "public-ip"
+	NetworkRegionalResourceMetadataKindRegion               NetworkRegionalResourceMetadataKind = "region"
+	NetworkRegionalResourceMetadataKindRole                 NetworkRegionalResourceMetadataKind = "role"
+	NetworkRegionalResourceMetadataKindRoleAssignment       NetworkRegionalResourceMetadataKind = "role-assignment"
+	NetworkRegionalResourceMetadataKindRoutingTable         NetworkRegionalResourceMetadataKind = "routing-table"
+	NetworkRegionalResourceMetadataKindSecurityGroup        NetworkRegionalResourceMetadataKind = "security-group"
+	NetworkRegionalResourceMetadataKindSecurityGroupRule    NetworkRegionalResourceMetadataKind = "security-group-rule"
+	NetworkRegionalResourceMetadataKindStorageSku           NetworkRegionalResourceMetadataKind = "storage-sku"
+	NetworkRegionalResourceMetadataKindSubnet               NetworkRegionalResourceMetadataKind = "subnet"
+	NetworkRegionalResourceMetadataKindWorkspace            NetworkRegionalResourceMetadataKind = "workspace"
+)
+
+// Defines values for NetworkZonalResourceMetadataKind.
+const (
+	NetworkZonalResourceMetadataKindActivityLog          NetworkZonalResourceMetadataKind = "activity-log"
+	NetworkZonalResourceMetadataKindBlockStorage         NetworkZonalResourceMetadataKind = "block-storage"
+	NetworkZonalResourceMetadataKindImage                NetworkZonalResourceMetadataKind = "image"
+	NetworkZonalResourceMetadataKindInstance             NetworkZonalResourceMetadataKind = "instance"
+	NetworkZonalResourceMetadataKindInstanceSku          NetworkZonalResourceMetadataKind = "instance-sku"
+	NetworkZonalResourceMetadataKindInternetGateway      NetworkZonalResourceMetadataKind = "internet-gateway"
+	NetworkZonalResourceMetadataKindNetwork              NetworkZonalResourceMetadataKind = "network"
+	NetworkZonalResourceMetadataKindNetworkLoadBalancer  NetworkZonalResourceMetadataKind = "network-load-balancer"
+	NetworkZonalResourceMetadataKindNetworkSku           NetworkZonalResourceMetadataKind = "network-sku"
+	NetworkZonalResourceMetadataKindNic                  NetworkZonalResourceMetadataKind = "nic"
+	NetworkZonalResourceMetadataKindObjectStorageAccount NetworkZonalResourceMetadataKind = "object-storage-account"
+	NetworkZonalResourceMetadataKindPublicIp             NetworkZonalResourceMetadataKind = "public-ip"
+	NetworkZonalResourceMetadataKindRegion               NetworkZonalResourceMetadataKind = "region"
+	NetworkZonalResourceMetadataKindRole                 NetworkZonalResourceMetadataKind = "role"
+	NetworkZonalResourceMetadataKindRoleAssignment       NetworkZonalResourceMetadataKind = "role-assignment"
+	NetworkZonalResourceMetadataKindRoutingTable         NetworkZonalResourceMetadataKind = "routing-table"
+	NetworkZonalResourceMetadataKindSecurityGroup        NetworkZonalResourceMetadataKind = "security-group"
+	NetworkZonalResourceMetadataKindSecurityGroupRule    NetworkZonalResourceMetadataKind = "security-group-rule"
+	NetworkZonalResourceMetadataKindStorageSku           NetworkZonalResourceMetadataKind = "storage-sku"
+	NetworkZonalResourceMetadataKindSubnet               NetworkZonalResourceMetadataKind = "subnet"
+	NetworkZonalResourceMetadataKindWorkspace            NetworkZonalResourceMetadataKind = "workspace"
+)
+
 // Defines values for RegionalResourceMetadataKind.
 const (
 	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
@@ -384,6 +434,60 @@ type NetworkIterator struct {
 	Metadata ResponseMetadata `json:"metadata"`
 }
 
+// NetworkMetadata Metadata for network resources
+type NetworkMetadata struct {
+	// Network Network identifier
+	Network string `json:"network"`
+}
+
+// NetworkRegionalResourceMetadata defines model for NetworkRegionalResourceMetadata.
+type NetworkRegionalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind NetworkRegionalResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+
+	// Network Network identifier
+	Network  string `json:"network"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
+
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+}
+
+// NetworkRegionalResourceMetadataKind Type of the resource
+type NetworkRegionalResourceMetadataKind string
+
 // NetworkSku defines model for NetworkSku.
 type NetworkSku struct {
 	// Annotations System-defined key/value pairs to annotate the resource.
@@ -475,6 +579,57 @@ type NetworkStatus struct {
 	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	State *ResourceState `json:"state,omitempty"`
 }
+
+// NetworkZonalResourceMetadata defines model for NetworkZonalResourceMetadata.
+type NetworkZonalResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind NetworkZonalResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+
+	// Network Network identifier
+	Network  string `json:"network"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
+
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
+
+	// Workspace Workspace identifier
+	Workspace *string `json:"workspace,omitempty"`
+
+	// Zone Reference to a specific zone within a region
+	Zone Zone `json:"zone"`
+}
+
+// NetworkZonalResourceMetadataKind Type of the resource
+type NetworkZonalResourceMetadataKind string
 
 // Nic defines model for Nic.
 type Nic struct {
@@ -842,8 +997,8 @@ type RouteTable struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for network regional resources with name, permission, modification, type, tenant, network and region information.
+	Metadata *NetworkRegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec The RouteTableSpec defines the routes that are associated with the route table.
 	Spec RouteTableSpec `json:"spec"`
@@ -1059,8 +1214,8 @@ type Subnet struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for network zonal resources with name, permission, modification, type, tenant, network, region, and zone information.
+	Metadata *NetworkZonalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Detailed specification of the subnet. Automatic address
 	// assignment is supported, similar to the network configuration. The
