@@ -50,12 +50,12 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, tref TenantReference, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
-	if err := tref.validate(); err != nil {
+func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, role *authorization.Role, params *authorization.CreateOrUpdateRoleParams) (*authorization.Role, error) {
+	if err := api.validateMetadata(role.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), params, *role, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, authorization.TenantPathParam(role.Metadata.Tenant), string(role.Metadata.Name), params, *role, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +71,8 @@ func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, tr
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, tref TenantReference, role *authorization.Role) (*authorization.Role, error) {
-	return api.CreateOrUpdateRoleWithParams(ctx, tref, role, nil)
+func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *authorization.Role) (*authorization.Role, error) {
+	return api.CreateOrUpdateRoleWithParams(ctx, role, nil)
 }
 
 func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *authorization.Role, params *authorization.DeleteRoleParams) error {
@@ -132,12 +132,12 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
-	if err := tref.validate(); err != nil {
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *authorization.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*authorization.RoleAssignment, error) {
+	if err := api.validateMetadata(assign.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, authorization.TenantPathParam(tref.Tenant), string(tref.Name), params, *assign, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, authorization.TenantPathParam(assign.Metadata.Tenant), string(assign.Metadata.Name), params, *assign, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -153,8 +153,8 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.C
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, tref TenantReference, assign *authorization.RoleAssignment) (*authorization.RoleAssignment, error) {
-	return api.CreateOrUpdateRoleAssignmentWithParams(ctx, tref, assign, nil)
+func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *authorization.RoleAssignment) (*authorization.RoleAssignment, error) {
+	return api.CreateOrUpdateRoleAssignmentWithParams(ctx, assign, nil)
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, assign *authorization.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {

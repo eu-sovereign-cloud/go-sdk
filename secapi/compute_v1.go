@@ -87,12 +87,12 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, wref WorkspaceReference, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
-	if err := wref.validate(); err != nil {
+func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
+	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(wref.Tenant), compute.WorkspacePathParam(wref.Workspace), wref.Name, params, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(inst.Metadata.Tenant), compute.WorkspacePathParam(*inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -108,8 +108,8 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, wref
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, wref WorkspaceReference, inst *compute.Instance) (*compute.Instance, error) {
-	return api.CreateOrUpdateInstanceWithParams(ctx, wref, inst, nil)
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) (*compute.Instance, error) {
+	return api.CreateOrUpdateInstanceWithParams(ctx, inst, nil)
 }
 
 func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {

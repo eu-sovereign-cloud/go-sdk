@@ -101,12 +101,13 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	tref := TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Workspace1Name,
+	ws := &workspace.Workspace{
+		Metadata: &workspace.RegionalResourceMetadata{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.Workspace1Name,
+		},
 	}
-	ws := &workspace.Workspace{}
-	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, tref, ws)
+	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 

@@ -107,11 +107,11 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	tref := TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Role1Name,
-	}
 	role := authorization.Role{
+		Metadata: &authorization.GlobalResourceMetadata{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.Role1Name,
+		},
 		Spec: authorization.RoleSpec{
 			Permissions: []authorization.Permission{
 				{
@@ -122,7 +122,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 			},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, tref, &role)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
@@ -259,11 +259,11 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	tref := TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.RoleAssignment1Name,
-	}
 	assign := &authorization.RoleAssignment{
+		Metadata: &authorization.GlobalResourceMetadata{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.RoleAssignment1Name,
+		},
 		Spec: authorization.RoleAssignmentSpec{
 			Roles: []string{secatest.Role1Name},
 			Scopes: []authorization.RoleAssignmentScope{
@@ -274,7 +274,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 			Subs: []string{secatest.RoleAssignment1Subject},
 		},
 	}
-	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, tref, assign)
+	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 

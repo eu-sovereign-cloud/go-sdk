@@ -24,10 +24,13 @@ func TestListInstancesSku(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockListInstanceSkusV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
-		Tier:     secatest.InstanceSku1Tier,
-		VCPU:     secatest.InstanceSku1VCPU,
-		Ram:      secatest.InstanceSku1RAM,
+		Metadata: secatest.MetadataResponseV1{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.InstanceSku1Name,
+		},
+		Tier: secatest.InstanceSku1Tier,
+		VCPU: secatest.InstanceSku1VCPU,
+		Ram:  secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -60,10 +63,13 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceSkuV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
-		Tier:     secatest.InstanceSku1Tier,
-		VCPU:     secatest.InstanceSku1VCPU,
-		Ram:      secatest.InstanceSku1RAM,
+		Metadata: secatest.MetadataResponseV1{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.InstanceSku1Name,
+		},
+		Tier: secatest.InstanceSku1Tier,
+		VCPU: secatest.InstanceSku1VCPU,
+		Ram:  secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -74,7 +80,7 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Workspace1Name,
+		Name:   secatest.InstanceSku1Name,
 	})
 	assert.NoError(t, err)
 
@@ -207,18 +213,18 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Instance1Name,
-	}
 	inst := &compute.Instance{
+		Metadata: &compute.ZonalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.Instance1Name,
+		},
 		Spec: compute.InstanceSpec{
 			SkuRef: *instanceSkuRef,
 			Zone:   secatest.ZoneA,
 		},
 	}
-	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, wref, inst)
+	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 

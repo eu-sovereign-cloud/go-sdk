@@ -205,18 +205,18 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.BlockStorage1Name,
-	}
 	block := &storage.BlockStorage{
+		Metadata: &storage.ZonalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.BlockStorage1Name,
+		},
 		Spec: storage.BlockStorageSpec{
 			SkuRef: *storageSkuRef,
 			SizeGB: secatest.BlockStorage1SizeGB,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, wref, block)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, block)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
@@ -385,17 +385,17 @@ func TestCreateOrUpdateImage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	tref := TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Image1Name,
-	}
 	image := &storage.Image{
+		Metadata: &storage.RegionalResourceMetadata{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.Image1Name,
+		},
 		Spec: storage.ImageSpec{
 			BlockStorageRef: *blockStorageRef,
 			CpuArchitecture: secatest.Image1CpuArch,
 		},
 	}
-	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, tref, image)
+	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, image)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 

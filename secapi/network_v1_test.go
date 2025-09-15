@@ -207,19 +207,19 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Network1Name,
-	}
 	net := &network.Network{
+		Metadata: &network.RegionalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.Network1Name,
+		},
 		Spec: network.NetworkSpec{
 			Cidr:          network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
 			RouteTableRef: *routeTableRef,
 			SkuRef:        *networkSkuRef,
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, wref, net)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, net)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Name)
@@ -373,19 +373,19 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	nref := NetworkReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Network:   secatest.Network1Name,
-		Name:      secatest.Subnet1Name,
-	}
 	sub := &network.Subnet{
+		Metadata: &network.NetworkZonalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   secatest.Network1Name,
+			Name:      secatest.Subnet1Name,
+		},
 		Spec: network.SubnetSpec{
 			Cidr: network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
 			Zone: network.Zone(secatest.ZoneA),
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, nref, sub)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, sub)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Subnet1Name, resp.Metadata.Name)
@@ -553,13 +553,13 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	nref := NetworkReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Network:   secatest.Network1Name,
-		Name:      secatest.Network1Name,
-	}
 	route := &network.RouteTable{
+		Metadata: &network.NetworkRegionalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   secatest.Network1Name,
+			Name:      secatest.RouteTable1Name,
+		},
 		Spec: network.RouteTableSpec{
 			Routes: []network.RouteSpec{
 				{
@@ -569,7 +569,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, nref, route)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateRouteTable(ctx, route)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.RouteTable1Name, resp.Metadata.Name)
@@ -718,13 +718,14 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.InternetGateway1Name,
+	gtw := &network.InternetGateway{
+		Metadata: &network.RegionalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.InternetGateway1Name,
+		},
 	}
-	gtw := &network.InternetGateway{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, wref, gtw)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateInternetGateway(ctx, gtw)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
@@ -779,7 +780,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockListSecurityGroupsV1(sim, secatest.SecurityGroupResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.InternetGateway1Name,
+			Name:      secatest.SecurityGroup1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
@@ -800,7 +801,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, resp, 1)
 
-	assert.Equal(t, secatest.InternetGateway1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.SecurityGroup1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
@@ -818,7 +819,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.InternetGateway1Name,
+			Name:      secatest.SecurityGroup1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
@@ -835,7 +836,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	resp, err := regionalClient.NetworkV1.GetSecurityGroup(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name})
 	assert.NoError(t, err)
 
-	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.SecurityGroup1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
@@ -853,7 +854,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockCreateOrUpdateSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.InternetGateway1Name,
+			Name:      secatest.SecurityGroup1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
@@ -867,12 +868,12 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.SecurityGroup1Name,
-	}
 	group := &network.SecurityGroup{
+		Metadata: &network.RegionalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.SecurityGroup1Name,
+		},
 		Spec: network.SecurityGroupSpec{
 			Rules: []network.SecurityGroupRuleSpec{
 				{
@@ -887,10 +888,10 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 			},
 		},
 	}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, wref, group)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroup(ctx, group)
 	assert.NoError(t, err)
 
-	assert.Equal(t, secatest.InternetGateway1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.SecurityGroup1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
@@ -908,7 +909,7 @@ func TestDeleteSecurityGroupV1(t *testing.T) {
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockGetSecurityGroupV1(sim, secatest.SecurityGroupResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.InternetGateway1Name,
+			Name:      secatest.SecurityGroup1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
@@ -1045,13 +1046,14 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Nic1Name,
+	nic := &network.Nic{
+		Metadata: &network.ZonalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.Nic1Name,
+		},
 	}
-	nic := &network.Nic{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, wref, nic)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateNic(ctx, nic)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
@@ -1072,7 +1074,7 @@ func TestDeleteNicV1(t *testing.T) {
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockGetNicV1(sim, secatest.NicResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.InternetGateway1Name,
+			Name:      secatest.Nic1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
 		},
@@ -1194,13 +1196,14 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.PublicIp1Name,
+	ip := &network.PublicIp{
+		Metadata: &network.RegionalResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Name:      secatest.PublicIp1Name,
+		},
 	}
-	ip := &network.PublicIp{}
-	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, wref, ip)
+	resp, err := regionalClient.NetworkV1.CreateOrUpdatePublicIp(ctx, ip)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
