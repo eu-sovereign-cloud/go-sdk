@@ -23,6 +23,31 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
+// Defines values for RegionalWorkspaceResourceMetadataKind.
+const (
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
+)
+
 // Defines values for ResourceState.
 const (
 	ResourceStateActive    ResourceState = "active"
@@ -62,31 +87,6 @@ const (
 // Defines values for VolumeReferenceType.
 const (
 	Virtio VolumeReferenceType = "virtio"
-)
-
-// Defines values for ZonalResourceMetadataKind.
-const (
-	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
-	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
-	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
-	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
-	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
-	ZonalResourceMetadataKindInternetGateway      ZonalResourceMetadataKind = "internet-gateway"
-	ZonalResourceMetadataKindNetwork              ZonalResourceMetadataKind = "network"
-	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
-	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
-	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
-	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
-	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
-	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
-	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
-	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
-	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
-	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
-	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
-	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
-	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
-	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -185,8 +185,8 @@ type Instance struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the instance, including its SKU, network configuration, and storage options.
 	Spec InstanceSpec `json:"spec"`
@@ -361,10 +361,52 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
+}
+
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name     string `json:"name"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
+
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace"`
 }
+
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -458,7 +500,7 @@ type SystemResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -508,59 +550,11 @@ type VolumeReference struct {
 // VolumeReferenceType The connection type depends on the type of device and type of block storage.
 type VolumeReferenceType string
 
-// ZonalMetadata Metadata for zonal resources
-type ZonalMetadata struct {
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
-}
-
-// ZonalResourceMetadata defines model for ZonalResourceMetadata.
-type ZonalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind ZonalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-
-	// Region Reference to the region where the resource is located
-	Region   string `json:"region"`
-	Resource string `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Workspace string `json:"workspace"`
 }
-
-// ZonalResourceMetadataKind Type of the resource
-type ZonalResourceMetadataKind string
 
 // Zone Reference to a specific zone within a region
 type Zone = string

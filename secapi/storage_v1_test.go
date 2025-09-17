@@ -124,7 +124,7 @@ func TestListBlockStorages(t *testing.T) {
 
 	assert.Equal(t, secatest.BlockStorage1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 
 	assert.Equal(t, *storageSkuRef, resp[0].Spec.SkuRef)
 
@@ -170,7 +170,7 @@ func TestGetBlockStorage(t *testing.T) {
 
 	assert.Equal(t, secatest.BlockStorage1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
@@ -206,9 +206,9 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	}
 
 	block := &storage.BlockStorage{
-		Metadata: &storage.ZonalResourceMetadata{
+		Metadata: &storage.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 			Name:      secatest.BlockStorage1Name,
 		},
 		Spec: storage.BlockStorageSpec{
@@ -219,10 +219,10 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, block)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-
-	assert.Equal(t, secatest.BlockStorage1Name, resp.Metadata.Name)
+	
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.BlockStorage1Name, resp.Metadata.Name)
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
@@ -279,7 +279,6 @@ func TestListImages(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Image1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -305,7 +304,6 @@ func TestListImages(t *testing.T) {
 
 	assert.Equal(t, secatest.Image1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
 
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
@@ -323,7 +321,6 @@ func TestGetImage(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Image1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -350,7 +347,6 @@ func TestGetImage(t *testing.T) {
 
 	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
@@ -398,10 +394,9 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, image)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-
-	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
+	
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 

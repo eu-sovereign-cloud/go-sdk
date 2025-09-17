@@ -143,7 +143,7 @@ const (
 
 // ActivityLog Activity log resource
 type ActivityLog struct {
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and region information.
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Activity log specification
@@ -604,9 +604,6 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
@@ -646,9 +643,6 @@ type RegionalResourceMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
 	Verb   string `json:"verb"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadataKind Type of the resource
@@ -876,7 +870,7 @@ type SubnetSpec struct {
 	Zone Zone `json:"zone"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`

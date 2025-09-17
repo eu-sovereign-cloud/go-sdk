@@ -92,7 +92,7 @@ func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, net *
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.TenantPathParam(net.Metadata.Tenant), network.WorkspacePathParam(*net.Metadata.Workspace), net.Metadata.Name, params, *net, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, network.TenantPathParam(net.Metadata.Tenant), network.WorkspacePathParam(net.Metadata.Workspace), net.Metadata.Name, params, *net, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (api *NetworkV1) DeleteNetworkWithParams(ctx context.Context, net *network.
 		return err
 	}
 
-	resp, err := api.network.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, *net.Metadata.Workspace, net.Metadata.Name, params, api.loadRequestHeaders, api.loadRequestHeaders)
+	resp, err := api.network.DeleteNetworkWithResponse(ctx, net.Metadata.Tenant, net.Metadata.Workspace, net.Metadata.Name, params, api.loadRequestHeaders, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -170,11 +170,11 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*ne
 }
 
 func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *network.Subnet, params *network.CreateOrUpdateSubnetParams) (*network.Subnet, error) {
-	if err := api.validateNetworkZonalMetadata(sub.Metadata); err != nil {
+	if err := api.validateNetworkMetadata(sub.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.TenantPathParam(sub.Metadata.Tenant), *sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, *sub, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, network.TenantPathParam(sub.Metadata.Tenant), sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, *sub, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -195,11 +195,11 @@ func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *network.Sub
 }
 
 func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *network.Subnet, params *network.DeleteSubnetParams) error {
-	if err := api.validateNetworkZonalMetadata(sub.Metadata); err != nil {
+	if err := api.validateNetworkMetadata(sub.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, *sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteSubnetWithResponse(ctx, sub.Metadata.Tenant, sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -252,11 +252,11 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) 
 }
 
 func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *network.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*network.RouteTable, error) {
-	if err := api.validateNetworkRegionalMetadata(route.Metadata); err != nil {
+	if err := api.validateNetworkMetadata(route.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.TenantPathParam(route.Metadata.Tenant), *route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, *route, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, network.TenantPathParam(route.Metadata.Tenant), route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, *route, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -277,11 +277,11 @@ func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *netwo
 }
 
 func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *network.RouteTable, params *network.DeleteRouteTableParams) error {
-	if err := api.validateNetworkRegionalMetadata(route.Metadata); err != nil {
+	if err := api.validateNetworkMetadata(route.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteRouteTableWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -338,7 +338,7 @@ func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Contex
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.TenantPathParam(gtw.Metadata.Tenant), network.WorkspacePathParam(*gtw.Metadata.Workspace), gtw.Metadata.Name, params, *gtw, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, network.TenantPathParam(gtw.Metadata.Tenant), network.WorkspacePathParam(gtw.Metadata.Workspace), gtw.Metadata.Name, params, *gtw, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +363,7 @@ func (api *NetworkV1) DeleteInternetGatewayWithParams(ctx context.Context, gtw *
 		return err
 	}
 
-	resp, err := api.network.DeleteInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, *gtw.Metadata.Workspace, gtw.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, gtw.Metadata.Workspace, gtw.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context,
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.TenantPathParam(group.Metadata.Tenant), network.WorkspacePathParam(*group.Metadata.Workspace), group.Metadata.Name, params, *group, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, network.TenantPathParam(group.Metadata.Tenant), network.WorkspacePathParam(group.Metadata.Workspace), group.Metadata.Name, params, *group, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +445,7 @@ func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *
 		return err
 	}
 
-	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, *route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -498,11 +498,11 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*net
 }
 
 func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, nic *network.Nic, params *network.CreateOrUpdateNicParams) (*network.Nic, error) {
-	if err := api.validateZonalMetadata(nic.Metadata); err != nil {
+	if err := api.validateRegionalMetadata(nic.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.TenantPathParam(nic.Metadata.Tenant), network.WorkspacePathParam(*nic.Metadata.Workspace), nic.Metadata.Name, params, *nic, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, network.TenantPathParam(nic.Metadata.Tenant), network.WorkspacePathParam(nic.Metadata.Workspace), nic.Metadata.Name, params, *nic, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -523,11 +523,11 @@ func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *network.Nic) (
 }
 
 func (api *NetworkV1) DeleteNicWithParams(ctx context.Context, nic *network.Nic, params *network.DeleteNicParams) error {
-	if err := api.validateZonalMetadata(nic.Metadata); err != nil {
+	if err := api.validateRegionalMetadata(nic.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteNicWithResponse(ctx, nic.Metadata.Tenant, *nic.Metadata.Workspace, nic.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteNicWithResponse(ctx, nic.Metadata.Tenant, nic.Metadata.Workspace, nic.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -584,7 +584,7 @@ func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.TenantPathParam(ip.Metadata.Tenant), network.WorkspacePathParam(*ip.Metadata.Workspace), ip.Metadata.Name, params, *ip, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, network.TenantPathParam(ip.Metadata.Tenant), network.WorkspacePathParam(ip.Metadata.Workspace), ip.Metadata.Name, params, *ip, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +609,7 @@ func (api *NetworkV1) DeletePublicIpWithParams(ctx context.Context, ip *network.
 		return err
 	}
 
-	resp, err := api.network.DeletePublicIpWithResponse(ctx, ip.Metadata.Tenant, *ip.Metadata.Workspace, ip.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeletePublicIpWithResponse(ctx, ip.Metadata.Tenant, ip.Metadata.Workspace, ip.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -636,7 +636,7 @@ func (api *NetworkV1) BuildReferenceURN(urn string) (*network.Reference, error) 
 	return ref, nil
 }
 
-func (api *NetworkV1) validateZonalMetadata(metadata *network.ZonalResourceMetadata) error {
+func (api *NetworkV1) validateRegionalMetadata(metadata *network.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -645,14 +645,14 @@ func (api *NetworkV1) validateZonalMetadata(metadata *network.ZonalResourceMetad
 		return ErrNoMetatadaTenant
 	}
 
-	if metadata.Workspace == nil {
+	if metadata.Workspace == "" {
 		return ErrNoMetatadaWorkspace
 	}
 
 	return nil
 }
 
-func (api *NetworkV1) validateRegionalMetadata(metadata *network.RegionalResourceMetadata) error {
+func (api *NetworkV1) validateNetworkMetadata(metadata *network.RegionalNetworkResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -661,39 +661,7 @@ func (api *NetworkV1) validateRegionalMetadata(metadata *network.RegionalResourc
 		return ErrNoMetatadaTenant
 	}
 
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	return nil
-}
-
-func (api *NetworkV1) validateNetworkRegionalMetadata(metadata *network.NetworkRegionalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	if metadata.Workspace == nil {
-		return ErrNoMetatadaWorkspace
-	}
-
-	return nil
-}
-
-func (api *NetworkV1) validateNetworkZonalMetadata(metadata *network.NetworkZonalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	if metadata.Workspace == nil {
+	if metadata.Workspace == "" {
 		return ErrNoMetatadaWorkspace
 	}
 

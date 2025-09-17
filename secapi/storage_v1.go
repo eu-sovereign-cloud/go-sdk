@@ -88,11 +88,11 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 }
 
 func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
-	if err := api.validateZonalMetadata(block.Metadata); err != nil {
+	if err := api.validateWorkspaceMetadata(block.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, storage.TenantPathParam(block.Metadata.Tenant), storage.WorkspacePathParam(*block.Metadata.Workspace), block.Metadata.Name, params, *block, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, storage.TenantPathParam(block.Metadata.Tenant), storage.WorkspacePathParam(block.Metadata.Workspace), block.Metadata.Name, params, *block, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -113,11 +113,11 @@ func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *sto
 }
 
 func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
-	if err := api.validateZonalMetadata(block.Metadata); err != nil {
+	if err := api.validateWorkspaceMetadata(block.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, *block.Metadata.Workspace, block.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.storage.DeleteBlockStorageWithResponse(ctx, block.Metadata.Tenant, block.Metadata.Workspace, block.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -238,7 +238,7 @@ func (api *StorageV1) validateRegionalMetadata(metadata *storage.RegionalResourc
 	return nil
 }
 
-func (api *StorageV1) validateZonalMetadata(metadata *storage.ZonalResourceMetadata) error {
+func (api *StorageV1) validateWorkspaceMetadata(metadata *storage.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -247,7 +247,7 @@ func (api *StorageV1) validateZonalMetadata(metadata *storage.ZonalResourceMetad
 		return ErrNoMetatadaTenant
 	}
 
-	if metadata.Workspace == nil {
+	if metadata.Workspace == "" {
 		return ErrNoMetatadaWorkspace
 	}
 

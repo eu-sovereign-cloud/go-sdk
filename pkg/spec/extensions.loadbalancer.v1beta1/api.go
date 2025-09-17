@@ -268,7 +268,7 @@ type NetworkLoadBalancer struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and region information.
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Defines the specification for a Network Load Balancer. A Load Balancer can have multiple
@@ -407,9 +407,6 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
@@ -449,9 +446,6 @@ type RegionalResourceMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
 	Verb   string `json:"verb"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadataKind Type of the resource
@@ -525,7 +519,7 @@ type StatusCondition struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`

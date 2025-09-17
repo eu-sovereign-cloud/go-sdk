@@ -133,7 +133,7 @@ func TestListInstances(t *testing.T) {
 
 	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
@@ -178,7 +178,7 @@ func TestGetInstance(t *testing.T) {
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
@@ -214,9 +214,9 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	}
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 			Name:      secatest.Instance1Name,
 		},
 		Spec: compute.InstanceSpec{
@@ -230,7 +230,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
@@ -253,10 +253,10 @@ func TestStartInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.StartInstance(ctx, inst)
@@ -279,10 +279,10 @@ func TestRestartInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.RestartInstance(ctx, inst)
@@ -305,10 +305,10 @@ func TestStopInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.StopInstance(ctx, inst)

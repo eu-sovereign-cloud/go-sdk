@@ -409,7 +409,7 @@ type StatusCondition struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`

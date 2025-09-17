@@ -92,7 +92,7 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst
 		return nil, err
 	}
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(inst.Metadata.Tenant), compute.WorkspacePathParam(*inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(inst.Metadata.Tenant), compute.WorkspacePathParam(inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *comput
 		return err
 	}
 
-	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.compute.DeleteInstanceWithResponse(ctx, inst.Metadata.Tenant, inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -138,7 +138,7 @@ func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *compute
 		return err
 	}
 
-	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.compute.StartInstanceWithResponse(ctx, inst.Metadata.Tenant, inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -159,7 +159,7 @@ func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *compute.
 		return err
 	}
 
-	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.compute.StopInstanceWithResponse(ctx, inst.Metadata.Tenant, inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -180,7 +180,7 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compu
 		return err
 	}
 
-	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, *inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.compute.RestartInstanceWithResponse(ctx, inst.Metadata.Tenant, inst.Metadata.Workspace, inst.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -207,7 +207,7 @@ func (api *ComputeV1) BuildReferenceURN(urn string) (*compute.Reference, error) 
 	return ref, nil
 }
 
-func (api *ComputeV1) validateMetadata(metadata *compute.ZonalResourceMetadata) error {
+func (api *ComputeV1) validateMetadata(metadata *compute.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -216,7 +216,7 @@ func (api *ComputeV1) validateMetadata(metadata *compute.ZonalResourceMetadata) 
 		return ErrNoMetatadaTenant
 	}
 
-	if metadata.Workspace == nil {
+	if metadata.Workspace == "" {
 		return ErrNoMetatadaWorkspace
 	}
 
