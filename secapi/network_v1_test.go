@@ -281,6 +281,7 @@ func TestListSubnetsV1(t *testing.T) {
 			Name:      secatest.Subnet1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
 		},
 		SkuRef: secatest.NetworkSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -321,9 +322,14 @@ func TestGetSubnetV1(t *testing.T) {
 
 	sim := mocknetwork.NewMockServerInterface(t)
 	secatest.MockGetSubnetV1(sim, secatest.SubnetResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Subnet1Name},
-		SkuRef:   secatest.NetworkSku1Ref,
-		Status:   secatest.StatusResponseV1{State: secatest.StatusStateActive},
+		Metadata: secatest.MetadataResponseV1{
+			Name:      secatest.Subnet1Name,
+			Tenant:    secatest.Tenant1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
+		},
+		SkuRef: secatest.NetworkSku1Ref,
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
 	})
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -359,6 +365,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 			Name:      secatest.Subnet1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
 		},
 		SkuRef: secatest.NetworkSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
@@ -447,6 +454,7 @@ func TestListRouteTablesV1(t *testing.T) {
 			Name:      secatest.RouteTable1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
 		},
 		RouteCidrBlock: secatest.CidrIpv4,
 		RouteTargetRef: secatest.Instance1Ref,
@@ -496,6 +504,7 @@ func TestGetRouteTableV1(t *testing.T) {
 			Name:      secatest.RouteTable1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
 		},
 		RouteCidrBlock: secatest.CidrIpv4,
 		RouteTargetRef: secatest.Instance1Ref,
@@ -541,6 +550,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 			Name:      secatest.RouteTable1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: ptr.To(secatest.Workspace1Name),
+			Network:   ptr.To(secatest.Network1Name),
 		},
 		RouteCidrBlock: secatest.CidrIpv4,
 		RouteTargetRef: secatest.Instance1Ref,
