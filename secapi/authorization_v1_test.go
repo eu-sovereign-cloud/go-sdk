@@ -125,7 +125,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	
+
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
 
@@ -277,7 +277,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	
+
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
 

@@ -219,7 +219,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	resp, err := regionalClient.StorageV1.CreateOrUpdateBlockStorage(ctx, block)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	
+
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.BlockStorage1Name, resp.Metadata.Name)
@@ -277,8 +277,8 @@ func TestListImages(t *testing.T) {
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockListStorageImagesV1(sim, secatest.ImageResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Image1Name,
-			Tenant:    secatest.Tenant1Name,
+			Name:   secatest.Image1Name,
+			Tenant: secatest.Tenant1Name,
 		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -319,8 +319,8 @@ func TestGetImage(t *testing.T) {
 	sim := mockstorage.NewMockServerInterface(t)
 	secatest.MockGetStorageImageV1(sim, secatest.ImageResponseV1{
 		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Image1Name,
-			Tenant:    secatest.Tenant1Name,
+			Name:   secatest.Image1Name,
+			Tenant: secatest.Tenant1Name,
 		},
 		BlockStorageRef: secatest.BlockStorage1Ref,
 		Status:          secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -394,7 +394,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	resp, err := regionalClient.StorageV1.CreateOrUpdateImage(ctx, image)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	
+
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
 

@@ -1047,6 +1047,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	// TODO Create a builder to simplify this request creation
 	subnetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Subnet1Ref)
 	if err != nil {
 		t.Fatal(err)

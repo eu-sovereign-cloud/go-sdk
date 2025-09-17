@@ -110,7 +110,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	resp, err := regionalClient.WorkspaceV1.CreateOrUpdateWorkspace(ctx, ws)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	
+
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 
