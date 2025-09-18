@@ -23,7 +23,7 @@ spec:
 
 .PHONY: schemas
 schemas: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
-	@echo "Generating schemas..."
+	@echo "Generated schemas..."
 
 $(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
 	make -C spec dist/specs/$(shell basename $@)
