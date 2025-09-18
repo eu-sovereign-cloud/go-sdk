@@ -30,29 +30,29 @@ const (
 	PreferNoSchedule KubernetesNodeTaintEffect = "PreferNoSchedule"
 )
 
-// Defines values for RegionalResourceMetadataKind.
+// Defines values for RegionalWorkspaceResourceMetadataKind.
 const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindInternetGateway      RegionalResourceMetadataKind = "internet-gateway"
-	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceState.
@@ -196,8 +196,8 @@ type KubernetesCluster struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the  kubernetes cluster, including its configuration
 	// and network settings.
@@ -268,8 +268,8 @@ type KubernetesNodePool struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the  kubernetes node pool, including its configuration
 	// and network settings. Since the node pool is, all nodes in the pool
@@ -477,8 +477,8 @@ type RegionalMetadata struct {
 	Region string `json:"region"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
@@ -489,7 +489,7 @@ type RegionalResourceMetadata struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
 
 	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
 	LastModifiedAt time.Time `json:"lastModifiedAt"`
@@ -514,10 +514,13 @@ type RegionalResourceMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
 	Verb   string `json:"verb"`
+
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
 }
 
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -623,6 +626,12 @@ type UserResourceMetadata struct {
 	// organize and categorize resources. They can be used to filter resources.
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
+}
+
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
 }
 
 // Zone Reference to a specific zone within a region
