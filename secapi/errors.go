@@ -8,5 +8,7 @@ var (
 	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
 	ErrNoMetatadaName      = errors.New("metadata name is empty")
 
+	ErrNoPathMetadata = errors.New("network path param is empty")
+
 	ErrResourceNotFound = errors.New("resource not found")
 )

@@ -3,7 +3,8 @@ package secatest
 type MetadataResponseV1 struct {
 	Name      string
 	Tenant    string
-	Workspace string
+	Workspace *string
+	Network   *string
 }
 type StatusResponseV1 struct {
 	State string
@@ -52,9 +53,10 @@ type SubnetResponseV1 struct {
 	Status   StatusResponseV1
 }
 type RouteTableResponseV1 struct {
-	Metadata MetadataResponseV1
-	LocalRef string
-	Status   StatusResponseV1
+	Metadata       MetadataResponseV1
+	RouteCidrBlock string
+	RouteTargetRef string
+	Status         StatusResponseV1
 }
 type InternetGatewayResponseV1 struct {
 	Metadata   MetadataResponseV1

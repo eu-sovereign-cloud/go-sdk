@@ -9,10 +9,9 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-	"k8s.io/utils/ptr"
 )
 
 // Instance Sku
@@ -25,10 +24,13 @@ func TestListInstancesSku(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockListInstanceSkusV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
-		Tier:     secatest.InstanceSku1Tier,
-		VCPU:     secatest.InstanceSku1VCPU,
-		Ram:      secatest.InstanceSku1RAM,
+		Metadata: secatest.MetadataResponseV1{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.InstanceSku1Name,
+		},
+		Tier: secatest.InstanceSku1Tier,
+		VCPU: secatest.InstanceSku1VCPU,
+		Ram:  secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -38,15 +40,15 @@ func TestListInstancesSku(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	iter, err := regionalClient.ComputeV1.ListSkus(ctx, secatest.Tenant1Name)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
 	labels := *resp[0].Labels
-	require.Len(t, labels, 1)
+	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
@@ -61,10 +63,13 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	secatest.MockGetInstanceSkuV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.InstanceSku1Name},
-		Tier:     secatest.InstanceSku1Tier,
-		VCPU:     secatest.InstanceSku1VCPU,
-		Ram:      secatest.InstanceSku1RAM,
+		Metadata: secatest.MetadataResponseV1{
+			Tenant: secatest.Tenant1Name,
+			Name:   secatest.InstanceSku1Name,
+		},
+		Tier: secatest.InstanceSku1Tier,
+		VCPU: secatest.InstanceSku1VCPU,
+		Ram:  secatest.InstanceSku1RAM,
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -75,14 +80,14 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
 		Tenant: secatest.Tenant1Name,
-		Name:   secatest.Workspace1Name,
+		Name:   secatest.InstanceSku1Name,
 	})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
 
 	labels := *resp.Labels
-	require.Len(t, labels, 1)
+	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp.Spec.VCPU)
@@ -102,7 +107,7 @@ func TestListInstances(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Instance1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: secatest.Workspace1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		SkuRef: secatest.InstanceSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -114,18 +119,23 @@ func TestListInstances(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	iter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
-	require.Len(t, resp, 1)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 
-	assert.Equal(t, secatest.InstanceSku1Ref, resp[0].Spec.SkuRef)
+	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
@@ -140,7 +150,7 @@ func TestGetInstance(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Instance1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: secatest.Workspace1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		SkuRef: secatest.InstanceSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -152,20 +162,25 @@ func TestGetInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
 		Name:      secatest.Instance1Name,
 	}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 
-	assert.Equal(t, secatest.InstanceSku1Ref, resp.Spec.SkuRef)
+	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
@@ -181,7 +196,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Instance1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: secatest.Workspace1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		SkuRef: secatest.InstanceSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
@@ -193,28 +208,31 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
 			Name:      secatest.Instance1Name,
-			Region:    secatest.Region1Name,
-			Zone:      secatest.ZoneA,
-			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		Spec: compute.InstanceSpec{
-			SkuRef: secatest.InstanceSku1Ref,
+			SkuRef: *instanceSkuRef,
 			Zone:   secatest.ZoneA,
 		},
 	}
 	resp, err := regionalClient.ComputeV1.CreateOrUpdateInstance(ctx, inst)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, *resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 
-	assert.Equal(t, secatest.InstanceSku1Ref, resp.Spec.SkuRef)
+	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
@@ -235,14 +253,14 @@ func TestStartInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.StartInstance(ctx, inst)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 func TestRestartInstanace(t *testing.T) {
@@ -261,14 +279,14 @@ func TestRestartInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.RestartInstance(ctx, inst)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 func TestStopInstanace(t *testing.T) {
@@ -287,14 +305,14 @@ func TestStopInstanace(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	inst := &compute.Instance{
-		Metadata: &compute.ZonalResourceMetadata{
+		Metadata: &compute.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
+			Workspace: secatest.Workspace1Name,
 		},
 	}
 	err := regionalClient.ComputeV1.StopInstance(ctx, inst)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 func TestDeleteInstance(t *testing.T) {
@@ -308,7 +326,7 @@ func TestDeleteInstance(t *testing.T) {
 		Metadata: secatest.MetadataResponseV1{
 			Name:      secatest.Instance1Name,
 			Tenant:    secatest.Tenant1Name,
-			Workspace: secatest.Workspace1Name,
+			Workspace: ptr.To(secatest.Workspace1Name),
 		},
 		SkuRef: secatest.InstanceSku1Ref,
 		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
@@ -327,9 +345,9 @@ func TestDeleteInstance(t *testing.T) {
 		Name:      secatest.Instance1Name,
 	}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }

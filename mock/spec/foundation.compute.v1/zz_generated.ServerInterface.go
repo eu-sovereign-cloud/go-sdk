@@ -24,7 +24,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.CreateOrUpdateInstanceParams) {
+func (_m *MockServerInterface) CreateOrUpdateInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.CreateOrUpdateInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -36,17 +36,17 @@ type MockServerInterface_CreateOrUpdateInstance_Call struct {
 // CreateOrUpdateInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params compute.CreateOrUpdateInstanceParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateInstance_Call {
 	return &MockServerInterface_CreateOrUpdateInstance_Call{Call: _e.mock.On("CreateOrUpdateInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.CreateOrUpdateInstanceParams)) *MockServerInterface_CreateOrUpdateInstance_Call {
+func (_c *MockServerInterface_CreateOrUpdateInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.CreateOrUpdateInstanceParams)) *MockServerInterface_CreateOrUpdateInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName), args[5].(compute.CreateOrUpdateInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam), args[5].(compute.CreateOrUpdateInstanceParams))
 	})
 	return _c
 }
@@ -56,13 +56,13 @@ func (_c *MockServerInterface_CreateOrUpdateInstance_Call) Return() *MockServerI
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName, compute.CreateOrUpdateInstanceParams)) *MockServerInterface_CreateOrUpdateInstance_Call {
+func (_c *MockServerInterface_CreateOrUpdateInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, compute.CreateOrUpdateInstanceParams)) *MockServerInterface_CreateOrUpdateInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.DeleteInstanceParams) {
+func (_m *MockServerInterface) DeleteInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.DeleteInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -74,17 +74,17 @@ type MockServerInterface_DeleteInstance_Call struct {
 // DeleteInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params compute.DeleteInstanceParams
 func (_e *MockServerInterface_Expecter) DeleteInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteInstance_Call {
 	return &MockServerInterface_DeleteInstance_Call{Call: _e.mock.On("DeleteInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.DeleteInstanceParams)) *MockServerInterface_DeleteInstance_Call {
+func (_c *MockServerInterface_DeleteInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.DeleteInstanceParams)) *MockServerInterface_DeleteInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName), args[5].(compute.DeleteInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam), args[5].(compute.DeleteInstanceParams))
 	})
 	return _c
 }
@@ -94,13 +94,13 @@ func (_c *MockServerInterface_DeleteInstance_Call) Return() *MockServerInterface
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName, compute.DeleteInstanceParams)) *MockServerInterface_DeleteInstance_Call {
+func (_c *MockServerInterface_DeleteInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, compute.DeleteInstanceParams)) *MockServerInterface_DeleteInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetInstance provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName) {
+func (_m *MockServerInterface) GetInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -112,16 +112,16 @@ type MockServerInterface_GetInstance_Call struct {
 // GetInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetInstance_Call {
 	return &MockServerInterface_GetInstance_Call{Call: _e.mock.On("GetInstance", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName)) *MockServerInterface_GetInstance_Call {
+func (_c *MockServerInterface_GetInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam)) *MockServerInterface_GetInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam))
 	})
 	return _c
 }
@@ -131,13 +131,13 @@ func (_c *MockServerInterface_GetInstance_Call) Return() *MockServerInterface_Ge
 	return _c
 }
 
-func (_c *MockServerInterface_GetInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName)) *MockServerInterface_GetInstance_Call {
+func (_c *MockServerInterface_GetInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam)) *MockServerInterface_GetInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetSku provides a mock function with given fields: w, r, tenant, name
-func (_m *MockServerInterface) GetSku(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, name compute.ResourceName) {
+func (_m *MockServerInterface) GetSku(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, name compute.ResourcePathParam) {
 	_m.Called(w, r, tenant, name)
 }
 
@@ -149,15 +149,15 @@ type MockServerInterface_GetSku_Call struct {
 // GetSku is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - name compute.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetSku(w interface{}, r interface{}, tenant interface{}, name interface{}) *MockServerInterface_GetSku_Call {
 	return &MockServerInterface_GetSku_Call{Call: _e.mock.On("GetSku", w, r, tenant, name)}
 }
 
-func (_c *MockServerInterface_GetSku_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, name compute.ResourceName)) *MockServerInterface_GetSku_Call {
+func (_c *MockServerInterface_GetSku_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, name compute.ResourcePathParam)) *MockServerInterface_GetSku_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.ResourcePathParam))
 	})
 	return _c
 }
@@ -167,13 +167,13 @@ func (_c *MockServerInterface_GetSku_Call) Return() *MockServerInterface_GetSku_
 	return _c
 }
 
-func (_c *MockServerInterface_GetSku_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.ResourceName)) *MockServerInterface_GetSku_Call {
+func (_c *MockServerInterface_GetSku_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.ResourcePathParam)) *MockServerInterface_GetSku_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListInstances provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListInstances(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, params compute.ListInstancesParams) {
+func (_m *MockServerInterface) ListInstances(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, params compute.ListInstancesParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -185,16 +185,16 @@ type MockServerInterface_ListInstances_Call struct {
 // ListInstances is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
 //   - params compute.ListInstancesParams
 func (_e *MockServerInterface_Expecter) ListInstances(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListInstances_Call {
 	return &MockServerInterface_ListInstances_Call{Call: _e.mock.On("ListInstances", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListInstances_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, params compute.ListInstancesParams)) *MockServerInterface_ListInstances_Call {
+func (_c *MockServerInterface_ListInstances_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, params compute.ListInstancesParams)) *MockServerInterface_ListInstances_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ListInstancesParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ListInstancesParams))
 	})
 	return _c
 }
@@ -204,13 +204,13 @@ func (_c *MockServerInterface_ListInstances_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_ListInstances_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ListInstancesParams)) *MockServerInterface_ListInstances_Call {
+func (_c *MockServerInterface_ListInstances_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ListInstancesParams)) *MockServerInterface_ListInstances_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListSkus provides a mock function with given fields: w, r, tenant, params
-func (_m *MockServerInterface) ListSkus(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, params compute.ListSkusParams) {
+func (_m *MockServerInterface) ListSkus(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, params compute.ListSkusParams) {
 	_m.Called(w, r, tenant, params)
 }
 
@@ -222,15 +222,15 @@ type MockServerInterface_ListSkus_Call struct {
 // ListSkus is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
+//   - tenant compute.TenantPathParam
 //   - params compute.ListSkusParams
 func (_e *MockServerInterface_Expecter) ListSkus(w interface{}, r interface{}, tenant interface{}, params interface{}) *MockServerInterface_ListSkus_Call {
 	return &MockServerInterface_ListSkus_Call{Call: _e.mock.On("ListSkus", w, r, tenant, params)}
 }
 
-func (_c *MockServerInterface_ListSkus_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, params compute.ListSkusParams)) *MockServerInterface_ListSkus_Call {
+func (_c *MockServerInterface_ListSkus_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, params compute.ListSkusParams)) *MockServerInterface_ListSkus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.ListSkusParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.ListSkusParams))
 	})
 	return _c
 }
@@ -240,13 +240,13 @@ func (_c *MockServerInterface_ListSkus_Call) Return() *MockServerInterface_ListS
 	return _c
 }
 
-func (_c *MockServerInterface_ListSkus_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.ListSkusParams)) *MockServerInterface_ListSkus_Call {
+func (_c *MockServerInterface_ListSkus_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.ListSkusParams)) *MockServerInterface_ListSkus_Call {
 	_c.Run(run)
 	return _c
 }
 
 // RestartInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) RestartInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.RestartInstanceParams) {
+func (_m *MockServerInterface) RestartInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.RestartInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -258,17 +258,17 @@ type MockServerInterface_RestartInstance_Call struct {
 // RestartInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params compute.RestartInstanceParams
 func (_e *MockServerInterface_Expecter) RestartInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_RestartInstance_Call {
 	return &MockServerInterface_RestartInstance_Call{Call: _e.mock.On("RestartInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_RestartInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.RestartInstanceParams)) *MockServerInterface_RestartInstance_Call {
+func (_c *MockServerInterface_RestartInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.RestartInstanceParams)) *MockServerInterface_RestartInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName), args[5].(compute.RestartInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam), args[5].(compute.RestartInstanceParams))
 	})
 	return _c
 }
@@ -278,13 +278,13 @@ func (_c *MockServerInterface_RestartInstance_Call) Return() *MockServerInterfac
 	return _c
 }
 
-func (_c *MockServerInterface_RestartInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName, compute.RestartInstanceParams)) *MockServerInterface_RestartInstance_Call {
+func (_c *MockServerInterface_RestartInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, compute.RestartInstanceParams)) *MockServerInterface_RestartInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // StartInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) StartInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StartInstanceParams) {
+func (_m *MockServerInterface) StartInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.StartInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -296,17 +296,17 @@ type MockServerInterface_StartInstance_Call struct {
 // StartInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params compute.StartInstanceParams
 func (_e *MockServerInterface_Expecter) StartInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_StartInstance_Call {
 	return &MockServerInterface_StartInstance_Call{Call: _e.mock.On("StartInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_StartInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StartInstanceParams)) *MockServerInterface_StartInstance_Call {
+func (_c *MockServerInterface_StartInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.StartInstanceParams)) *MockServerInterface_StartInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName), args[5].(compute.StartInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam), args[5].(compute.StartInstanceParams))
 	})
 	return _c
 }
@@ -316,13 +316,13 @@ func (_c *MockServerInterface_StartInstance_Call) Return() *MockServerInterface_
 	return _c
 }
 
-func (_c *MockServerInterface_StartInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName, compute.StartInstanceParams)) *MockServerInterface_StartInstance_Call {
+func (_c *MockServerInterface_StartInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, compute.StartInstanceParams)) *MockServerInterface_StartInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // StopInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) StopInstance(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StopInstanceParams) {
+func (_m *MockServerInterface) StopInstance(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.StopInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -334,17 +334,17 @@ type MockServerInterface_StopInstance_Call struct {
 // StopInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant compute.Tenant
-//   - workspace compute.Workspace
-//   - name compute.ResourceName
+//   - tenant compute.TenantPathParam
+//   - workspace compute.WorkspacePathParam
+//   - name compute.ResourcePathParam
 //   - params compute.StopInstanceParams
 func (_e *MockServerInterface_Expecter) StopInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_StopInstance_Call {
 	return &MockServerInterface_StopInstance_Call{Call: _e.mock.On("StopInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_StopInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.Tenant, workspace compute.Workspace, name compute.ResourceName, params compute.StopInstanceParams)) *MockServerInterface_StopInstance_Call {
+func (_c *MockServerInterface_StopInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant compute.TenantPathParam, workspace compute.WorkspacePathParam, name compute.ResourcePathParam, params compute.StopInstanceParams)) *MockServerInterface_StopInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.Tenant), args[3].(compute.Workspace), args[4].(compute.ResourceName), args[5].(compute.StopInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(compute.TenantPathParam), args[3].(compute.WorkspacePathParam), args[4].(compute.ResourcePathParam), args[5].(compute.StopInstanceParams))
 	})
 	return _c
 }
@@ -354,7 +354,7 @@ func (_c *MockServerInterface_StopInstance_Call) Return() *MockServerInterface_S
 	return _c
 }
 
-func (_c *MockServerInterface_StopInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.Tenant, compute.Workspace, compute.ResourceName, compute.StopInstanceParams)) *MockServerInterface_StopInstance_Call {
+func (_c *MockServerInterface_StopInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, compute.TenantPathParam, compute.WorkspacePathParam, compute.ResourcePathParam, compute.StopInstanceParams)) *MockServerInterface_StopInstance_Call {
 	_c.Run(run)
 	return _c
 }

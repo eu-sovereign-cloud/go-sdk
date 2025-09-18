@@ -46,28 +46,29 @@ const (
 	Udp  NetworkLoadBalancerFrontendProtocol = "udp"
 )
 
-// Defines values for RegionalResourceMetadataKind.
+// Defines values for RegionalWorkspaceResourceMetadataKind.
 const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceState.
@@ -88,6 +89,7 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
 	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
@@ -146,221 +148,29 @@ type Error struct {
 	Type string `json:"type"`
 }
 
-// Error400 defines model for Error400.
-type Error400 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error400 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
+// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error401 = Error
 
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
+// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error403 = Error
 
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
+// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error404 = Error
 
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
+// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error409 = Error
 
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error412 = Error
 
-// Error401 defines model for Error401.
-type Error401 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error422 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error403 defines model for Error403.
-type Error403 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error404 defines model for Error404.
-type Error404 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error409 defines model for Error409.
-type Error409 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error412 defines model for Error412.
-type Error412 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error422 defines model for Error422.
-type Error422 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error500 defines model for Error500.
-type Error500 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error500 = Error
 
 // ErrorSource An object containing references to the source of the error.
 type ErrorSource struct {
@@ -400,7 +210,7 @@ type LoadBalancerTarget struct {
 	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
 
 	// Members Nic reference to the members as part of the LoadBalancerTarget
-	Members []interface{} `json:"members"`
+	Members []Reference `json:"members"`
 
 	// Port A valid network port number.
 	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
@@ -458,8 +268,8 @@ type NetworkLoadBalancer struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Defines the specification for a Network Load Balancer. A Load Balancer can have multiple
 	// frontends, where each frontend may target multiple backend instances. Frontend ports and
@@ -505,7 +315,9 @@ type NetworkLoadBalancerIterator struct {
 // determines whether the Load Balancer is internal or external.
 type NetworkLoadBalancerSpec struct {
 	Frontends []NetworkLoadBalancerFrontend `json:"frontends"`
-	NicRef    interface{}                   `json:"nicRef"`
+
+	// NicRef Reference to the NIC attached to the load balancer.
+	NicRef Reference `json:"nicRef"`
 }
 
 // NetworkLoadBalancerStatus defines model for NetworkLoadBalancerStatus.
@@ -595,13 +407,10 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
@@ -612,7 +421,7 @@ type RegionalResourceMetadata struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
 
 	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
 	LastModifiedAt time.Time `json:"lastModifiedAt"`
@@ -639,11 +448,11 @@ type RegionalResourceMetadata struct {
 	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace"`
 }
 
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -713,7 +522,7 @@ type StatusCondition struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -751,6 +560,12 @@ type UserResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
+}
+
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
 
@@ -763,17 +578,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
-// ResourceName defines model for resourceName.
-type ResourceName = string
+// ResourcePathParam defines model for resourcePathParam.
+type ResourcePathParam = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// Tenant defines model for tenant.
-type Tenant = string
+// TenantPathParam defines model for tenantPathParam.
+type TenantPathParam = string
 
-// Workspace defines model for workspace.
-type Workspace = string
+// WorkspacePathParam defines model for workspacePathParam.
+type WorkspacePathParam = string
 
 // ListNetworkLoadBalancersParams defines parameters for ListNetworkLoadBalancers.
 type ListNetworkLoadBalancersParams struct {
@@ -955,21 +770,21 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListNetworkLoadBalancers request
-	ListNetworkLoadBalancers(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListNetworkLoadBalancers(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNetworkLoadBalancer request
-	DeleteNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNetworkLoadBalancer request
-	GetNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateNetworkLoadBalancerWithBody request with any body
-	CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListNetworkLoadBalancers(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListNetworkLoadBalancers(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNetworkLoadBalancersRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -981,7 +796,7 @@ func (c *Client) ListNetworkLoadBalancers(ctx context.Context, tenant Tenant, wo
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNetworkLoadBalancerRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -993,7 +808,7 @@ func (c *Client) DeleteNetworkLoadBalancer(ctx context.Context, tenant Tenant, w
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNetworkLoadBalancerRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1005,7 +820,7 @@ func (c *Client) GetNetworkLoadBalancer(ctx context.Context, tenant Tenant, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkLoadBalancerRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1017,7 +832,7 @@ func (c *Client) CreateOrUpdateNetworkLoadBalancerWithBody(ctx context.Context, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkLoadBalancerRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1030,7 +845,7 @@ func (c *Client) CreateOrUpdateNetworkLoadBalancer(ctx context.Context, tenant T
 }
 
 // NewListNetworkLoadBalancersRequest generates requests for ListNetworkLoadBalancers
-func NewListNetworkLoadBalancersRequest(server string, tenant Tenant, workspace Workspace, params *ListNetworkLoadBalancersParams) (*http.Request, error) {
+func NewListNetworkLoadBalancersRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworkLoadBalancersParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1140,7 +955,7 @@ func NewListNetworkLoadBalancersRequest(server string, tenant Tenant, workspace 
 }
 
 // NewDeleteNetworkLoadBalancerRequest generates requests for DeleteNetworkLoadBalancer
-func NewDeleteNetworkLoadBalancerRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkLoadBalancerParams) (*http.Request, error) {
+func NewDeleteNetworkLoadBalancerRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkLoadBalancerParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1203,7 +1018,7 @@ func NewDeleteNetworkLoadBalancerRequest(server string, tenant Tenant, workspace
 }
 
 // NewGetNetworkLoadBalancerRequest generates requests for GetNetworkLoadBalancer
-func NewGetNetworkLoadBalancerRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetNetworkLoadBalancerRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1251,7 +1066,7 @@ func NewGetNetworkLoadBalancerRequest(server string, tenant Tenant, workspace Wo
 }
 
 // NewCreateOrUpdateNetworkLoadBalancerRequest calls the generic CreateOrUpdateNetworkLoadBalancer builder with application/json body
-func NewCreateOrUpdateNetworkLoadBalancerRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNetworkLoadBalancerRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1262,7 +1077,7 @@ func NewCreateOrUpdateNetworkLoadBalancerRequest(server string, tenant Tenant, w
 }
 
 // NewCreateOrUpdateNetworkLoadBalancerRequestWithBody generates requests for CreateOrUpdateNetworkLoadBalancer with any type of body
-func NewCreateOrUpdateNetworkLoadBalancerRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNetworkLoadBalancerRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1370,18 +1185,18 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListNetworkLoadBalancersWithResponse request
-	ListNetworkLoadBalancersWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*ListNetworkLoadBalancersResponse, error)
+	ListNetworkLoadBalancersWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*ListNetworkLoadBalancersResponse, error)
 
 	// DeleteNetworkLoadBalancerWithResponse request
-	DeleteNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*DeleteNetworkLoadBalancerResponse, error)
+	DeleteNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*DeleteNetworkLoadBalancerResponse, error)
 
 	// GetNetworkLoadBalancerWithResponse request
-	GetNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkLoadBalancerResponse, error)
+	GetNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkLoadBalancerResponse, error)
 
 	// CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse request with any body
-	CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error)
+	CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error)
 
-	CreateOrUpdateNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error)
+	CreateOrUpdateNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error)
 }
 
 type ListNetworkLoadBalancersResponse struct {
@@ -1497,7 +1312,7 @@ func (r CreateOrUpdateNetworkLoadBalancerResponse) StatusCode() int {
 }
 
 // ListNetworkLoadBalancersWithResponse request returning *ListNetworkLoadBalancersResponse
-func (c *ClientWithResponses) ListNetworkLoadBalancersWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*ListNetworkLoadBalancersResponse, error) {
+func (c *ClientWithResponses) ListNetworkLoadBalancersWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworkLoadBalancersParams, reqEditors ...RequestEditorFn) (*ListNetworkLoadBalancersResponse, error) {
 	rsp, err := c.ListNetworkLoadBalancers(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1506,7 +1321,7 @@ func (c *ClientWithResponses) ListNetworkLoadBalancersWithResponse(ctx context.C
 }
 
 // DeleteNetworkLoadBalancerWithResponse request returning *DeleteNetworkLoadBalancerResponse
-func (c *ClientWithResponses) DeleteNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*DeleteNetworkLoadBalancerResponse, error) {
+func (c *ClientWithResponses) DeleteNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkLoadBalancerParams, reqEditors ...RequestEditorFn) (*DeleteNetworkLoadBalancerResponse, error) {
 	rsp, err := c.DeleteNetworkLoadBalancer(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1515,7 +1330,7 @@ func (c *ClientWithResponses) DeleteNetworkLoadBalancerWithResponse(ctx context.
 }
 
 // GetNetworkLoadBalancerWithResponse request returning *GetNetworkLoadBalancerResponse
-func (c *ClientWithResponses) GetNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkLoadBalancerResponse, error) {
+func (c *ClientWithResponses) GetNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkLoadBalancerResponse, error) {
 	rsp, err := c.GetNetworkLoadBalancer(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1524,7 +1339,7 @@ func (c *ClientWithResponses) GetNetworkLoadBalancerWithResponse(ctx context.Con
 }
 
 // CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNetworkLoadBalancerResponse
-func (c *ClientWithResponses) CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkLoadBalancerWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error) {
 	rsp, err := c.CreateOrUpdateNetworkLoadBalancerWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1532,7 +1347,7 @@ func (c *ClientWithResponses) CreateOrUpdateNetworkLoadBalancerWithBodyWithRespo
 	return ParseCreateOrUpdateNetworkLoadBalancerResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNetworkLoadBalancerWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkLoadBalancerWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkLoadBalancerParams, body CreateOrUpdateNetworkLoadBalancerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkLoadBalancerResponse, error) {
 	rsp, err := c.CreateOrUpdateNetworkLoadBalancer(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1816,16 +1631,16 @@ func ParseCreateOrUpdateNetworkLoadBalancerResponse(rsp *http.Response) (*Create
 type ServerInterface interface {
 	// List network load balancers
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/network-load-balancers)
-	ListNetworkLoadBalancers(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListNetworkLoadBalancersParams)
+	ListNetworkLoadBalancers(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListNetworkLoadBalancersParams)
 	// Delete network load balancer
 	// (DELETE /v1beta1/tenants/{tenant}/workspaces/{workspace}/network-load-balancers/{name})
-	DeleteNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteNetworkLoadBalancerParams)
+	DeleteNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteNetworkLoadBalancerParams)
 	// Get network load balancer
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/network-load-balancers/{name})
-	GetNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update network load balancer
 	// (PUT /v1beta1/tenants/{tenant}/workspaces/{workspace}/network-load-balancers/{name})
-	CreateOrUpdateNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateNetworkLoadBalancerParams)
+	CreateOrUpdateNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateNetworkLoadBalancerParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1843,7 +1658,7 @@ func (siw *ServerInterfaceWrapper) ListNetworkLoadBalancers(w http.ResponseWrite
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1852,7 +1667,7 @@ func (siw *ServerInterfaceWrapper) ListNetworkLoadBalancers(w http.ResponseWrite
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1931,7 +1746,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetworkLoadBalancer(w http.ResponseWrit
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1940,7 +1755,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetworkLoadBalancer(w http.ResponseWrit
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1949,7 +1764,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetworkLoadBalancer(w http.ResponseWrit
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2004,7 +1819,7 @@ func (siw *ServerInterfaceWrapper) GetNetworkLoadBalancer(w http.ResponseWriter,
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2013,7 +1828,7 @@ func (siw *ServerInterfaceWrapper) GetNetworkLoadBalancer(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2022,7 +1837,7 @@ func (siw *ServerInterfaceWrapper) GetNetworkLoadBalancer(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2053,7 +1868,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetworkLoadBalancer(w http.Resp
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2062,7 +1877,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetworkLoadBalancer(w http.Resp
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2071,7 +1886,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetworkLoadBalancer(w http.Resp
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

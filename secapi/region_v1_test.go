@@ -10,7 +10,6 @@ import (
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 // Region
@@ -38,15 +37,15 @@ func TestListRegionsV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.RegionV1.ListRegions(ctx)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
-	require.Len(t, resp, 1)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
 
-	require.Len(t, resp[0].Spec.Providers, 1)
+	assert.Len(t, resp[0].Spec.Providers, 1)
 	assert.Contains(t, resp[0].Spec.Providers[0].Name, secatest.ProviderNetworkName)
 	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
 	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
@@ -75,7 +74,7 @@ func TestGetRegionV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.RegionV1.GetRegion(ctx, secatest.Region1Name)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Name)
 

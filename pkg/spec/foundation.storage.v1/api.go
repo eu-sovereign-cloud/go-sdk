@@ -48,6 +48,7 @@ const (
 	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
 	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
 	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
+	RegionalResourceMetadataKindInternetGateway      RegionalResourceMetadataKind = "internet-gateway"
 	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
 	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
 	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
@@ -63,6 +64,31 @@ const (
 	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
 	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
 	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+)
+
+// Defines values for RegionalWorkspaceResourceMetadataKind.
+const (
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceState.
@@ -90,6 +116,7 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
 	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
@@ -105,30 +132,6 @@ const (
 	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
 	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
 	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
-)
-
-// Defines values for ZonalResourceMetadataKind.
-const (
-	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
-	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
-	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
-	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
-	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
-	ZonalResourceMetadataKindNetwork              ZonalResourceMetadataKind = "network"
-	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
-	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
-	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
-	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
-	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
-	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
-	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
-	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
-	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
-	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
-	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
-	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
-	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
-	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -183,8 +186,8 @@ type BlockStorage struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec References the SKU used for this block.
 	// If a reference to the source image is used as the base for creating this block storage.
@@ -198,14 +201,19 @@ type BlockStorage struct {
 // If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
 	// SizeGB Size of the block storage in GB.
-	SizeGB         int          `json:"sizeGB"`
-	SkuRef         interface{}  `json:"skuRef"`
-	SourceImageRef *interface{} `json:"sourceImageRef,omitempty"`
+	SizeGB int `json:"sizeGB"`
+
+	// SkuRef Reference to the SKU of the block storage.
+	SkuRef Reference `json:"skuRef"`
+
+	// SourceImageRef Reference to the source image used as the base for creating the block storage.
+	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
 }
 
 // BlockStorageStatus defines model for BlockStorageStatus.
 type BlockStorageStatus struct {
-	AttachedTo *interface{}      `json:"attachedTo,omitempty"`
+	// AttachedTo Reference to the instance the block storage is attached to.
+	AttachedTo *Reference        `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// SizeGB Size of the block storage in GB.
@@ -249,221 +257,29 @@ type Error struct {
 	Type string `json:"type"`
 }
 
-// Error400 defines model for Error400.
-type Error400 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error400 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
+// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error401 = Error
 
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
+// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error403 = Error
 
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
+// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error404 = Error
 
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
+// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error409 = Error
 
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error412 = Error
 
-// Error401 defines model for Error401.
-type Error401 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error422 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error403 defines model for Error403.
-type Error403 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error404 defines model for Error404.
-type Error404 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error409 defines model for Error409.
-type Error409 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error412 defines model for Error412.
-type Error412 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error422 defines model for Error422.
-type Error422 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error500 defines model for Error500.
-type Error500 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error500 = Error
 
 // ErrorSource An object containing references to the source of the error.
 type ErrorSource struct {
@@ -489,7 +305,7 @@ type Image struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and region information.
 	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Detailed specification of the Image resource.
@@ -518,7 +334,8 @@ type ImageIterator struct {
 // compute instances. For additional information, refer to the
 // [Image Handling](/docs/content/Other/image-handling) section.
 type ImageSpec struct {
-	BlockStorageRef interface{} `json:"blockStorageRef"`
+	// BlockStorageRef Reference to the block storage used to store the image.
+	BlockStorageRef Reference `json:"blockStorageRef"`
 
 	// Boot Boot type for the Image
 	Boot *ImageSpecBoot `json:"boot,omitempty"`
@@ -645,9 +462,6 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadata defines model for RegionalResourceMetadata.
@@ -687,13 +501,55 @@ type RegionalResourceMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
 	Verb   string `json:"verb"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
 // RegionalResourceMetadataKind Type of the resource
 type RegionalResourceMetadataKind string
+
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name     string `json:"name"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
+
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
+
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
+}
+
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -891,7 +747,7 @@ type SystemResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -929,62 +785,11 @@ type UserResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// ZonalMetadata Metadata for zonal resources
-type ZonalMetadata struct {
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
-}
-
-// ZonalResourceMetadata defines model for ZonalResourceMetadata.
-type ZonalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind ZonalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-
-	// Region Reference to the region where the resource is located
-	Region   string `json:"region"`
-	Resource string `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Workspace string `json:"workspace"`
 }
-
-// ZonalResourceMetadataKind Type of the resource
-type ZonalResourceMetadataKind string
-
-// Zone Reference to a specific zone within a region
-type Zone = string
 
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
@@ -998,17 +803,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
-// ResourceName defines model for resourceName.
-type ResourceName = string
+// ResourcePathParam defines model for resourcePathParam.
+type ResourcePathParam = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// Tenant defines model for tenant.
-type Tenant = string
+// TenantPathParam defines model for tenantPathParam.
+type TenantPathParam = string
 
-// Workspace defines model for workspace.
-type Workspace = string
+// WorkspacePathParam defines model for workspacePathParam.
+type WorkspacePathParam = string
 
 // ListImagesParams defines parameters for ListImages.
 type ListImagesParams struct {
@@ -1261,41 +1066,41 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListImages request
-	ListImages(ctx context.Context, tenant Tenant, params *ListImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListImages(ctx context.Context, tenant TenantPathParam, params *ListImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteImage request
-	DeleteImage(ctx context.Context, tenant Tenant, name ResourceName, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetImage request
-	GetImage(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateImageWithBody request with any body
-	CreateOrUpdateImageWithBody(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateImageWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateImage(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSkus request
-	ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSku request
-	GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListBlockStorages request
-	ListBlockStorages(ctx context.Context, tenant Tenant, workspace Workspace, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListBlockStorages(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteBlockStorage request
-	DeleteBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetBlockStorage request
-	GetBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateBlockStorageWithBody request with any body
-	CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListImages(ctx context.Context, tenant Tenant, params *ListImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListImages(ctx context.Context, tenant TenantPathParam, params *ListImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListImagesRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -1307,7 +1112,7 @@ func (c *Client) ListImages(ctx context.Context, tenant Tenant, params *ListImag
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteImage(ctx context.Context, tenant Tenant, name ResourceName, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteImageRequest(c.Server, tenant, name, params)
 	if err != nil {
 		return nil, err
@@ -1319,7 +1124,7 @@ func (c *Client) DeleteImage(ctx context.Context, tenant Tenant, name ResourceNa
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetImage(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetImageRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -1331,7 +1136,7 @@ func (c *Client) GetImage(ctx context.Context, tenant Tenant, name ResourceName,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateImageWithBody(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateImageWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateImageRequestWithBody(c.Server, tenant, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1343,7 +1148,7 @@ func (c *Client) CreateOrUpdateImageWithBody(ctx context.Context, tenant Tenant,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateImage(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateImage(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateImageRequest(c.Server, tenant, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1355,7 +1160,7 @@ func (c *Client) CreateOrUpdateImage(ctx context.Context, tenant Tenant, name Re
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSkusRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -1367,7 +1172,7 @@ func (c *Client) ListSkus(ctx context.Context, tenant Tenant, params *ListSkusPa
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSkuRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -1379,7 +1184,7 @@ func (c *Client) GetSku(ctx context.Context, tenant Tenant, name ResourceName, r
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListBlockStorages(ctx context.Context, tenant Tenant, workspace Workspace, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListBlockStorages(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListBlockStoragesRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -1391,7 +1196,7 @@ func (c *Client) ListBlockStorages(ctx context.Context, tenant Tenant, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteBlockStorageRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -1403,7 +1208,7 @@ func (c *Client) DeleteBlockStorage(ctx context.Context, tenant Tenant, workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetBlockStorageRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1415,7 +1220,7 @@ func (c *Client) GetBlockStorage(ctx context.Context, tenant Tenant, workspace W
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateBlockStorageRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1427,7 +1232,7 @@ func (c *Client) CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateBlockStorage(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateBlockStorage(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateBlockStorageRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1440,7 +1245,7 @@ func (c *Client) CreateOrUpdateBlockStorage(ctx context.Context, tenant Tenant, 
 }
 
 // NewListImagesRequest generates requests for ListImages
-func NewListImagesRequest(server string, tenant Tenant, params *ListImagesParams) (*http.Request, error) {
+func NewListImagesRequest(server string, tenant TenantPathParam, params *ListImagesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1543,7 +1348,7 @@ func NewListImagesRequest(server string, tenant Tenant, params *ListImagesParams
 }
 
 // NewDeleteImageRequest generates requests for DeleteImage
-func NewDeleteImageRequest(server string, tenant Tenant, name ResourceName, params *DeleteImageParams) (*http.Request, error) {
+func NewDeleteImageRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *DeleteImageParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1599,7 +1404,7 @@ func NewDeleteImageRequest(server string, tenant Tenant, name ResourceName, para
 }
 
 // NewGetImageRequest generates requests for GetImage
-func NewGetImageRequest(server string, tenant Tenant, name ResourceName) (*http.Request, error) {
+func NewGetImageRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1640,7 +1445,7 @@ func NewGetImageRequest(server string, tenant Tenant, name ResourceName) (*http.
 }
 
 // NewCreateOrUpdateImageRequest calls the generic CreateOrUpdateImage builder with application/json body
-func NewCreateOrUpdateImageRequest(server string, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateImageRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1651,7 +1456,7 @@ func NewCreateOrUpdateImageRequest(server string, tenant Tenant, name ResourceNa
 }
 
 // NewCreateOrUpdateImageRequestWithBody generates requests for CreateOrUpdateImage with any type of body
-func NewCreateOrUpdateImageRequestWithBody(server string, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateImageRequestWithBody(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1709,7 +1514,7 @@ func NewCreateOrUpdateImageRequestWithBody(server string, tenant Tenant, name Re
 }
 
 // NewListSkusRequest generates requests for ListSkus
-func NewListSkusRequest(server string, tenant Tenant, params *ListSkusParams) (*http.Request, error) {
+func NewListSkusRequest(server string, tenant TenantPathParam, params *ListSkusParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1812,7 +1617,7 @@ func NewListSkusRequest(server string, tenant Tenant, params *ListSkusParams) (*
 }
 
 // NewGetSkuRequest generates requests for GetSku
-func NewGetSkuRequest(server string, tenant Tenant, name ResourceName) (*http.Request, error) {
+func NewGetSkuRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1853,7 +1658,7 @@ func NewGetSkuRequest(server string, tenant Tenant, name ResourceName) (*http.Re
 }
 
 // NewListBlockStoragesRequest generates requests for ListBlockStorages
-func NewListBlockStoragesRequest(server string, tenant Tenant, workspace Workspace, params *ListBlockStoragesParams) (*http.Request, error) {
+func NewListBlockStoragesRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListBlockStoragesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1963,7 +1768,7 @@ func NewListBlockStoragesRequest(server string, tenant Tenant, workspace Workspa
 }
 
 // NewDeleteBlockStorageRequest generates requests for DeleteBlockStorage
-func NewDeleteBlockStorageRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteBlockStorageParams) (*http.Request, error) {
+func NewDeleteBlockStorageRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteBlockStorageParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2026,7 +1831,7 @@ func NewDeleteBlockStorageRequest(server string, tenant Tenant, workspace Worksp
 }
 
 // NewGetBlockStorageRequest generates requests for GetBlockStorage
-func NewGetBlockStorageRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetBlockStorageRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2074,7 +1879,7 @@ func NewGetBlockStorageRequest(server string, tenant Tenant, workspace Workspace
 }
 
 // NewCreateOrUpdateBlockStorageRequest calls the generic CreateOrUpdateBlockStorage builder with application/json body
-func NewCreateOrUpdateBlockStorageRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateBlockStorageRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -2085,7 +1890,7 @@ func NewCreateOrUpdateBlockStorageRequest(server string, tenant Tenant, workspac
 }
 
 // NewCreateOrUpdateBlockStorageRequestWithBody generates requests for CreateOrUpdateBlockStorage with any type of body
-func NewCreateOrUpdateBlockStorageRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateBlockStorageRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2193,38 +1998,38 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListImagesWithResponse request
-	ListImagesWithResponse(ctx context.Context, tenant Tenant, params *ListImagesParams, reqEditors ...RequestEditorFn) (*ListImagesResponse, error)
+	ListImagesWithResponse(ctx context.Context, tenant TenantPathParam, params *ListImagesParams, reqEditors ...RequestEditorFn) (*ListImagesResponse, error)
 
 	// DeleteImageWithResponse request
-	DeleteImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*DeleteImageResponse, error)
+	DeleteImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*DeleteImageResponse, error)
 
 	// GetImageWithResponse request
-	GetImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetImageResponse, error)
+	GetImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetImageResponse, error)
 
 	// CreateOrUpdateImageWithBodyWithResponse request with any body
-	CreateOrUpdateImageWithBodyWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error)
+	CreateOrUpdateImageWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error)
 
-	CreateOrUpdateImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error)
+	CreateOrUpdateImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error)
 
 	// ListSkusWithResponse request
-	ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
+	ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
 
 	// GetSkuWithResponse request
-	GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
+	GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
 
 	// ListBlockStoragesWithResponse request
-	ListBlockStoragesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*ListBlockStoragesResponse, error)
+	ListBlockStoragesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*ListBlockStoragesResponse, error)
 
 	// DeleteBlockStorageWithResponse request
-	DeleteBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*DeleteBlockStorageResponse, error)
+	DeleteBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*DeleteBlockStorageResponse, error)
 
 	// GetBlockStorageWithResponse request
-	GetBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetBlockStorageResponse, error)
+	GetBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetBlockStorageResponse, error)
 
 	// CreateOrUpdateBlockStorageWithBodyWithResponse request with any body
-	CreateOrUpdateBlockStorageWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error)
+	CreateOrUpdateBlockStorageWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error)
 
-	CreateOrUpdateBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error)
+	CreateOrUpdateBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error)
 }
 
 type ListImagesResponse struct {
@@ -2505,7 +2310,7 @@ func (r CreateOrUpdateBlockStorageResponse) StatusCode() int {
 }
 
 // ListImagesWithResponse request returning *ListImagesResponse
-func (c *ClientWithResponses) ListImagesWithResponse(ctx context.Context, tenant Tenant, params *ListImagesParams, reqEditors ...RequestEditorFn) (*ListImagesResponse, error) {
+func (c *ClientWithResponses) ListImagesWithResponse(ctx context.Context, tenant TenantPathParam, params *ListImagesParams, reqEditors ...RequestEditorFn) (*ListImagesResponse, error) {
 	rsp, err := c.ListImages(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2514,7 +2319,7 @@ func (c *ClientWithResponses) ListImagesWithResponse(ctx context.Context, tenant
 }
 
 // DeleteImageWithResponse request returning *DeleteImageResponse
-func (c *ClientWithResponses) DeleteImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*DeleteImageResponse, error) {
+func (c *ClientWithResponses) DeleteImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteImageParams, reqEditors ...RequestEditorFn) (*DeleteImageResponse, error) {
 	rsp, err := c.DeleteImage(ctx, tenant, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2523,7 +2328,7 @@ func (c *ClientWithResponses) DeleteImageWithResponse(ctx context.Context, tenan
 }
 
 // GetImageWithResponse request returning *GetImageResponse
-func (c *ClientWithResponses) GetImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetImageResponse, error) {
+func (c *ClientWithResponses) GetImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetImageResponse, error) {
 	rsp, err := c.GetImage(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2532,7 +2337,7 @@ func (c *ClientWithResponses) GetImageWithResponse(ctx context.Context, tenant T
 }
 
 // CreateOrUpdateImageWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateImageResponse
-func (c *ClientWithResponses) CreateOrUpdateImageWithBodyWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateImageWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error) {
 	rsp, err := c.CreateOrUpdateImageWithBody(ctx, tenant, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2540,7 +2345,7 @@ func (c *ClientWithResponses) CreateOrUpdateImageWithBodyWithResponse(ctx contex
 	return ParseCreateOrUpdateImageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateImageWithResponse(ctx context.Context, tenant Tenant, name ResourceName, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateImageWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateImageParams, body CreateOrUpdateImageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateImageResponse, error) {
 	rsp, err := c.CreateOrUpdateImage(ctx, tenant, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2549,7 +2354,7 @@ func (c *ClientWithResponses) CreateOrUpdateImageWithResponse(ctx context.Contex
 }
 
 // ListSkusWithResponse request returning *ListSkusResponse
-func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
+func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
 	rsp, err := c.ListSkus(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2558,7 +2363,7 @@ func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant T
 }
 
 // GetSkuWithResponse request returning *GetSkuResponse
-func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
+func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
 	rsp, err := c.GetSku(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2567,7 +2372,7 @@ func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Ten
 }
 
 // ListBlockStoragesWithResponse request returning *ListBlockStoragesResponse
-func (c *ClientWithResponses) ListBlockStoragesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*ListBlockStoragesResponse, error) {
+func (c *ClientWithResponses) ListBlockStoragesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListBlockStoragesParams, reqEditors ...RequestEditorFn) (*ListBlockStoragesResponse, error) {
 	rsp, err := c.ListBlockStorages(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2576,7 +2381,7 @@ func (c *ClientWithResponses) ListBlockStoragesWithResponse(ctx context.Context,
 }
 
 // DeleteBlockStorageWithResponse request returning *DeleteBlockStorageResponse
-func (c *ClientWithResponses) DeleteBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*DeleteBlockStorageResponse, error) {
+func (c *ClientWithResponses) DeleteBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteBlockStorageParams, reqEditors ...RequestEditorFn) (*DeleteBlockStorageResponse, error) {
 	rsp, err := c.DeleteBlockStorage(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2585,7 +2390,7 @@ func (c *ClientWithResponses) DeleteBlockStorageWithResponse(ctx context.Context
 }
 
 // GetBlockStorageWithResponse request returning *GetBlockStorageResponse
-func (c *ClientWithResponses) GetBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetBlockStorageResponse, error) {
+func (c *ClientWithResponses) GetBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetBlockStorageResponse, error) {
 	rsp, err := c.GetBlockStorage(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2594,7 +2399,7 @@ func (c *ClientWithResponses) GetBlockStorageWithResponse(ctx context.Context, t
 }
 
 // CreateOrUpdateBlockStorageWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateBlockStorageResponse
-func (c *ClientWithResponses) CreateOrUpdateBlockStorageWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateBlockStorageWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error) {
 	rsp, err := c.CreateOrUpdateBlockStorageWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2602,7 +2407,7 @@ func (c *ClientWithResponses) CreateOrUpdateBlockStorageWithBodyWithResponse(ctx
 	return ParseCreateOrUpdateBlockStorageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateBlockStorageWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateBlockStorageWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateBlockStorageParams, body CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateBlockStorageResponse, error) {
 	rsp, err := c.CreateOrUpdateBlockStorage(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -3273,34 +3078,34 @@ func ParseCreateOrUpdateBlockStorageResponse(rsp *http.Response) (*CreateOrUpdat
 type ServerInterface interface {
 	// List images
 	// (GET /v1/tenants/{tenant}/images)
-	ListImages(w http.ResponseWriter, r *http.Request, tenant Tenant, params ListImagesParams)
+	ListImages(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListImagesParams)
 	// Delete image
 	// (DELETE /v1/tenants/{tenant}/images/{name})
-	DeleteImage(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName, params DeleteImageParams)
+	DeleteImage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params DeleteImageParams)
 	// Get image
 	// (GET /v1/tenants/{tenant}/images/{name})
-	GetImage(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName)
+	GetImage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
 	// Create or update image
 	// (PUT /v1/tenants/{tenant}/images/{name})
-	CreateOrUpdateImage(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName, params CreateOrUpdateImageParams)
+	CreateOrUpdateImage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params CreateOrUpdateImageParams)
 	// List skus
 	// (GET /v1/tenants/{tenant}/skus)
-	ListSkus(w http.ResponseWriter, r *http.Request, tenant Tenant, params ListSkusParams)
+	ListSkus(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListSkusParams)
 	// Get sku
 	// (GET /v1/tenants/{tenant}/skus/{name})
-	GetSku(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName)
+	GetSku(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
 	// List block-storages
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/block-storages)
-	ListBlockStorages(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListBlockStoragesParams)
+	ListBlockStorages(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListBlockStoragesParams)
 	// Delete block-storage
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/block-storages/{name})
-	DeleteBlockStorage(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteBlockStorageParams)
+	DeleteBlockStorage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteBlockStorageParams)
 	// Get block-storage
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/block-storages/{name})
-	GetBlockStorage(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetBlockStorage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update block-storage
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/block-storages/{name})
-	CreateOrUpdateBlockStorage(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateBlockStorageParams)
+	CreateOrUpdateBlockStorage(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateBlockStorageParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -3318,7 +3123,7 @@ func (siw *ServerInterfaceWrapper) ListImages(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3397,7 +3202,7 @@ func (siw *ServerInterfaceWrapper) DeleteImage(w http.ResponseWriter, r *http.Re
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3406,7 +3211,7 @@ func (siw *ServerInterfaceWrapper) DeleteImage(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3461,7 +3266,7 @@ func (siw *ServerInterfaceWrapper) GetImage(w http.ResponseWriter, r *http.Reque
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3470,7 +3275,7 @@ func (siw *ServerInterfaceWrapper) GetImage(w http.ResponseWriter, r *http.Reque
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3501,7 +3306,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateImage(w http.ResponseWriter, r 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3510,7 +3315,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateImage(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3565,7 +3370,7 @@ func (siw *ServerInterfaceWrapper) ListSkus(w http.ResponseWriter, r *http.Reque
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3644,7 +3449,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3653,7 +3458,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3684,7 +3489,7 @@ func (siw *ServerInterfaceWrapper) ListBlockStorages(w http.ResponseWriter, r *h
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3693,7 +3498,7 @@ func (siw *ServerInterfaceWrapper) ListBlockStorages(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3772,7 +3577,7 @@ func (siw *ServerInterfaceWrapper) DeleteBlockStorage(w http.ResponseWriter, r *
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3781,7 +3586,7 @@ func (siw *ServerInterfaceWrapper) DeleteBlockStorage(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3790,7 +3595,7 @@ func (siw *ServerInterfaceWrapper) DeleteBlockStorage(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3845,7 +3650,7 @@ func (siw *ServerInterfaceWrapper) GetBlockStorage(w http.ResponseWriter, r *htt
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3854,7 +3659,7 @@ func (siw *ServerInterfaceWrapper) GetBlockStorage(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3863,7 +3668,7 @@ func (siw *ServerInterfaceWrapper) GetBlockStorage(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3894,7 +3699,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateBlockStorage(w http.ResponseWri
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3903,7 +3708,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateBlockStorage(w http.ResponseWri
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3912,7 +3717,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateBlockStorage(w http.ResponseWri
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

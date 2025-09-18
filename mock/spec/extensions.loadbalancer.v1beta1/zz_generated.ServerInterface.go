@@ -23,7 +23,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateNetworkLoadBalancer provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params loadbalancer.CreateOrUpdateNetworkLoadBalancerParams) {
+func (_m *MockServerInterface) CreateOrUpdateNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params loadbalancer.CreateOrUpdateNetworkLoadBalancerParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -35,17 +35,17 @@ type MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call struct {
 // CreateOrUpdateNetworkLoadBalancer is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - params loadbalancer.CreateOrUpdateNetworkLoadBalancerParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateNetworkLoadBalancer(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call {
 	return &MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call{Call: _e.mock.On("CreateOrUpdateNetworkLoadBalancer", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params loadbalancer.CreateOrUpdateNetworkLoadBalancerParams)) *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params loadbalancer.CreateOrUpdateNetworkLoadBalancerParams)) *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.Tenant), args[3].(loadbalancer.Workspace), args[4].(loadbalancer.ResourceName), args[5].(loadbalancer.CreateOrUpdateNetworkLoadBalancerParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.TenantPathParam), args[3].(loadbalancer.WorkspacePathParam), args[4].(loadbalancer.ResourcePathParam), args[5].(loadbalancer.CreateOrUpdateNetworkLoadBalancerParams))
 	})
 	return _c
 }
@@ -55,13 +55,13 @@ func (_c *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call) Return() *
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, loadbalancer.CreateOrUpdateNetworkLoadBalancerParams)) *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, loadbalancer.CreateOrUpdateNetworkLoadBalancerParams)) *MockServerInterface_CreateOrUpdateNetworkLoadBalancer_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteNetworkLoadBalancer provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params loadbalancer.DeleteNetworkLoadBalancerParams) {
+func (_m *MockServerInterface) DeleteNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params loadbalancer.DeleteNetworkLoadBalancerParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -73,17 +73,17 @@ type MockServerInterface_DeleteNetworkLoadBalancer_Call struct {
 // DeleteNetworkLoadBalancer is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 //   - params loadbalancer.DeleteNetworkLoadBalancerParams
 func (_e *MockServerInterface_Expecter) DeleteNetworkLoadBalancer(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteNetworkLoadBalancer_Call {
 	return &MockServerInterface_DeleteNetworkLoadBalancer_Call{Call: _e.mock.On("DeleteNetworkLoadBalancer", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName, params loadbalancer.DeleteNetworkLoadBalancerParams)) *MockServerInterface_DeleteNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_DeleteNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam, params loadbalancer.DeleteNetworkLoadBalancerParams)) *MockServerInterface_DeleteNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.Tenant), args[3].(loadbalancer.Workspace), args[4].(loadbalancer.ResourceName), args[5].(loadbalancer.DeleteNetworkLoadBalancerParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.TenantPathParam), args[3].(loadbalancer.WorkspacePathParam), args[4].(loadbalancer.ResourcePathParam), args[5].(loadbalancer.DeleteNetworkLoadBalancerParams))
 	})
 	return _c
 }
@@ -93,13 +93,13 @@ func (_c *MockServerInterface_DeleteNetworkLoadBalancer_Call) Return() *MockServ
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName, loadbalancer.DeleteNetworkLoadBalancerParams)) *MockServerInterface_DeleteNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_DeleteNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam, loadbalancer.DeleteNetworkLoadBalancerParams)) *MockServerInterface_DeleteNetworkLoadBalancer_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetNetworkLoadBalancer provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName) {
+func (_m *MockServerInterface) GetNetworkLoadBalancer(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -111,16 +111,16 @@ type MockServerInterface_GetNetworkLoadBalancer_Call struct {
 // GetNetworkLoadBalancer is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
-//   - name loadbalancer.ResourceName
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
+//   - name loadbalancer.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetNetworkLoadBalancer(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetNetworkLoadBalancer_Call {
 	return &MockServerInterface_GetNetworkLoadBalancer_Call{Call: _e.mock.On("GetNetworkLoadBalancer", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, name loadbalancer.ResourceName)) *MockServerInterface_GetNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_GetNetworkLoadBalancer_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, name loadbalancer.ResourcePathParam)) *MockServerInterface_GetNetworkLoadBalancer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.Tenant), args[3].(loadbalancer.Workspace), args[4].(loadbalancer.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.TenantPathParam), args[3].(loadbalancer.WorkspacePathParam), args[4].(loadbalancer.ResourcePathParam))
 	})
 	return _c
 }
@@ -130,13 +130,13 @@ func (_c *MockServerInterface_GetNetworkLoadBalancer_Call) Return() *MockServerI
 	return _c
 }
 
-func (_c *MockServerInterface_GetNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ResourceName)) *MockServerInterface_GetNetworkLoadBalancer_Call {
+func (_c *MockServerInterface_GetNetworkLoadBalancer_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ResourcePathParam)) *MockServerInterface_GetNetworkLoadBalancer_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListNetworkLoadBalancers provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListNetworkLoadBalancers(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, params loadbalancer.ListNetworkLoadBalancersParams) {
+func (_m *MockServerInterface) ListNetworkLoadBalancers(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, params loadbalancer.ListNetworkLoadBalancersParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -148,16 +148,16 @@ type MockServerInterface_ListNetworkLoadBalancers_Call struct {
 // ListNetworkLoadBalancers is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant loadbalancer.Tenant
-//   - workspace loadbalancer.Workspace
+//   - tenant loadbalancer.TenantPathParam
+//   - workspace loadbalancer.WorkspacePathParam
 //   - params loadbalancer.ListNetworkLoadBalancersParams
 func (_e *MockServerInterface_Expecter) ListNetworkLoadBalancers(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListNetworkLoadBalancers_Call {
 	return &MockServerInterface_ListNetworkLoadBalancers_Call{Call: _e.mock.On("ListNetworkLoadBalancers", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListNetworkLoadBalancers_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.Tenant, workspace loadbalancer.Workspace, params loadbalancer.ListNetworkLoadBalancersParams)) *MockServerInterface_ListNetworkLoadBalancers_Call {
+func (_c *MockServerInterface_ListNetworkLoadBalancers_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant loadbalancer.TenantPathParam, workspace loadbalancer.WorkspacePathParam, params loadbalancer.ListNetworkLoadBalancersParams)) *MockServerInterface_ListNetworkLoadBalancers_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.Tenant), args[3].(loadbalancer.Workspace), args[4].(loadbalancer.ListNetworkLoadBalancersParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(loadbalancer.TenantPathParam), args[3].(loadbalancer.WorkspacePathParam), args[4].(loadbalancer.ListNetworkLoadBalancersParams))
 	})
 	return _c
 }
@@ -167,7 +167,7 @@ func (_c *MockServerInterface_ListNetworkLoadBalancers_Call) Return() *MockServe
 	return _c
 }
 
-func (_c *MockServerInterface_ListNetworkLoadBalancers_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.Tenant, loadbalancer.Workspace, loadbalancer.ListNetworkLoadBalancersParams)) *MockServerInterface_ListNetworkLoadBalancers_Call {
+func (_c *MockServerInterface_ListNetworkLoadBalancers_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, loadbalancer.TenantPathParam, loadbalancer.WorkspacePathParam, loadbalancer.ListNetworkLoadBalancersParams)) *MockServerInterface_ListNetworkLoadBalancers_Call {
 	_c.Run(run)
 	return _c
 }

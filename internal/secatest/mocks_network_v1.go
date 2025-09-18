@@ -65,8 +65,8 @@ func MockDeleteNetworkV1(sim *mocknetwork.MockServerInterface) {
 
 // Subnet
 func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
-	sim.EXPECT().ListSubnets(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListSubnetsParams) {
+	sim.EXPECT().ListSubnets(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, params network.ListSubnetsParams) {
 			if err := configGetHttpResponse(w, subnetsResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -74,8 +74,8 @@ func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetResponse
 }
 
 func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
-	sim.EXPECT().GetSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
+	sim.EXPECT().GetSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, params network.ResourcePathParam) {
 			if err := configGetHttpResponse(w, subnetResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -83,8 +83,8 @@ func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1
 }
 
 func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
-	sim.EXPECT().CreateOrUpdateSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSubnetParams) {
+	sim.EXPECT().CreateOrUpdateSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateSubnetParams) {
 			if err := configPutHttpResponse(w, subnetResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -92,16 +92,16 @@ func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp Subne
 }
 
 func MockDeleteSubnetV1(sim *mocknetwork.MockServerInterface) {
-	sim.EXPECT().DeleteSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSubnetParams) {
+	sim.EXPECT().DeleteSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteSubnetParams) {
 			configDeleteHttpResponse(w)
 		})
 }
 
 // Route Table
 func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
-	sim.EXPECT().ListRouteTables(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListRouteTablesParams) {
+	sim.EXPECT().ListRouteTables(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, params network.ListRouteTablesParams) {
 			if err := configGetHttpResponse(w, routeTablesResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -109,8 +109,8 @@ func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTable
 }
 
 func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
-	sim.EXPECT().GetRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
+	sim.EXPECT().GetRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, name network.ResourcePathParam) {
 			if err := configGetHttpResponse(w, routeTableResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -118,8 +118,8 @@ func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableRe
 }
 
 func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
-	sim.EXPECT().CreateOrUpdateRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateRouteTableParams) {
+	sim.EXPECT().CreateOrUpdateRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, name network.ResourcePathParam, params network.CreateOrUpdateRouteTableParams) {
 			if err := configPutHttpResponse(w, routeTableResponseTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -127,8 +127,8 @@ func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp R
 }
 
 func MockDeleteRouteTableV1(sim *mocknetwork.MockServerInterface) {
-	sim.EXPECT().DeleteRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteRouteTableParams) {
+	sim.EXPECT().DeleteRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant network.TenantPathParam, workspace network.WorkspacePathParam, network network.NetworkPathParam, name network.ResourcePathParam, params network.DeleteRouteTableParams) {
 			configDeleteHttpResponse(w)
 		})
 }

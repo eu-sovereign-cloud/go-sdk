@@ -28,16 +28,6 @@ const (
 	IPv6 IPVersion = "IPv6"
 )
 
-// Defines values for InstanceSpecBootVolumeType.
-const (
-	InstanceSpecBootVolumeTypeVirtio InstanceSpecBootVolumeType = "virtio"
-)
-
-// Defines values for InstanceSpecDataVolumesType.
-const (
-	InstanceSpecDataVolumesTypeVirtio InstanceSpecDataVolumesType = "virtio"
-)
-
 // Defines values for LoadBalancerHealthCheckType.
 const (
 	Connect LoadBalancerHealthCheckType = "connect"
@@ -61,28 +51,29 @@ const (
 	NetworkLoadBalancerFrontendProtocolUdp  NetworkLoadBalancerFrontendProtocol = "udp"
 )
 
-// Defines values for RegionalResourceMetadataKind.
+// Defines values for RegionalWorkspaceResourceMetadataKind.
 const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for SecurityGroupRuleSpecDirection.
@@ -113,6 +104,7 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
 	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
@@ -151,8 +143,8 @@ const (
 
 // ActivityLog Activity log resource
 type ActivityLog struct {
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Activity log specification
 	Spec ActivityLogSpec `json:"spec"`
@@ -197,9 +189,13 @@ type ActivityLogSpec_Request_Body struct {
 // If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
 	// SizeGB Size of the block storage in GB.
-	SizeGB         int          `json:"sizeGB"`
-	SkuRef         interface{}  `json:"skuRef"`
-	SourceImageRef *interface{} `json:"sourceImageRef,omitempty"`
+	SizeGB int `json:"sizeGB"`
+
+	// SkuRef Reference to the SKU of the block storage.
+	SkuRef Reference `json:"skuRef"`
+
+	// SourceImageRef Reference to the source image used as the base for creating the block storage.
+	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
 }
 
 // Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
@@ -229,113 +225,17 @@ type Error struct {
 	Type string `json:"type"`
 }
 
-// Error400 defines model for Error400.
-type Error400 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error400 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
+// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error401 = Error
 
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
+// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error403 = Error
 
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error401 defines model for Error401.
-type Error401 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error403 defines model for Error403.
-type Error403 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error500 defines model for Error500.
-type Error500 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error500 = Error
 
 // ErrorSource An object containing references to the source of the error.
 type ErrorSource struct {
@@ -373,27 +273,25 @@ type InstanceSkuSpec struct {
 // InstanceSpec Specification of the instance, including its SKU, network configuration, and storage options.
 type InstanceSpec struct {
 	// AdditionalNicRefs Additional NICs attached to this instance
-	AdditionalNicRefs *[]interface{} `json:"additionalNicRefs,omitempty"`
+	AdditionalNicRefs *[]Reference `json:"additionalNicRefs,omitempty"`
 
 	// AntiAffinityGroup Anti-affinity group to which this instance belongs.
 	// Instances in the same anti-affinity group are placed on different physical hosts.
 	// The number of maximum instances in an anti-affinity group is provider-specific.
 	AntiAffinityGroup *string `json:"antiAffinityGroup,omitempty"`
-	BootVolume        struct {
-		DeviceRef interface{} `json:"deviceRef"`
 
-		// Type The connection type depends on the type of device and type of block storage.
-		Type *InstanceSpecBootVolumeType `json:"type,omitempty"`
-	} `json:"bootVolume"`
-	DataVolumes *[]struct {
-		DeviceRef interface{} `json:"deviceRef"`
+	// BootVolume Reference to the block storage used to store the boot volume of the instance.
+	BootVolume  VolumeReference    `json:"bootVolume"`
+	DataVolumes *[]VolumeReference `json:"dataVolumes,omitempty"`
 
-		// Type The connection type depends on the type of device and type of block storage.
-		Type *InstanceSpecDataVolumesType `json:"type,omitempty"`
-	} `json:"dataVolumes,omitempty"`
-	PrimaryNicRef    *interface{} `json:"primaryNicRef,omitempty"`
-	SecurityGroupRef *interface{} `json:"securityGroupRef,omitempty"`
-	SkuRef           interface{}  `json:"skuRef"`
+	// PrimaryNicRef Reference to the primary NIC attached to this instance.
+	PrimaryNicRef *Reference `json:"primaryNicRef,omitempty"`
+
+	// SecurityGroupRef Reference to the security group associated with this instance.
+	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
+
+	// SkuRef Reference to the SKU of the instance.
+	SkuRef Reference `json:"skuRef"`
 
 	// SshKeys Provider-specific references to SSH keys used in cloud-init vendorData.
 	// These references are used to inject SSH public keys during instance initialization
@@ -407,12 +305,6 @@ type InstanceSpec struct {
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
 }
-
-// InstanceSpecBootVolumeType The connection type depends on the type of device and type of block storage.
-type InstanceSpecBootVolumeType string
-
-// InstanceSpecDataVolumesType The connection type depends on the type of device and type of block storage.
-type InstanceSpecDataVolumesType string
 
 // LoadBalancerHealthCheck Optional port health check. It probes the port with protocol.
 type LoadBalancerHealthCheck struct {
@@ -443,7 +335,7 @@ type LoadBalancerTarget struct {
 	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
 
 	// Members Nic reference to the members as part of the LoadBalancerTarget
-	Members []interface{} `json:"members"`
+	Members []Reference `json:"members"`
 
 	// Port A valid network port number.
 	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
@@ -510,7 +402,9 @@ type NetworkLoadBalancerFrontendProtocol string
 // determines whether the Load Balancer is internal or external.
 type NetworkLoadBalancerSpec struct {
 	Frontends []NetworkLoadBalancerFrontend `json:"frontends"`
-	NicRef    interface{}                   `json:"nicRef"`
+
+	// NicRef Reference to the NIC attached to the load balancer.
+	NicRef Reference `json:"nicRef"`
 }
 
 // NetworkSkuSpec Specification of the network SKU, including its bandwidth and packets per second.
@@ -549,9 +443,14 @@ type NetworkSpec struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr          Cidr        `json:"cidr"`
-	RouteTableRef interface{} `json:"routeTableRef"`
-	SkuRef        interface{} `json:"skuRef"`
+	Cidr Cidr `json:"cidr"`
+
+	// RouteTableRef Reference to the route table used by default for all Subnets.
+	RouteTableRef Reference `json:"routeTableRef"`
+
+	// SkuRef Reference to the SKU used by default for all NIC in this Network.
+	// Can be overridden by the NIC.
+	SkuRef Reference `json:"skuRef"`
 }
 
 // NicIp IP address for the NIC. The IP is either IPv4 or IPv6. The IP
@@ -574,9 +473,13 @@ type NicSpec struct {
 
 	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
 	// and not directly visible on the server/NIC itself.
-	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
-	SkuRef       *interface{}   `json:"skuRef,omitempty"`
-	SubnetRef    interface{}    `json:"subnetRef"`
+	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
+
+	// SkuRef Reference to the SKU of the NIC.
+	SkuRef *Reference `json:"skuRef,omitempty"`
+
+	// SubnetRef Reference to the subnet used by the NIC connections.
+	SubnetRef Reference `json:"subnetRef"`
 }
 
 // ObjectStorageAccountSpec The specification of an object storage account, including the region and zone.
@@ -701,13 +604,10 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
@@ -718,7 +618,7 @@ type RegionalResourceMetadata struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
 
 	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
 	LastModifiedAt time.Time `json:"lastModifiedAt"`
@@ -745,11 +645,11 @@ type RegionalResourceMetadata struct {
 	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace"`
 }
 
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
@@ -833,7 +733,7 @@ type SecurityGroupRuleSpec struct {
 	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
 	// with the security group. If a security group is specified, all instances in that group are allowed.
 	// If no sourceRefs are specified, all traffic is allowed.
-	SourceRefs *[]interface{} `json:"sourceRefs,omitempty"`
+	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
 
 	// Version IP version of the address
 	Version *IPVersion `json:"version,omitempty"`
@@ -959,15 +859,21 @@ type SubnetSpec struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr          Cidr         `json:"cidr"`
-	RouteTableRef *interface{} `json:"routeTableRef,omitempty"`
-	SkuRef        *interface{} `json:"skuRef,omitempty"`
+	Cidr Cidr `json:"cidr"`
+
+	// RouteTableRef Reference to the route table used by default for all NICs in this Subnet.
+	// If not provided, the routeTableRef associated with the network of the subnet will be used.
+	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
+
+	// SkuRef Reference to the SKU used by default for all NICs in this Network.
+	// Can be overridden by the NIC
+	SkuRef *Reference `json:"skuRef,omitempty"`
 
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -991,7 +897,8 @@ type TypeMetadataKind string
 
 // VolumeReference Represents a connection between a Block Storage and an a user of the block storage.
 type VolumeReference struct {
-	DeviceRef interface{} `json:"deviceRef"`
+	// DeviceRef Reference to the block storage used to store the volume.
+	DeviceRef Reference `json:"deviceRef"`
 
 	// Type The connection type depends on the type of device and type of block storage.
 	Type *VolumeReferenceType `json:"type,omitempty"`
@@ -999,6 +906,12 @@ type VolumeReference struct {
 
 // VolumeReferenceType The connection type depends on the type of device and type of block storage.
 type VolumeReferenceType string
+
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
+}
 
 // WorkspaceSpec Specification of the workspace, including its capabilities and extensions.
 type WorkspaceSpec = map[string]interface{}
@@ -1037,11 +950,11 @@ type LimitParam = int
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// Tenant defines model for tenant.
-type Tenant = string
+// TenantPathParam defines model for tenantPathParam.
+type TenantPathParam = string
 
-// Workspace defines model for workspace.
-type Workspace = string
+// WorkspacePathParam defines model for workspacePathParam.
+type WorkspacePathParam = string
 
 // ListActivityLogsParams defines parameters for ListActivityLogs.
 type ListActivityLogsParams struct {
@@ -1606,10 +1519,10 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListActivityLogs request
-	ListActivityLogs(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListActivityLogs(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListActivityLogs(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListActivityLogs(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListActivityLogsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -1622,7 +1535,7 @@ func (c *Client) ListActivityLogs(ctx context.Context, tenant Tenant, workspace 
 }
 
 // NewListActivityLogsRequest generates requests for ListActivityLogs
-func NewListActivityLogsRequest(server string, tenant Tenant, workspace Workspace, params *ListActivityLogsParams) (*http.Request, error) {
+func NewListActivityLogsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListActivityLogsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1775,7 +1688,7 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListActivityLogsWithResponse request
-	ListActivityLogsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error)
+	ListActivityLogsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error)
 }
 
 type ListActivityLogsResponse struct {
@@ -1805,7 +1718,7 @@ func (r ListActivityLogsResponse) StatusCode() int {
 }
 
 // ListActivityLogsWithResponse request returning *ListActivityLogsResponse
-func (c *ClientWithResponses) ListActivityLogsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error) {
+func (c *ClientWithResponses) ListActivityLogsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListActivityLogsParams, reqEditors ...RequestEditorFn) (*ListActivityLogsResponse, error) {
 	rsp, err := c.ListActivityLogs(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1871,7 +1784,7 @@ func ParseListActivityLogsResponse(rsp *http.Response) (*ListActivityLogsRespons
 type ServerInterface interface {
 	// List activity logs
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/activity-logs)
-	ListActivityLogs(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListActivityLogsParams)
+	ListActivityLogs(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListActivityLogsParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1889,7 +1802,7 @@ func (siw *ServerInterfaceWrapper) ListActivityLogs(w http.ResponseWriter, r *ht
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1898,7 +1811,7 @@ func (siw *ServerInterfaceWrapper) ListActivityLogs(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

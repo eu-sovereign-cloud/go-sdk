@@ -30,28 +30,29 @@ const (
 	PreferNoSchedule KubernetesNodeTaintEffect = "PreferNoSchedule"
 )
 
-// Defines values for RegionalResourceMetadataKind.
+// Defines values for RegionalWorkspaceResourceMetadataKind.
 const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceState.
@@ -72,6 +73,7 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
 	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
@@ -146,221 +148,29 @@ type Error struct {
 	Type string `json:"type"`
 }
 
-// Error400 defines model for Error400.
-type Error400 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error400 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
+// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error401 = Error
 
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
+// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error403 = Error
 
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
+// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error404 = Error
 
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
+// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error409 = Error
 
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error412 = Error
 
-// Error401 defines model for Error401.
-type Error401 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error422 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error403 defines model for Error403.
-type Error403 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error404 defines model for Error404.
-type Error404 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error409 defines model for Error409.
-type Error409 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error412 defines model for Error412.
-type Error412 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error422 defines model for Error422.
-type Error422 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error500 defines model for Error500.
-type Error500 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error500 = Error
 
 // ErrorSource An object containing references to the source of the error.
 type ErrorSource struct {
@@ -386,8 +196,8 @@ type KubernetesCluster struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the  kubernetes cluster, including its configuration
 	// and network settings.
@@ -418,8 +228,10 @@ type KubernetesClusterSpec struct {
 	// ServiceCidr CIDR range for the service network. This is used to allocate IP addresses
 	// for services in the cluster. The CIDR must be a valid IPv4 or IPv6 CIDR.
 	// If not specified, a default provider CIDR will be used.
-	ServiceCidr *string     `json:"serviceCidr,omitempty"`
-	SkuRef      interface{} `json:"skuRef"`
+	ServiceCidr *string `json:"serviceCidr,omitempty"`
+
+	// SkuRef Reference to the SKU of the Kubernetes cluster.
+	SkuRef Reference `json:"skuRef"`
 }
 
 // KubernetesClusterStatus defines model for KubernetesClusterStatus.
@@ -456,8 +268,8 @@ type KubernetesNodePool struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the  kubernetes node pool, including its configuration
 	// and network settings. Since the node pool is, all nodes in the pool
@@ -495,7 +307,7 @@ type KubernetesNodePoolStatus struct {
 
 	// Nodes List of nodes in the Node Pool. Each node is represented by its
 	// reference to a compute instance.
-	Nodes *[]interface{} `json:"nodes,omitempty"`
+	Nodes *[]Reference `json:"nodes,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -514,8 +326,10 @@ type KubernetesNodePoolStatus struct {
 // The SKU must be one of the available block storage SKUs in the region.
 type KubernetesNodeRootVolume struct {
 	// SizeGB Size of the root volume in GB. The size is recommended to be at least 100GB.
-	SizeGB int         `json:"sizeGB"`
-	SkuRef interface{} `json:"skuRef"`
+	SizeGB int `json:"sizeGB"`
+
+	// SkuRef Reference to the SKU of the block storage created to store the root volume.
+	SkuRef Reference `json:"skuRef"`
 }
 
 // KubernetesNodeTaint Represents a taint applied to the nodes in the node pool. Taints are used
@@ -549,10 +363,16 @@ type KubernetesNodeTemplate struct {
 	// system and other software required to run the node.
 	//
 	// The SKU must be one of the available block storage SKUs in the region.
-	RootVolume       KubernetesNodeRootVolume `json:"rootVolume"`
-	SecurityGroupRef *interface{}             `json:"securityGroupRef,omitempty"`
-	SkuRef           interface{}              `json:"skuRef"`
-	SubnetRef        interface{}              `json:"subnetRef"`
+	RootVolume KubernetesNodeRootVolume `json:"rootVolume"`
+
+	// SecurityGroupRef Reference to the security group associated with the node instances.
+	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
+
+	// SkuRef Reference to the SKU of the node instances.
+	SkuRef Reference `json:"skuRef"`
+
+	// SubnetRef Reference to the NIC attached to the node instances.
+	SubnetRef Reference `json:"subnetRef"`
 
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
@@ -655,13 +475,10 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
@@ -672,7 +489,7 @@ type RegionalResourceMetadata struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
 
 	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
 	LastModifiedAt time.Time `json:"lastModifiedAt"`
@@ -699,11 +516,11 @@ type RegionalResourceMetadata struct {
 	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace"`
 }
 
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -773,7 +590,7 @@ type StatusCondition struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -811,14 +628,20 @@ type UserResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
+}
+
 // Zone Reference to a specific zone within a region
 type Zone = string
 
 // AcceptHeader defines model for acceptHeader.
 type AcceptHeader string
 
-// Cluster defines model for cluster.
-type Cluster = string
+// ClusterPathParam defines model for clusterPathParam.
+type ClusterPathParam = string
 
 // IfUnmodifiedSince defines model for ifUnmodifiedSince.
 type IfUnmodifiedSince = int
@@ -829,17 +652,17 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
-// ResourceName defines model for resourceName.
-type ResourceName = string
+// ResourcePathParam defines model for resourcePathParam.
+type ResourcePathParam = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// Tenant defines model for tenant.
-type Tenant = string
+// TenantPathParam defines model for tenantPathParam.
+type TenantPathParam = string
 
-// Workspace defines model for workspace.
-type Workspace = string
+// WorkspacePathParam defines model for workspacePathParam.
+type WorkspacePathParam = string
 
 // ListClustersParams defines parameters for ListClusters.
 type ListClustersParams struct {
@@ -1065,35 +888,35 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListClusters request
-	ListClusters(ctx context.Context, tenant Tenant, workspace Workspace, params *ListClustersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListClusters(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListClustersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListNodePools request
-	ListNodePools(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListNodePools(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNodePool request
-	DeleteNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNodePool request
-	GetNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateNodePoolWithBody request with any body
-	CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteCluster request
-	DeleteCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetCluster request
-	GetCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateClusterWithBody request with any body
-	CreateOrUpdateClusterWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateClusterWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListClusters(ctx context.Context, tenant Tenant, workspace Workspace, params *ListClustersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListClusters(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListClustersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListClustersRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -1105,7 +928,7 @@ func (c *Client) ListClusters(ctx context.Context, tenant Tenant, workspace Work
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListNodePools(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListNodePools(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNodePoolsRequest(c.Server, tenant, workspace, cluster, params)
 	if err != nil {
 		return nil, err
@@ -1117,7 +940,7 @@ func (c *Client) ListNodePools(ctx context.Context, tenant Tenant, workspace Wor
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNodePoolRequest(c.Server, tenant, workspace, cluster, name, params)
 	if err != nil {
 		return nil, err
@@ -1129,7 +952,7 @@ func (c *Client) DeleteNodePool(ctx context.Context, tenant Tenant, workspace Wo
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNodePoolRequest(c.Server, tenant, workspace, cluster, name)
 	if err != nil {
 		return nil, err
@@ -1141,7 +964,7 @@ func (c *Client) GetNodePool(ctx context.Context, tenant Tenant, workspace Works
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNodePoolRequestWithBody(c.Server, tenant, workspace, cluster, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1153,7 +976,7 @@ func (c *Client) CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant Tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNodePool(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNodePool(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNodePoolRequest(c.Server, tenant, workspace, cluster, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1165,7 +988,7 @@ func (c *Client) CreateOrUpdateNodePool(ctx context.Context, tenant Tenant, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteClusterRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -1177,7 +1000,7 @@ func (c *Client) DeleteCluster(ctx context.Context, tenant Tenant, workspace Wor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClusterRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1189,7 +1012,7 @@ func (c *Client) GetCluster(ctx context.Context, tenant Tenant, workspace Worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateClusterWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateClusterWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateClusterRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1201,7 +1024,7 @@ func (c *Client) CreateOrUpdateClusterWithBody(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateCluster(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateCluster(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateClusterRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1214,7 +1037,7 @@ func (c *Client) CreateOrUpdateCluster(ctx context.Context, tenant Tenant, works
 }
 
 // NewListClustersRequest generates requests for ListClusters
-func NewListClustersRequest(server string, tenant Tenant, workspace Workspace, params *ListClustersParams) (*http.Request, error) {
+func NewListClustersRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListClustersParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1324,7 +1147,7 @@ func NewListClustersRequest(server string, tenant Tenant, workspace Workspace, p
 }
 
 // NewListNodePoolsRequest generates requests for ListNodePools
-func NewListNodePoolsRequest(server string, tenant Tenant, workspace Workspace, cluster Cluster, params *ListNodePoolsParams) (*http.Request, error) {
+func NewListNodePoolsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params *ListNodePoolsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1441,7 +1264,7 @@ func NewListNodePoolsRequest(server string, tenant Tenant, workspace Workspace, 
 }
 
 // NewDeleteNodePoolRequest generates requests for DeleteNodePool
-func NewDeleteNodePoolRequest(server string, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *DeleteNodePoolParams) (*http.Request, error) {
+func NewDeleteNodePoolRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *DeleteNodePoolParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1511,7 +1334,7 @@ func NewDeleteNodePoolRequest(server string, tenant Tenant, workspace Workspace,
 }
 
 // NewGetNodePoolRequest generates requests for GetNodePool
-func NewGetNodePoolRequest(server string, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName) (*http.Request, error) {
+func NewGetNodePoolRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1566,7 +1389,7 @@ func NewGetNodePoolRequest(server string, tenant Tenant, workspace Workspace, cl
 }
 
 // NewCreateOrUpdateNodePoolRequest calls the generic CreateOrUpdateNodePool builder with application/json body
-func NewCreateOrUpdateNodePoolRequest(server string, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNodePoolRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1577,7 +1400,7 @@ func NewCreateOrUpdateNodePoolRequest(server string, tenant Tenant, workspace Wo
 }
 
 // NewCreateOrUpdateNodePoolRequestWithBody generates requests for CreateOrUpdateNodePool with any type of body
-func NewCreateOrUpdateNodePoolRequestWithBody(server string, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNodePoolRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1649,7 +1472,7 @@ func NewCreateOrUpdateNodePoolRequestWithBody(server string, tenant Tenant, work
 }
 
 // NewDeleteClusterRequest generates requests for DeleteCluster
-func NewDeleteClusterRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteClusterParams) (*http.Request, error) {
+func NewDeleteClusterRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteClusterParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1712,7 +1535,7 @@ func NewDeleteClusterRequest(server string, tenant Tenant, workspace Workspace, 
 }
 
 // NewGetClusterRequest generates requests for GetCluster
-func NewGetClusterRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetClusterRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1760,7 +1583,7 @@ func NewGetClusterRequest(server string, tenant Tenant, workspace Workspace, nam
 }
 
 // NewCreateOrUpdateClusterRequest calls the generic CreateOrUpdateCluster builder with application/json body
-func NewCreateOrUpdateClusterRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateClusterRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1771,7 +1594,7 @@ func NewCreateOrUpdateClusterRequest(server string, tenant Tenant, workspace Wor
 }
 
 // NewCreateOrUpdateClusterRequestWithBody generates requests for CreateOrUpdateCluster with any type of body
-func NewCreateOrUpdateClusterRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateClusterRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1879,32 +1702,32 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListClustersWithResponse request
-	ListClustersWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListClustersParams, reqEditors ...RequestEditorFn) (*ListClustersResponse, error)
+	ListClustersWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListClustersParams, reqEditors ...RequestEditorFn) (*ListClustersResponse, error)
 
 	// ListNodePoolsWithResponse request
-	ListNodePoolsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*ListNodePoolsResponse, error)
+	ListNodePoolsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*ListNodePoolsResponse, error)
 
 	// DeleteNodePoolWithResponse request
-	DeleteNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*DeleteNodePoolResponse, error)
+	DeleteNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*DeleteNodePoolResponse, error)
 
 	// GetNodePoolWithResponse request
-	GetNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, reqEditors ...RequestEditorFn) (*GetNodePoolResponse, error)
+	GetNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNodePoolResponse, error)
 
 	// CreateOrUpdateNodePoolWithBodyWithResponse request with any body
-	CreateOrUpdateNodePoolWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error)
+	CreateOrUpdateNodePoolWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error)
 
-	CreateOrUpdateNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error)
+	CreateOrUpdateNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error)
 
 	// DeleteClusterWithResponse request
-	DeleteClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*DeleteClusterResponse, error)
+	DeleteClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*DeleteClusterResponse, error)
 
 	// GetClusterWithResponse request
-	GetClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetClusterResponse, error)
+	GetClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetClusterResponse, error)
 
 	// CreateOrUpdateClusterWithBodyWithResponse request with any body
-	CreateOrUpdateClusterWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error)
+	CreateOrUpdateClusterWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error)
 
-	CreateOrUpdateClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error)
+	CreateOrUpdateClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error)
 }
 
 type ListClustersResponse struct {
@@ -2132,7 +1955,7 @@ func (r CreateOrUpdateClusterResponse) StatusCode() int {
 }
 
 // ListClustersWithResponse request returning *ListClustersResponse
-func (c *ClientWithResponses) ListClustersWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListClustersParams, reqEditors ...RequestEditorFn) (*ListClustersResponse, error) {
+func (c *ClientWithResponses) ListClustersWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListClustersParams, reqEditors ...RequestEditorFn) (*ListClustersResponse, error) {
 	rsp, err := c.ListClusters(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2141,7 +1964,7 @@ func (c *ClientWithResponses) ListClustersWithResponse(ctx context.Context, tena
 }
 
 // ListNodePoolsWithResponse request returning *ListNodePoolsResponse
-func (c *ClientWithResponses) ListNodePoolsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*ListNodePoolsResponse, error) {
+func (c *ClientWithResponses) ListNodePoolsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params *ListNodePoolsParams, reqEditors ...RequestEditorFn) (*ListNodePoolsResponse, error) {
 	rsp, err := c.ListNodePools(ctx, tenant, workspace, cluster, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2150,7 +1973,7 @@ func (c *ClientWithResponses) ListNodePoolsWithResponse(ctx context.Context, ten
 }
 
 // DeleteNodePoolWithResponse request returning *DeleteNodePoolResponse
-func (c *ClientWithResponses) DeleteNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*DeleteNodePoolResponse, error) {
+func (c *ClientWithResponses) DeleteNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *DeleteNodePoolParams, reqEditors ...RequestEditorFn) (*DeleteNodePoolResponse, error) {
 	rsp, err := c.DeleteNodePool(ctx, tenant, workspace, cluster, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2159,7 +1982,7 @@ func (c *ClientWithResponses) DeleteNodePoolWithResponse(ctx context.Context, te
 }
 
 // GetNodePoolWithResponse request returning *GetNodePoolResponse
-func (c *ClientWithResponses) GetNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, reqEditors ...RequestEditorFn) (*GetNodePoolResponse, error) {
+func (c *ClientWithResponses) GetNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNodePoolResponse, error) {
 	rsp, err := c.GetNodePool(ctx, tenant, workspace, cluster, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2168,7 +1991,7 @@ func (c *ClientWithResponses) GetNodePoolWithResponse(ctx context.Context, tenan
 }
 
 // CreateOrUpdateNodePoolWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNodePoolResponse
-func (c *ClientWithResponses) CreateOrUpdateNodePoolWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNodePoolWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error) {
 	rsp, err := c.CreateOrUpdateNodePoolWithBody(ctx, tenant, workspace, cluster, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2176,7 +1999,7 @@ func (c *ClientWithResponses) CreateOrUpdateNodePoolWithBodyWithResponse(ctx con
 	return ParseCreateOrUpdateNodePoolResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNodePoolWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNodePoolWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params *CreateOrUpdateNodePoolParams, body CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNodePoolResponse, error) {
 	rsp, err := c.CreateOrUpdateNodePool(ctx, tenant, workspace, cluster, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2185,7 +2008,7 @@ func (c *ClientWithResponses) CreateOrUpdateNodePoolWithResponse(ctx context.Con
 }
 
 // DeleteClusterWithResponse request returning *DeleteClusterResponse
-func (c *ClientWithResponses) DeleteClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*DeleteClusterResponse, error) {
+func (c *ClientWithResponses) DeleteClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteClusterParams, reqEditors ...RequestEditorFn) (*DeleteClusterResponse, error) {
 	rsp, err := c.DeleteCluster(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2194,7 +2017,7 @@ func (c *ClientWithResponses) DeleteClusterWithResponse(ctx context.Context, ten
 }
 
 // GetClusterWithResponse request returning *GetClusterResponse
-func (c *ClientWithResponses) GetClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetClusterResponse, error) {
+func (c *ClientWithResponses) GetClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetClusterResponse, error) {
 	rsp, err := c.GetCluster(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2203,7 +2026,7 @@ func (c *ClientWithResponses) GetClusterWithResponse(ctx context.Context, tenant
 }
 
 // CreateOrUpdateClusterWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateClusterResponse
-func (c *ClientWithResponses) CreateOrUpdateClusterWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateClusterWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error) {
 	rsp, err := c.CreateOrUpdateClusterWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2211,7 +2034,7 @@ func (c *ClientWithResponses) CreateOrUpdateClusterWithBodyWithResponse(ctx cont
 	return ParseCreateOrUpdateClusterResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateClusterWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateClusterWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateClusterParams, body CreateOrUpdateClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateClusterResponse, error) {
 	rsp, err := c.CreateOrUpdateCluster(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -2767,28 +2590,28 @@ func ParseCreateOrUpdateClusterResponse(rsp *http.Response) (*CreateOrUpdateClus
 type ServerInterface interface {
 	// List clusters
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters)
-	ListClusters(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListClustersParams)
+	ListClusters(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListClustersParams)
 	// List node-pools
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{cluster}/node-pools)
-	ListNodePools(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, cluster Cluster, params ListNodePoolsParams)
+	ListNodePools(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, params ListNodePoolsParams)
 	// Delete node-pool
 	// (DELETE /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{cluster}/node-pools/{name})
-	DeleteNodePool(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params DeleteNodePoolParams)
+	DeleteNodePool(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params DeleteNodePoolParams)
 	// Get node-pool
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{cluster}/node-pools/{name})
-	GetNodePool(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName)
+	GetNodePool(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam)
 	// Create or update node-pool
 	// (PUT /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{cluster}/node-pools/{name})
-	CreateOrUpdateNodePool(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, cluster Cluster, name ResourceName, params CreateOrUpdateNodePoolParams)
+	CreateOrUpdateNodePool(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, cluster ClusterPathParam, name ResourcePathParam, params CreateOrUpdateNodePoolParams)
 	// Delete cluster
 	// (DELETE /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{name})
-	DeleteCluster(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteClusterParams)
+	DeleteCluster(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteClusterParams)
 	// Get cluster
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{name})
-	GetCluster(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetCluster(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update cluster
 	// (PUT /v1beta1/tenants/{tenant}/workspaces/{workspace}/clusters/{name})
-	CreateOrUpdateCluster(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateClusterParams)
+	CreateOrUpdateCluster(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateClusterParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -2806,7 +2629,7 @@ func (siw *ServerInterfaceWrapper) ListClusters(w http.ResponseWriter, r *http.R
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2815,7 +2638,7 @@ func (siw *ServerInterfaceWrapper) ListClusters(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2894,7 +2717,7 @@ func (siw *ServerInterfaceWrapper) ListNodePools(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2903,7 +2726,7 @@ func (siw *ServerInterfaceWrapper) ListNodePools(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2912,7 +2735,7 @@ func (siw *ServerInterfaceWrapper) ListNodePools(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "cluster" -------------
-	var cluster Cluster
+	var cluster ClusterPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "cluster", r.PathValue("cluster"), &cluster, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2991,7 +2814,7 @@ func (siw *ServerInterfaceWrapper) DeleteNodePool(w http.ResponseWriter, r *http
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3000,7 +2823,7 @@ func (siw *ServerInterfaceWrapper) DeleteNodePool(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3009,7 +2832,7 @@ func (siw *ServerInterfaceWrapper) DeleteNodePool(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "cluster" -------------
-	var cluster Cluster
+	var cluster ClusterPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "cluster", r.PathValue("cluster"), &cluster, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3018,7 +2841,7 @@ func (siw *ServerInterfaceWrapper) DeleteNodePool(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3073,7 +2896,7 @@ func (siw *ServerInterfaceWrapper) GetNodePool(w http.ResponseWriter, r *http.Re
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3082,7 +2905,7 @@ func (siw *ServerInterfaceWrapper) GetNodePool(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3091,7 +2914,7 @@ func (siw *ServerInterfaceWrapper) GetNodePool(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "cluster" -------------
-	var cluster Cluster
+	var cluster ClusterPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "cluster", r.PathValue("cluster"), &cluster, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3100,7 +2923,7 @@ func (siw *ServerInterfaceWrapper) GetNodePool(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3131,7 +2954,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNodePool(w http.ResponseWriter,
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3140,7 +2963,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNodePool(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3149,7 +2972,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNodePool(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "cluster" -------------
-	var cluster Cluster
+	var cluster ClusterPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "cluster", r.PathValue("cluster"), &cluster, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3158,7 +2981,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNodePool(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3213,7 +3036,7 @@ func (siw *ServerInterfaceWrapper) DeleteCluster(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3222,7 +3045,7 @@ func (siw *ServerInterfaceWrapper) DeleteCluster(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3231,7 +3054,7 @@ func (siw *ServerInterfaceWrapper) DeleteCluster(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3286,7 +3109,7 @@ func (siw *ServerInterfaceWrapper) GetCluster(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3295,7 +3118,7 @@ func (siw *ServerInterfaceWrapper) GetCluster(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3304,7 +3127,7 @@ func (siw *ServerInterfaceWrapper) GetCluster(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3335,7 +3158,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateCluster(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3344,7 +3167,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateCluster(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -3353,7 +3176,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateCluster(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

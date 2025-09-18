@@ -29,28 +29,54 @@ const (
 	IPv6 IPVersion = "IPv6"
 )
 
-// Defines values for RegionalResourceMetadataKind.
+// Defines values for RegionalNetworkResourceMetadataKind.
 const (
-	RegionalResourceMetadataKindActivityLog          RegionalResourceMetadataKind = "activity-log"
-	RegionalResourceMetadataKindBlockStorage         RegionalResourceMetadataKind = "block-storage"
-	RegionalResourceMetadataKindImage                RegionalResourceMetadataKind = "image"
-	RegionalResourceMetadataKindInstance             RegionalResourceMetadataKind = "instance"
-	RegionalResourceMetadataKindInstanceSku          RegionalResourceMetadataKind = "instance-sku"
-	RegionalResourceMetadataKindNetwork              RegionalResourceMetadataKind = "network"
-	RegionalResourceMetadataKindNetworkLoadBalancer  RegionalResourceMetadataKind = "network-load-balancer"
-	RegionalResourceMetadataKindNetworkSku           RegionalResourceMetadataKind = "network-sku"
-	RegionalResourceMetadataKindNic                  RegionalResourceMetadataKind = "nic"
-	RegionalResourceMetadataKindObjectStorageAccount RegionalResourceMetadataKind = "object-storage-account"
-	RegionalResourceMetadataKindPublicIp             RegionalResourceMetadataKind = "public-ip"
-	RegionalResourceMetadataKindRegion               RegionalResourceMetadataKind = "region"
-	RegionalResourceMetadataKindRole                 RegionalResourceMetadataKind = "role"
-	RegionalResourceMetadataKindRoleAssignment       RegionalResourceMetadataKind = "role-assignment"
-	RegionalResourceMetadataKindRoutingTable         RegionalResourceMetadataKind = "routing-table"
-	RegionalResourceMetadataKindSecurityGroup        RegionalResourceMetadataKind = "security-group"
-	RegionalResourceMetadataKindSecurityGroupRule    RegionalResourceMetadataKind = "security-group-rule"
-	RegionalResourceMetadataKindStorageSku           RegionalResourceMetadataKind = "storage-sku"
-	RegionalResourceMetadataKindSubnet               RegionalResourceMetadataKind = "subnet"
-	RegionalResourceMetadataKindWorkspace            RegionalResourceMetadataKind = "workspace"
+	RegionalNetworkResourceMetadataKindActivityLog          RegionalNetworkResourceMetadataKind = "activity-log"
+	RegionalNetworkResourceMetadataKindBlockStorage         RegionalNetworkResourceMetadataKind = "block-storage"
+	RegionalNetworkResourceMetadataKindImage                RegionalNetworkResourceMetadataKind = "image"
+	RegionalNetworkResourceMetadataKindInstance             RegionalNetworkResourceMetadataKind = "instance"
+	RegionalNetworkResourceMetadataKindInstanceSku          RegionalNetworkResourceMetadataKind = "instance-sku"
+	RegionalNetworkResourceMetadataKindInternetGateway      RegionalNetworkResourceMetadataKind = "internet-gateway"
+	RegionalNetworkResourceMetadataKindNetwork              RegionalNetworkResourceMetadataKind = "network"
+	RegionalNetworkResourceMetadataKindNetworkLoadBalancer  RegionalNetworkResourceMetadataKind = "network-load-balancer"
+	RegionalNetworkResourceMetadataKindNetworkSku           RegionalNetworkResourceMetadataKind = "network-sku"
+	RegionalNetworkResourceMetadataKindNic                  RegionalNetworkResourceMetadataKind = "nic"
+	RegionalNetworkResourceMetadataKindObjectStorageAccount RegionalNetworkResourceMetadataKind = "object-storage-account"
+	RegionalNetworkResourceMetadataKindPublicIp             RegionalNetworkResourceMetadataKind = "public-ip"
+	RegionalNetworkResourceMetadataKindRegion               RegionalNetworkResourceMetadataKind = "region"
+	RegionalNetworkResourceMetadataKindRole                 RegionalNetworkResourceMetadataKind = "role"
+	RegionalNetworkResourceMetadataKindRoleAssignment       RegionalNetworkResourceMetadataKind = "role-assignment"
+	RegionalNetworkResourceMetadataKindRoutingTable         RegionalNetworkResourceMetadataKind = "routing-table"
+	RegionalNetworkResourceMetadataKindSecurityGroup        RegionalNetworkResourceMetadataKind = "security-group"
+	RegionalNetworkResourceMetadataKindSecurityGroupRule    RegionalNetworkResourceMetadataKind = "security-group-rule"
+	RegionalNetworkResourceMetadataKindStorageSku           RegionalNetworkResourceMetadataKind = "storage-sku"
+	RegionalNetworkResourceMetadataKindSubnet               RegionalNetworkResourceMetadataKind = "subnet"
+	RegionalNetworkResourceMetadataKindWorkspace            RegionalNetworkResourceMetadataKind = "workspace"
+)
+
+// Defines values for RegionalWorkspaceResourceMetadataKind.
+const (
+	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
+	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
+	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
+	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
+	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
+	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
+	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
+	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
+	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
+	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
+	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
+	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
+	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
+	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
+	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
+	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
+	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
+	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
+	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
+	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
+	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
 )
 
 // Defines values for ResourceState.
@@ -85,6 +111,7 @@ const (
 	TypeMetadataKindImage                TypeMetadataKind = "image"
 	TypeMetadataKindInstance             TypeMetadataKind = "instance"
 	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
+	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
 	TypeMetadataKindNetwork              TypeMetadataKind = "network"
 	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
 	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
@@ -100,30 +127,6 @@ const (
 	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
 	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
 	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
-)
-
-// Defines values for ZonalResourceMetadataKind.
-const (
-	ZonalResourceMetadataKindActivityLog          ZonalResourceMetadataKind = "activity-log"
-	ZonalResourceMetadataKindBlockStorage         ZonalResourceMetadataKind = "block-storage"
-	ZonalResourceMetadataKindImage                ZonalResourceMetadataKind = "image"
-	ZonalResourceMetadataKindInstance             ZonalResourceMetadataKind = "instance"
-	ZonalResourceMetadataKindInstanceSku          ZonalResourceMetadataKind = "instance-sku"
-	ZonalResourceMetadataKindNetwork              ZonalResourceMetadataKind = "network"
-	ZonalResourceMetadataKindNetworkLoadBalancer  ZonalResourceMetadataKind = "network-load-balancer"
-	ZonalResourceMetadataKindNetworkSku           ZonalResourceMetadataKind = "network-sku"
-	ZonalResourceMetadataKindNic                  ZonalResourceMetadataKind = "nic"
-	ZonalResourceMetadataKindObjectStorageAccount ZonalResourceMetadataKind = "object-storage-account"
-	ZonalResourceMetadataKindPublicIp             ZonalResourceMetadataKind = "public-ip"
-	ZonalResourceMetadataKindRegion               ZonalResourceMetadataKind = "region"
-	ZonalResourceMetadataKindRole                 ZonalResourceMetadataKind = "role"
-	ZonalResourceMetadataKindRoleAssignment       ZonalResourceMetadataKind = "role-assignment"
-	ZonalResourceMetadataKindRoutingTable         ZonalResourceMetadataKind = "routing-table"
-	ZonalResourceMetadataKindSecurityGroup        ZonalResourceMetadataKind = "security-group"
-	ZonalResourceMetadataKindSecurityGroupRule    ZonalResourceMetadataKind = "security-group-rule"
-	ZonalResourceMetadataKindStorageSku           ZonalResourceMetadataKind = "storage-sku"
-	ZonalResourceMetadataKindSubnet               ZonalResourceMetadataKind = "subnet"
-	ZonalResourceMetadataKindWorkspace            ZonalResourceMetadataKind = "workspace"
 )
 
 // Defines values for AcceptHeader.
@@ -154,6 +157,20 @@ const (
 	ListNetworksParamsAcceptApplicationjsonDeletedTrue ListNetworksParamsAccept = "application/json; deleted=true"
 )
 
+// Defines values for ListRouteTablesParamsAccept.
+const (
+	ListRouteTablesParamsAcceptApplicationjson            ListRouteTablesParamsAccept = "application/json"
+	ListRouteTablesParamsAcceptApplicationjsonDeletedOnly ListRouteTablesParamsAccept = "application/json; deleted=only"
+	ListRouteTablesParamsAcceptApplicationjsonDeletedTrue ListRouteTablesParamsAccept = "application/json; deleted=true"
+)
+
+// Defines values for ListSubnetsParamsAccept.
+const (
+	ListSubnetsParamsAcceptApplicationjson            ListSubnetsParamsAccept = "application/json"
+	ListSubnetsParamsAcceptApplicationjsonDeletedOnly ListSubnetsParamsAccept = "application/json; deleted=only"
+	ListSubnetsParamsAcceptApplicationjsonDeletedTrue ListSubnetsParamsAccept = "application/json; deleted=true"
+)
+
 // Defines values for ListNicsParamsAccept.
 const (
 	ListNicsParamsAcceptApplicationjson            ListNicsParamsAccept = "application/json"
@@ -168,25 +185,11 @@ const (
 	ListPublicIpsParamsAcceptApplicationjsonDeletedTrue ListPublicIpsParamsAccept = "application/json; deleted=true"
 )
 
-// Defines values for ListRouteTablesParamsAccept.
-const (
-	ListRouteTablesParamsAcceptApplicationjson            ListRouteTablesParamsAccept = "application/json"
-	ListRouteTablesParamsAcceptApplicationjsonDeletedOnly ListRouteTablesParamsAccept = "application/json; deleted=only"
-	ListRouteTablesParamsAcceptApplicationjsonDeletedTrue ListRouteTablesParamsAccept = "application/json; deleted=true"
-)
-
 // Defines values for ListSecurityGroupsParamsAccept.
 const (
-	ListSecurityGroupsParamsAcceptApplicationjson            ListSecurityGroupsParamsAccept = "application/json"
-	ListSecurityGroupsParamsAcceptApplicationjsonDeletedOnly ListSecurityGroupsParamsAccept = "application/json; deleted=only"
-	ListSecurityGroupsParamsAcceptApplicationjsonDeletedTrue ListSecurityGroupsParamsAccept = "application/json; deleted=true"
-)
-
-// Defines values for ListSubnetsParamsAccept.
-const (
-	Applicationjson            ListSubnetsParamsAccept = "application/json"
-	ApplicationjsonDeletedOnly ListSubnetsParamsAccept = "application/json; deleted=only"
-	ApplicationjsonDeletedTrue ListSubnetsParamsAccept = "application/json; deleted=true"
+	Applicationjson            ListSecurityGroupsParamsAccept = "application/json"
+	ApplicationjsonDeletedOnly ListSecurityGroupsParamsAccept = "application/json; deleted=only"
+	ApplicationjsonDeletedTrue ListSecurityGroupsParamsAccept = "application/json; deleted=true"
 )
 
 // Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
@@ -216,221 +219,29 @@ type Error struct {
 	Type string `json:"type"`
 }
 
-// Error400 defines model for Error400.
-type Error400 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error400 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
+// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error401 = Error
 
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
+// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error403 = Error
 
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
+// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error404 = Error
 
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
+// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error409 = Error
 
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error412 = Error
 
-// Error401 defines model for Error401.
-type Error401 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
+// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error422 = Error
 
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error403 defines model for Error403.
-type Error403 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error404 defines model for Error404.
-type Error404 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error409 defines model for Error409.
-type Error409 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error412 defines model for Error412.
-type Error412 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error422 defines model for Error422.
-type Error422 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error500 defines model for Error500.
-type Error500 struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
+// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
+type Error500 = Error
 
 // ErrorSource An object containing references to the source of the error.
 type ErrorSource struct {
@@ -468,8 +279,8 @@ type InternetGateway struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec The internet gateway will use the reserved IP addres.
 	// the subnet CIDR block to provide internet access to the subnet.
@@ -535,8 +346,8 @@ type Network struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec A Network represents a virtual network that can be used to isolate resources.
 	// Key network concepts:
@@ -571,6 +382,12 @@ type NetworkIterator struct {
 
 	// Metadata Metadata for response objects.
 	Metadata ResponseMetadata `json:"metadata"`
+}
+
+// NetworkMetadata Metadata for resources with network constraints
+type NetworkMetadata struct {
+	// Network Network identifier
+	Network string `json:"network"`
 }
 
 // NetworkSku defines model for NetworkSku.
@@ -627,9 +444,14 @@ type NetworkSpec struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr          Cidr        `json:"cidr"`
-	RouteTableRef interface{} `json:"routeTableRef"`
-	SkuRef        interface{} `json:"skuRef"`
+	Cidr Cidr `json:"cidr"`
+
+	// RouteTableRef Reference to the route table used by default for all Subnets.
+	RouteTableRef Reference `json:"routeTableRef"`
+
+	// SkuRef Reference to the SKU used by default for all NIC in this Network.
+	// Can be overridden by the NIC.
+	SkuRef Reference `json:"skuRef"`
 }
 
 // NetworkStatus defines model for NetworkStatus.
@@ -643,9 +465,11 @@ type NetworkStatus struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr          Cidr              `json:"cidr"`
-	Conditions    []StatusCondition `json:"conditions"`
-	RouteTableRef *interface{}      `json:"routeTableRef,omitempty"`
+	Cidr       Cidr              `json:"cidr"`
+	Conditions []StatusCondition `json:"conditions"`
+
+	// RouteTableRef Reference to the route table used by default for all Subnets.
+	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -673,8 +497,8 @@ type Nic struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the Network Interface Card
 	//
@@ -718,9 +542,13 @@ type NicSpec struct {
 
 	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
 	// and not directly visible on the server/NIC itself.
-	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
-	SkuRef       *interface{}   `json:"skuRef,omitempty"`
-	SubnetRef    interface{}    `json:"subnetRef"`
+	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
+
+	// SkuRef Reference to the SKU of the NIC.
+	SkuRef *Reference `json:"skuRef,omitempty"`
+
+	// SubnetRef Reference to the subnet used by the NIC connections.
+	SubnetRef Reference `json:"subnetRef"`
 }
 
 // NicStatus defines model for NicStatus.
@@ -732,7 +560,7 @@ type NicStatus struct {
 	MacAddress *string `json:"macAddress,omitempty"`
 
 	// PublicIpRefs Array of public IP addresses associated with this NIC.
-	PublicIpRefs *[]interface{} `json:"publicIpRefs,omitempty"`
+	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -792,8 +620,8 @@ type PublicIp struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the public IP.
 	Spec PublicIpSpec `json:"spec"`
@@ -822,7 +650,8 @@ type PublicIpSpec struct {
 
 // PublicIpStatus defines model for PublicIpStatus.
 type PublicIpStatus struct {
-	AttachedTo *interface{}      `json:"attachedTo,omitempty"`
+	// AttachedTo Reference to the instance the public IP is attached to.
+	AttachedTo *Reference        `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// IpAddress The public IP address in case.
@@ -897,13 +726,10 @@ type ReferenceURN = string
 type RegionalMetadata struct {
 	// Region Reference to the region where the resource is located
 	Region string `json:"region"`
-
-	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
 }
 
-// RegionalResourceMetadata defines model for RegionalResourceMetadata.
-type RegionalResourceMetadata struct {
+// RegionalNetworkResourceMetadata defines model for RegionalNetworkResourceMetadata.
+type RegionalNetworkResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
@@ -914,7 +740,55 @@ type RegionalResourceMetadata struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Kind Type of the resource
-	Kind RegionalResourceMetadataKind `json:"kind"`
+	Kind RegionalNetworkResourceMetadataKind `json:"kind"`
+
+	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
+	LastModifiedAt time.Time `json:"lastModifiedAt"`
+
+	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
+	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
+	// Each segment follows the same rules.
+	Name string `json:"name"`
+
+	// Network Network identifier
+	Network  string `json:"network"`
+	Provider string `json:"provider"`
+
+	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
+	// The reference can be used to refer to a resource in other resources.
+	Ref *Reference `json:"ref,omitempty"`
+
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
+
+	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
+	ResourceVersion int `json:"resourceVersion"`
+
+	// Tenant Tenant identifier
+	Tenant string `json:"tenant"`
+	Verb   string `json:"verb"`
+
+	// Workspace Workspace identifier
+	Workspace string `json:"workspace"`
+}
+
+// RegionalNetworkResourceMetadataKind Type of the resource
+type RegionalNetworkResourceMetadataKind string
+
+// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
+type RegionalWorkspaceResourceMetadata struct {
+	// ApiVersion API version of the resource
+	ApiVersion string `json:"apiVersion"`
+
+	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+
+	// Kind Type of the resource
+	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
 
 	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
 	LastModifiedAt time.Time `json:"lastModifiedAt"`
@@ -941,11 +815,11 @@ type RegionalResourceMetadata struct {
 	Verb   string `json:"verb"`
 
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace"`
 }
 
-// RegionalResourceMetadataKind Type of the resource
-type RegionalResourceMetadataKind string
+// RegionalWorkspaceResourceMetadataKind Type of the resource
+type RegionalWorkspaceResourceMetadataKind string
 
 // ResourceState Current phase of the resource:
 // - pending: not available, waiting for other resources
@@ -983,8 +857,10 @@ type RouteSpec struct {
 	// DestinationCidrBlock The CIDR block for the destination. The block can be
 	// a specific IP address or a range of addresses. It can be
 	// IPv6 or IPv4.
-	DestinationCidrBlock string      `json:"destinationCidrBlock"`
-	TargetRef            interface{} `json:"targetRef"`
+	DestinationCidrBlock string `json:"destinationCidrBlock"`
+
+	// TargetRef Reference to the target of the route. The target can be an instance, an gateway or an IP address.
+	TargetRef Reference `json:"targetRef"`
 }
 
 // RouteStatus defines model for RouteStatus.
@@ -1017,11 +893,10 @@ type RouteTable struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, workspace, network and region information.
+	Metadata *RegionalNetworkResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec The RouteTableSpec defines the routes that are associated with the route table.
-	// The `localRef` is a reference to the network it will inherit the routes from.
 	Spec RouteTableSpec `json:"spec"`
 
 	// Status The status of the route table. The status is read-only and will be set by the
@@ -1031,10 +906,8 @@ type RouteTable struct {
 }
 
 // RouteTableSpec The RouteTableSpec defines the routes that are associated with the route table.
-// The `localRef` is a reference to the network it will inherit the routes from.
 type RouteTableSpec struct {
-	LocalRef interface{} `json:"localRef"`
-	Routes   []RouteSpec `json:"routes"`
+	Routes []RouteSpec `json:"routes"`
 }
 
 // RouteTableStatus defines model for RouteTableStatus.
@@ -1068,8 +941,8 @@ type SecurityGroup struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, and region information.
-	Metadata *RegionalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Specification of the security group
 	Spec SecurityGroupSpec `json:"spec"`
@@ -1122,7 +995,7 @@ type SecurityGroupRuleSpec struct {
 	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
 	// with the security group. If a security group is specified, all instances in that group are allowed.
 	// If no sourceRefs are specified, all traffic is allowed.
-	SourceRefs *[]interface{} `json:"sourceRefs,omitempty"`
+	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
 
 	// Version IP version of the address
 	Version *IPVersion `json:"version,omitempty"`
@@ -1237,8 +1110,8 @@ type Subnet struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Metadata Metadata for zonal resources with name, permission, modification, type, tenant, region, and zone information.
-	Metadata *ZonalResourceMetadata `json:"metadata,omitempty"`
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, workspace, network and region information.
+	Metadata *RegionalNetworkResourceMetadata `json:"metadata,omitempty"`
 
 	// Spec Detailed specification of the subnet. Automatic address
 	// assignment is supported, similar to the network configuration. The
@@ -1281,9 +1154,15 @@ type SubnetSpec struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr          Cidr         `json:"cidr"`
-	RouteTableRef *interface{} `json:"routeTableRef,omitempty"`
-	SkuRef        *interface{} `json:"skuRef,omitempty"`
+	Cidr Cidr `json:"cidr"`
+
+	// RouteTableRef Reference to the route table used by default for all NICs in this Subnet.
+	// If not provided, the routeTableRef associated with the network of the subnet will be used.
+	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
+
+	// SkuRef Reference to the SKU used by default for all NICs in this Network.
+	// Can be overridden by the NIC
+	SkuRef *Reference `json:"skuRef,omitempty"`
 
 	// Zone Reference to a specific zone within a region
 	Zone Zone `json:"zone"`
@@ -1300,6 +1179,9 @@ type SubnetStatus struct {
 	// * IPv4 and IPv6 (Dual Stack)
 	Cidr       *Cidr             `json:"cidr,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
+
+	// RouteTableRef The route table used by this subnet.
+	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -1324,7 +1206,7 @@ type SystemResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// TenantMetadata Metadata for global resources with tenant constraints
+// TenantMetadata Metadata for resources with tenant constraints
 type TenantMetadata struct {
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
@@ -1362,59 +1244,11 @@ type UserResourceMetadata struct {
 	Labels *map[string]string `json:"labels,omitempty"`
 }
 
-// ZonalMetadata Metadata for zonal resources
-type ZonalMetadata struct {
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
-}
-
-// ZonalResourceMetadata defines model for ZonalResourceMetadata.
-type ZonalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind ZonalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-
-	// Region Reference to the region where the resource is located
-	Region   string `json:"region"`
-	Resource string `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-
+// WorkspaceMetadata Metadata for resources with workspace constraints
+type WorkspaceMetadata struct {
 	// Workspace Workspace identifier
-	Workspace *string `json:"workspace,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Workspace string `json:"workspace"`
 }
-
-// ZonalResourceMetadataKind Type of the resource
-type ZonalResourceMetadataKind string
 
 // Zone Reference to a specific zone within a region
 type Zone = string
@@ -1450,17 +1284,20 @@ type LabelSelector = string
 // LimitParam defines model for limitParam.
 type LimitParam = int
 
-// ResourceName defines model for resourceName.
-type ResourceName = string
+// NetworkPathParam defines model for networkPathParam.
+type NetworkPathParam = string
+
+// ResourcePathParam defines model for resourcePathParam.
+type ResourcePathParam = string
 
 // SkipTokenParam defines model for skipTokenParam.
 type SkipTokenParam = string
 
-// Tenant defines model for tenant.
-type Tenant = string
+// TenantPathParam defines model for tenantPathParam.
+type TenantPathParam = string
 
-// Workspace defines model for workspace.
-type Workspace = string
+// WorkspacePathParam defines model for workspacePathParam.
+type WorkspacePathParam = string
 
 // ListSkusParams defines parameters for ListSkus.
 type ListSkusParams struct {
@@ -1571,6 +1408,88 @@ type CreateOrUpdateNetworkParams struct {
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
+// ListRouteTablesParams defines parameters for ListRouteTables.
+type ListRouteTablesParams struct {
+	// Labels Filter resources by their labels. Multiple filters are combined with comma.
+	// Filter syntax:
+	//   - Equals: key=value
+	//   - Not equals: key!=value
+	//   - Wildcards: *key*=*value* - matches if at least one pair match
+	//   - Numeric: key>value, key<value, key>=value, key<=value
+	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
+	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+
+	// Limit Maximum number of resources to return in the response
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
+	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+
+	// Accept Controls whether deleted resources are included:
+	// - `"application/json"`: Returns only non-deleted resources
+	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
+	// - `"application/json; deleted=only"`: Returns only deleted resources
+	Accept *ListRouteTablesParamsAccept `json:"Accept,omitempty"`
+}
+
+// ListRouteTablesParamsAccept defines parameters for ListRouteTables.
+type ListRouteTablesParamsAccept string
+
+// DeleteRouteTableParams defines parameters for DeleteRouteTable.
+type DeleteRouteTableParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// CreateOrUpdateRouteTableParams defines parameters for CreateOrUpdateRouteTable.
+type CreateOrUpdateRouteTableParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// ListSubnetsParams defines parameters for ListSubnets.
+type ListSubnetsParams struct {
+	// Labels Filter resources by their labels. Multiple filters are combined with comma.
+	// Filter syntax:
+	//   - Equals: key=value
+	//   - Not equals: key!=value
+	//   - Wildcards: *key*=*value* - matches if at least one pair match
+	//   - Numeric: key>value, key<value, key>=value, key<=value
+	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
+	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+
+	// Limit Maximum number of resources to return in the response
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
+	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+
+	// Accept Controls whether deleted resources are included:
+	// - `"application/json"`: Returns only non-deleted resources
+	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
+	// - `"application/json; deleted=only"`: Returns only deleted resources
+	Accept *ListSubnetsParamsAccept `json:"Accept,omitempty"`
+}
+
+// ListSubnetsParamsAccept defines parameters for ListSubnets.
+type ListSubnetsParamsAccept string
+
+// DeleteSubnetParams defines parameters for DeleteSubnet.
+type DeleteSubnetParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
+// CreateOrUpdateSubnetParams defines parameters for CreateOrUpdateSubnet.
+type CreateOrUpdateSubnetParams struct {
+	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
+	// Uses metadata.resourceVersion for comparison.
+	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+}
+
 // ListNicsParams defines parameters for ListNics.
 type ListNicsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
@@ -1653,47 +1572,6 @@ type CreateOrUpdatePublicIpParams struct {
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// ListRouteTablesParams defines parameters for ListRouteTables.
-type ListRouteTablesParams struct {
-	// Labels Filter resources by their labels. Multiple filters are combined with comma.
-	// Filter syntax:
-	//   - Equals: key=value
-	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
-	//   - Numeric: key>value, key<value, key>=value, key<=value
-	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
-
-	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
-
-	// Accept Controls whether deleted resources are included:
-	// - `"application/json"`: Returns only non-deleted resources
-	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
-	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListRouteTablesParamsAccept `json:"Accept,omitempty"`
-}
-
-// ListRouteTablesParamsAccept defines parameters for ListRouteTables.
-type ListRouteTablesParamsAccept string
-
-// DeleteRouteTableParams defines parameters for DeleteRouteTable.
-type DeleteRouteTableParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
-	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
-}
-
-// CreateOrUpdateRouteTableParams defines parameters for CreateOrUpdateRouteTable.
-type CreateOrUpdateRouteTableParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
-	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
-}
-
 // ListSecurityGroupsParams defines parameters for ListSecurityGroups.
 type ListSecurityGroupsParams struct {
 	// Labels Filter resources by their labels. Multiple filters are combined with comma.
@@ -1735,52 +1613,17 @@ type CreateOrUpdateSecurityGroupParams struct {
 	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
-// ListSubnetsParams defines parameters for ListSubnets.
-type ListSubnetsParams struct {
-	// Labels Filter resources by their labels. Multiple filters are combined with comma.
-	// Filter syntax:
-	//   - Equals: key=value
-	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
-	//   - Numeric: key>value, key<value, key>=value, key<=value
-	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
-
-	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
-
-	// Accept Controls whether deleted resources are included:
-	// - `"application/json"`: Returns only non-deleted resources
-	// - `"application/json; deleted=true"`: Returns both deleted and non-deleted resources
-	// - `"application/json; deleted=only"`: Returns only deleted resources
-	Accept *ListSubnetsParamsAccept `json:"Accept,omitempty"`
-}
-
-// ListSubnetsParamsAccept defines parameters for ListSubnets.
-type ListSubnetsParamsAccept string
-
-// DeleteSubnetParams defines parameters for DeleteSubnet.
-type DeleteSubnetParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
-	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
-}
-
-// CreateOrUpdateSubnetParams defines parameters for CreateOrUpdateSubnet.
-type CreateOrUpdateSubnetParams struct {
-	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
-	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
-}
-
 // CreateOrUpdateInternetGatewayJSONRequestBody defines body for CreateOrUpdateInternetGateway for application/json ContentType.
 type CreateOrUpdateInternetGatewayJSONRequestBody = InternetGateway
 
 // CreateOrUpdateNetworkJSONRequestBody defines body for CreateOrUpdateNetwork for application/json ContentType.
 type CreateOrUpdateNetworkJSONRequestBody = Network
+
+// CreateOrUpdateRouteTableJSONRequestBody defines body for CreateOrUpdateRouteTable for application/json ContentType.
+type CreateOrUpdateRouteTableJSONRequestBody = RouteTable
+
+// CreateOrUpdateSubnetJSONRequestBody defines body for CreateOrUpdateSubnet for application/json ContentType.
+type CreateOrUpdateSubnetJSONRequestBody = Subnet
 
 // CreateOrUpdateNicJSONRequestBody defines body for CreateOrUpdateNic for application/json ContentType.
 type CreateOrUpdateNicJSONRequestBody = Nic
@@ -1788,14 +1631,8 @@ type CreateOrUpdateNicJSONRequestBody = Nic
 // CreateOrUpdatePublicIpJSONRequestBody defines body for CreateOrUpdatePublicIp for application/json ContentType.
 type CreateOrUpdatePublicIpJSONRequestBody = PublicIp
 
-// CreateOrUpdateRouteTableJSONRequestBody defines body for CreateOrUpdateRouteTable for application/json ContentType.
-type CreateOrUpdateRouteTableJSONRequestBody = RouteTable
-
 // CreateOrUpdateSecurityGroupJSONRequestBody defines body for CreateOrUpdateSecurityGroup for application/json ContentType.
 type CreateOrUpdateSecurityGroupJSONRequestBody = SecurityGroup
-
-// CreateOrUpdateSubnetJSONRequestBody defines body for CreateOrUpdateSubnet for application/json ContentType.
-type CreateOrUpdateSubnetJSONRequestBody = Subnet
 
 // AsReferenceURN returns the union data inside the Reference as a ReferenceURN
 func (t Reference) AsReferenceURN() (ReferenceURN, error) {
@@ -1933,111 +1770,111 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListSkus request
-	ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSku request
-	GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInternetGateways request
-	ListInternetGateways(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListInternetGateways(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteInternetGateway request
-	DeleteInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetInternetGateway request
-	GetInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateInternetGatewayWithBody request with any body
-	CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListNetworks request
-	ListNetworks(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListNetworks(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNetwork request
-	DeleteNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNetwork request
-	GetNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateNetworkWithBody request with any body
-	CreateOrUpdateNetworkWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetworkWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListNics request
-	ListNics(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteNic request
-	DeleteNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetNic request
-	GetNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateOrUpdateNicWithBody request with any body
-	CreateOrUpdateNicWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateOrUpdateNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListPublicIps request
-	ListPublicIps(ctx context.Context, tenant Tenant, workspace Workspace, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeletePublicIp request
-	DeletePublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPublicIp request
-	GetPublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateOrUpdatePublicIpWithBody request with any body
-	CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateOrUpdatePublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListRouteTables request
-	ListRouteTables(ctx context.Context, tenant Tenant, workspace Workspace, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListRouteTables(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRouteTable request
-	DeleteRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRouteTable request
-	GetRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateRouteTableWithBody request with any body
-	CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSecurityGroups request
-	ListSecurityGroups(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteSecurityGroup request
-	DeleteSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetSecurityGroup request
-	GetSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateOrUpdateSecurityGroupWithBody request with any body
-	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateOrUpdateSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSubnets request
-	ListSubnets(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSubnets(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteSubnet request
-	DeleteSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSubnet request
-	GetSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateSubnetWithBody request with any body
-	CreateOrUpdateSubnetWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnetWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListNics request
+	ListNics(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteNic request
+	DeleteNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetNic request
+	GetNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateOrUpdateNicWithBody request with any body
+	CreateOrUpdateNicWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateOrUpdateNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListPublicIps request
+	ListPublicIps(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeletePublicIp request
+	DeletePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPublicIp request
+	GetPublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateOrUpdatePublicIpWithBody request with any body
+	CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateOrUpdatePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListSecurityGroups request
+	ListSecurityGroups(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteSecurityGroup request
+	DeleteSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSecurityGroup request
+	GetSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateOrUpdateSecurityGroupWithBody request with any body
+	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateOrUpdateSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListSkus(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSkusRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -2049,7 +1886,7 @@ func (c *Client) ListSkus(ctx context.Context, tenant Tenant, params *ListSkusPa
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSku(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSkuRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -2061,7 +1898,7 @@ func (c *Client) GetSku(ctx context.Context, tenant Tenant, name ResourceName, r
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListInternetGateways(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListInternetGateways(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListInternetGatewaysRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2073,7 +1910,7 @@ func (c *Client) ListInternetGateways(ctx context.Context, tenant Tenant, worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteInternetGatewayRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2085,7 +1922,7 @@ func (c *Client) DeleteInternetGateway(ctx context.Context, tenant Tenant, works
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetInternetGatewayRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2097,7 +1934,7 @@ func (c *Client) GetInternetGateway(ctx context.Context, tenant Tenant, workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInternetGatewayRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2109,7 +1946,7 @@ func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInternetGatewayRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2121,7 +1958,7 @@ func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListNetworks(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListNetworks(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNetworksRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2133,7 +1970,7 @@ func (c *Client) ListNetworks(ctx context.Context, tenant Tenant, workspace Work
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNetworkRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2145,7 +1982,7 @@ func (c *Client) DeleteNetwork(ctx context.Context, tenant Tenant, workspace Wor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNetworkRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2157,7 +1994,7 @@ func (c *Client) GetNetwork(ctx context.Context, tenant Tenant, workspace Worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2169,7 +2006,7 @@ func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2181,7 +2018,127 @@ func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant Tenant, works
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListNics(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListRouteTables(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListRouteTablesRequest(c.Server, tenant, workspace, network, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteRouteTableRequest(c.Server, tenant, workspace, network, name, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRouteTableRequest(c.Server, tenant, workspace, network, name)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateRouteTableRequestWithBody(c.Server, tenant, workspace, network, name, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateOrUpdateRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateRouteTableRequest(c.Server, tenant, workspace, network, name, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListSubnets(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSubnetsRequest(c.Server, tenant, workspace, network, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteSubnetRequest(c.Server, tenant, workspace, network, name, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSubnetRequest(c.Server, tenant, workspace, network, name)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateSubnetRequestWithBody(c.Server, tenant, workspace, network, name, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateOrUpdateSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrUpdateSubnetRequest(c.Server, tenant, workspace, network, name, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListNics(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNicsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2193,7 +2150,7 @@ func (c *Client) ListNics(ctx context.Context, tenant Tenant, workspace Workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNicRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2205,7 +2162,7 @@ func (c *Client) DeleteNic(ctx context.Context, tenant Tenant, workspace Workspa
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNicRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2217,7 +2174,7 @@ func (c *Client) GetNic(ctx context.Context, tenant Tenant, workspace Workspace,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNicRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2229,7 +2186,7 @@ func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant Tenant, w
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNicRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2241,7 +2198,7 @@ func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant Tenant, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListPublicIps(ctx context.Context, tenant Tenant, workspace Workspace, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListPublicIps(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListPublicIpsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2253,7 +2210,7 @@ func (c *Client) ListPublicIps(ctx context.Context, tenant Tenant, workspace Wor
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeletePublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeletePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeletePublicIpRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2265,7 +2222,7 @@ func (c *Client) DeletePublicIp(ctx context.Context, tenant Tenant, workspace Wo
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetPublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPublicIpRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2277,7 +2234,7 @@ func (c *Client) GetPublicIp(ctx context.Context, tenant Tenant, workspace Works
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdatePublicIpRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2289,7 +2246,7 @@ func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant Tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdatePublicIpRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2301,67 +2258,7 @@ func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant Tenant, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListRouteTables(ctx context.Context, tenant Tenant, workspace Workspace, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListRouteTablesRequest(c.Server, tenant, workspace, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteRouteTableRequest(c.Server, tenant, workspace, name, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetRouteTableRequest(c.Server, tenant, workspace, name)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateRouteTableRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateOrUpdateRouteTable(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateRouteTableRequest(c.Server, tenant, workspace, name, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ListSecurityGroups(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSecurityGroups(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSecurityGroupsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2373,7 +2270,7 @@ func (c *Client) ListSecurityGroups(ctx context.Context, tenant Tenant, workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSecurityGroupRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2385,7 +2282,7 @@ func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant Tenant, workspa
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSecurityGroupRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2397,7 +2294,7 @@ func (c *Client) GetSecurityGroup(ctx context.Context, tenant Tenant, workspace 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2409,7 +2306,7 @@ func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2421,68 +2318,8 @@ func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant Tenant,
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListSubnets(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSubnetsRequest(c.Server, tenant, workspace, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteSubnetRequest(c.Server, tenant, workspace, name, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetSubnetRequest(c.Server, tenant, workspace, name)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateSubnetRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateOrUpdateSubnet(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrUpdateSubnetRequest(c.Server, tenant, workspace, name, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // NewListSkusRequest generates requests for ListSkus
-func NewListSkusRequest(server string, tenant Tenant, params *ListSkusParams) (*http.Request, error) {
+func NewListSkusRequest(server string, tenant TenantPathParam, params *ListSkusParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2585,7 +2422,7 @@ func NewListSkusRequest(server string, tenant Tenant, params *ListSkusParams) (*
 }
 
 // NewGetSkuRequest generates requests for GetSku
-func NewGetSkuRequest(server string, tenant Tenant, name ResourceName) (*http.Request, error) {
+func NewGetSkuRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2626,7 +2463,7 @@ func NewGetSkuRequest(server string, tenant Tenant, name ResourceName) (*http.Re
 }
 
 // NewListInternetGatewaysRequest generates requests for ListInternetGateways
-func NewListInternetGatewaysRequest(server string, tenant Tenant, workspace Workspace, params *ListInternetGatewaysParams) (*http.Request, error) {
+func NewListInternetGatewaysRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2736,7 +2573,7 @@ func NewListInternetGatewaysRequest(server string, tenant Tenant, workspace Work
 }
 
 // NewDeleteInternetGatewayRequest generates requests for DeleteInternetGateway
-func NewDeleteInternetGatewayRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInternetGatewayParams) (*http.Request, error) {
+func NewDeleteInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2799,7 +2636,7 @@ func NewDeleteInternetGatewayRequest(server string, tenant Tenant, workspace Wor
 }
 
 // NewGetInternetGatewayRequest generates requests for GetInternetGateway
-func NewGetInternetGatewayRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2847,7 +2684,7 @@ func NewGetInternetGatewayRequest(server string, tenant Tenant, workspace Worksp
 }
 
 // NewCreateOrUpdateInternetGatewayRequest calls the generic CreateOrUpdateInternetGateway builder with application/json body
-func NewCreateOrUpdateInternetGatewayRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -2858,7 +2695,7 @@ func NewCreateOrUpdateInternetGatewayRequest(server string, tenant Tenant, works
 }
 
 // NewCreateOrUpdateInternetGatewayRequestWithBody generates requests for CreateOrUpdateInternetGateway with any type of body
-func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2923,7 +2760,7 @@ func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant Tenan
 }
 
 // NewListNetworksRequest generates requests for ListNetworks
-func NewListNetworksRequest(server string, tenant Tenant, workspace Workspace, params *ListNetworksParams) (*http.Request, error) {
+func NewListNetworksRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3033,7 +2870,7 @@ func NewListNetworksRequest(server string, tenant Tenant, workspace Workspace, p
 }
 
 // NewDeleteNetworkRequest generates requests for DeleteNetwork
-func NewDeleteNetworkRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkParams) (*http.Request, error) {
+func NewDeleteNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3096,7 +2933,7 @@ func NewDeleteNetworkRequest(server string, tenant Tenant, workspace Workspace, 
 }
 
 // NewGetNetworkRequest generates requests for GetNetwork
-func NewGetNetworkRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3144,7 +2981,7 @@ func NewGetNetworkRequest(server string, tenant Tenant, workspace Workspace, nam
 }
 
 // NewCreateOrUpdateNetworkRequest calls the generic CreateOrUpdateNetwork builder with application/json body
-func NewCreateOrUpdateNetworkRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3155,7 +2992,7 @@ func NewCreateOrUpdateNetworkRequest(server string, tenant Tenant, workspace Wor
 }
 
 // NewCreateOrUpdateNetworkRequestWithBody generates requests for CreateOrUpdateNetwork with any type of body
-func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3219,8 +3056,658 @@ func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant Tenant, works
 	return req, nil
 }
 
+// NewListRouteTablesRequest generates requests for ListRouteTables
+func NewListRouteTablesRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/route-tables", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Labels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "labels", runtime.ParamLocationQuery, *params.Labels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SkipToken != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "skipToken", runtime.ParamLocationQuery, *params.SkipToken); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.Accept != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "Accept", runtime.ParamLocationHeader, *params.Accept)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Accept", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteRouteTableRequest generates requests for DeleteRouteTable
+func NewDeleteRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/route-tables/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetRouteTableRequest generates requests for GetRouteTable
+func NewGetRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/route-tables/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateOrUpdateRouteTableRequest calls the generic CreateOrUpdateRouteTable builder with application/json body
+func NewCreateOrUpdateRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateOrUpdateRouteTableRequestWithBody(server, tenant, workspace, network, name, params, "application/json", bodyReader)
+}
+
+// NewCreateOrUpdateRouteTableRequestWithBody generates requests for CreateOrUpdateRouteTable with any type of body
+func NewCreateOrUpdateRouteTableRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/route-tables/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListSubnetsRequest generates requests for ListSubnets
+func NewListSubnetsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/subnets", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Labels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "labels", runtime.ParamLocationQuery, *params.Labels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SkipToken != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "skipToken", runtime.ParamLocationQuery, *params.SkipToken); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.Accept != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "Accept", runtime.ParamLocationHeader, *params.Accept)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Accept", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteSubnetRequest generates requests for DeleteSubnet
+func NewDeleteSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/subnets/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetSubnetRequest generates requests for GetSubnet
+func NewGetSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/subnets/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateOrUpdateSubnetRequest calls the generic CreateOrUpdateSubnet builder with application/json body
+func NewCreateOrUpdateSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateOrUpdateSubnetRequestWithBody(server, tenant, workspace, network, name, params, "application/json", bodyReader)
+}
+
+// NewCreateOrUpdateSubnetRequestWithBody generates requests for CreateOrUpdateSubnet with any type of body
+func NewCreateOrUpdateSubnetRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "network", runtime.ParamLocationPath, network)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/networks/%s/subnets/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IfUnmodifiedSince != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("if-unmodified-since", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListNicsRequest generates requests for ListNics
-func NewListNicsRequest(server string, tenant Tenant, workspace Workspace, params *ListNicsParams) (*http.Request, error) {
+func NewListNicsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3330,7 +3817,7 @@ func NewListNicsRequest(server string, tenant Tenant, workspace Workspace, param
 }
 
 // NewDeleteNicRequest generates requests for DeleteNic
-func NewDeleteNicRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNicParams) (*http.Request, error) {
+func NewDeleteNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3393,7 +3880,7 @@ func NewDeleteNicRequest(server string, tenant Tenant, workspace Workspace, name
 }
 
 // NewGetNicRequest generates requests for GetNic
-func NewGetNicRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3441,7 +3928,7 @@ func NewGetNicRequest(server string, tenant Tenant, workspace Workspace, name Re
 }
 
 // NewCreateOrUpdateNicRequest calls the generic CreateOrUpdateNic builder with application/json body
-func NewCreateOrUpdateNicRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3452,7 +3939,7 @@ func NewCreateOrUpdateNicRequest(server string, tenant Tenant, workspace Workspa
 }
 
 // NewCreateOrUpdateNicRequestWithBody generates requests for CreateOrUpdateNic with any type of body
-func NewCreateOrUpdateNicRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNicRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3517,7 +4004,7 @@ func NewCreateOrUpdateNicRequestWithBody(server string, tenant Tenant, workspace
 }
 
 // NewListPublicIpsRequest generates requests for ListPublicIps
-func NewListPublicIpsRequest(server string, tenant Tenant, workspace Workspace, params *ListPublicIpsParams) (*http.Request, error) {
+func NewListPublicIpsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3627,7 +4114,7 @@ func NewListPublicIpsRequest(server string, tenant Tenant, workspace Workspace, 
 }
 
 // NewDeletePublicIpRequest generates requests for DeletePublicIp
-func NewDeletePublicIpRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeletePublicIpParams) (*http.Request, error) {
+func NewDeletePublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3690,7 +4177,7 @@ func NewDeletePublicIpRequest(server string, tenant Tenant, workspace Workspace,
 }
 
 // NewGetPublicIpRequest generates requests for GetPublicIp
-func NewGetPublicIpRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetPublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3738,7 +4225,7 @@ func NewGetPublicIpRequest(server string, tenant Tenant, workspace Workspace, na
 }
 
 // NewCreateOrUpdatePublicIpRequest calls the generic CreateOrUpdatePublicIp builder with application/json body
-func NewCreateOrUpdatePublicIpRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdatePublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3749,7 +4236,7 @@ func NewCreateOrUpdatePublicIpRequest(server string, tenant Tenant, workspace Wo
 }
 
 // NewCreateOrUpdatePublicIpRequestWithBody generates requests for CreateOrUpdatePublicIp with any type of body
-func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3813,305 +4300,8 @@ func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant Tenant, work
 	return req, nil
 }
 
-// NewListRouteTablesRequest generates requests for ListRouteTables
-func NewListRouteTablesRequest(server string, tenant Tenant, workspace Workspace, params *ListRouteTablesParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/route-tables", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Labels != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "labels", runtime.ParamLocationQuery, *params.Labels); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.SkipToken != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "skipToken", runtime.ParamLocationQuery, *params.SkipToken); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.Accept != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "Accept", runtime.ParamLocationHeader, *params.Accept)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Accept", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewDeleteRouteTableRequest generates requests for DeleteRouteTable
-func NewDeleteRouteTableRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteRouteTableParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/route-tables/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.IfUnmodifiedSince != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("if-unmodified-since", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewGetRouteTableRequest generates requests for GetRouteTable
-func NewGetRouteTableRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/route-tables/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateOrUpdateRouteTableRequest calls the generic CreateOrUpdateRouteTable builder with application/json body
-func NewCreateOrUpdateRouteTableRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateRouteTableRequestWithBody(server, tenant, workspace, name, params, "application/json", bodyReader)
-}
-
-// NewCreateOrUpdateRouteTableRequestWithBody generates requests for CreateOrUpdateRouteTable with any type of body
-func NewCreateOrUpdateRouteTableRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/route-tables/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.IfUnmodifiedSince != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("if-unmodified-since", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
 // NewListSecurityGroupsRequest generates requests for ListSecurityGroups
-func NewListSecurityGroupsRequest(server string, tenant Tenant, workspace Workspace, params *ListSecurityGroupsParams) (*http.Request, error) {
+func NewListSecurityGroupsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4221,7 +4411,7 @@ func NewListSecurityGroupsRequest(server string, tenant Tenant, workspace Worksp
 }
 
 // NewDeleteSecurityGroupRequest generates requests for DeleteSecurityGroup
-func NewDeleteSecurityGroupRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSecurityGroupParams) (*http.Request, error) {
+func NewDeleteSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4284,7 +4474,7 @@ func NewDeleteSecurityGroupRequest(server string, tenant Tenant, workspace Works
 }
 
 // NewGetSecurityGroupRequest generates requests for GetSecurityGroup
-func NewGetSecurityGroupRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
+func NewGetSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4332,7 +4522,7 @@ func NewGetSecurityGroupRequest(server string, tenant Tenant, workspace Workspac
 }
 
 // NewCreateOrUpdateSecurityGroupRequest calls the generic CreateOrUpdateSecurityGroup builder with application/json body
-func NewCreateOrUpdateSecurityGroupRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -4343,7 +4533,7 @@ func NewCreateOrUpdateSecurityGroupRequest(server string, tenant Tenant, workspa
 }
 
 // NewCreateOrUpdateSecurityGroupRequestWithBody generates requests for CreateOrUpdateSecurityGroup with any type of body
-func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4373,303 +4563,6 @@ func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, tenant Tenant,
 	}
 
 	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/security-groups/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.IfUnmodifiedSince != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("if-unmodified-since", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewListSubnetsRequest generates requests for ListSubnets
-func NewListSubnetsRequest(server string, tenant Tenant, workspace Workspace, params *ListSubnetsParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/subnets", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Labels != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "labels", runtime.ParamLocationQuery, *params.Labels); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.SkipToken != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "skipToken", runtime.ParamLocationQuery, *params.SkipToken); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.Accept != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "Accept", runtime.ParamLocationHeader, *params.Accept)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Accept", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewDeleteSubnetRequest generates requests for DeleteSubnet
-func NewDeleteSubnetRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSubnetParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/subnets/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.IfUnmodifiedSince != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithLocation("simple", false, "if-unmodified-since", runtime.ParamLocationHeader, *params.IfUnmodifiedSince)
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("if-unmodified-since", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewGetSubnetRequest generates requests for GetSubnet
-func NewGetSubnetRequest(server string, tenant Tenant, workspace Workspace, name ResourceName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/subnets/%s", pathParam0, pathParam1, pathParam2)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateOrUpdateSubnetRequest calls the generic CreateOrUpdateSubnet builder with application/json body
-func NewCreateOrUpdateSubnetRequest(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateOrUpdateSubnetRequestWithBody(server, tenant, workspace, name, params, "application/json", bodyReader)
-}
-
-// NewCreateOrUpdateSubnetRequestWithBody generates requests for CreateOrUpdateSubnet with any type of body
-func NewCreateOrUpdateSubnetRequestWithBody(server string, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "tenant", runtime.ParamLocationPath, tenant)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "workspace", runtime.ParamLocationPath, workspace)
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam2 string
-
-	pathParam2, err = runtime.StyleParamWithLocation("simple", false, "name", runtime.ParamLocationPath, name)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/tenants/%s/workspaces/%s/subnets/%s", pathParam0, pathParam1, pathParam2)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -4748,108 +4641,108 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListSkusWithResponse request
-	ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
+	ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
 
 	// GetSkuWithResponse request
-	GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
+	GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
 
 	// ListInternetGatewaysWithResponse request
-	ListInternetGatewaysWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error)
+	ListInternetGatewaysWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error)
 
 	// DeleteInternetGatewayWithResponse request
-	DeleteInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error)
+	DeleteInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error)
 
 	// GetInternetGatewayWithResponse request
-	GetInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error)
+	GetInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error)
 
 	// CreateOrUpdateInternetGatewayWithBodyWithResponse request with any body
-	CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
+	CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
 
-	CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
+	CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
 
 	// ListNetworksWithResponse request
-	ListNetworksWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error)
+	ListNetworksWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error)
 
 	// DeleteNetworkWithResponse request
-	DeleteNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error)
+	DeleteNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error)
 
 	// GetNetworkWithResponse request
-	GetNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error)
+	GetNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error)
 
 	// CreateOrUpdateNetworkWithBodyWithResponse request with any body
-	CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
+	CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
 
-	CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
-
-	// ListNicsWithResponse request
-	ListNicsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error)
-
-	// DeleteNicWithResponse request
-	DeleteNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
-
-	// GetNicWithResponse request
-	GetNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
-
-	// CreateOrUpdateNicWithBodyWithResponse request with any body
-	CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
-
-	CreateOrUpdateNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
-
-	// ListPublicIpsWithResponse request
-	ListPublicIpsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error)
-
-	// DeletePublicIpWithResponse request
-	DeletePublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error)
-
-	// GetPublicIpWithResponse request
-	GetPublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error)
-
-	// CreateOrUpdatePublicIpWithBodyWithResponse request with any body
-	CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
-
-	CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
+	CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
 
 	// ListRouteTablesWithResponse request
-	ListRouteTablesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error)
+	ListRouteTablesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error)
 
 	// DeleteRouteTableWithResponse request
-	DeleteRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error)
+	DeleteRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error)
 
 	// GetRouteTableWithResponse request
-	GetRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error)
+	GetRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error)
 
 	// CreateOrUpdateRouteTableWithBodyWithResponse request with any body
-	CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
+	CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
 
-	CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
-
-	// ListSecurityGroupsWithResponse request
-	ListSecurityGroupsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error)
-
-	// DeleteSecurityGroupWithResponse request
-	DeleteSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
-
-	// GetSecurityGroupWithResponse request
-	GetSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
-
-	// CreateOrUpdateSecurityGroupWithBodyWithResponse request with any body
-	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
-
-	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+	CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
 
 	// ListSubnetsWithResponse request
-	ListSubnetsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error)
+	ListSubnetsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error)
 
 	// DeleteSubnetWithResponse request
-	DeleteSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
+	DeleteSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
 
 	// GetSubnetWithResponse request
-	GetSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
+	GetSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
 
 	// CreateOrUpdateSubnetWithBodyWithResponse request with any body
-	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
 
-	CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+
+	// ListNicsWithResponse request
+	ListNicsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error)
+
+	// DeleteNicWithResponse request
+	DeleteNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
+
+	// GetNicWithResponse request
+	GetNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
+
+	// CreateOrUpdateNicWithBodyWithResponse request with any body
+	CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
+
+	CreateOrUpdateNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
+
+	// ListPublicIpsWithResponse request
+	ListPublicIpsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error)
+
+	// DeletePublicIpWithResponse request
+	DeletePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error)
+
+	// GetPublicIpWithResponse request
+	GetPublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error)
+
+	// CreateOrUpdatePublicIpWithBodyWithResponse request with any body
+	CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
+
+	CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
+
+	// ListSecurityGroupsWithResponse request
+	ListSecurityGroupsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error)
+
+	// DeleteSecurityGroupWithResponse request
+	DeleteSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
+
+	// GetSecurityGroupWithResponse request
+	GetSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
+
+	// CreateOrUpdateSecurityGroupWithBodyWithResponse request with any body
+	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+
+	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
 }
 
 type ListSkusResponse struct {
@@ -5129,6 +5022,230 @@ func (r CreateOrUpdateNetworkResponse) StatusCode() int {
 	return 0
 }
 
+type ListRouteTablesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *RouteTableIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r ListRouteTablesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListRouteTablesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteRouteTableResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteRouteTableResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteRouteTableResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetRouteTableResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *RouteTable
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRouteTableResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRouteTableResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateOrUpdateRouteTableResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *RouteTable
+	JSON201      *RouteTable
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
+	JSON422      *Error422
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateOrUpdateRouteTableResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateOrUpdateRouteTableResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListSubnetsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *SubnetIterator
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSubnetsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSubnetsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteSubnetResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteSubnetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteSubnetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetSubnetResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Subnet
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSubnetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSubnetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateOrUpdateSubnetResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Subnet
+	JSON201      *Subnet
+	JSON400      *Error400
+	JSON401      *Error401
+	JSON403      *Error403
+	JSON404      *Error404
+	JSON409      *Error409
+	JSON412      *Error412
+	JSON422      *Error422
+	JSON500      *Error500
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateOrUpdateSubnetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateOrUpdateSubnetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type ListNicsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -5353,118 +5470,6 @@ func (r CreateOrUpdatePublicIpResponse) StatusCode() int {
 	return 0
 }
 
-type ListRouteTablesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *RouteTableIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r ListRouteTablesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListRouteTablesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteRouteTableResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteRouteTableResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteRouteTableResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetRouteTableResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *RouteTable
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r GetRouteTableResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetRouteTableResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateOrUpdateRouteTableResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *RouteTable
-	JSON201      *RouteTable
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateOrUpdateRouteTableResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateOrUpdateRouteTableResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type ListSecurityGroupsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -5577,120 +5582,8 @@ func (r CreateOrUpdateSecurityGroupResponse) StatusCode() int {
 	return 0
 }
 
-type ListSubnetsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *SubnetIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSubnetsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSubnetsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteSubnetResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteSubnetResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteSubnetResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetSubnetResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Subnet
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r GetSubnetResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetSubnetResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateOrUpdateSubnetResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Subnet
-	JSON201      *Subnet
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateOrUpdateSubnetResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateOrUpdateSubnetResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 // ListSkusWithResponse request returning *ListSkusResponse
-func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant Tenant, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
+func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
 	rsp, err := c.ListSkus(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5699,7 +5592,7 @@ func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant T
 }
 
 // GetSkuWithResponse request returning *GetSkuResponse
-func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Tenant, name ResourceName, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
+func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
 	rsp, err := c.GetSku(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5708,7 +5601,7 @@ func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Ten
 }
 
 // ListInternetGatewaysWithResponse request returning *ListInternetGatewaysResponse
-func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error) {
+func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error) {
 	rsp, err := c.ListInternetGateways(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5717,7 +5610,7 @@ func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Conte
 }
 
 // DeleteInternetGatewayWithResponse request returning *DeleteInternetGatewayResponse
-func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error) {
+func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error) {
 	rsp, err := c.DeleteInternetGateway(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5726,7 +5619,7 @@ func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Cont
 }
 
 // GetInternetGatewayWithResponse request returning *GetInternetGatewayResponse
-func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error) {
+func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error) {
 	rsp, err := c.GetInternetGateway(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5735,7 +5628,7 @@ func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context
 }
 
 // CreateOrUpdateInternetGatewayWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateInternetGatewayResponse
-func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
 	rsp, err := c.CreateOrUpdateInternetGatewayWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5743,7 +5636,7 @@ func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(
 	return ParseCreateOrUpdateInternetGatewayResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
 	rsp, err := c.CreateOrUpdateInternetGateway(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5752,7 +5645,7 @@ func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx cont
 }
 
 // ListNetworksWithResponse request returning *ListNetworksResponse
-func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error) {
+func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error) {
 	rsp, err := c.ListNetworks(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5761,7 +5654,7 @@ func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tena
 }
 
 // DeleteNetworkWithResponse request returning *DeleteNetworkResponse
-func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error) {
+func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error) {
 	rsp, err := c.DeleteNetwork(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5770,7 +5663,7 @@ func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, ten
 }
 
 // GetNetworkWithResponse request returning *GetNetworkResponse
-func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error) {
+func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error) {
 	rsp, err := c.GetNetwork(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5779,7 +5672,7 @@ func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant
 }
 
 // CreateOrUpdateNetworkWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNetworkResponse
-func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
 	rsp, err := c.CreateOrUpdateNetworkWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5787,7 +5680,7 @@ func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx cont
 	return ParseCreateOrUpdateNetworkResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
 	rsp, err := c.CreateOrUpdateNetwork(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5795,8 +5688,96 @@ func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Cont
 	return ParseCreateOrUpdateNetworkResponse(rsp)
 }
 
+// ListRouteTablesWithResponse request returning *ListRouteTablesResponse
+func (c *ClientWithResponses) ListRouteTablesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error) {
+	rsp, err := c.ListRouteTables(ctx, tenant, workspace, network, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListRouteTablesResponse(rsp)
+}
+
+// DeleteRouteTableWithResponse request returning *DeleteRouteTableResponse
+func (c *ClientWithResponses) DeleteRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error) {
+	rsp, err := c.DeleteRouteTable(ctx, tenant, workspace, network, name, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteRouteTableResponse(rsp)
+}
+
+// GetRouteTableWithResponse request returning *GetRouteTableResponse
+func (c *ClientWithResponses) GetRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error) {
+	rsp, err := c.GetRouteTable(ctx, tenant, workspace, network, name, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRouteTableResponse(rsp)
+}
+
+// CreateOrUpdateRouteTableWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRouteTableResponse
+func (c *ClientWithResponses) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
+	rsp, err := c.CreateOrUpdateRouteTableWithBody(ctx, tenant, workspace, network, name, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrUpdateRouteTableResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
+	rsp, err := c.CreateOrUpdateRouteTable(ctx, tenant, workspace, network, name, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrUpdateRouteTableResponse(rsp)
+}
+
+// ListSubnetsWithResponse request returning *ListSubnetsResponse
+func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error) {
+	rsp, err := c.ListSubnets(ctx, tenant, workspace, network, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSubnetsResponse(rsp)
+}
+
+// DeleteSubnetWithResponse request returning *DeleteSubnetResponse
+func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
+	rsp, err := c.DeleteSubnet(ctx, tenant, workspace, network, name, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteSubnetResponse(rsp)
+}
+
+// GetSubnetWithResponse request returning *GetSubnetResponse
+func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
+	rsp, err := c.GetSubnet(ctx, tenant, workspace, network, name, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSubnetResponse(rsp)
+}
+
+// CreateOrUpdateSubnetWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSubnetResponse
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+	rsp, err := c.CreateOrUpdateSubnetWithBody(ctx, tenant, workspace, network, name, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrUpdateSubnetResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+	rsp, err := c.CreateOrUpdateSubnet(ctx, tenant, workspace, network, name, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrUpdateSubnetResponse(rsp)
+}
+
 // ListNicsWithResponse request returning *ListNicsResponse
-func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error) {
+func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error) {
 	rsp, err := c.ListNics(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5805,7 +5786,7 @@ func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant T
 }
 
 // DeleteNicWithResponse request returning *DeleteNicResponse
-func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
+func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
 	rsp, err := c.DeleteNic(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5814,7 +5795,7 @@ func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant 
 }
 
 // GetNicWithResponse request returning *GetNicResponse
-func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
+func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
 	rsp, err := c.GetNic(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5823,7 +5804,7 @@ func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant Ten
 }
 
 // CreateOrUpdateNicWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNicResponse
-func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
 	rsp, err := c.CreateOrUpdateNicWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5831,7 +5812,7 @@ func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.
 	return ParseCreateOrUpdateNicResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
 	rsp, err := c.CreateOrUpdateNic(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5840,7 +5821,7 @@ func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context,
 }
 
 // ListPublicIpsWithResponse request returning *ListPublicIpsResponse
-func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error) {
+func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error) {
 	rsp, err := c.ListPublicIps(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5849,7 +5830,7 @@ func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, ten
 }
 
 // DeletePublicIpWithResponse request returning *DeletePublicIpResponse
-func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error) {
+func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error) {
 	rsp, err := c.DeletePublicIp(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5858,7 +5839,7 @@ func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, te
 }
 
 // GetPublicIpWithResponse request returning *GetPublicIpResponse
-func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error) {
+func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error) {
 	rsp, err := c.GetPublicIp(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5867,7 +5848,7 @@ func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenan
 }
 
 // CreateOrUpdatePublicIpWithBodyWithResponse request with arbitrary body returning *CreateOrUpdatePublicIpResponse
-func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
 	rsp, err := c.CreateOrUpdatePublicIpWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5875,7 +5856,7 @@ func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx con
 	return ParseCreateOrUpdatePublicIpResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
 	rsp, err := c.CreateOrUpdatePublicIp(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5883,52 +5864,8 @@ func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Con
 	return ParseCreateOrUpdatePublicIpResponse(rsp)
 }
 
-// ListRouteTablesWithResponse request returning *ListRouteTablesResponse
-func (c *ClientWithResponses) ListRouteTablesWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error) {
-	rsp, err := c.ListRouteTables(ctx, tenant, workspace, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListRouteTablesResponse(rsp)
-}
-
-// DeleteRouteTableWithResponse request returning *DeleteRouteTableResponse
-func (c *ClientWithResponses) DeleteRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error) {
-	rsp, err := c.DeleteRouteTable(ctx, tenant, workspace, name, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteRouteTableResponse(rsp)
-}
-
-// GetRouteTableWithResponse request returning *GetRouteTableResponse
-func (c *ClientWithResponses) GetRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error) {
-	rsp, err := c.GetRouteTable(ctx, tenant, workspace, name, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetRouteTableResponse(rsp)
-}
-
-// CreateOrUpdateRouteTableWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRouteTableResponse
-func (c *ClientWithResponses) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
-	rsp, err := c.CreateOrUpdateRouteTableWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateRouteTableResponse(rsp)
-}
-
-func (c *ClientWithResponses) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
-	rsp, err := c.CreateOrUpdateRouteTable(ctx, tenant, workspace, name, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateRouteTableResponse(rsp)
-}
-
 // ListSecurityGroupsWithResponse request returning *ListSecurityGroupsResponse
-func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error) {
+func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error) {
 	rsp, err := c.ListSecurityGroups(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5937,7 +5874,7 @@ func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context
 }
 
 // DeleteSecurityGroupWithResponse request returning *DeleteSecurityGroupResponse
-func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
+func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
 	rsp, err := c.DeleteSecurityGroup(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5946,7 +5883,7 @@ func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Contex
 }
 
 // GetSecurityGroupWithResponse request returning *GetSecurityGroupResponse
-func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
+func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
 	rsp, err := c.GetSecurityGroup(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5955,7 +5892,7 @@ func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, 
 }
 
 // CreateOrUpdateSecurityGroupWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSecurityGroupResponse
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroupWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5963,56 +5900,12 @@ func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ct
 	return ParseCreateOrUpdateSecurityGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroup(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateSecurityGroupResponse(rsp)
-}
-
-// ListSubnetsWithResponse request returning *ListSubnetsResponse
-func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error) {
-	rsp, err := c.ListSubnets(ctx, tenant, workspace, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSubnetsResponse(rsp)
-}
-
-// DeleteSubnetWithResponse request returning *DeleteSubnetResponse
-func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
-	rsp, err := c.DeleteSubnet(ctx, tenant, workspace, name, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteSubnetResponse(rsp)
-}
-
-// GetSubnetWithResponse request returning *GetSubnetResponse
-func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
-	rsp, err := c.GetSubnet(ctx, tenant, workspace, name, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetSubnetResponse(rsp)
-}
-
-// CreateOrUpdateSubnetWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSubnetResponse
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
-	rsp, err := c.CreateOrUpdateSubnetWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateSubnetResponse(rsp)
-}
-
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant Tenant, workspace Workspace, name ResourceName, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
-	rsp, err := c.CreateOrUpdateSubnet(ctx, tenant, workspace, name, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateOrUpdateSubnetResponse(rsp)
 }
 
 // ParseListSkusResponse parses an HTTP response from a ListSkusWithResponse call
@@ -6674,6 +6567,550 @@ func ParseCreateOrUpdateNetworkResponse(rsp *http.Response) (*CreateOrUpdateNetw
 	return response, nil
 }
 
+// ParseListRouteTablesResponse parses an HTTP response from a ListRouteTablesWithResponse call
+func ParseListRouteTablesResponse(rsp *http.Response) (*ListRouteTablesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListRouteTablesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RouteTableIterator
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteRouteTableResponse parses an HTTP response from a DeleteRouteTableWithResponse call
+func ParseDeleteRouteTableResponse(rsp *http.Response) (*DeleteRouteTableResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteRouteTableResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetRouteTableResponse parses an HTTP response from a GetRouteTableWithResponse call
+func ParseGetRouteTableResponse(rsp *http.Response) (*GetRouteTableResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetRouteTableResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RouteTable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateOrUpdateRouteTableResponse parses an HTTP response from a CreateOrUpdateRouteTableWithResponse call
+func ParseCreateOrUpdateRouteTableResponse(rsp *http.Response) (*CreateOrUpdateRouteTableResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateOrUpdateRouteTableResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RouteTable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest RouteTable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Error422
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListSubnetsResponse parses an HTTP response from a ListSubnetsWithResponse call
+func ParseListSubnetsResponse(rsp *http.Response) (*ListSubnetsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSubnetsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest SubnetIterator
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteSubnetResponse parses an HTTP response from a DeleteSubnetWithResponse call
+func ParseDeleteSubnetResponse(rsp *http.Response) (*DeleteSubnetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteSubnetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSubnetResponse parses an HTTP response from a GetSubnetWithResponse call
+func ParseGetSubnetResponse(rsp *http.Response) (*GetSubnetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSubnetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Subnet
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateOrUpdateSubnetResponse parses an HTTP response from a CreateOrUpdateSubnetWithResponse call
+func ParseCreateOrUpdateSubnetResponse(rsp *http.Response) (*CreateOrUpdateSubnetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateOrUpdateSubnetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Subnet
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Subnet
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Error400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Error401
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Error403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Error404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Error409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
+		var dest Error412
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON412 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Error422
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest Error500
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListNicsResponse parses an HTTP response from a ListNicsWithResponse call
 func ParseListNicsResponse(rsp *http.Response) (*ListNicsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -7218,278 +7655,6 @@ func ParseCreateOrUpdatePublicIpResponse(rsp *http.Response) (*CreateOrUpdatePub
 	return response, nil
 }
 
-// ParseListRouteTablesResponse parses an HTTP response from a ListRouteTablesWithResponse call
-func ParseListRouteTablesResponse(rsp *http.Response) (*ListRouteTablesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListRouteTablesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RouteTableIterator
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteRouteTableResponse parses an HTTP response from a DeleteRouteTableWithResponse call
-func ParseDeleteRouteTableResponse(rsp *http.Response) (*DeleteRouteTableResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteRouteTableResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON412 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetRouteTableResponse parses an HTTP response from a GetRouteTableWithResponse call
-func ParseGetRouteTableResponse(rsp *http.Response) (*GetRouteTableResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetRouteTableResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RouteTable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateOrUpdateRouteTableResponse parses an HTTP response from a CreateOrUpdateRouteTableWithResponse call
-func ParseCreateOrUpdateRouteTableResponse(rsp *http.Response) (*CreateOrUpdateRouteTableResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateOrUpdateRouteTableResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RouteTable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest RouteTable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON412 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseListSecurityGroupsResponse parses an HTTP response from a ListSecurityGroupsWithResponse call
 func ParseListSecurityGroupsResponse(rsp *http.Response) (*ListSecurityGroupsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -7762,370 +7927,98 @@ func ParseCreateOrUpdateSecurityGroupResponse(rsp *http.Response) (*CreateOrUpda
 	return response, nil
 }
 
-// ParseListSubnetsResponse parses an HTTP response from a ListSubnetsWithResponse call
-func ParseListSubnetsResponse(rsp *http.Response) (*ListSubnetsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSubnetsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest SubnetIterator
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteSubnetResponse parses an HTTP response from a DeleteSubnetWithResponse call
-func ParseDeleteSubnetResponse(rsp *http.Response) (*DeleteSubnetResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteSubnetResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON412 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetSubnetResponse parses an HTTP response from a GetSubnetWithResponse call
-func ParseGetSubnetResponse(rsp *http.Response) (*GetSubnetResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetSubnetResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Subnet
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateOrUpdateSubnetResponse parses an HTTP response from a CreateOrUpdateSubnetWithResponse call
-func ParseCreateOrUpdateSubnetResponse(rsp *http.Response) (*CreateOrUpdateSubnetResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateOrUpdateSubnetResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Subnet
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Subnet
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON412 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// List skus
 	// (GET /v1/tenants/{tenant}/skus)
-	ListSkus(w http.ResponseWriter, r *http.Request, tenant Tenant, params ListSkusParams)
+	ListSkus(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListSkusParams)
 	// Get sku
 	// (GET /v1/tenants/{tenant}/skus/{name})
-	GetSku(w http.ResponseWriter, r *http.Request, tenant Tenant, name ResourceName)
+	GetSku(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
 	// List internet gateways
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways)
-	ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListInternetGatewaysParams)
+	ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListInternetGatewaysParams)
 	// Delete internet gateway
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteInternetGatewayParams)
+	DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteInternetGatewayParams)
 	// Get internet gateway
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update internet gateway
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateInternetGatewayParams)
+	CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateInternetGatewayParams)
 	// List networks
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks)
-	ListNetworks(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListNetworksParams)
+	ListNetworks(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListNetworksParams)
 	// Delete network
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteNetworkParams)
+	DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteNetworkParams)
 	// Get network
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	GetNetwork(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update network
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateNetworkParams)
+	CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateNetworkParams)
+	// List route-tables
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables)
+	ListRouteTables(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params ListRouteTablesParams)
+	// Delete route-table
+	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
+	DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params DeleteRouteTableParams)
+	// Get route-table
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
+	GetRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam)
+	// Create or update route-table
+	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
+	CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params CreateOrUpdateRouteTableParams)
+	// List subnets
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets)
+	ListSubnets(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params ListSubnetsParams)
+	// Delete subnet
+	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
+	DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params DeleteSubnetParams)
+	// Get subnet
+	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
+	GetSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam)
+	// Create or update subnet
+	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
+	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params CreateOrUpdateSubnetParams)
 	// List nics
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/nics)
-	ListNics(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListNicsParams)
+	ListNics(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListNicsParams)
 	// Delete nic
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	DeleteNic(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteNicParams)
+	DeleteNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteNicParams)
 	// Get nic
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	GetNic(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update nic
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateNicParams)
+	CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateNicParams)
 	// List public ips
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/public-ips)
-	ListPublicIps(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListPublicIpsParams)
+	ListPublicIps(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListPublicIpsParams)
 	// Delete public ip
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeletePublicIpParams)
+	DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeletePublicIpParams)
 	// Get public ip
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	GetPublicIp(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetPublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update public ip
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdatePublicIpParams)
-	// List route-tables
-	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/route-tables)
-	ListRouteTables(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListRouteTablesParams)
-	// Delete route-table
-	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name})
-	DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteRouteTableParams)
-	// Get route-table
-	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name})
-	GetRouteTable(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
-	// Create or update route-table
-	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name})
-	CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateRouteTableParams)
+	CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdatePublicIpParams)
 	// List security-groups
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/security-groups)
-	ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListSecurityGroupsParams)
+	ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListSecurityGroupsParams)
 	// Delete security group
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteSecurityGroupParams)
+	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteSecurityGroupParams)
 	// Get security group
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
+	GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
 	// Create or update security group
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateSecurityGroupParams)
-	// List subnets
-	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/subnets)
-	ListSubnets(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, params ListSubnetsParams)
-	// Delete subnet
-	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name})
-	DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params DeleteSubnetParams)
-	// Get subnet
-	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name})
-	GetSubnet(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName)
-	// Create or update subnet
-	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name})
-	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant Tenant, workspace Workspace, name ResourceName, params CreateOrUpdateSubnetParams)
+	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateSecurityGroupParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -8143,7 +8036,7 @@ func (siw *ServerInterfaceWrapper) ListSkus(w http.ResponseWriter, r *http.Reque
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8222,7 +8115,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8231,7 +8124,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8262,7 +8155,7 @@ func (siw *ServerInterfaceWrapper) ListInternetGateways(w http.ResponseWriter, r
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8271,7 +8164,7 @@ func (siw *ServerInterfaceWrapper) ListInternetGateways(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8350,7 +8243,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8359,7 +8252,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8368,7 +8261,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8423,7 +8316,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8432,7 +8325,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8441,7 +8334,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8472,7 +8365,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8481,7 +8374,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8490,7 +8383,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8545,7 +8438,7 @@ func (siw *ServerInterfaceWrapper) ListNetworks(w http.ResponseWriter, r *http.R
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8554,7 +8447,7 @@ func (siw *ServerInterfaceWrapper) ListNetworks(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8633,7 +8526,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8642,7 +8535,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8651,7 +8544,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8706,7 +8599,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8715,7 +8608,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8724,7 +8617,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8755,7 +8648,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8764,7 +8657,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8773,7 +8666,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8822,13 +8715,13 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	handler.ServeHTTP(w, r)
 }
 
-// ListNics operation middleware
-func (siw *ServerInterfaceWrapper) ListNics(w http.ResponseWriter, r *http.Request) {
+// ListRouteTables operation middleware
+func (siw *ServerInterfaceWrapper) ListRouteTables(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8837,7 +8730,645 @@ func (siw *ServerInterfaceWrapper) ListNics(w http.ResponseWriter, r *http.Reque
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListRouteTablesParams
+
+	// ------------- Optional query parameter "labels" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "labels", r.URL.Query(), &params.Labels)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "labels", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "skipToken" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "skipToken", r.URL.Query(), &params.SkipToken)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "skipToken", Err: err})
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Accept" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
+		var Accept ListRouteTablesParamsAccept
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
+			return
+		}
+
+		params.Accept = &Accept
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListRouteTables(w, r, tenant, workspace, network, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteRouteTable operation middleware
+func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteRouteTableParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteRouteTable(w, r, tenant, workspace, network, name, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetRouteTable operation middleware
+func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetRouteTable(w, r, tenant, workspace, network, name)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateOrUpdateRouteTable operation middleware
+func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateOrUpdateRouteTableParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateOrUpdateRouteTable(w, r, tenant, workspace, network, name, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListSubnets operation middleware
+func (siw *ServerInterfaceWrapper) ListSubnets(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListSubnetsParams
+
+	// ------------- Optional query parameter "labels" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "labels", r.URL.Query(), &params.Labels)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "labels", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "skipToken" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "skipToken", r.URL.Query(), &params.SkipToken)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "skipToken", Err: err})
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Accept" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
+		var Accept ListSubnetsParamsAccept
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
+			return
+		}
+
+		params.Accept = &Accept
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListSubnets(w, r, tenant, workspace, network, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSubnet operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteSubnetParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSubnet(w, r, tenant, workspace, network, name, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetSubnet operation middleware
+func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetSubnet(w, r, tenant, workspace, network, name)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateOrUpdateSubnet operation middleware
+func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "network" -------------
+	var network NetworkPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "network", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "name" -------------
+	var name ResourcePathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateOrUpdateSubnetParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "if-unmodified-since" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
+		var IfUnmodifiedSince IfUnmodifiedSince
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
+			return
+		}
+
+		params.IfUnmodifiedSince = &IfUnmodifiedSince
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateOrUpdateSubnet(w, r, tenant, workspace, network, name, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListNics operation middleware
+func (siw *ServerInterfaceWrapper) ListNics(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "tenant" -------------
+	var tenant TenantPathParam
+
+	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "workspace" -------------
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8916,7 +9447,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8925,7 +9456,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8934,7 +9465,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8989,7 +9520,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8998,7 +9529,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9007,7 +9538,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9038,7 +9569,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9047,7 +9578,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9056,7 +9587,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9111,7 +9642,7 @@ func (siw *ServerInterfaceWrapper) ListPublicIps(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9120,7 +9651,7 @@ func (siw *ServerInterfaceWrapper) ListPublicIps(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9199,7 +9730,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9208,7 +9739,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9217,7 +9748,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9272,7 +9803,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9281,7 +9812,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9290,7 +9821,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9321,7 +9852,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9330,7 +9861,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9339,7 +9870,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9388,296 +9919,13 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	handler.ServeHTTP(w, r)
 }
 
-// ListRouteTables operation middleware
-func (siw *ServerInterfaceWrapper) ListRouteTables(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params ListRouteTablesParams
-
-	// ------------- Optional query parameter "labels" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "labels", r.URL.Query(), &params.Labels)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "labels", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "limit" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "skipToken" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "skipToken", r.URL.Query(), &params.SkipToken)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "skipToken", Err: err})
-		return
-	}
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Accept" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListRouteTablesParamsAccept
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
-			return
-		}
-
-		params.Accept = &Accept
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListRouteTables(w, r, tenant, workspace, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// DeleteRouteTable operation middleware
-func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params DeleteRouteTableParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "if-unmodified-since" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
-			return
-		}
-
-		params.IfUnmodifiedSince = &IfUnmodifiedSince
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteRouteTable(w, r, tenant, workspace, name, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// GetRouteTable operation middleware
-func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetRouteTable(w, r, tenant, workspace, name)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// CreateOrUpdateRouteTable operation middleware
-func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateOrUpdateRouteTableParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "if-unmodified-since" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
-			return
-		}
-
-		params.IfUnmodifiedSince = &IfUnmodifiedSince
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateRouteTable(w, r, tenant, workspace, name, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
 // ListSecurityGroups operation middleware
 func (siw *ServerInterfaceWrapper) ListSecurityGroups(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9686,7 +9934,7 @@ func (siw *ServerInterfaceWrapper) ListSecurityGroups(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9765,7 +10013,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9774,7 +10022,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9783,7 +10031,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9838,7 +10086,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9847,7 +10095,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9856,7 +10104,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9887,7 +10135,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
+	var tenant TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9896,7 +10144,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
+	var workspace WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9905,7 +10153,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourceName
+	var name ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9945,289 +10193,6 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateOrUpdateSecurityGroup(w, r, tenant, workspace, name, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// ListSubnets operation middleware
-func (siw *ServerInterfaceWrapper) ListSubnets(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params ListSubnetsParams
-
-	// ------------- Optional query parameter "labels" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "labels", r.URL.Query(), &params.Labels)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "labels", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "limit" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
-		return
-	}
-
-	// ------------- Optional query parameter "skipToken" -------------
-
-	err = runtime.BindQueryParameter("form", true, false, "skipToken", r.URL.Query(), &params.SkipToken)
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "skipToken", Err: err})
-		return
-	}
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Accept" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept ListSubnetsParamsAccept
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
-			return
-		}
-
-		params.Accept = &Accept
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListSubnets(w, r, tenant, workspace, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// DeleteSubnet operation middleware
-func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params DeleteSubnetParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "if-unmodified-since" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
-			return
-		}
-
-		params.IfUnmodifiedSince = &IfUnmodifiedSince
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteSubnet(w, r, tenant, workspace, name, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// GetSubnet operation middleware
-func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetSubnet(w, r, tenant, workspace, name)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// CreateOrUpdateSubnet operation middleware
-func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-
-	// ------------- Path parameter "tenant" -------------
-	var tenant Tenant
-
-	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "tenant", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "workspace" -------------
-	var workspace Workspace
-
-	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace", Err: err})
-		return
-	}
-
-	// ------------- Path parameter "name" -------------
-	var name ResourceName
-
-	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
-		return
-	}
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateOrUpdateSubnetParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "if-unmodified-since" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "if-unmodified-since", valueList[0], &IfUnmodifiedSince, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "if-unmodified-since", Err: err})
-			return
-		}
-
-		params.IfUnmodifiedSince = &IfUnmodifiedSince
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateOrUpdateSubnet(w, r, tenant, workspace, name, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -10367,6 +10332,14 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{name}", wrapper.DeleteNetwork)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{name}", wrapper.GetNetwork)
 	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{name}", wrapper.CreateOrUpdateNetwork)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables", wrapper.ListRouteTables)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name}", wrapper.DeleteRouteTable)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name}", wrapper.GetRouteTable)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name}", wrapper.CreateOrUpdateRouteTable)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets", wrapper.ListSubnets)
+	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name}", wrapper.DeleteSubnet)
+	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name}", wrapper.GetSubnet)
+	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name}", wrapper.CreateOrUpdateSubnet)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/nics", wrapper.ListNics)
 	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/nics/{name}", wrapper.DeleteNic)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/nics/{name}", wrapper.GetNic)
@@ -10375,18 +10348,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name}", wrapper.DeletePublicIp)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name}", wrapper.GetPublicIp)
 	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name}", wrapper.CreateOrUpdatePublicIp)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/route-tables", wrapper.ListRouteTables)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name}", wrapper.DeleteRouteTable)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name}", wrapper.GetRouteTable)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/route-tables/{name}", wrapper.CreateOrUpdateRouteTable)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/security-groups", wrapper.ListSecurityGroups)
 	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name}", wrapper.DeleteSecurityGroup)
 	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name}", wrapper.GetSecurityGroup)
 	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name}", wrapper.CreateOrUpdateSecurityGroup)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/subnets", wrapper.ListSubnets)
-	m.HandleFunc("DELETE "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name}", wrapper.DeleteSubnet)
-	m.HandleFunc("GET "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name}", wrapper.GetSubnet)
-	m.HandleFunc("PUT "+options.BaseURL+"/v1/tenants/{tenant}/workspaces/{workspace}/subnets/{name}", wrapper.CreateOrUpdateSubnet)
 
 	return m
 }

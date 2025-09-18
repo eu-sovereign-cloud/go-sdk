@@ -20,7 +20,16 @@ type WorkspaceReference struct {
 	Name      string
 }
 
-func validateTenantReference(tref TenantReference) error {
+type NetworkReference struct {
+	Tenant    TenantID
+	Workspace WorkspaceID
+	Network   NetworkID
+	Name      string
+}
+
+// Validators
+
+func (tref *TenantReference) validate() error {
 	if tref.Tenant == "" {
 		return ErrNoMetatadaTenant
 	}
@@ -32,7 +41,7 @@ func validateTenantReference(tref TenantReference) error {
 	return nil
 }
 
-func validateWorkspaceReference(wref WorkspaceReference) error {
+func (wref *WorkspaceReference) validate() error {
 	if wref.Tenant == "" {
 		return ErrNoMetatadaTenant
 	}
@@ -42,6 +51,26 @@ func validateWorkspaceReference(wref WorkspaceReference) error {
 	}
 
 	if wref.Name == "" {
+		return ErrNoMetatadaName
+	}
+
+	return nil
+}
+
+func (nref *NetworkReference) validate() error {
+	if nref.Tenant == "" {
+		return ErrNoMetatadaTenant
+	}
+
+	if nref.Workspace == "" {
+		return ErrNoMetatadaWorkspace
+	}
+
+	if nref.Network == "" {
+		return ErrNoPathMetadata
+	}
+
+	if nref.Name == "" {
 		return ErrNoMetatadaName
 	}
 

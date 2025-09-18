@@ -72,8 +72,7 @@ const (
 			{
 				"metadata": {
 					"name": "{{.Metadata.Name}}",
-					"tenant": "{{.Metadata.Tenant}}",
-					"workspace": "{{.Metadata.Workspace}}"
+					"tenant": "{{.Metadata.Tenant}}"
 				},
 				"spec": {
 					"blockStorageRef": "{{.BlockStorageRef}}"
@@ -88,8 +87,7 @@ const (
 	{
 		"metadata": {
 			"name": "{{.Metadata.Name}}",
-			"tenant": "{{.Metadata.Tenant}}",
-			"workspace": "{{.Metadata.Workspace}}"
+			"tenant": "{{.Metadata.Tenant}}"
 		},
 		"spec": {
 			"blockStorageRef": "{{.BlockStorageRef}}"

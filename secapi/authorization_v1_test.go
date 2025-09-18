@@ -11,7 +11,6 @@ import (
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 // Role
@@ -37,17 +36,17 @@ func TestListRoles(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
-	require.Len(t, resp, 1)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.Role1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
-	require.Len(t, resp[0].Spec.Permissions, 1)
-	require.Len(t, resp[0].Spec.Permissions[0].Verb, 1)
+	assert.Len(t, resp[0].Spec.Permissions, 1)
+	assert.Len(t, resp[0].Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
@@ -75,14 +74,14 @@ func TestGetRole(t *testing.T) {
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
 	resp, err := client.AuthorizationV1.GetRole(ctx, tref)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 
-	require.Len(t, resp.Spec.Permissions, 1)
-	require.Len(t, resp.Spec.Permissions[0].Verb, 1)
+	assert.Len(t, resp.Spec.Permissions, 1)
+	assert.Len(t, resp.Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
@@ -124,14 +123,14 @@ func TestCreateOrUpdateRole(t *testing.T) {
 		},
 	}
 	resp, err := client.AuthorizationV1.CreateOrUpdateRole(ctx, &role)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
-	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Role1Name, resp.Metadata.Name)
 
-	require.Len(t, resp.Spec.Permissions, 1)
-	require.Len(t, resp.Spec.Permissions[0].Verb, 1)
+	assert.Len(t, resp.Spec.Permissions, 1)
+	assert.Len(t, resp.Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
@@ -160,11 +159,11 @@ func TestDeleteRole(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.AuthorizationV1.GetRole(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name})
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	err = client.AuthorizationV1.DeleteRole(ctx, resp)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 // Role Assignment
@@ -190,17 +189,17 @@ func TestListRoleAssignments(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, secatest.Tenant1Name)
-	require.NoError(t, err)
-	require.NotNil(t, iter)
+	assert.NoError(t, err)
+	assert.NotNil(t, iter)
 
 	resp, err := iter.All(ctx)
-	require.NoError(t, err)
-	require.Len(t, resp, 1)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
 
 	assert.Equal(t, secatest.RoleAssignment1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
-	require.Len(t, resp[0].Spec.Subs, 1)
+	assert.Len(t, resp[0].Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp[0].Spec.Subs[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
@@ -228,13 +227,13 @@ func TestGetRoleAssignment(t *testing.T) {
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
 	resp, err := client.AuthorizationV1.GetRoleAssignment(ctx, tref)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 
-	require.Len(t, resp.Spec.Subs, 1)
+	assert.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
@@ -276,13 +275,13 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 		},
 	}
 	resp, err := client.AuthorizationV1.CreateOrUpdateRoleAssignment(ctx, assign)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
-	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.RoleAssignment1Name, resp.Metadata.Name)
 
-	require.Len(t, resp.Spec.Subs, 1)
+	assert.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
@@ -311,9 +310,9 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	resp, err := client.AuthorizationV1.GetRoleAssignment(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name})
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }

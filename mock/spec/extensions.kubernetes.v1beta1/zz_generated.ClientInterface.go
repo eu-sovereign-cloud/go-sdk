@@ -26,7 +26,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateCluster provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateCluster(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateClusterParams, body kubernetes.CreateOrUpdateClusterJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateCluster(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateClusterParams, body kubernetes.CreateOrUpdateClusterJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -42,10 +42,10 @@ func (_m *MockClientInterface) CreateOrUpdateCluster(ctx context.Context, tenant
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -53,7 +53,7 @@ func (_m *MockClientInterface) CreateOrUpdateCluster(ctx context.Context, tenant
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -69,9 +69,9 @@ type MockClientInterface_CreateOrUpdateCluster_Call struct {
 
 // CreateOrUpdateCluster is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.CreateOrUpdateClusterParams
 //   - body kubernetes.CreateOrUpdateClusterJSONRequestBody
 //   - reqEditors ...kubernetes.RequestEditorFn
@@ -80,7 +80,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateCluster(ctx interface{}, t
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateClusterParams, body kubernetes.CreateOrUpdateClusterJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateCluster_Call {
+func (_c *MockClientInterface_CreateOrUpdateCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateClusterParams, body kubernetes.CreateOrUpdateClusterJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -88,7 +88,7 @@ func (_c *MockClientInterface_CreateOrUpdateCluster_Call) Run(run func(ctx conte
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.ResourceName), args[4].(*kubernetes.CreateOrUpdateClusterParams), args[5].(kubernetes.CreateOrUpdateClusterJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ResourcePathParam), args[4].(*kubernetes.CreateOrUpdateClusterParams), args[5].(kubernetes.CreateOrUpdateClusterJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -98,13 +98,13 @@ func (_c *MockClientInterface_CreateOrUpdateCluster_Call) Return(_a0 *http.Respo
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateCluster_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateCluster_Call {
+func (_c *MockClientInterface_CreateOrUpdateCluster_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, kubernetes.CreateOrUpdateClusterJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateCluster_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateClusterWithBody provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateClusterWithBody(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateClusterWithBody(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -120,10 +120,10 @@ func (_m *MockClientInterface) CreateOrUpdateClusterWithBody(ctx context.Context
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -131,7 +131,7 @@ func (_m *MockClientInterface) CreateOrUpdateClusterWithBody(ctx context.Context
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -147,9 +147,9 @@ type MockClientInterface_CreateOrUpdateClusterWithBody_Call struct {
 
 // CreateOrUpdateClusterWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.CreateOrUpdateClusterParams
 //   - contentType string
 //   - body io.Reader
@@ -159,7 +159,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateClusterWithBody(ctx interf
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateClusterWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateClusterParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateClusterWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -167,7 +167,7 @@ func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) Run(run func(c
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.ResourceName), args[4].(*kubernetes.CreateOrUpdateClusterParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ResourcePathParam), args[4].(*kubernetes.CreateOrUpdateClusterParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -177,13 +177,13 @@ func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) Return(_a0 *ht
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateClusterWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateClusterWithBody_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateClusterParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateClusterWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNodePool provides a mock function with given fields: ctx, tenant, workspace, cluster, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateNodePool(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateNodePoolParams, body kubernetes.CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateNodePool(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateNodePoolParams, body kubernetes.CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -199,10 +199,10 @@ func (_m *MockClientInterface) CreateOrUpdateNodePool(ctx context.Context, tenan
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, cluster, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, cluster, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -210,7 +210,7 @@ func (_m *MockClientInterface) CreateOrUpdateNodePool(ctx context.Context, tenan
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, cluster, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -226,10 +226,10 @@ type MockClientInterface_CreateOrUpdateNodePool_Call struct {
 
 // CreateOrUpdateNodePool is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.CreateOrUpdateNodePoolParams
 //   - body kubernetes.CreateOrUpdateNodePoolJSONRequestBody
 //   - reqEditors ...kubernetes.RequestEditorFn
@@ -238,7 +238,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateNodePool(ctx interface{}, 
 		append([]interface{}{ctx, tenant, workspace, cluster, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateNodePoolParams, body kubernetes.CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNodePool_Call {
+func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateNodePoolParams, body kubernetes.CreateOrUpdateNodePoolJSONRequestBody, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -246,7 +246,7 @@ func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) Run(run func(ctx cont
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.Cluster), args[4].(kubernetes.ResourceName), args[5].(*kubernetes.CreateOrUpdateNodePoolParams), args[6].(kubernetes.CreateOrUpdateNodePoolJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ClusterPathParam), args[4].(kubernetes.ResourcePathParam), args[5].(*kubernetes.CreateOrUpdateNodePoolParams), args[6].(kubernetes.CreateOrUpdateNodePoolJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -256,13 +256,13 @@ func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) Return(_a0 *http.Resp
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNodePool_Call {
+func (_c *MockClientInterface_CreateOrUpdateNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, kubernetes.CreateOrUpdateNodePoolJSONRequestBody, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNodePool_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateNodePoolWithBody provides a mock function with given fields: ctx, tenant, workspace, cluster, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateNodePoolWithBody(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -278,10 +278,10 @@ func (_m *MockClientInterface) CreateOrUpdateNodePoolWithBody(ctx context.Contex
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, cluster, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, cluster, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -289,7 +289,7 @@ func (_m *MockClientInterface) CreateOrUpdateNodePoolWithBody(ctx context.Contex
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, cluster, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -305,10 +305,10 @@ type MockClientInterface_CreateOrUpdateNodePoolWithBody_Call struct {
 
 // CreateOrUpdateNodePoolWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.CreateOrUpdateNodePoolParams
 //   - contentType string
 //   - body io.Reader
@@ -318,7 +318,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateNodePoolWithBody(ctx inter
 		append([]interface{}{ctx, tenant, workspace, cluster, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.CreateOrUpdateNodePoolParams, contentType string, body io.Reader, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-8)
 		for i, a := range args[8:] {
@@ -326,7 +326,7 @@ func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) Run(run func(
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.Cluster), args[4].(kubernetes.ResourceName), args[5].(*kubernetes.CreateOrUpdateNodePoolParams), args[6].(string), args[7].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ClusterPathParam), args[4].(kubernetes.ResourcePathParam), args[5].(*kubernetes.CreateOrUpdateNodePoolParams), args[6].(string), args[7].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -336,13 +336,13 @@ func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) Return(_a0 *h
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.CreateOrUpdateNodePoolParams, string, io.Reader, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateNodePoolWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteCluster provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientInterface) DeleteCluster(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.DeleteClusterParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteCluster(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.DeleteClusterParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -358,10 +358,10 @@ func (_m *MockClientInterface) DeleteCluster(ctx context.Context, tenant kuberne
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -369,7 +369,7 @@ func (_m *MockClientInterface) DeleteCluster(ctx context.Context, tenant kuberne
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -385,9 +385,9 @@ type MockClientInterface_DeleteCluster_Call struct {
 
 // DeleteCluster is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.DeleteClusterParams
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteCluster(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteCluster_Call {
@@ -395,7 +395,7 @@ func (_e *MockClientInterface_Expecter) DeleteCluster(ctx interface{}, tenant in
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, params *kubernetes.DeleteClusterParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_DeleteCluster_Call {
+func (_c *MockClientInterface_DeleteCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, params *kubernetes.DeleteClusterParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_DeleteCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -403,7 +403,7 @@ func (_c *MockClientInterface_DeleteCluster_Call) Run(run func(ctx context.Conte
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.ResourceName), args[4].(*kubernetes.DeleteClusterParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ResourcePathParam), args[4].(*kubernetes.DeleteClusterParams), variadicArgs...)
 	})
 	return _c
 }
@@ -413,13 +413,13 @@ func (_c *MockClientInterface_DeleteCluster_Call) Return(_a0 *http.Response, _a1
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteCluster_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteCluster_Call {
+func (_c *MockClientInterface_DeleteCluster_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteClusterParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteCluster_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteNodePool provides a mock function with given fields: ctx, tenant, workspace, cluster, name, params, reqEditors
-func (_m *MockClientInterface) DeleteNodePool(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.DeleteNodePoolParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteNodePool(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.DeleteNodePoolParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -435,10 +435,10 @@ func (_m *MockClientInterface) DeleteNodePool(ctx context.Context, tenant kubern
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, cluster, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, cluster, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -446,7 +446,7 @@ func (_m *MockClientInterface) DeleteNodePool(ctx context.Context, tenant kubern
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, cluster, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -462,10 +462,10 @@ type MockClientInterface_DeleteNodePool_Call struct {
 
 // DeleteNodePool is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - params *kubernetes.DeleteNodePoolParams
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteNodePool(ctx interface{}, tenant interface{}, workspace interface{}, cluster interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteNodePool_Call {
@@ -473,7 +473,7 @@ func (_e *MockClientInterface_Expecter) DeleteNodePool(ctx interface{}, tenant i
 		append([]interface{}{ctx, tenant, workspace, cluster, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, params *kubernetes.DeleteNodePoolParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_DeleteNodePool_Call {
+func (_c *MockClientInterface_DeleteNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, params *kubernetes.DeleteNodePoolParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_DeleteNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -481,7 +481,7 @@ func (_c *MockClientInterface_DeleteNodePool_Call) Run(run func(ctx context.Cont
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.Cluster), args[4].(kubernetes.ResourceName), args[5].(*kubernetes.DeleteNodePoolParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ClusterPathParam), args[4].(kubernetes.ResourcePathParam), args[5].(*kubernetes.DeleteNodePoolParams), variadicArgs...)
 	})
 	return _c
 }
@@ -491,13 +491,13 @@ func (_c *MockClientInterface_DeleteNodePool_Call) Return(_a0 *http.Response, _a
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteNodePool_Call {
+func (_c *MockClientInterface_DeleteNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, *kubernetes.DeleteNodePoolParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteNodePool_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetCluster provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientInterface) GetCluster(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetCluster(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -513,10 +513,10 @@ func (_m *MockClientInterface) GetCluster(ctx context.Context, tenant kubernetes
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -524,7 +524,7 @@ func (_m *MockClientInterface) GetCluster(ctx context.Context, tenant kubernetes
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -540,16 +540,16 @@ type MockClientInterface_GetCluster_Call struct {
 
 // GetCluster is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - name kubernetes.ResourcePathParam
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetCluster(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetCluster_Call {
 	return &MockClientInterface_GetCluster_Call{Call: _e.mock.On("GetCluster",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, name kubernetes.ResourceName, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_GetCluster_Call {
+func (_c *MockClientInterface_GetCluster_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, name kubernetes.ResourcePathParam, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_GetCluster_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -557,7 +557,7 @@ func (_c *MockClientInterface_GetCluster_Call) Run(run func(ctx context.Context,
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -567,13 +567,13 @@ func (_c *MockClientInterface_GetCluster_Call) Return(_a0 *http.Response, _a1 er
 	return _c
 }
 
-func (_c *MockClientInterface_GetCluster_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetCluster_Call {
+func (_c *MockClientInterface_GetCluster_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetCluster_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetNodePool provides a mock function with given fields: ctx, tenant, workspace, cluster, name, reqEditors
-func (_m *MockClientInterface) GetNodePool(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetNodePool(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -589,10 +589,10 @@ func (_m *MockClientInterface) GetNodePool(ctx context.Context, tenant kubernete
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, cluster, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, cluster, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -600,7 +600,7 @@ func (_m *MockClientInterface) GetNodePool(ctx context.Context, tenant kubernete
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, cluster, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -616,17 +616,17 @@ type MockClientInterface_GetNodePool_Call struct {
 
 // GetNodePool is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
-//   - name kubernetes.ResourceName
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
+//   - name kubernetes.ResourcePathParam
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetNodePool(ctx interface{}, tenant interface{}, workspace interface{}, cluster interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetNodePool_Call {
 	return &MockClientInterface_GetNodePool_Call{Call: _e.mock.On("GetNodePool",
 		append([]interface{}{ctx, tenant, workspace, cluster, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, name kubernetes.ResourceName, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_GetNodePool_Call {
+func (_c *MockClientInterface_GetNodePool_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, name kubernetes.ResourcePathParam, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_GetNodePool_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -634,7 +634,7 @@ func (_c *MockClientInterface_GetNodePool_Call) Run(run func(ctx context.Context
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.Cluster), args[4].(kubernetes.ResourceName), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ClusterPathParam), args[4].(kubernetes.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -644,13 +644,13 @@ func (_c *MockClientInterface_GetNodePool_Call) Return(_a0 *http.Response, _a1 e
 	return _c
 }
 
-func (_c *MockClientInterface_GetNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, kubernetes.ResourceName, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetNodePool_Call {
+func (_c *MockClientInterface_GetNodePool_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, kubernetes.ResourcePathParam, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetNodePool_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListClusters provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListClusters(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, params *kubernetes.ListClustersParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListClusters(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, params *kubernetes.ListClustersParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -666,10 +666,10 @@ func (_m *MockClientInterface) ListClusters(ctx context.Context, tenant kubernet
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -677,7 +677,7 @@ func (_m *MockClientInterface) ListClusters(ctx context.Context, tenant kubernet
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -693,8 +693,8 @@ type MockClientInterface_ListClusters_Call struct {
 
 // ListClusters is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
 //   - params *kubernetes.ListClustersParams
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListClusters(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListClusters_Call {
@@ -702,7 +702,7 @@ func (_e *MockClientInterface_Expecter) ListClusters(ctx interface{}, tenant int
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListClusters_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, params *kubernetes.ListClustersParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_ListClusters_Call {
+func (_c *MockClientInterface_ListClusters_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, params *kubernetes.ListClustersParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_ListClusters_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -710,7 +710,7 @@ func (_c *MockClientInterface_ListClusters_Call) Run(run func(ctx context.Contex
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(*kubernetes.ListClustersParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(*kubernetes.ListClustersParams), variadicArgs...)
 	})
 	return _c
 }
@@ -720,13 +720,13 @@ func (_c *MockClientInterface_ListClusters_Call) Return(_a0 *http.Response, _a1 
 	return _c
 }
 
-func (_c *MockClientInterface_ListClusters_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListClusters_Call {
+func (_c *MockClientInterface_ListClusters_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, *kubernetes.ListClustersParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListClusters_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListNodePools provides a mock function with given fields: ctx, tenant, workspace, cluster, params, reqEditors
-func (_m *MockClientInterface) ListNodePools(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, params *kubernetes.ListNodePoolsParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListNodePools(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, params *kubernetes.ListNodePoolsParams, reqEditors ...kubernetes.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -742,10 +742,10 @@ func (_m *MockClientInterface) ListNodePools(ctx context.Context, tenant kuberne
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, cluster, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, cluster, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -753,7 +753,7 @@ func (_m *MockClientInterface) ListNodePools(ctx context.Context, tenant kuberne
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, cluster, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -769,9 +769,9 @@ type MockClientInterface_ListNodePools_Call struct {
 
 // ListNodePools is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant kubernetes.Tenant
-//   - workspace kubernetes.Workspace
-//   - cluster kubernetes.Cluster
+//   - tenant kubernetes.TenantPathParam
+//   - workspace kubernetes.WorkspacePathParam
+//   - cluster kubernetes.ClusterPathParam
 //   - params *kubernetes.ListNodePoolsParams
 //   - reqEditors ...kubernetes.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListNodePools(ctx interface{}, tenant interface{}, workspace interface{}, cluster interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListNodePools_Call {
@@ -779,7 +779,7 @@ func (_e *MockClientInterface_Expecter) ListNodePools(ctx interface{}, tenant in
 		append([]interface{}{ctx, tenant, workspace, cluster, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListNodePools_Call) Run(run func(ctx context.Context, tenant kubernetes.Tenant, workspace kubernetes.Workspace, cluster kubernetes.Cluster, params *kubernetes.ListNodePoolsParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_ListNodePools_Call {
+func (_c *MockClientInterface_ListNodePools_Call) Run(run func(ctx context.Context, tenant kubernetes.TenantPathParam, workspace kubernetes.WorkspacePathParam, cluster kubernetes.ClusterPathParam, params *kubernetes.ListNodePoolsParams, reqEditors ...kubernetes.RequestEditorFn)) *MockClientInterface_ListNodePools_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]kubernetes.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -787,7 +787,7 @@ func (_c *MockClientInterface_ListNodePools_Call) Run(run func(ctx context.Conte
 				variadicArgs[i] = a.(kubernetes.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(kubernetes.Tenant), args[2].(kubernetes.Workspace), args[3].(kubernetes.Cluster), args[4].(*kubernetes.ListNodePoolsParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(kubernetes.TenantPathParam), args[2].(kubernetes.WorkspacePathParam), args[3].(kubernetes.ClusterPathParam), args[4].(*kubernetes.ListNodePoolsParams), variadicArgs...)
 	})
 	return _c
 }
@@ -797,7 +797,7 @@ func (_c *MockClientInterface_ListNodePools_Call) Return(_a0 *http.Response, _a1
 	return _c
 }
 
-func (_c *MockClientInterface_ListNodePools_Call) RunAndReturn(run func(context.Context, kubernetes.Tenant, kubernetes.Workspace, kubernetes.Cluster, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListNodePools_Call {
+func (_c *MockClientInterface_ListNodePools_Call) RunAndReturn(run func(context.Context, kubernetes.TenantPathParam, kubernetes.WorkspacePathParam, kubernetes.ClusterPathParam, *kubernetes.ListNodePoolsParams, ...kubernetes.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListNodePools_Call {
 	_c.Call.Return(run)
 	return _c
 }

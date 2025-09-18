@@ -24,7 +24,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateRole provides a mock function with given fields: w, r, tenant, name, params
-func (_m *MockServerInterface) CreateOrUpdateRole(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.CreateOrUpdateRoleParams) {
+func (_m *MockServerInterface) CreateOrUpdateRole(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.CreateOrUpdateRoleParams) {
 	_m.Called(w, r, tenant, name, params)
 }
 
@@ -36,16 +36,16 @@ type MockServerInterface_CreateOrUpdateRole_Call struct {
 // CreateOrUpdateRole is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params authorization.CreateOrUpdateRoleParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateRole(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateRole_Call {
 	return &MockServerInterface_CreateOrUpdateRole_Call{Call: _e.mock.On("CreateOrUpdateRole", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.CreateOrUpdateRoleParams)) *MockServerInterface_CreateOrUpdateRole_Call {
+func (_c *MockServerInterface_CreateOrUpdateRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.CreateOrUpdateRoleParams)) *MockServerInterface_CreateOrUpdateRole_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName), args[4].(authorization.CreateOrUpdateRoleParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam), args[4].(authorization.CreateOrUpdateRoleParams))
 	})
 	return _c
 }
@@ -55,13 +55,13 @@ func (_c *MockServerInterface_CreateOrUpdateRole_Call) Return() *MockServerInter
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName, authorization.CreateOrUpdateRoleParams)) *MockServerInterface_CreateOrUpdateRole_Call {
+func (_c *MockServerInterface_CreateOrUpdateRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam, authorization.CreateOrUpdateRoleParams)) *MockServerInterface_CreateOrUpdateRole_Call {
 	_c.Run(run)
 	return _c
 }
 
 // CreateOrUpdateRoleAssignment provides a mock function with given fields: w, r, tenant, name, params
-func (_m *MockServerInterface) CreateOrUpdateRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.CreateOrUpdateRoleAssignmentParams) {
+func (_m *MockServerInterface) CreateOrUpdateRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.CreateOrUpdateRoleAssignmentParams) {
 	_m.Called(w, r, tenant, name, params)
 }
 
@@ -73,16 +73,16 @@ type MockServerInterface_CreateOrUpdateRoleAssignment_Call struct {
 // CreateOrUpdateRoleAssignment is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params authorization.CreateOrUpdateRoleAssignmentParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateRoleAssignment(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateRoleAssignment_Call {
 	return &MockServerInterface_CreateOrUpdateRoleAssignment_Call{Call: _e.mock.On("CreateOrUpdateRoleAssignment", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.CreateOrUpdateRoleAssignmentParams)) *MockServerInterface_CreateOrUpdateRoleAssignment_Call {
+func (_c *MockServerInterface_CreateOrUpdateRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.CreateOrUpdateRoleAssignmentParams)) *MockServerInterface_CreateOrUpdateRoleAssignment_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName), args[4].(authorization.CreateOrUpdateRoleAssignmentParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam), args[4].(authorization.CreateOrUpdateRoleAssignmentParams))
 	})
 	return _c
 }
@@ -92,13 +92,13 @@ func (_c *MockServerInterface_CreateOrUpdateRoleAssignment_Call) Return() *MockS
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName, authorization.CreateOrUpdateRoleAssignmentParams)) *MockServerInterface_CreateOrUpdateRoleAssignment_Call {
+func (_c *MockServerInterface_CreateOrUpdateRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam, authorization.CreateOrUpdateRoleAssignmentParams)) *MockServerInterface_CreateOrUpdateRoleAssignment_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteRole provides a mock function with given fields: w, r, tenant, name, params
-func (_m *MockServerInterface) DeleteRole(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.DeleteRoleParams) {
+func (_m *MockServerInterface) DeleteRole(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.DeleteRoleParams) {
 	_m.Called(w, r, tenant, name, params)
 }
 
@@ -110,16 +110,16 @@ type MockServerInterface_DeleteRole_Call struct {
 // DeleteRole is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params authorization.DeleteRoleParams
 func (_e *MockServerInterface_Expecter) DeleteRole(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteRole_Call {
 	return &MockServerInterface_DeleteRole_Call{Call: _e.mock.On("DeleteRole", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.DeleteRoleParams)) *MockServerInterface_DeleteRole_Call {
+func (_c *MockServerInterface_DeleteRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.DeleteRoleParams)) *MockServerInterface_DeleteRole_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName), args[4].(authorization.DeleteRoleParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam), args[4].(authorization.DeleteRoleParams))
 	})
 	return _c
 }
@@ -129,13 +129,13 @@ func (_c *MockServerInterface_DeleteRole_Call) Return() *MockServerInterface_Del
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName, authorization.DeleteRoleParams)) *MockServerInterface_DeleteRole_Call {
+func (_c *MockServerInterface_DeleteRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam, authorization.DeleteRoleParams)) *MockServerInterface_DeleteRole_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteRoleAssignment provides a mock function with given fields: w, r, tenant, name, params
-func (_m *MockServerInterface) DeleteRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.DeleteRoleAssignmentParams) {
+func (_m *MockServerInterface) DeleteRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.DeleteRoleAssignmentParams) {
 	_m.Called(w, r, tenant, name, params)
 }
 
@@ -147,16 +147,16 @@ type MockServerInterface_DeleteRoleAssignment_Call struct {
 // DeleteRoleAssignment is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 //   - params authorization.DeleteRoleAssignmentParams
 func (_e *MockServerInterface_Expecter) DeleteRoleAssignment(w interface{}, r interface{}, tenant interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteRoleAssignment_Call {
 	return &MockServerInterface_DeleteRoleAssignment_Call{Call: _e.mock.On("DeleteRoleAssignment", w, r, tenant, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName, params authorization.DeleteRoleAssignmentParams)) *MockServerInterface_DeleteRoleAssignment_Call {
+func (_c *MockServerInterface_DeleteRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam, params authorization.DeleteRoleAssignmentParams)) *MockServerInterface_DeleteRoleAssignment_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName), args[4].(authorization.DeleteRoleAssignmentParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam), args[4].(authorization.DeleteRoleAssignmentParams))
 	})
 	return _c
 }
@@ -166,13 +166,13 @@ func (_c *MockServerInterface_DeleteRoleAssignment_Call) Return() *MockServerInt
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName, authorization.DeleteRoleAssignmentParams)) *MockServerInterface_DeleteRoleAssignment_Call {
+func (_c *MockServerInterface_DeleteRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam, authorization.DeleteRoleAssignmentParams)) *MockServerInterface_DeleteRoleAssignment_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetRole provides a mock function with given fields: w, r, tenant, name
-func (_m *MockServerInterface) GetRole(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName) {
+func (_m *MockServerInterface) GetRole(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam) {
 	_m.Called(w, r, tenant, name)
 }
 
@@ -184,15 +184,15 @@ type MockServerInterface_GetRole_Call struct {
 // GetRole is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetRole(w interface{}, r interface{}, tenant interface{}, name interface{}) *MockServerInterface_GetRole_Call {
 	return &MockServerInterface_GetRole_Call{Call: _e.mock.On("GetRole", w, r, tenant, name)}
 }
 
-func (_c *MockServerInterface_GetRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName)) *MockServerInterface_GetRole_Call {
+func (_c *MockServerInterface_GetRole_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam)) *MockServerInterface_GetRole_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam))
 	})
 	return _c
 }
@@ -202,13 +202,13 @@ func (_c *MockServerInterface_GetRole_Call) Return() *MockServerInterface_GetRol
 	return _c
 }
 
-func (_c *MockServerInterface_GetRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName)) *MockServerInterface_GetRole_Call {
+func (_c *MockServerInterface_GetRole_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam)) *MockServerInterface_GetRole_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetRoleAssignment provides a mock function with given fields: w, r, tenant, name
-func (_m *MockServerInterface) GetRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName) {
+func (_m *MockServerInterface) GetRoleAssignment(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam) {
 	_m.Called(w, r, tenant, name)
 }
 
@@ -220,15 +220,15 @@ type MockServerInterface_GetRoleAssignment_Call struct {
 // GetRoleAssignment is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
-//   - name authorization.ResourceName
+//   - tenant authorization.TenantPathParam
+//   - name authorization.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetRoleAssignment(w interface{}, r interface{}, tenant interface{}, name interface{}) *MockServerInterface_GetRoleAssignment_Call {
 	return &MockServerInterface_GetRoleAssignment_Call{Call: _e.mock.On("GetRoleAssignment", w, r, tenant, name)}
 }
 
-func (_c *MockServerInterface_GetRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, name authorization.ResourceName)) *MockServerInterface_GetRoleAssignment_Call {
+func (_c *MockServerInterface_GetRoleAssignment_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, name authorization.ResourcePathParam)) *MockServerInterface_GetRoleAssignment_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ResourceName))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ResourcePathParam))
 	})
 	return _c
 }
@@ -238,13 +238,13 @@ func (_c *MockServerInterface_GetRoleAssignment_Call) Return() *MockServerInterf
 	return _c
 }
 
-func (_c *MockServerInterface_GetRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ResourceName)) *MockServerInterface_GetRoleAssignment_Call {
+func (_c *MockServerInterface_GetRoleAssignment_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ResourcePathParam)) *MockServerInterface_GetRoleAssignment_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListRoleAssignments provides a mock function with given fields: w, r, tenant, params
-func (_m *MockServerInterface) ListRoleAssignments(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, params authorization.ListRoleAssignmentsParams) {
+func (_m *MockServerInterface) ListRoleAssignments(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, params authorization.ListRoleAssignmentsParams) {
 	_m.Called(w, r, tenant, params)
 }
 
@@ -256,15 +256,15 @@ type MockServerInterface_ListRoleAssignments_Call struct {
 // ListRoleAssignments is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
+//   - tenant authorization.TenantPathParam
 //   - params authorization.ListRoleAssignmentsParams
 func (_e *MockServerInterface_Expecter) ListRoleAssignments(w interface{}, r interface{}, tenant interface{}, params interface{}) *MockServerInterface_ListRoleAssignments_Call {
 	return &MockServerInterface_ListRoleAssignments_Call{Call: _e.mock.On("ListRoleAssignments", w, r, tenant, params)}
 }
 
-func (_c *MockServerInterface_ListRoleAssignments_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, params authorization.ListRoleAssignmentsParams)) *MockServerInterface_ListRoleAssignments_Call {
+func (_c *MockServerInterface_ListRoleAssignments_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, params authorization.ListRoleAssignmentsParams)) *MockServerInterface_ListRoleAssignments_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ListRoleAssignmentsParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ListRoleAssignmentsParams))
 	})
 	return _c
 }
@@ -274,13 +274,13 @@ func (_c *MockServerInterface_ListRoleAssignments_Call) Return() *MockServerInte
 	return _c
 }
 
-func (_c *MockServerInterface_ListRoleAssignments_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ListRoleAssignmentsParams)) *MockServerInterface_ListRoleAssignments_Call {
+func (_c *MockServerInterface_ListRoleAssignments_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ListRoleAssignmentsParams)) *MockServerInterface_ListRoleAssignments_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListRoles provides a mock function with given fields: w, r, tenant, params
-func (_m *MockServerInterface) ListRoles(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, params authorization.ListRolesParams) {
+func (_m *MockServerInterface) ListRoles(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, params authorization.ListRolesParams) {
 	_m.Called(w, r, tenant, params)
 }
 
@@ -292,15 +292,15 @@ type MockServerInterface_ListRoles_Call struct {
 // ListRoles is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant authorization.Tenant
+//   - tenant authorization.TenantPathParam
 //   - params authorization.ListRolesParams
 func (_e *MockServerInterface_Expecter) ListRoles(w interface{}, r interface{}, tenant interface{}, params interface{}) *MockServerInterface_ListRoles_Call {
 	return &MockServerInterface_ListRoles_Call{Call: _e.mock.On("ListRoles", w, r, tenant, params)}
 }
 
-func (_c *MockServerInterface_ListRoles_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.Tenant, params authorization.ListRolesParams)) *MockServerInterface_ListRoles_Call {
+func (_c *MockServerInterface_ListRoles_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant authorization.TenantPathParam, params authorization.ListRolesParams)) *MockServerInterface_ListRoles_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.Tenant), args[3].(authorization.ListRolesParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(authorization.TenantPathParam), args[3].(authorization.ListRolesParams))
 	})
 	return _c
 }
@@ -310,7 +310,7 @@ func (_c *MockServerInterface_ListRoles_Call) Return() *MockServerInterface_List
 	return _c
 }
 
-func (_c *MockServerInterface_ListRoles_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.Tenant, authorization.ListRolesParams)) *MockServerInterface_ListRoles_Call {
+func (_c *MockServerInterface_ListRoles_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, authorization.TenantPathParam, authorization.ListRolesParams)) *MockServerInterface_ListRoles_Call {
 	_c.Run(run)
 	return _c
 }
