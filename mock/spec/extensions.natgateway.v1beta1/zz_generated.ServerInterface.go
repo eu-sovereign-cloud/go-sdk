@@ -6,6 +6,7 @@ import (
 	http "net/http"
 
 	natgateway "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.natgateway.v1beta1"
+	schema "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -23,7 +24,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // CreateOrUpdateInternetNatGatewayInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) CreateOrUpdateInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params natgateway.CreateOrUpdateInternetNatGatewayInstanceParams) {
+func (_m *MockServerInterface) CreateOrUpdateInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params natgateway.CreateOrUpdateInternetNatGatewayInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -35,17 +36,17 @@ type MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call struct {
 // CreateOrUpdateInternetNatGatewayInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant natgateway.TenantPathParam
-//   - workspace natgateway.WorkspacePathParam
-//   - name natgateway.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - params natgateway.CreateOrUpdateInternetNatGatewayInstanceParams
 func (_e *MockServerInterface_Expecter) CreateOrUpdateInternetNatGatewayInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
 	return &MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call{Call: _e.mock.On("CreateOrUpdateInternetNatGatewayInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params natgateway.CreateOrUpdateInternetNatGatewayInstanceParams)) *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params natgateway.CreateOrUpdateInternetNatGatewayInstanceParams)) *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(natgateway.TenantPathParam), args[3].(natgateway.WorkspacePathParam), args[4].(natgateway.ResourcePathParam), args[5].(natgateway.CreateOrUpdateInternetNatGatewayInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam), args[5].(natgateway.CreateOrUpdateInternetNatGatewayInstanceParams))
 	})
 	return _c
 }
@@ -55,13 +56,13 @@ func (_c *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call) Ret
 	return _c
 }
 
-func (_c *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, natgateway.CreateOrUpdateInternetNatGatewayInstanceParams)) *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, natgateway.CreateOrUpdateInternetNatGatewayInstanceParams)) *MockServerInterface_CreateOrUpdateInternetNatGatewayInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // DeleteInternetNatGatewayInstance provides a mock function with given fields: w, r, tenant, workspace, name, params
-func (_m *MockServerInterface) DeleteInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params natgateway.DeleteInternetNatGatewayInstanceParams) {
+func (_m *MockServerInterface) DeleteInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params natgateway.DeleteInternetNatGatewayInstanceParams) {
 	_m.Called(w, r, tenant, workspace, name, params)
 }
 
@@ -73,17 +74,17 @@ type MockServerInterface_DeleteInternetNatGatewayInstance_Call struct {
 // DeleteInternetNatGatewayInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant natgateway.TenantPathParam
-//   - workspace natgateway.WorkspacePathParam
-//   - name natgateway.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - params natgateway.DeleteInternetNatGatewayInstanceParams
 func (_e *MockServerInterface_Expecter) DeleteInternetNatGatewayInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteInternetNatGatewayInstance_Call {
 	return &MockServerInterface_DeleteInternetNatGatewayInstance_Call{Call: _e.mock.On("DeleteInternetNatGatewayInstance", w, r, tenant, workspace, name, params)}
 }
 
-func (_c *MockServerInterface_DeleteInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam, params natgateway.DeleteInternetNatGatewayInstanceParams)) *MockServerInterface_DeleteInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_DeleteInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params natgateway.DeleteInternetNatGatewayInstanceParams)) *MockServerInterface_DeleteInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(natgateway.TenantPathParam), args[3].(natgateway.WorkspacePathParam), args[4].(natgateway.ResourcePathParam), args[5].(natgateway.DeleteInternetNatGatewayInstanceParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam), args[5].(natgateway.DeleteInternetNatGatewayInstanceParams))
 	})
 	return _c
 }
@@ -93,13 +94,13 @@ func (_c *MockServerInterface_DeleteInternetNatGatewayInstance_Call) Return() *M
 	return _c
 }
 
-func (_c *MockServerInterface_DeleteInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam, natgateway.DeleteInternetNatGatewayInstanceParams)) *MockServerInterface_DeleteInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_DeleteInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, natgateway.DeleteInternetNatGatewayInstanceParams)) *MockServerInterface_DeleteInternetNatGatewayInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // GetInternetNatGatewayInstance provides a mock function with given fields: w, r, tenant, workspace, name
-func (_m *MockServerInterface) GetInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam) {
+func (_m *MockServerInterface) GetInternetNatGatewayInstance(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
 	_m.Called(w, r, tenant, workspace, name)
 }
 
@@ -111,16 +112,16 @@ type MockServerInterface_GetInternetNatGatewayInstance_Call struct {
 // GetInternetNatGatewayInstance is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant natgateway.TenantPathParam
-//   - workspace natgateway.WorkspacePathParam
-//   - name natgateway.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 func (_e *MockServerInterface_Expecter) GetInternetNatGatewayInstance(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetInternetNatGatewayInstance_Call {
 	return &MockServerInterface_GetInternetNatGatewayInstance_Call{Call: _e.mock.On("GetInternetNatGatewayInstance", w, r, tenant, workspace, name)}
 }
 
-func (_c *MockServerInterface_GetInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, name natgateway.ResourcePathParam)) *MockServerInterface_GetInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_GetInternetNatGatewayInstance_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam)) *MockServerInterface_GetInternetNatGatewayInstance_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(natgateway.TenantPathParam), args[3].(natgateway.WorkspacePathParam), args[4].(natgateway.ResourcePathParam))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam))
 	})
 	return _c
 }
@@ -130,13 +131,13 @@ func (_c *MockServerInterface_GetInternetNatGatewayInstance_Call) Return() *Mock
 	return _c
 }
 
-func (_c *MockServerInterface_GetInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ResourcePathParam)) *MockServerInterface_GetInternetNatGatewayInstance_Call {
+func (_c *MockServerInterface_GetInternetNatGatewayInstance_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam)) *MockServerInterface_GetInternetNatGatewayInstance_Call {
 	_c.Run(run)
 	return _c
 }
 
 // ListInternetNatGatewayInstances provides a mock function with given fields: w, r, tenant, workspace, params
-func (_m *MockServerInterface) ListInternetNatGatewayInstances(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, params natgateway.ListInternetNatGatewayInstancesParams) {
+func (_m *MockServerInterface) ListInternetNatGatewayInstances(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params natgateway.ListInternetNatGatewayInstancesParams) {
 	_m.Called(w, r, tenant, workspace, params)
 }
 
@@ -148,16 +149,16 @@ type MockServerInterface_ListInternetNatGatewayInstances_Call struct {
 // ListInternetNatGatewayInstances is a helper method to define mock.On call
 //   - w http.ResponseWriter
 //   - r *http.Request
-//   - tenant natgateway.TenantPathParam
-//   - workspace natgateway.WorkspacePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
 //   - params natgateway.ListInternetNatGatewayInstancesParams
 func (_e *MockServerInterface_Expecter) ListInternetNatGatewayInstances(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListInternetNatGatewayInstances_Call {
 	return &MockServerInterface_ListInternetNatGatewayInstances_Call{Call: _e.mock.On("ListInternetNatGatewayInstances", w, r, tenant, workspace, params)}
 }
 
-func (_c *MockServerInterface_ListInternetNatGatewayInstances_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant natgateway.TenantPathParam, workspace natgateway.WorkspacePathParam, params natgateway.ListInternetNatGatewayInstancesParams)) *MockServerInterface_ListInternetNatGatewayInstances_Call {
+func (_c *MockServerInterface_ListInternetNatGatewayInstances_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params natgateway.ListInternetNatGatewayInstancesParams)) *MockServerInterface_ListInternetNatGatewayInstances_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(natgateway.TenantPathParam), args[3].(natgateway.WorkspacePathParam), args[4].(natgateway.ListInternetNatGatewayInstancesParams))
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(natgateway.ListInternetNatGatewayInstancesParams))
 	})
 	return _c
 }
@@ -167,7 +168,7 @@ func (_c *MockServerInterface_ListInternetNatGatewayInstances_Call) Return() *Mo
 	return _c
 }
 
-func (_c *MockServerInterface_ListInternetNatGatewayInstances_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, natgateway.TenantPathParam, natgateway.WorkspacePathParam, natgateway.ListInternetNatGatewayInstancesParams)) *MockServerInterface_ListInternetNatGatewayInstances_Call {
+func (_c *MockServerInterface_ListInternetNatGatewayInstances_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, natgateway.ListInternetNatGatewayInstancesParams)) *MockServerInterface_ListInternetNatGatewayInstances_Call {
 	_c.Run(run)
 	return _c
 }

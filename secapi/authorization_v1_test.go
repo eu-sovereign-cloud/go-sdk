@@ -8,7 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
-	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -107,13 +107,13 @@ func TestCreateOrUpdateRole(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	role := authorization.Role{
-		Metadata: &authorization.GlobalResourceMetadata{
+	role := schema.Role{
+		Metadata: &schema.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
-		Spec: authorization.RoleSpec{
-			Permissions: []authorization.Permission{
+		Spec: schema.RoleSpec{
+			Permissions: []schema.Permission{
 				{
 					Provider:  secatest.Role1PermissionProvider,
 					Resources: []string{secatest.Role1PermissionResource},
@@ -259,14 +259,14 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	assign := &authorization.RoleAssignment{
-		Metadata: &authorization.GlobalResourceMetadata{
+	assign := &schema.RoleAssignment{
+		Metadata: &schema.GlobalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
-		Spec: authorization.RoleAssignmentSpec{
+		Spec: schema.RoleAssignmentSpec{
 			Roles: []string{secatest.Role1Name},
-			Scopes: []authorization.RoleAssignmentScope{
+			Scopes: []schema.RoleAssignmentScope{
 				{
 					Tenants: &[]string{secatest.Tenant1Name},
 				},

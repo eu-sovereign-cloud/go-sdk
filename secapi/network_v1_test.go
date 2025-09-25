@@ -8,7 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mocknetwork "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.network.v1"
-	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"github.com/stretchr/testify/assert"
 	"k8s.io/utils/ptr"
@@ -207,14 +207,14 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	net := &network.Network{
-		Metadata: &network.RegionalWorkspaceResourceMetadata{
+	net := &schema.Network{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.Network1Name,
 		},
-		Spec: network.NetworkSpec{
-			Cidr:          network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
+		Spec: schema.NetworkSpec{
+			Cidr:          schema.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
 			RouteTableRef: *routeTableRef,
 			SkuRef:        *networkSkuRef,
 		},
@@ -382,16 +382,16 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	sub := &network.Subnet{
-		Metadata: &network.RegionalNetworkResourceMetadata{
+	sub := &schema.Subnet{
+		Metadata: &schema.RegionalNetworkResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Network:   secatest.Network1Name,
 			Name:      secatest.Subnet1Name,
 		},
-		Spec: network.SubnetSpec{
-			Cidr: network.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
-			Zone: network.Zone(secatest.ZoneA),
+		Spec: schema.SubnetSpec{
+			Cidr: schema.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
+			Zone: schema.Zone(secatest.ZoneA),
 		},
 	}
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, sub)
@@ -568,15 +568,15 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	route := &network.RouteTable{
-		Metadata: &network.RegionalNetworkResourceMetadata{
+	route := &schema.RouteTable{
+		Metadata: &schema.RegionalNetworkResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Network:   secatest.Network1Name,
 			Name:      secatest.RouteTable1Name,
 		},
-		Spec: network.RouteTableSpec{
-			Routes: []network.RouteSpec{
+		Spec: schema.RouteTableSpec{
+			Routes: []schema.RouteSpec{
 				{
 					DestinationCidrBlock: secatest.CidrIpv4,
 					TargetRef:            *targetRef,
@@ -734,8 +734,8 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	gtw := &network.InternetGateway{
-		Metadata: &network.RegionalWorkspaceResourceMetadata{
+	gtw := &schema.InternetGateway{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.InternetGateway1Name,
@@ -884,21 +884,21 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	group := &network.SecurityGroup{
-		Metadata: &network.RegionalWorkspaceResourceMetadata{
+	group := &schema.SecurityGroup{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.SecurityGroup1Name,
 		},
-		Spec: network.SecurityGroupSpec{
-			Rules: []network.SecurityGroupRuleSpec{
+		Spec: schema.SecurityGroupSpec{
+			Rules: []schema.SecurityGroupRuleSpec{
 				{
-					Direction: network.Ingress,
-					Version:   ptr.To(network.IPv4),
-					Protocol:  ptr.To(network.Tcp),
-					Ports: &network.Ports{
-						From: ptr.To(network.Port(secatest.SecurityGroup1PortFrom)),
-						To:   ptr.To(network.Port(secatest.SecurityGroup1PortTo)),
+					Direction: schema.SecurityGroupRuleDirectionIngress,
+					Version:   ptr.To(schema.IPVersionIPv4),
+					Protocol:  ptr.To(schema.SecurityGroupRuleProtocolTCP),
+					Ports: &schema.Ports{
+						From: ptr.To(schema.Port(secatest.SecurityGroup1PortFrom)),
+						To:   ptr.To(schema.Port(secatest.SecurityGroup1PortTo)),
 					},
 				},
 			},
@@ -1063,8 +1063,8 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	nic := &network.Nic{
-		Metadata: &network.RegionalWorkspaceResourceMetadata{
+	nic := &schema.Nic{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.Nic1Name,
@@ -1213,8 +1213,8 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	ip := &network.PublicIp{
-		Metadata: &network.RegionalWorkspaceResourceMetadata{
+	ip := &schema.PublicIp{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.PublicIp1Name,

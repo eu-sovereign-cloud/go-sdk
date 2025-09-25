@@ -5,10 +5,12 @@ GO_TOOL := $(GO) run $(TOOLS_GOMOD)
 
 PKG := pkg/spec
 SPEC_SRC := spec/spec
-SPEC_DIST := spec/dist/specs
+SPEC_SCHEMAS_SRC := spec/spec/schemas
 SPEC_SOURCES := $(shell ls $(SPEC_SRC)/*.yaml)
-SCHEMAS_SOURCES := $(SPEC_SOURCES:$(SPEC_SRC)/%.yaml=$(SPEC_DIST)/%.yaml)
-SCHEMAS_FINAL = $(SCHEMAS_SOURCES:$(SPEC_DIST)/%.yaml=$(PKG)/%/api.go)
+SPEC_SCHEMAS_SOURCES := $(shell ls $(SPEC_SCHEMAS_SRC)/*.yaml)
+
+GEN_TARGETS := $(SPEC_SCHEMAS_SOURCES:$(SPEC_SCHEMAS_SRC)/%.yaml=$(PKG)/schema/%.go)
+GEN_TARGETS += $(SPEC_SOURCES:$(SPEC_SRC)/%.yaml=$(PKG)/%/api.go)
 
 .PHONY: update	
 update:
@@ -22,15 +24,18 @@ spec:
 	sh -c "cd spec && make build"
 
 .PHONY: schemas
-schemas: $(SCHEMAS_SOURCES) $(SCHEMAS_FINAL)
-	@echo "Generated schemas..."
+schemas: $(GEN_TARGETS)
+	@echo "Generating schemas..."
 
-$(SPEC_DIST)/%.yaml: $(SPEC_SRC)/%.yaml
-	make -C spec dist/specs/$(shell basename $@)
-
-$(PKG)/%/api.go: $(SPEC_DIST)/%.yaml
+# generate types
+$(PKG)/schema/%.go: $(SPEC_SCHEMAS_SRC)/%.yaml
 	@-mkdir -p $(shell dirname $@)
-	-$(GO_TOOL) $(OPENAPI_GENERATOR) -alias-types -generate "types,client,std-http" \
+	$(GO_TOOL) $(OPENAPI_GENERATOR) -config config/schema.yaml -o $@ $<
+
+# generate api spec
+$(PKG)/%/api.go: $(SPEC_SRC)/%.yaml
+	@-mkdir -p $(shell dirname $@)
+	$(GO_TOOL) $(OPENAPI_GENERATOR) -config config/api.yaml \
 		-package $(shell basename $(shell dirname $@) | cut -d '.' -f 2) -o $@ $<
 
 .PHONY: mock

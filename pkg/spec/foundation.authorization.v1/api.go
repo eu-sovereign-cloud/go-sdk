@@ -14,8 +14,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
+	externalRef0 "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/oapi-codegen/runtime"
 )
 
@@ -23,525 +23,37 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for GlobalResourceMetadataKind.
-const (
-	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
-	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
-	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
-	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
-	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
-	GlobalResourceMetadataKindInternetGateway      GlobalResourceMetadataKind = "internet-gateway"
-	GlobalResourceMetadataKindNetwork              GlobalResourceMetadataKind = "network"
-	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
-	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
-	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
-	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
-	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
-	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
-	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
-	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
-	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
-	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
-	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
-	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
-	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
-	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
-)
-
-// Defines values for ResourceState.
-const (
-	ResourceStateActive    ResourceState = "active"
-	ResourceStateCreating  ResourceState = "creating"
-	ResourceStateDeleting  ResourceState = "deleting"
-	ResourceStateError     ResourceState = "error"
-	ResourceStatePending   ResourceState = "pending"
-	ResourceStateSuspended ResourceState = "suspended"
-	ResourceStateUpdating  ResourceState = "updating"
-)
-
-// Defines values for TypeMetadataKind.
-const (
-	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
-	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
-	TypeMetadataKindImage                TypeMetadataKind = "image"
-	TypeMetadataKindInstance             TypeMetadataKind = "instance"
-	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
-	TypeMetadataKindNetwork              TypeMetadataKind = "network"
-	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
-	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
-	TypeMetadataKindNic                  TypeMetadataKind = "nic"
-	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
-	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindRegion               TypeMetadataKind = "region"
-	TypeMetadataKindRole                 TypeMetadataKind = "role"
-	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
-	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
-	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
-	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
-	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
-	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
-	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
-)
-
-// Defines values for AcceptHeader.
-const (
-	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
-	AcceptHeaderApplicationjsonDeletedOnly AcceptHeader = "application/json; deleted=only"
-	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
-)
-
 // Defines values for ListRoleAssignmentsParamsAccept.
 const (
-	ListRoleAssignmentsParamsAcceptApplicationjson            ListRoleAssignmentsParamsAccept = "application/json"
-	ListRoleAssignmentsParamsAcceptApplicationjsonDeletedOnly ListRoleAssignmentsParamsAccept = "application/json; deleted=only"
-	ListRoleAssignmentsParamsAcceptApplicationjsonDeletedTrue ListRoleAssignmentsParamsAccept = "application/json; deleted=true"
+	ListRoleAssignmentsParamsAcceptAcceptHeaderJson            ListRoleAssignmentsParamsAccept = "application/json"
+	ListRoleAssignmentsParamsAcceptAcceptHeaderJsonDeletedOnly ListRoleAssignmentsParamsAccept = "application/json; deleted=only"
+	ListRoleAssignmentsParamsAcceptAcceptHeaderJsonDeletedTrue ListRoleAssignmentsParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListRolesParamsAccept.
 const (
-	Applicationjson            ListRolesParamsAccept = "application/json"
-	ApplicationjsonDeletedOnly ListRolesParamsAccept = "application/json; deleted=only"
-	ApplicationjsonDeletedTrue ListRolesParamsAccept = "application/json; deleted=true"
+	ListRolesParamsAcceptAcceptHeaderJson            ListRolesParamsAccept = "application/json"
+	ListRolesParamsAcceptAcceptHeaderJsonDeletedOnly ListRolesParamsAccept = "application/json; deleted=only"
+	ListRolesParamsAcceptAcceptHeaderJsonDeletedTrue ListRolesParamsAccept = "application/json; deleted=true"
 )
-
-// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error400 = Error
-
-// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error401 = Error
-
-// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error403 = Error
-
-// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error404 = Error
-
-// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error409 = Error
-
-// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error412 = Error
-
-// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error422 = Error
-
-// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error500 = Error
-
-// ErrorSource An object containing references to the source of the error.
-type ErrorSource struct {
-	// Parameter A string indicating which URI query parameter caused the error.
-	Parameter string `json:"parameter"`
-
-	// Pointer A JSON Pointer [RFC6901] to the associated entity in the request document.
-	Pointer string `json:"pointer"`
-}
-
-// GlobalResourceMetadata defines model for GlobalResourceMetadata.
-type GlobalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind GlobalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref      *Reference `json:"ref,omitempty"`
-	Resource string     `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-}
-
-// GlobalResourceMetadataKind Type of the resource
-type GlobalResourceMetadataKind string
-
-// ModificationMetadata Base metadata for all resources with optional region references
-type ModificationMetadata struct {
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-}
-
-// NameMetadata Metadata for resource names
-type NameMetadata struct {
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-}
-
-// Permission Permission specification, including providers, resources, and verbs.
-// Permissions are used to define access control policies for user accounts.
-type Permission struct {
-	// Provider The provider for which the resource and verbs are defined.
-	Provider string `json:"provider"`
-
-	// Resources The resources are the specific resources that the permission applies to.
-	// The resource can be a wildcard `*` to represent all resources or a
-	// specific resource type. For example, `images/my-image` or
-	// `images/*`.
-	Resources []string `json:"resources"`
-
-	// Verb The verb is a string that represents the action to be performed on a resource.
-	// The standard operations are defined as `get`, `put`, `list`, `delete`. If the
-	// resource has additional actions they can to be permitted individually as
-	// verb and action in the form `<verb>:<action>`. For example, `post.start`,
-	// `post.stop`, `post.restart` or with a wildcard for all actions `post`.
-	Verb []string `json:"verb"`
-}
-
-// PermissionMetadata Metadata for permission management
-type PermissionMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-	Verb     string `json:"verb"`
-}
-
-// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-// The reference can be used to refer to a resource in other resources.
-type Reference struct {
-	union json.RawMessage
-}
-
-// ReferenceObject A reference to a resource using an object. The object contains the
-// same information as the ReferenceURN, but is represented as a structured object.
-// The advantage of this representation is that it can be used to reference
-// resources in different workspaces or regions without the need to specify
-// the full URN.
-type ReferenceObject struct {
-	// Provider Provider of the resource. If not set, the provider is inferred from the context.
-	Provider *string `json:"provider,omitempty"`
-
-	// Region Region of the resource. If not set, the region is inferred from the context.
-	Region *string `json:"region,omitempty"`
-
-	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
-	// The type is the resource type, and the name is the resource name.
-	Resource string `json:"resource"`
-
-	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
-	Tenant *string `json:"tenant,omitempty"`
-
-	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
-	Workspace *string `json:"workspace,omitempty"`
-}
-
-// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
-// is represented as the full URN (Uniform Resource Name) name of the resource.
-//
-// ### Automatic Prefix Inference
-//
-// In most cases, the prefix of the URN can be automatically derived in the given context.
-// To simplify usage, only the resource type and name might be specified as a reference
-// using the `<type>/<name>` notation. The suffix can be made more specific by adding
-// additional segments separated by slashes.
-//
-// The prefix is automatically inferred from the context. For example, if the resource is a
-// block storage in the same workspace the reference can be specified as
-// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
-// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
-//
-// For automatic prefix inference, the following rules apply:
-// - the version is inferred from the current resource version
-// - the workspace is inferred from the current workspace
-// - the region is inferred from the current region
-// - the provider is inferred from the type and context of the usage
-//
-// The prefix inference is resolved on admission into the full URN format, which makes it
-// mostly suitable for human use.
-type ReferenceURN = string
-
-// ResourceState Current phase of the resource:
-// - pending: not available, waiting for other resources
-// - creating: not available, creation started
-// - active: available for data layer usage
-// - updating: available for data layer usage
-// - deleting: maybe still available for data layer user, can fail any moment
-// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-type ResourceState string
-
-// ResponseMetadata defines model for ResponseMetadata.
-type ResponseMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-
-	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
-	SkipToken *string `json:"skipToken,omitempty"`
-	Verb      string  `json:"verb"`
-}
-
-// Role defines model for Role.
-type Role struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for global resources with name, permission, modification, type, and tenant information.
-	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Role specification defined as a list of permissions.
-	// Roles are used to define access control policies for
-	// a user account using a role assignment.
-	Spec RoleSpec `json:"spec"`
-
-	// Status Current status of the resource
-	Status *Status `json:"status,omitempty"`
-}
-
-// RoleAssignment defines model for RoleAssignment.
-type RoleAssignment struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for global resources with name, permission, modification, type, and tenant information.
-	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Role assignment for a user account. The role is assigned to the user account in the context of the specified scopes.
-	Spec RoleAssignmentSpec `json:"spec"`
-
-	// Status Current status of the resource
-	Status *Status `json:"status,omitempty"`
-}
 
 // RoleAssignmentIterator Iterator for role assignments
 type RoleAssignmentIterator struct {
 	// Items List of role assignments
-	Items []RoleAssignment `json:"items"`
+	Items []externalRef0.RoleAssignment `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// RoleAssignmentScope Role assignment scope, including the workspaces, regions and tenants.
-type RoleAssignmentScope struct {
-	// Regions Optionally, a restriction can be applied to the region
-	// where the role assignment is valid. If not specified,
-	// the role assignment is valid for all regions.
-	Regions *[]string `json:"regions,omitempty"`
-
-	// Tenants Optionally, can be opened to all tenants or restricted to a specific tenant.
-	// If not specified, the role assignment is valid for the current tenant.
-	Tenants *[]string `json:"tenants,omitempty"`
-
-	// Workspaces Optionally, a restriction can be applied to the workspace
-	// where the role assignment is valid. If not specified,
-	// the role assignment is valid for all workspaces.
-	Workspaces *[]string `json:"workspaces,omitempty"`
-}
-
-// RoleAssignmentSpec Role assignment for a user account. The role is assigned to the user account in the context of the specified scopes.
-type RoleAssignmentSpec struct {
-	// Roles List of assigned role names
-	Roles []string `json:"roles"`
-
-	// Scopes List of scopes (e.g., tenant, workspace) for the role assignment
-	Scopes []RoleAssignmentScope `json:"scopes"`
-
-	// Subs List of subject IDs (from JWT) to whom the roles are assigned,
-	// A wildcard `*` can be used to represent all users of the tenant scopes
-	Subs []string `json:"subs"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // RoleIterator Iterator for roles
 type RoleIterator struct {
 	// Items List of roles
-	Items []Role `json:"items"`
+	Items []externalRef0.Role `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
-
-// RoleSpec Role specification defined as a list of permissions.
-// Roles are used to define access control policies for
-// a user account using a role assignment.
-type RoleSpec struct {
-	// Permissions List of permissions granted by this role
-	Permissions []Permission `json:"permissions"`
-}
-
-// Status Current status of the resource
-type Status struct {
-	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// StatusCondition StatusCondition describes the state of a resource at a certain point.
-// Conditions are provider-specific and can represent different states depending on the
-// resource type and provider implementation.
-type StatusCondition struct {
-	// LastTransitionAt LastTransitionAt is the last time the condition transitioned from one
-	// status to another. This should be when the underlying condition changed.
-	// If that is not known, then using the time when the API field changed is
-	// acceptable.
-	LastTransitionAt time.Time `json:"lastTransitionAt"`
-
-	// Message A human-readable message indicating details about the transition.
-	Message *string `json:"message,omitempty"`
-
-	// Reason The reason for the condition's last transition in CamelCase.
-	// The specific set of reason values is provider-specific and should be
-	// documented by the provider.
-	Reason *string `json:"reason,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State ResourceState `json:"state"`
-
-	// Type Type of condition. The condition type is provider-specific and should
-	// reflect the specific states relevant to your resource.
-	Type *string `json:"type,omitempty"`
-}
-
-// TenantMetadata Metadata for resources with tenant constraints
-type TenantMetadata struct {
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-}
-
-// TypeMetadata Metadata for all resources with type information.
-type TypeMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// Kind Type of the resource
-	Kind TypeMetadataKind `json:"kind"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-}
-
-// TypeMetadataKind Type of the resource
-type TypeMetadataKind string
-
-// UserResourceMetadata Metadata for user-defined resource properties
-type UserResourceMetadata struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-}
-
-// AcceptHeader defines model for acceptHeader.
-type AcceptHeader string
-
-// IfUnmodifiedSince defines model for ifUnmodifiedSince.
-type IfUnmodifiedSince = int
-
-// LabelSelector defines model for labelSelector.
-type LabelSelector = string
-
-// LimitParam defines model for limitParam.
-type LimitParam = int
-
-// ResourcePathParam defines model for resourcePathParam.
-type ResourcePathParam = string
-
-// SkipTokenParam defines model for skipTokenParam.
-type SkipTokenParam = string
-
-// TenantPathParam defines model for tenantPathParam.
-type TenantPathParam = string
 
 // ListRoleAssignmentsParams defines parameters for ListRoleAssignments.
 type ListRoleAssignmentsParams struct {
@@ -552,13 +64,13 @@ type ListRoleAssignmentsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -574,14 +86,14 @@ type ListRoleAssignmentsParamsAccept string
 type DeleteRoleAssignmentParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateRoleAssignmentParams defines parameters for CreateOrUpdateRoleAssignment.
 type CreateOrUpdateRoleAssignmentParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListRolesParams defines parameters for ListRoles.
@@ -593,13 +105,13 @@ type ListRolesParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -615,83 +127,21 @@ type ListRolesParamsAccept string
 type DeleteRoleParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateRoleParams defines parameters for CreateOrUpdateRole.
 type CreateOrUpdateRoleParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateRoleAssignmentJSONRequestBody defines body for CreateOrUpdateRoleAssignment for application/json ContentType.
-type CreateOrUpdateRoleAssignmentJSONRequestBody = RoleAssignment
+type CreateOrUpdateRoleAssignmentJSONRequestBody = externalRef0.RoleAssignment
 
 // CreateOrUpdateRoleJSONRequestBody defines body for CreateOrUpdateRole for application/json ContentType.
-type CreateOrUpdateRoleJSONRequestBody = Role
-
-// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
-func (t Reference) AsReferenceURN() (ReferenceURN, error) {
-	var body ReferenceURN
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
-func (t *Reference) FromReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
-func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
-func (t Reference) AsReferenceObject() (ReferenceObject, error) {
-	var body ReferenceObject
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
-func (t *Reference) FromReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
-func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t Reference) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *Reference) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
+type CreateOrUpdateRoleJSONRequestBody = externalRef0.Role
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -767,35 +217,35 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListRoleAssignments request
-	ListRoleAssignments(ctx context.Context, tenant TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListRoleAssignments(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRoleAssignment request
-	DeleteRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRoleAssignment request
-	GetRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateRoleAssignmentWithBody request with any body
-	CreateOrUpdateRoleAssignmentWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRoleAssignmentWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListRoles request
-	ListRoles(ctx context.Context, tenant TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListRoles(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRole request
-	DeleteRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRole request
-	GetRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateRoleWithBody request with any body
-	CreateOrUpdateRoleWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRoleWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListRoleAssignments(ctx context.Context, tenant TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListRoleAssignments(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListRoleAssignmentsRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -807,7 +257,7 @@ func (c *Client) ListRoleAssignments(ctx context.Context, tenant TenantPathParam
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteRoleAssignmentRequest(c.Server, tenant, name, params)
 	if err != nil {
 		return nil, err
@@ -819,7 +269,7 @@ func (c *Client) DeleteRoleAssignment(ctx context.Context, tenant TenantPathPara
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetRoleAssignmentRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -831,7 +281,7 @@ func (c *Client) GetRoleAssignment(ctx context.Context, tenant TenantPathParam, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRoleAssignmentWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRoleAssignmentWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoleAssignmentRequestWithBody(c.Server, tenant, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -843,7 +293,7 @@ func (c *Client) CreateOrUpdateRoleAssignmentWithBody(ctx context.Context, tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRoleAssignment(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRoleAssignment(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoleAssignmentRequest(c.Server, tenant, name, params, body)
 	if err != nil {
 		return nil, err
@@ -855,7 +305,7 @@ func (c *Client) CreateOrUpdateRoleAssignment(ctx context.Context, tenant Tenant
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListRoles(ctx context.Context, tenant TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListRoles(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListRolesRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -867,7 +317,7 @@ func (c *Client) ListRoles(ctx context.Context, tenant TenantPathParam, params *
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteRoleRequest(c.Server, tenant, name, params)
 	if err != nil {
 		return nil, err
@@ -879,7 +329,7 @@ func (c *Client) DeleteRole(ctx context.Context, tenant TenantPathParam, name Re
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetRoleRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -891,7 +341,7 @@ func (c *Client) GetRole(ctx context.Context, tenant TenantPathParam, name Resou
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRoleWithBody(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRoleWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoleRequestWithBody(c.Server, tenant, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -903,7 +353,7 @@ func (c *Client) CreateOrUpdateRoleWithBody(ctx context.Context, tenant TenantPa
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRole(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRole(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRoleRequest(c.Server, tenant, name, params, body)
 	if err != nil {
 		return nil, err
@@ -916,7 +366,7 @@ func (c *Client) CreateOrUpdateRole(ctx context.Context, tenant TenantPathParam,
 }
 
 // NewListRoleAssignmentsRequest generates requests for ListRoleAssignments
-func NewListRoleAssignmentsRequest(server string, tenant TenantPathParam, params *ListRoleAssignmentsParams) (*http.Request, error) {
+func NewListRoleAssignmentsRequest(server string, tenant externalRef0.TenantPathParam, params *ListRoleAssignmentsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1019,7 +469,7 @@ func NewListRoleAssignmentsRequest(server string, tenant TenantPathParam, params
 }
 
 // NewDeleteRoleAssignmentRequest generates requests for DeleteRoleAssignment
-func NewDeleteRoleAssignmentRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleAssignmentParams) (*http.Request, error) {
+func NewDeleteRoleAssignmentRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleAssignmentParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1075,7 +525,7 @@ func NewDeleteRoleAssignmentRequest(server string, tenant TenantPathParam, name 
 }
 
 // NewGetRoleAssignmentRequest generates requests for GetRoleAssignment
-func NewGetRoleAssignmentRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetRoleAssignmentRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1116,7 +566,7 @@ func NewGetRoleAssignmentRequest(server string, tenant TenantPathParam, name Res
 }
 
 // NewCreateOrUpdateRoleAssignmentRequest calls the generic CreateOrUpdateRoleAssignment builder with application/json body
-func NewCreateOrUpdateRoleAssignmentRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateRoleAssignmentRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1127,7 +577,7 @@ func NewCreateOrUpdateRoleAssignmentRequest(server string, tenant TenantPathPara
 }
 
 // NewCreateOrUpdateRoleAssignmentRequestWithBody generates requests for CreateOrUpdateRoleAssignment with any type of body
-func NewCreateOrUpdateRoleAssignmentRequestWithBody(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateRoleAssignmentRequestWithBody(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1185,7 +635,7 @@ func NewCreateOrUpdateRoleAssignmentRequestWithBody(server string, tenant Tenant
 }
 
 // NewListRolesRequest generates requests for ListRoles
-func NewListRolesRequest(server string, tenant TenantPathParam, params *ListRolesParams) (*http.Request, error) {
+func NewListRolesRequest(server string, tenant externalRef0.TenantPathParam, params *ListRolesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1288,7 +738,7 @@ func NewListRolesRequest(server string, tenant TenantPathParam, params *ListRole
 }
 
 // NewDeleteRoleRequest generates requests for DeleteRole
-func NewDeleteRoleRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleParams) (*http.Request, error) {
+func NewDeleteRoleRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1344,7 +794,7 @@ func NewDeleteRoleRequest(server string, tenant TenantPathParam, name ResourcePa
 }
 
 // NewGetRoleRequest generates requests for GetRole
-func NewGetRoleRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetRoleRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1385,7 +835,7 @@ func NewGetRoleRequest(server string, tenant TenantPathParam, name ResourcePathP
 }
 
 // NewCreateOrUpdateRoleRequest calls the generic CreateOrUpdateRole builder with application/json body
-func NewCreateOrUpdateRoleRequest(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateRoleRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -1396,7 +846,7 @@ func NewCreateOrUpdateRoleRequest(server string, tenant TenantPathParam, name Re
 }
 
 // NewCreateOrUpdateRoleRequestWithBody generates requests for CreateOrUpdateRole with any type of body
-func NewCreateOrUpdateRoleRequestWithBody(server string, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateRoleRequestWithBody(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1497,42 +947,42 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListRoleAssignmentsWithResponse request
-	ListRoleAssignmentsWithResponse(ctx context.Context, tenant TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*ListRoleAssignmentsResponse, error)
+	ListRoleAssignmentsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*ListRoleAssignmentsResponse, error)
 
 	// DeleteRoleAssignmentWithResponse request
-	DeleteRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*DeleteRoleAssignmentResponse, error)
+	DeleteRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*DeleteRoleAssignmentResponse, error)
 
 	// GetRoleAssignmentWithResponse request
-	GetRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleAssignmentResponse, error)
+	GetRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleAssignmentResponse, error)
 
 	// CreateOrUpdateRoleAssignmentWithBodyWithResponse request with any body
-	CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error)
+	CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error)
 
-	CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error)
+	CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error)
 
 	// ListRolesWithResponse request
-	ListRolesWithResponse(ctx context.Context, tenant TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*ListRolesResponse, error)
+	ListRolesWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*ListRolesResponse, error)
 
 	// DeleteRoleWithResponse request
-	DeleteRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*DeleteRoleResponse, error)
+	DeleteRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*DeleteRoleResponse, error)
 
 	// GetRoleWithResponse request
-	GetRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleResponse, error)
+	GetRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleResponse, error)
 
 	// CreateOrUpdateRoleWithBodyWithResponse request with any body
-	CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error)
+	CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error)
 
-	CreateOrUpdateRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error)
+	CreateOrUpdateRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error)
 }
 
 type ListRoleAssignmentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *RoleAssignmentIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1554,13 +1004,13 @@ func (r ListRoleAssignmentsResponse) StatusCode() int {
 type DeleteRoleAssignmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1582,12 +1032,12 @@ func (r DeleteRoleAssignmentResponse) StatusCode() int {
 type GetRoleAssignmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RoleAssignment
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.RoleAssignment
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1609,16 +1059,16 @@ func (r GetRoleAssignmentResponse) StatusCode() int {
 type CreateOrUpdateRoleAssignmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RoleAssignment
-	JSON201      *RoleAssignment
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.RoleAssignment
+	JSON201      *externalRef0.RoleAssignment
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1641,10 +1091,10 @@ type ListRolesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *RoleIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1666,13 +1116,13 @@ func (r ListRolesResponse) StatusCode() int {
 type DeleteRoleResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1694,12 +1144,12 @@ func (r DeleteRoleResponse) StatusCode() int {
 type GetRoleResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Role
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.Role
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1721,16 +1171,16 @@ func (r GetRoleResponse) StatusCode() int {
 type CreateOrUpdateRoleResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Role
-	JSON201      *Role
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.Role
+	JSON201      *externalRef0.Role
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1750,7 +1200,7 @@ func (r CreateOrUpdateRoleResponse) StatusCode() int {
 }
 
 // ListRoleAssignmentsWithResponse request returning *ListRoleAssignmentsResponse
-func (c *ClientWithResponses) ListRoleAssignmentsWithResponse(ctx context.Context, tenant TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*ListRoleAssignmentsResponse, error) {
+func (c *ClientWithResponses) ListRoleAssignmentsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRoleAssignmentsParams, reqEditors ...RequestEditorFn) (*ListRoleAssignmentsResponse, error) {
 	rsp, err := c.ListRoleAssignments(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1759,7 +1209,7 @@ func (c *ClientWithResponses) ListRoleAssignmentsWithResponse(ctx context.Contex
 }
 
 // DeleteRoleAssignmentWithResponse request returning *DeleteRoleAssignmentResponse
-func (c *ClientWithResponses) DeleteRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*DeleteRoleAssignmentResponse, error) {
+func (c *ClientWithResponses) DeleteRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleAssignmentParams, reqEditors ...RequestEditorFn) (*DeleteRoleAssignmentResponse, error) {
 	rsp, err := c.DeleteRoleAssignment(ctx, tenant, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1768,7 +1218,7 @@ func (c *ClientWithResponses) DeleteRoleAssignmentWithResponse(ctx context.Conte
 }
 
 // GetRoleAssignmentWithResponse request returning *GetRoleAssignmentResponse
-func (c *ClientWithResponses) GetRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleAssignmentResponse, error) {
+func (c *ClientWithResponses) GetRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleAssignmentResponse, error) {
 	rsp, err := c.GetRoleAssignment(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1777,7 +1227,7 @@ func (c *ClientWithResponses) GetRoleAssignmentWithResponse(ctx context.Context,
 }
 
 // CreateOrUpdateRoleAssignmentWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRoleAssignmentResponse
-func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error) {
 	rsp, err := c.CreateOrUpdateRoleAssignmentWithBody(ctx, tenant, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1785,7 +1235,7 @@ func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithBodyWithResponse(c
 	return ParseCreateOrUpdateRoleAssignmentResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleAssignmentParams, body CreateOrUpdateRoleAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleAssignmentResponse, error) {
 	rsp, err := c.CreateOrUpdateRoleAssignment(ctx, tenant, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1794,7 +1244,7 @@ func (c *ClientWithResponses) CreateOrUpdateRoleAssignmentWithResponse(ctx conte
 }
 
 // ListRolesWithResponse request returning *ListRolesResponse
-func (c *ClientWithResponses) ListRolesWithResponse(ctx context.Context, tenant TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*ListRolesResponse, error) {
+func (c *ClientWithResponses) ListRolesWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListRolesParams, reqEditors ...RequestEditorFn) (*ListRolesResponse, error) {
 	rsp, err := c.ListRoles(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1803,7 +1253,7 @@ func (c *ClientWithResponses) ListRolesWithResponse(ctx context.Context, tenant 
 }
 
 // DeleteRoleWithResponse request returning *DeleteRoleResponse
-func (c *ClientWithResponses) DeleteRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*DeleteRoleResponse, error) {
+func (c *ClientWithResponses) DeleteRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *DeleteRoleParams, reqEditors ...RequestEditorFn) (*DeleteRoleResponse, error) {
 	rsp, err := c.DeleteRole(ctx, tenant, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1812,7 +1262,7 @@ func (c *ClientWithResponses) DeleteRoleWithResponse(ctx context.Context, tenant
 }
 
 // GetRoleWithResponse request returning *GetRoleResponse
-func (c *ClientWithResponses) GetRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleResponse, error) {
+func (c *ClientWithResponses) GetRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRoleResponse, error) {
 	rsp, err := c.GetRole(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1821,7 +1271,7 @@ func (c *ClientWithResponses) GetRoleWithResponse(ctx context.Context, tenant Te
 }
 
 // CreateOrUpdateRoleWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRoleResponse
-func (c *ClientWithResponses) CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoleWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error) {
 	rsp, err := c.CreateOrUpdateRoleWithBody(ctx, tenant, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1829,7 +1279,7 @@ func (c *ClientWithResponses) CreateOrUpdateRoleWithBodyWithResponse(ctx context
 	return ParseCreateOrUpdateRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateRoleWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRoleWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRoleParams, body CreateOrUpdateRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRoleResponse, error) {
 	rsp, err := c.CreateOrUpdateRole(ctx, tenant, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1859,28 +1309,28 @@ func ParseListRoleAssignmentsResponse(rsp *http.Response) (*ListRoleAssignmentsR
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1906,49 +1356,49 @@ func ParseDeleteRoleAssignmentResponse(rsp *http.Response) (*DeleteRoleAssignmen
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1974,42 +1424,42 @@ func ParseGetRoleAssignmentResponse(rsp *http.Response) (*GetRoleAssignmentRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RoleAssignment
+		var dest externalRef0.RoleAssignment
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2035,70 +1485,70 @@ func ParseCreateOrUpdateRoleAssignmentResponse(rsp *http.Response) (*CreateOrUpd
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RoleAssignment
+		var dest externalRef0.RoleAssignment
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest RoleAssignment
+		var dest externalRef0.RoleAssignment
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2131,28 +1581,28 @@ func ParseListRolesResponse(rsp *http.Response) (*ListRolesResponse, error) {
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2178,49 +1628,49 @@ func ParseDeleteRoleResponse(rsp *http.Response) (*DeleteRoleResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2246,42 +1696,42 @@ func ParseGetRoleResponse(rsp *http.Response) (*GetRoleResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Role
+		var dest externalRef0.Role
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2307,70 +1757,70 @@ func ParseCreateOrUpdateRoleResponse(rsp *http.Response) (*CreateOrUpdateRoleRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Role
+		var dest externalRef0.Role
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Role
+		var dest externalRef0.Role
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -2385,28 +1835,28 @@ func ParseCreateOrUpdateRoleResponse(rsp *http.Response) (*CreateOrUpdateRoleRes
 type ServerInterface interface {
 	// List role assignments
 	// (GET /v1/tenants/{tenant}/role-assignments)
-	ListRoleAssignments(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListRoleAssignmentsParams)
+	ListRoleAssignments(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, params ListRoleAssignmentsParams)
 	// Delete role assignment
 	// (DELETE /v1/tenants/{tenant}/role-assignments/{name})
-	DeleteRoleAssignment(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params DeleteRoleAssignmentParams)
+	DeleteRoleAssignment(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params DeleteRoleAssignmentParams)
 	// Get role assignment
 	// (GET /v1/tenants/{tenant}/role-assignments/{name})
-	GetRoleAssignment(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
+	GetRoleAssignment(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam)
 	// Create or update role assignment
 	// (PUT /v1/tenants/{tenant}/role-assignments/{name})
-	CreateOrUpdateRoleAssignment(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params CreateOrUpdateRoleAssignmentParams)
+	CreateOrUpdateRoleAssignment(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateRoleAssignmentParams)
 	// List roles
 	// (GET /v1/tenants/{tenant}/roles)
-	ListRoles(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListRolesParams)
+	ListRoles(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, params ListRolesParams)
 	// Delete role
 	// (DELETE /v1/tenants/{tenant}/roles/{name})
-	DeleteRole(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params DeleteRoleParams)
+	DeleteRole(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params DeleteRoleParams)
 	// Get role
 	// (GET /v1/tenants/{tenant}/roles/{name})
-	GetRole(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
+	GetRole(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam)
 	// Create or update role
 	// (PUT /v1/tenants/{tenant}/roles/{name})
-	CreateOrUpdateRole(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam, params CreateOrUpdateRoleParams)
+	CreateOrUpdateRole(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateRoleParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -2424,7 +1874,7 @@ func (siw *ServerInterfaceWrapper) ListRoleAssignments(w http.ResponseWriter, r 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2503,7 +1953,7 @@ func (siw *ServerInterfaceWrapper) DeleteRoleAssignment(w http.ResponseWriter, r
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2512,7 +1962,7 @@ func (siw *ServerInterfaceWrapper) DeleteRoleAssignment(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2533,7 +1983,7 @@ func (siw *ServerInterfaceWrapper) DeleteRoleAssignment(w http.ResponseWriter, r
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -2567,7 +2017,7 @@ func (siw *ServerInterfaceWrapper) GetRoleAssignment(w http.ResponseWriter, r *h
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2576,7 +2026,7 @@ func (siw *ServerInterfaceWrapper) GetRoleAssignment(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2607,7 +2057,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRoleAssignment(w http.ResponseW
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2616,7 +2066,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRoleAssignment(w http.ResponseW
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2637,7 +2087,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRoleAssignment(w http.ResponseW
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -2671,7 +2121,7 @@ func (siw *ServerInterfaceWrapper) ListRoles(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2750,7 +2200,7 @@ func (siw *ServerInterfaceWrapper) DeleteRole(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2759,7 +2209,7 @@ func (siw *ServerInterfaceWrapper) DeleteRole(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2780,7 +2230,7 @@ func (siw *ServerInterfaceWrapper) DeleteRole(w http.ResponseWriter, r *http.Req
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -2814,7 +2264,7 @@ func (siw *ServerInterfaceWrapper) GetRole(w http.ResponseWriter, r *http.Reques
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2823,7 +2273,7 @@ func (siw *ServerInterfaceWrapper) GetRole(w http.ResponseWriter, r *http.Reques
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2854,7 +2304,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRole(w http.ResponseWriter, r *
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2863,7 +2313,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRole(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -2884,7 +2334,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRole(w http.ResponseWriter, r *
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})

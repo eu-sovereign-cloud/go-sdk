@@ -8,7 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
-	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
@@ -205,13 +205,13 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	block := &storage.BlockStorage{
-		Metadata: &storage.RegionalWorkspaceResourceMetadata{
+	block := &schema.BlockStorage{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.BlockStorage1Name,
 		},
-		Spec: storage.BlockStorageSpec{
+		Spec: schema.BlockStorageSpec{
 			SkuRef: *storageSkuRef,
 			SizeGB: secatest.BlockStorage1SizeGB,
 		},
@@ -381,12 +381,12 @@ func TestCreateOrUpdateImage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	image := &storage.Image{
-		Metadata: &storage.RegionalResourceMetadata{
+	image := &schema.Image{
+		Metadata: &schema.RegionalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Image1Name,
 		},
-		Spec: storage.ImageSpec{
+		Spec: schema.ImageSpec{
 			BlockStorageRef: *blockStorageRef,
 			CpuArchitecture: secatest.Image1CpuArch,
 		},

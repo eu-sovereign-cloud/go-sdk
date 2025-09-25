@@ -3,7 +3,7 @@ package secapi
 import (
 	"fmt"
 
-	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 type RegionalClient struct {
@@ -15,7 +15,7 @@ type RegionalClient struct {
 	WorkspaceV1 *WorkspaceV1
 }
 
-func newRegionalClient(authToken string, region *region.Region) (*RegionalClient, error) {
+func newRegionalClient(authToken string, region *schema.Region) (*RegionalClient, error) {
 	client := &RegionalClient{
 		authToken: authToken,
 	}
@@ -43,7 +43,7 @@ func newRegionalClient(authToken string, region *region.Region) (*RegionalClient
 	return client, nil
 }
 
-func initRegionalAPI[T any](client *RegionalClient, name string, region *region.Region, newFunc func(client *RegionalClient, url string) (*T, error), setFunc func(*T)) error {
+func initRegionalAPI[T any](client *RegionalClient, name string, region *schema.Region, newFunc func(client *RegionalClient, url string) (*T, error), setFunc func(*T)) error {
 	provider, err := findRegionalProvider(name, region)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func initRegionalAPI[T any](client *RegionalClient, name string, region *region.
 	return nil
 }
 
-func findRegionalProvider(name string, region *region.Region) (*region.Provider, error) {
+func findRegionalProvider(name string, region *schema.Region) (*schema.Provider, error) {
 	for _, provider := range region.Spec.Providers {
 		if provider.Name == name {
 			return &provider, nil

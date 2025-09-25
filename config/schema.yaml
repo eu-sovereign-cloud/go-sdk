@@ -1,0 +1,34 @@
+package: schema
+generate:
+  models: true
+output-options:
+  # to make sure that all types are generated
+  skip-prune: true
+import-mapping:
+  "./activity-log.yaml": "-"
+  "./block-storage.yaml": "-"
+  "./errors.yaml": "-"
+  "./image.yaml": "-"
+  "./instance-sku.yaml": "-"
+  "./instance.yaml": "-"
+  "./internet-gateway.yaml": "-"
+  "./kubernetes-sku.yaml": "-"
+  "./kubernetes.yaml": "-"
+  "./load-balancer.yaml": "-"
+  "./nat-gateway.yaml": "-"
+  "./network-sku.yaml": "-"
+  "./network.yaml": "-"
+  "./nic.yaml": "-"
+  "./object-storage.yaml": "-"
+  "./parameters.yaml": "-"
+  "./public-ip.yaml": "-"
+  "./rbac.yaml": "-"
+  "./region.yaml": "-"
+  "./resource.yaml": "-"
+  "./route-table.yaml": "-"
+  "./security-group.yaml": "-"
+  "./security.yaml": "-"
+  "./storage-sku.yaml": "-"
+  "./subnet.yaml": "-"
+  "./wellknown.yaml": "-"
+  "./workspace.yaml": "-"

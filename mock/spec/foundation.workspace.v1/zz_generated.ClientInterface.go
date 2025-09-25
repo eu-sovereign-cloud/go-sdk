@@ -10,6 +10,8 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
+	schema "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 )
 
@@ -27,7 +29,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateWorkspace provides a mock function with given fields: ctx, tenant, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateWorkspace(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateWorkspace(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -43,10 +45,10 @@ func (_m *MockClientInterface) CreateOrUpdateWorkspace(ctx context.Context, tena
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -54,7 +56,7 @@ func (_m *MockClientInterface) CreateOrUpdateWorkspace(ctx context.Context, tena
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -70,8 +72,8 @@ type MockClientInterface_CreateOrUpdateWorkspace_Call struct {
 
 // CreateOrUpdateWorkspace is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant workspace.TenantPathParam
-//   - name workspace.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *workspace.CreateOrUpdateWorkspaceParams
 //   - body workspace.CreateOrUpdateWorkspaceJSONRequestBody
 //   - reqEditors ...workspace.RequestEditorFn
@@ -80,7 +82,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateWorkspace(ctx interface{},
 		append([]interface{}{ctx, tenant, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) Run(run func(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_CreateOrUpdateWorkspace_Call {
+func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, body workspace.CreateOrUpdateWorkspaceJSONRequestBody, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_CreateOrUpdateWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -88,7 +90,7 @@ func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) Run(run func(ctx con
 				variadicArgs[i] = a.(workspace.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(workspace.TenantPathParam), args[2].(workspace.ResourcePathParam), args[3].(*workspace.CreateOrUpdateWorkspaceParams), args[4].(workspace.CreateOrUpdateWorkspaceJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*workspace.CreateOrUpdateWorkspaceParams), args[4].(workspace.CreateOrUpdateWorkspaceJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -98,13 +100,13 @@ func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) Return(_a0 *http.Res
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) RunAndReturn(run func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateWorkspace_Call {
+func (_c *MockClientInterface_CreateOrUpdateWorkspace_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, workspace.CreateOrUpdateWorkspaceJSONRequestBody, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateWorkspace_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateWorkspaceWithBody provides a mock function with given fields: ctx, tenant, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateWorkspaceWithBody(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateWorkspaceWithBody(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -120,10 +122,10 @@ func (_m *MockClientInterface) CreateOrUpdateWorkspaceWithBody(ctx context.Conte
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -131,7 +133,7 @@ func (_m *MockClientInterface) CreateOrUpdateWorkspaceWithBody(ctx context.Conte
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -147,8 +149,8 @@ type MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call struct {
 
 // CreateOrUpdateWorkspaceWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant workspace.TenantPathParam
-//   - name workspace.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *workspace.CreateOrUpdateWorkspaceParams
 //   - contentType string
 //   - body io.Reader
@@ -158,7 +160,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateWorkspaceWithBody(ctx inte
 		append([]interface{}{ctx, tenant, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) Run(run func(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.CreateOrUpdateWorkspaceParams, contentType string, body io.Reader, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -166,7 +168,7 @@ func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) Run(run func
 				variadicArgs[i] = a.(workspace.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(workspace.TenantPathParam), args[2].(workspace.ResourcePathParam), args[3].(*workspace.CreateOrUpdateWorkspaceParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*workspace.CreateOrUpdateWorkspaceParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -176,13 +178,13 @@ func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) Return(_a0 *
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) RunAndReturn(run func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.CreateOrUpdateWorkspaceParams, string, io.Reader, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateWorkspaceWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteWorkspace provides a mock function with given fields: ctx, tenant, name, params, reqEditors
-func (_m *MockClientInterface) DeleteWorkspace(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteWorkspace(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -198,10 +200,10 @@ func (_m *MockClientInterface) DeleteWorkspace(ctx context.Context, tenant works
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -209,7 +211,7 @@ func (_m *MockClientInterface) DeleteWorkspace(ctx context.Context, tenant works
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -225,8 +227,8 @@ type MockClientInterface_DeleteWorkspace_Call struct {
 
 // DeleteWorkspace is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant workspace.TenantPathParam
-//   - name workspace.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *workspace.DeleteWorkspaceParams
 //   - reqEditors ...workspace.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteWorkspace(ctx interface{}, tenant interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteWorkspace_Call {
@@ -234,7 +236,7 @@ func (_e *MockClientInterface_Expecter) DeleteWorkspace(ctx interface{}, tenant 
 		append([]interface{}{ctx, tenant, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteWorkspace_Call) Run(run func(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_DeleteWorkspace_Call {
+func (_c *MockClientInterface_DeleteWorkspace_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *workspace.DeleteWorkspaceParams, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_DeleteWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -242,7 +244,7 @@ func (_c *MockClientInterface_DeleteWorkspace_Call) Run(run func(ctx context.Con
 				variadicArgs[i] = a.(workspace.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(workspace.TenantPathParam), args[2].(workspace.ResourcePathParam), args[3].(*workspace.DeleteWorkspaceParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*workspace.DeleteWorkspaceParams), variadicArgs...)
 	})
 	return _c
 }
@@ -252,13 +254,13 @@ func (_c *MockClientInterface_DeleteWorkspace_Call) Return(_a0 *http.Response, _
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteWorkspace_Call) RunAndReturn(run func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteWorkspace_Call {
+func (_c *MockClientInterface_DeleteWorkspace_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *workspace.DeleteWorkspaceParams, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteWorkspace_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetWorkspace provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientInterface) GetWorkspace(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetWorkspace(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -274,10 +276,10 @@ func (_m *MockClientInterface) GetWorkspace(ctx context.Context, tenant workspac
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, ...workspace.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...workspace.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -285,7 +287,7 @@ func (_m *MockClientInterface) GetWorkspace(ctx context.Context, tenant workspac
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, ...workspace.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...workspace.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -301,15 +303,15 @@ type MockClientInterface_GetWorkspace_Call struct {
 
 // GetWorkspace is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant workspace.TenantPathParam
-//   - name workspace.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - reqEditors ...workspace.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetWorkspace(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetWorkspace_Call {
 	return &MockClientInterface_GetWorkspace_Call{Call: _e.mock.On("GetWorkspace",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetWorkspace_Call) Run(run func(ctx context.Context, tenant workspace.TenantPathParam, name workspace.ResourcePathParam, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_GetWorkspace_Call {
+func (_c *MockClientInterface_GetWorkspace_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_GetWorkspace_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -317,7 +319,7 @@ func (_c *MockClientInterface_GetWorkspace_Call) Run(run func(ctx context.Contex
 				variadicArgs[i] = a.(workspace.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(workspace.TenantPathParam), args[2].(workspace.ResourcePathParam), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -327,13 +329,13 @@ func (_c *MockClientInterface_GetWorkspace_Call) Return(_a0 *http.Response, _a1 
 	return _c
 }
 
-func (_c *MockClientInterface_GetWorkspace_Call) RunAndReturn(run func(context.Context, workspace.TenantPathParam, workspace.ResourcePathParam, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetWorkspace_Call {
+func (_c *MockClientInterface_GetWorkspace_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetWorkspace_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListWorkspaces provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientInterface) ListWorkspaces(ctx context.Context, tenant workspace.TenantPathParam, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListWorkspaces(ctx context.Context, tenant schema.TenantPathParam, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -349,10 +351,10 @@ func (_m *MockClientInterface) ListWorkspaces(ctx context.Context, tenant worksp
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, workspace.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -360,7 +362,7 @@ func (_m *MockClientInterface) ListWorkspaces(ctx context.Context, tenant worksp
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, workspace.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -376,7 +378,7 @@ type MockClientInterface_ListWorkspaces_Call struct {
 
 // ListWorkspaces is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant workspace.TenantPathParam
+//   - tenant schema.TenantPathParam
 //   - params *workspace.ListWorkspacesParams
 //   - reqEditors ...workspace.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListWorkspaces(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListWorkspaces_Call {
@@ -384,7 +386,7 @@ func (_e *MockClientInterface_Expecter) ListWorkspaces(ctx interface{}, tenant i
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListWorkspaces_Call) Run(run func(ctx context.Context, tenant workspace.TenantPathParam, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_ListWorkspaces_Call {
+func (_c *MockClientInterface_ListWorkspaces_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, params *workspace.ListWorkspacesParams, reqEditors ...workspace.RequestEditorFn)) *MockClientInterface_ListWorkspaces_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]workspace.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -392,7 +394,7 @@ func (_c *MockClientInterface_ListWorkspaces_Call) Run(run func(ctx context.Cont
 				variadicArgs[i] = a.(workspace.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(workspace.TenantPathParam), args[2].(*workspace.ListWorkspacesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(*workspace.ListWorkspacesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -402,7 +404,7 @@ func (_c *MockClientInterface_ListWorkspaces_Call) Return(_a0 *http.Response, _a
 	return _c
 }
 
-func (_c *MockClientInterface_ListWorkspaces_Call) RunAndReturn(run func(context.Context, workspace.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListWorkspaces_Call {
+func (_c *MockClientInterface_ListWorkspaces_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, *workspace.ListWorkspacesParams, ...workspace.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListWorkspaces_Call {
 	_c.Call.Return(run)
 	return _c
 }

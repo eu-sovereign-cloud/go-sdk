@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"k8s.io/utils/ptr"
 )
@@ -16,11 +17,11 @@ type RegionV1 struct {
 
 // Region
 
-func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region], error) {
-	iter := Iterator[region.Region]{
-		fn: func(ctx context.Context, skipToken *string) ([]region.Region, *string, error) {
+func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	iter := Iterator[schema.Region]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
-				Accept: ptr.To(region.ListRegionsParamsAcceptApplicationjson),
+				Accept: ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -33,7 +34,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[region.Region],
 	return &iter, nil
 }
 
-func (api *RegionV1) GetRegion(ctx context.Context, name string) (*region.Region, error) {
+func (api *RegionV1) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
 	resp, err := api.region.GetRegionWithResponse(ctx, name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err

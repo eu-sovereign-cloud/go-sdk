@@ -8,7 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
-	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -101,8 +101,8 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	ws := &workspace.Workspace{
-		Metadata: &workspace.RegionalResourceMetadata{
+	ws := &schema.Workspace{
+		Metadata: &schema.RegionalResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Workspace1Name,
 		},

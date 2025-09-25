@@ -14,8 +14,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
+	externalRef0 "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/oapi-codegen/runtime"
 )
 
@@ -23,453 +23,21 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for GlobalResourceMetadataKind.
-const (
-	GlobalResourceMetadataKindActivityLog          GlobalResourceMetadataKind = "activity-log"
-	GlobalResourceMetadataKindBlockStorage         GlobalResourceMetadataKind = "block-storage"
-	GlobalResourceMetadataKindImage                GlobalResourceMetadataKind = "image"
-	GlobalResourceMetadataKindInstance             GlobalResourceMetadataKind = "instance"
-	GlobalResourceMetadataKindInstanceSku          GlobalResourceMetadataKind = "instance-sku"
-	GlobalResourceMetadataKindInternetGateway      GlobalResourceMetadataKind = "internet-gateway"
-	GlobalResourceMetadataKindNetwork              GlobalResourceMetadataKind = "network"
-	GlobalResourceMetadataKindNetworkLoadBalancer  GlobalResourceMetadataKind = "network-load-balancer"
-	GlobalResourceMetadataKindNetworkSku           GlobalResourceMetadataKind = "network-sku"
-	GlobalResourceMetadataKindNic                  GlobalResourceMetadataKind = "nic"
-	GlobalResourceMetadataKindObjectStorageAccount GlobalResourceMetadataKind = "object-storage-account"
-	GlobalResourceMetadataKindPublicIp             GlobalResourceMetadataKind = "public-ip"
-	GlobalResourceMetadataKindRegion               GlobalResourceMetadataKind = "region"
-	GlobalResourceMetadataKindRole                 GlobalResourceMetadataKind = "role"
-	GlobalResourceMetadataKindRoleAssignment       GlobalResourceMetadataKind = "role-assignment"
-	GlobalResourceMetadataKindRoutingTable         GlobalResourceMetadataKind = "routing-table"
-	GlobalResourceMetadataKindSecurityGroup        GlobalResourceMetadataKind = "security-group"
-	GlobalResourceMetadataKindSecurityGroupRule    GlobalResourceMetadataKind = "security-group-rule"
-	GlobalResourceMetadataKindStorageSku           GlobalResourceMetadataKind = "storage-sku"
-	GlobalResourceMetadataKindSubnet               GlobalResourceMetadataKind = "subnet"
-	GlobalResourceMetadataKindWorkspace            GlobalResourceMetadataKind = "workspace"
-)
-
-// Defines values for ResourceState.
-const (
-	ResourceStateActive    ResourceState = "active"
-	ResourceStateCreating  ResourceState = "creating"
-	ResourceStateDeleting  ResourceState = "deleting"
-	ResourceStateError     ResourceState = "error"
-	ResourceStatePending   ResourceState = "pending"
-	ResourceStateSuspended ResourceState = "suspended"
-	ResourceStateUpdating  ResourceState = "updating"
-)
-
-// Defines values for TypeMetadataKind.
-const (
-	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
-	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
-	TypeMetadataKindImage                TypeMetadataKind = "image"
-	TypeMetadataKindInstance             TypeMetadataKind = "instance"
-	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
-	TypeMetadataKindNetwork              TypeMetadataKind = "network"
-	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
-	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
-	TypeMetadataKindNic                  TypeMetadataKind = "nic"
-	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
-	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindRegion               TypeMetadataKind = "region"
-	TypeMetadataKindRole                 TypeMetadataKind = "role"
-	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
-	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
-	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
-	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
-	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
-	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
-	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
-)
-
-// Defines values for AcceptHeader.
-const (
-	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
-	AcceptHeaderApplicationjsonDeletedOnly AcceptHeader = "application/json; deleted=only"
-	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
-)
-
 // Defines values for ListAccountsParamsAccept.
 const (
-	ListAccountsParamsAcceptApplicationjson            ListAccountsParamsAccept = "application/json"
-	ListAccountsParamsAcceptApplicationjsonDeletedOnly ListAccountsParamsAccept = "application/json; deleted=only"
-	ListAccountsParamsAcceptApplicationjsonDeletedTrue ListAccountsParamsAccept = "application/json; deleted=true"
+	AcceptHeaderJson            ListAccountsParamsAccept = "application/json"
+	AcceptHeaderJsonDeletedOnly ListAccountsParamsAccept = "application/json; deleted=only"
+	AcceptHeaderJsonDeletedTrue ListAccountsParamsAccept = "application/json; deleted=true"
 )
 
 // AccountIterator Iterator for accounts
 type AccountIterator struct {
 	// Items List of accounts
-	Items []ObjectStorageAccount `json:"items"`
+	Items []externalRef0.ObjectStorageAccount `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
-
-// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error400 = Error
-
-// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error401 = Error
-
-// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error403 = Error
-
-// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error404 = Error
-
-// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error409 = Error
-
-// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error412 = Error
-
-// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error422 = Error
-
-// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error500 = Error
-
-// ErrorSource An object containing references to the source of the error.
-type ErrorSource struct {
-	// Parameter A string indicating which URI query parameter caused the error.
-	Parameter string `json:"parameter"`
-
-	// Pointer A JSON Pointer [RFC6901] to the associated entity in the request document.
-	Pointer string `json:"pointer"`
-}
-
-// GlobalResourceMetadata defines model for GlobalResourceMetadata.
-type GlobalResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind GlobalResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref      *Reference `json:"ref,omitempty"`
-	Resource string     `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-}
-
-// GlobalResourceMetadataKind Type of the resource
-type GlobalResourceMetadataKind string
-
-// ModificationMetadata Base metadata for all resources with optional region references
-type ModificationMetadata struct {
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-}
-
-// NameMetadata Metadata for resource names
-type NameMetadata struct {
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-}
-
-// ObjectStorageAccount defines model for ObjectStorageAccount.
-type ObjectStorageAccount struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for global resources with name, permission, modification, type, and tenant information.
-	Metadata *GlobalResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec The specification of an object storage account, including the region and zone.
-	Spec ObjectStorageAccountSpec `json:"spec"`
-
-	// Status The status of an object storage account, including the access key, secret key, and canonical user ID.
-	Status *ObjectStorageAccountStatus `json:"status,omitempty"`
-}
-
-// ObjectStorageAccountSpec The specification of an object storage account, including the region and zone.
-type ObjectStorageAccountSpec = map[string]interface{}
-
-// ObjectStorageAccountStatus defines model for ObjectStorageAccountStatus.
-type ObjectStorageAccountStatus struct {
-	// AccessKey Access key for the object storage account
-	AccessKey *string `json:"accessKey,omitempty"`
-
-	// CanonicalUserId Canonical user ID for the object storage account
-	CanonicalUserId *string           `json:"canonicalUserId,omitempty"`
-	Conditions      []StatusCondition `json:"conditions"`
-
-	// SecretKey Secret key for the object storage account
-	SecretKey *string `json:"secretKey,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// PermissionMetadata Metadata for permission management
-type PermissionMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-	Verb     string `json:"verb"`
-}
-
-// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-// The reference can be used to refer to a resource in other resources.
-type Reference struct {
-	union json.RawMessage
-}
-
-// ReferenceObject A reference to a resource using an object. The object contains the
-// same information as the ReferenceURN, but is represented as a structured object.
-// The advantage of this representation is that it can be used to reference
-// resources in different workspaces or regions without the need to specify
-// the full URN.
-type ReferenceObject struct {
-	// Provider Provider of the resource. If not set, the provider is inferred from the context.
-	Provider *string `json:"provider,omitempty"`
-
-	// Region Region of the resource. If not set, the region is inferred from the context.
-	Region *string `json:"region,omitempty"`
-
-	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
-	// The type is the resource type, and the name is the resource name.
-	Resource string `json:"resource"`
-
-	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
-	Tenant *string `json:"tenant,omitempty"`
-
-	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
-	Workspace *string `json:"workspace,omitempty"`
-}
-
-// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
-// is represented as the full URN (Uniform Resource Name) name of the resource.
-//
-// ### Automatic Prefix Inference
-//
-// In most cases, the prefix of the URN can be automatically derived in the given context.
-// To simplify usage, only the resource type and name might be specified as a reference
-// using the `<type>/<name>` notation. The suffix can be made more specific by adding
-// additional segments separated by slashes.
-//
-// The prefix is automatically inferred from the context. For example, if the resource is a
-// block storage in the same workspace the reference can be specified as
-// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
-// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
-//
-// For automatic prefix inference, the following rules apply:
-// - the version is inferred from the current resource version
-// - the workspace is inferred from the current workspace
-// - the region is inferred from the current region
-// - the provider is inferred from the type and context of the usage
-//
-// The prefix inference is resolved on admission into the full URN format, which makes it
-// mostly suitable for human use.
-type ReferenceURN = string
-
-// ResourceState Current phase of the resource:
-// - pending: not available, waiting for other resources
-// - creating: not available, creation started
-// - active: available for data layer usage
-// - updating: available for data layer usage
-// - deleting: maybe still available for data layer user, can fail any moment
-// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-type ResourceState string
-
-// ResponseMetadata defines model for ResponseMetadata.
-type ResponseMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-
-	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
-	SkipToken *string `json:"skipToken,omitempty"`
-	Verb      string  `json:"verb"`
-}
-
-// Status Current status of the resource
-type Status struct {
-	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// StatusCondition StatusCondition describes the state of a resource at a certain point.
-// Conditions are provider-specific and can represent different states depending on the
-// resource type and provider implementation.
-type StatusCondition struct {
-	// LastTransitionAt LastTransitionAt is the last time the condition transitioned from one
-	// status to another. This should be when the underlying condition changed.
-	// If that is not known, then using the time when the API field changed is
-	// acceptable.
-	LastTransitionAt time.Time `json:"lastTransitionAt"`
-
-	// Message A human-readable message indicating details about the transition.
-	Message *string `json:"message,omitempty"`
-
-	// Reason The reason for the condition's last transition in CamelCase.
-	// The specific set of reason values is provider-specific and should be
-	// documented by the provider.
-	Reason *string `json:"reason,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State ResourceState `json:"state"`
-
-	// Type Type of condition. The condition type is provider-specific and should
-	// reflect the specific states relevant to your resource.
-	Type *string `json:"type,omitempty"`
-}
-
-// TenantMetadata Metadata for resources with tenant constraints
-type TenantMetadata struct {
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-}
-
-// TypeMetadata Metadata for all resources with type information.
-type TypeMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// Kind Type of the resource
-	Kind TypeMetadataKind `json:"kind"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-}
-
-// TypeMetadataKind Type of the resource
-type TypeMetadataKind string
-
-// UserResourceMetadata Metadata for user-defined resource properties
-type UserResourceMetadata struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-}
-
-// AcceptHeader defines model for acceptHeader.
-type AcceptHeader string
-
-// IfUnmodifiedSince defines model for ifUnmodifiedSince.
-type IfUnmodifiedSince = int
-
-// LabelSelector defines model for labelSelector.
-type LabelSelector = string
-
-// LimitParam defines model for limitParam.
-type LimitParam = int
-
-// ResourcePathParam defines model for resourcePathParam.
-type ResourcePathParam = string
-
-// SkipTokenParam defines model for skipTokenParam.
-type SkipTokenParam = string
-
-// TenantPathParam defines model for tenantPathParam.
-type TenantPathParam = string
-
-// WorkspacePathParam defines model for workspacePathParam.
-type WorkspacePathParam = string
 
 // ListAccountsParams defines parameters for ListAccounts.
 type ListAccountsParams struct {
@@ -480,13 +48,13 @@ type ListAccountsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -502,80 +70,18 @@ type ListAccountsParamsAccept string
 type DeleteAccountParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateAccountParams defines parameters for CreateOrUpdateAccount.
 type CreateOrUpdateAccountParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateAccountJSONRequestBody defines body for CreateOrUpdateAccount for application/json ContentType.
-type CreateOrUpdateAccountJSONRequestBody = ObjectStorageAccount
-
-// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
-func (t Reference) AsReferenceURN() (ReferenceURN, error) {
-	var body ReferenceURN
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
-func (t *Reference) FromReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
-func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
-func (t Reference) AsReferenceObject() (ReferenceObject, error) {
-	var body ReferenceObject
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
-func (t *Reference) FromReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
-func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t Reference) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *Reference) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
+type CreateOrUpdateAccountJSONRequestBody = externalRef0.ObjectStorageAccount
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -651,21 +157,21 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListAccounts request
-	ListAccounts(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListAccounts(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteAccount request
-	DeleteAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetAccount request
-	GetAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateAccountWithBody request with any body
-	CreateOrUpdateAccountWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateAccountWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListAccounts(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListAccounts(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAccountsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -677,7 +183,7 @@ func (c *Client) ListAccounts(ctx context.Context, tenant TenantPathParam, works
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteAccountRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -689,7 +195,7 @@ func (c *Client) DeleteAccount(ctx context.Context, tenant TenantPathParam, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetAccountRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -701,7 +207,7 @@ func (c *Client) GetAccount(ctx context.Context, tenant TenantPathParam, workspa
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateAccountWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateAccountWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateAccountRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -713,7 +219,7 @@ func (c *Client) CreateOrUpdateAccountWithBody(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateAccount(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateAccount(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateAccountRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -726,7 +232,7 @@ func (c *Client) CreateOrUpdateAccount(ctx context.Context, tenant TenantPathPar
 }
 
 // NewListAccountsRequest generates requests for ListAccounts
-func NewListAccountsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListAccountsParams) (*http.Request, error) {
+func NewListAccountsRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListAccountsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -836,7 +342,7 @@ func NewListAccountsRequest(server string, tenant TenantPathParam, workspace Wor
 }
 
 // NewDeleteAccountRequest generates requests for DeleteAccount
-func NewDeleteAccountRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteAccountParams) (*http.Request, error) {
+func NewDeleteAccountRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteAccountParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -899,7 +405,7 @@ func NewDeleteAccountRequest(server string, tenant TenantPathParam, workspace Wo
 }
 
 // NewGetAccountRequest generates requests for GetAccount
-func NewGetAccountRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetAccountRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -947,7 +453,7 @@ func NewGetAccountRequest(server string, tenant TenantPathParam, workspace Works
 }
 
 // NewCreateOrUpdateAccountRequest calls the generic CreateOrUpdateAccount builder with application/json body
-func NewCreateOrUpdateAccountRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateAccountRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -958,7 +464,7 @@ func NewCreateOrUpdateAccountRequest(server string, tenant TenantPathParam, work
 }
 
 // NewCreateOrUpdateAccountRequestWithBody generates requests for CreateOrUpdateAccount with any type of body
-func NewCreateOrUpdateAccountRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateAccountRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1066,28 +572,28 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListAccountsWithResponse request
-	ListAccountsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error)
+	ListAccountsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error)
 
 	// DeleteAccountWithResponse request
-	DeleteAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error)
+	DeleteAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error)
 
 	// GetAccountWithResponse request
-	GetAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetAccountResponse, error)
+	GetAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetAccountResponse, error)
 
 	// CreateOrUpdateAccountWithBodyWithResponse request with any body
-	CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
+	CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
 
-	CreateOrUpdateAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
+	CreateOrUpdateAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error)
 }
 
 type ListAccountsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *AccountIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1109,13 +615,13 @@ func (r ListAccountsResponse) StatusCode() int {
 type DeleteAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1137,12 +643,12 @@ func (r DeleteAccountResponse) StatusCode() int {
 type GetAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ObjectStorageAccount
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.ObjectStorageAccount
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1164,16 +670,16 @@ func (r GetAccountResponse) StatusCode() int {
 type CreateOrUpdateAccountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ObjectStorageAccount
-	JSON201      *ObjectStorageAccount
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.ObjectStorageAccount
+	JSON201      *externalRef0.ObjectStorageAccount
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -1193,7 +699,7 @@ func (r CreateOrUpdateAccountResponse) StatusCode() int {
 }
 
 // ListAccountsWithResponse request returning *ListAccountsResponse
-func (c *ClientWithResponses) ListAccountsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error) {
+func (c *ClientWithResponses) ListAccountsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResponse, error) {
 	rsp, err := c.ListAccounts(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1202,7 +708,7 @@ func (c *ClientWithResponses) ListAccountsWithResponse(ctx context.Context, tena
 }
 
 // DeleteAccountWithResponse request returning *DeleteAccountResponse
-func (c *ClientWithResponses) DeleteAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error) {
+func (c *ClientWithResponses) DeleteAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteAccountParams, reqEditors ...RequestEditorFn) (*DeleteAccountResponse, error) {
 	rsp, err := c.DeleteAccount(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1211,7 +717,7 @@ func (c *ClientWithResponses) DeleteAccountWithResponse(ctx context.Context, ten
 }
 
 // GetAccountWithResponse request returning *GetAccountResponse
-func (c *ClientWithResponses) GetAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetAccountResponse, error) {
+func (c *ClientWithResponses) GetAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetAccountResponse, error) {
 	rsp, err := c.GetAccount(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1220,7 +726,7 @@ func (c *ClientWithResponses) GetAccountWithResponse(ctx context.Context, tenant
 }
 
 // CreateOrUpdateAccountWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateAccountResponse
-func (c *ClientWithResponses) CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateAccountWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
 	rsp, err := c.CreateOrUpdateAccountWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1228,7 +734,7 @@ func (c *ClientWithResponses) CreateOrUpdateAccountWithBodyWithResponse(ctx cont
 	return ParseCreateOrUpdateAccountResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateAccountWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateAccountWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateAccountParams, body CreateOrUpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateAccountResponse, error) {
 	rsp, err := c.CreateOrUpdateAccount(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -1258,28 +764,28 @@ func ParseListAccountsResponse(rsp *http.Response) (*ListAccountsResponse, error
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1305,49 +811,49 @@ func ParseDeleteAccountResponse(rsp *http.Response) (*DeleteAccountResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1373,42 +879,42 @@ func ParseGetAccountResponse(rsp *http.Response) (*GetAccountResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorageAccount
+		var dest externalRef0.ObjectStorageAccount
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1434,70 +940,70 @@ func ParseCreateOrUpdateAccountResponse(rsp *http.Response) (*CreateOrUpdateAcco
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorageAccount
+		var dest externalRef0.ObjectStorageAccount
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorageAccount
+		var dest externalRef0.ObjectStorageAccount
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1512,16 +1018,16 @@ func ParseCreateOrUpdateAccountResponse(rsp *http.Response) (*CreateOrUpdateAcco
 type ServerInterface interface {
 	// List accounts
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts)
-	ListAccounts(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListAccountsParams)
+	ListAccounts(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListAccountsParams)
 	// Delete account
 	// (DELETE /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
-	DeleteAccount(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteAccountParams)
+	DeleteAccount(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeleteAccountParams)
 	// Get account
 	// (GET /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
-	GetAccount(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetAccount(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update account
 	// (PUT /v1beta1/tenants/{tenant}/workspaces/{workspace}/accounts/{name})
-	CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateAccountParams)
+	CreateOrUpdateAccount(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateAccountParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -1539,7 +1045,7 @@ func (siw *ServerInterfaceWrapper) ListAccounts(w http.ResponseWriter, r *http.R
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1548,7 +1054,7 @@ func (siw *ServerInterfaceWrapper) ListAccounts(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1627,7 +1133,7 @@ func (siw *ServerInterfaceWrapper) DeleteAccount(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1636,7 +1142,7 @@ func (siw *ServerInterfaceWrapper) DeleteAccount(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1645,7 +1151,7 @@ func (siw *ServerInterfaceWrapper) DeleteAccount(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1666,7 +1172,7 @@ func (siw *ServerInterfaceWrapper) DeleteAccount(w http.ResponseWriter, r *http.
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -1700,7 +1206,7 @@ func (siw *ServerInterfaceWrapper) GetAccount(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1709,7 +1215,7 @@ func (siw *ServerInterfaceWrapper) GetAccount(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1718,7 +1224,7 @@ func (siw *ServerInterfaceWrapper) GetAccount(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1749,7 +1255,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateAccount(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1758,7 +1264,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateAccount(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1767,7 +1273,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateAccount(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -1788,7 +1294,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateAccount(w http.ResponseWriter, 
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
