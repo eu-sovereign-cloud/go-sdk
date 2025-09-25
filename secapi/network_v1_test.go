@@ -48,7 +48,7 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Name, resp[0].Metadata.Name)
 
-	labels := *resp[0].Labels
+	labels := resp[0].Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.NetworkSku1Tier, labels[secatest.LabelKeyTier])
 
@@ -84,7 +84,7 @@ func TestGetNetworkSkuV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Name, resp.Metadata.Name)
 
-	labels := *resp.Labels
+	labels := resp.Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.NetworkSku1Tier, labels[secatest.LabelKeyTier])
 

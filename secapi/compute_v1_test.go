@@ -47,7 +47,7 @@ func TestListInstancesSku(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	labels := *resp[0].Labels
+	labels := resp[0].Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
@@ -86,7 +86,7 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
 
-	labels := *resp.Labels
+	labels := resp.Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
