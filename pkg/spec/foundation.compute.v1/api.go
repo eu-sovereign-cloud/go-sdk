@@ -23,6 +23,12 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
+// Defines values for InstanceStatusPowerState.
+const (
+	Off InstanceStatusPowerState = "off"
+	On  InstanceStatusPowerState = "on"
+)
+
 // Defines values for RegionalWorkspaceResourceMetadataKind.
 const (
 	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
@@ -270,8 +276,26 @@ type InstanceSpec struct {
 	Zone Zone `json:"zone"`
 }
 
-// InstanceStatus Current status of the resource
-type InstanceStatus = Status
+// InstanceStatus defines model for InstanceStatus.
+type InstanceStatus struct {
+	Conditions []StatusCondition `json:"conditions"`
+
+	// PowerState Current power state of the instance.
+	PowerState InstanceStatusPowerState `json:"powerState"`
+
+	// State Current phase of the resource:
+	// - pending: not available, waiting for other resources
+	// - creating: not available, creation started
+	// - active: available for data layer usage
+	// - updating: available for data layer usage
+	// - deleting: maybe still available for data layer user, can fail any moment
+	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
+	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
+	State *ResourceState `json:"state,omitempty"`
+}
+
+// InstanceStatusPowerState Current power state of the instance.
+type InstanceStatusPowerState string
 
 // ModificationMetadata Base metadata for all resources with optional region references
 type ModificationMetadata struct {
@@ -589,7 +613,7 @@ type ListSkusParams struct {
 	// Filter syntax:
 	//   - Equals: key=value
 	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
+	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
 	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
@@ -616,7 +640,7 @@ type ListInstancesParams struct {
 	// Filter syntax:
 	//   - Equals: key=value
 	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
+	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
 	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`

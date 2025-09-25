@@ -162,27 +162,13 @@ type ActivityLogIterator struct {
 // ActivityLogSpec Activity log specification
 type ActivityLogSpec struct {
 	// Request Request object
-	Request *struct {
-		Body     *ActivityLogSpec_Request_Body `json:"body,omitempty"`
-		Resource *string                       `json:"resource,omitempty"`
-
-		// Verb Verb that describes the action to be performed on the resource.
-		// The verb can be one of the following: get, list, put, delete, post, ..
-		Verb *string `json:"verb,omitempty"`
-	} `json:"request,omitempty"`
+	Request *RequestObject `json:"request,omitempty"`
 
 	// Response Response object
-	Response *struct {
-		Code *float32 `json:"code,omitempty"`
-	} `json:"response,omitempty"`
+	Response *ResponseObject `json:"response,omitempty"`
 
 	// Subject User-JWT executing this query
 	Subject *string `json:"subject,omitempty"`
-}
-
-// ActivityLogSpec_Request_Body defines model for ActivityLogSpec.Request.Body.
-type ActivityLogSpec_Request_Body struct {
-	union json.RawMessage
 }
 
 // BlockStorageSpec References the SKU used for this block.
@@ -651,6 +637,21 @@ type RegionalWorkspaceResourceMetadata struct {
 // RegionalWorkspaceResourceMetadataKind Type of the resource
 type RegionalWorkspaceResourceMetadataKind string
 
+// RequestObject Request object
+type RequestObject struct {
+	Body     *RequestObject_Body `json:"body,omitempty"`
+	Resource *string             `json:"resource,omitempty"`
+
+	// Verb Verb that describes the action to be performed on the resource.
+	// The verb can be one of the following: get, list, put, delete, post, ..
+	Verb *string `json:"verb,omitempty"`
+}
+
+// RequestObject_Body defines model for RequestObject.Body.
+type RequestObject_Body struct {
+	union json.RawMessage
+}
+
 // ResponseMetadata defines model for ResponseMetadata.
 type ResponseMetadata struct {
 	Provider string `json:"provider"`
@@ -659,6 +660,11 @@ type ResponseMetadata struct {
 	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
 	SkipToken *string `json:"skipToken,omitempty"`
 	Verb      string  `json:"verb"`
+}
+
+// ResponseObject Response object
+type ResponseObject struct {
+	Code *float32 `json:"code,omitempty"`
 }
 
 // RoleAssignmentScope Role assignment scope, including the workspaces, regions and tenants.
@@ -962,7 +968,7 @@ type ListActivityLogsParams struct {
 	// Filter syntax:
 	//   - Equals: key=value
 	//   - Not equals: key!=value
-	//   - Wildcards: *key*=*value* - matches if at least one pair match
+	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
 	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
@@ -982,406 +988,6 @@ type ListActivityLogsParams struct {
 
 // ListActivityLogsParamsAccept defines parameters for ListActivityLogs.
 type ListActivityLogsParamsAccept string
-
-// AsBlockStorageSpec returns the union data inside the ActivityLogSpec_Request_Body as a BlockStorageSpec
-func (t ActivityLogSpec_Request_Body) AsBlockStorageSpec() (BlockStorageSpec, error) {
-	var body BlockStorageSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromBlockStorageSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided BlockStorageSpec
-func (t *ActivityLogSpec_Request_Body) FromBlockStorageSpec(v BlockStorageSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeBlockStorageSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided BlockStorageSpec
-func (t *ActivityLogSpec_Request_Body) MergeBlockStorageSpec(v BlockStorageSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsInstanceSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a InstanceSkuSpec
-func (t ActivityLogSpec_Request_Body) AsInstanceSkuSpec() (InstanceSkuSpec, error) {
-	var body InstanceSkuSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromInstanceSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided InstanceSkuSpec
-func (t *ActivityLogSpec_Request_Body) FromInstanceSkuSpec(v InstanceSkuSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeInstanceSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided InstanceSkuSpec
-func (t *ActivityLogSpec_Request_Body) MergeInstanceSkuSpec(v InstanceSkuSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsInstanceSpec returns the union data inside the ActivityLogSpec_Request_Body as a InstanceSpec
-func (t ActivityLogSpec_Request_Body) AsInstanceSpec() (InstanceSpec, error) {
-	var body InstanceSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromInstanceSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided InstanceSpec
-func (t *ActivityLogSpec_Request_Body) FromInstanceSpec(v InstanceSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeInstanceSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided InstanceSpec
-func (t *ActivityLogSpec_Request_Body) MergeInstanceSpec(v InstanceSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsNetworkLoadBalancerSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkLoadBalancerSpec
-func (t ActivityLogSpec_Request_Body) AsNetworkLoadBalancerSpec() (NetworkLoadBalancerSpec, error) {
-	var body NetworkLoadBalancerSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNetworkLoadBalancerSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkLoadBalancerSpec
-func (t *ActivityLogSpec_Request_Body) FromNetworkLoadBalancerSpec(v NetworkLoadBalancerSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNetworkLoadBalancerSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkLoadBalancerSpec
-func (t *ActivityLogSpec_Request_Body) MergeNetworkLoadBalancerSpec(v NetworkLoadBalancerSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsNetworkSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkSkuSpec
-func (t ActivityLogSpec_Request_Body) AsNetworkSkuSpec() (NetworkSkuSpec, error) {
-	var body NetworkSkuSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNetworkSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkSkuSpec
-func (t *ActivityLogSpec_Request_Body) FromNetworkSkuSpec(v NetworkSkuSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNetworkSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkSkuSpec
-func (t *ActivityLogSpec_Request_Body) MergeNetworkSkuSpec(v NetworkSkuSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsNetworkSpec returns the union data inside the ActivityLogSpec_Request_Body as a NetworkSpec
-func (t ActivityLogSpec_Request_Body) AsNetworkSpec() (NetworkSpec, error) {
-	var body NetworkSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNetworkSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NetworkSpec
-func (t *ActivityLogSpec_Request_Body) FromNetworkSpec(v NetworkSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNetworkSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NetworkSpec
-func (t *ActivityLogSpec_Request_Body) MergeNetworkSpec(v NetworkSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsNicSpec returns the union data inside the ActivityLogSpec_Request_Body as a NicSpec
-func (t ActivityLogSpec_Request_Body) AsNicSpec() (NicSpec, error) {
-	var body NicSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromNicSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided NicSpec
-func (t *ActivityLogSpec_Request_Body) FromNicSpec(v NicSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeNicSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided NicSpec
-func (t *ActivityLogSpec_Request_Body) MergeNicSpec(v NicSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsObjectStorageAccountSpec returns the union data inside the ActivityLogSpec_Request_Body as a ObjectStorageAccountSpec
-func (t ActivityLogSpec_Request_Body) AsObjectStorageAccountSpec() (ObjectStorageAccountSpec, error) {
-	var body ObjectStorageAccountSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromObjectStorageAccountSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided ObjectStorageAccountSpec
-func (t *ActivityLogSpec_Request_Body) FromObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeObjectStorageAccountSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided ObjectStorageAccountSpec
-func (t *ActivityLogSpec_Request_Body) MergeObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsPublicIpSpec returns the union data inside the ActivityLogSpec_Request_Body as a PublicIpSpec
-func (t ActivityLogSpec_Request_Body) AsPublicIpSpec() (PublicIpSpec, error) {
-	var body PublicIpSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromPublicIpSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided PublicIpSpec
-func (t *ActivityLogSpec_Request_Body) FromPublicIpSpec(v PublicIpSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergePublicIpSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided PublicIpSpec
-func (t *ActivityLogSpec_Request_Body) MergePublicIpSpec(v PublicIpSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsRoleAssignmentSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleAssignmentSpec
-func (t ActivityLogSpec_Request_Body) AsRoleAssignmentSpec() (RoleAssignmentSpec, error) {
-	var body RoleAssignmentSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRoleAssignmentSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleAssignmentSpec
-func (t *ActivityLogSpec_Request_Body) FromRoleAssignmentSpec(v RoleAssignmentSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRoleAssignmentSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleAssignmentSpec
-func (t *ActivityLogSpec_Request_Body) MergeRoleAssignmentSpec(v RoleAssignmentSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsRoleSpec returns the union data inside the ActivityLogSpec_Request_Body as a RoleSpec
-func (t ActivityLogSpec_Request_Body) AsRoleSpec() (RoleSpec, error) {
-	var body RoleSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRoleSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided RoleSpec
-func (t *ActivityLogSpec_Request_Body) FromRoleSpec(v RoleSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRoleSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided RoleSpec
-func (t *ActivityLogSpec_Request_Body) MergeRoleSpec(v RoleSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSecurityGroupSpec returns the union data inside the ActivityLogSpec_Request_Body as a SecurityGroupSpec
-func (t ActivityLogSpec_Request_Body) AsSecurityGroupSpec() (SecurityGroupSpec, error) {
-	var body SecurityGroupSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSecurityGroupSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SecurityGroupSpec
-func (t *ActivityLogSpec_Request_Body) FromSecurityGroupSpec(v SecurityGroupSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSecurityGroupSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SecurityGroupSpec
-func (t *ActivityLogSpec_Request_Body) MergeSecurityGroupSpec(v SecurityGroupSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsStorageSkuSpec returns the union data inside the ActivityLogSpec_Request_Body as a StorageSkuSpec
-func (t ActivityLogSpec_Request_Body) AsStorageSkuSpec() (StorageSkuSpec, error) {
-	var body StorageSkuSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromStorageSkuSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided StorageSkuSpec
-func (t *ActivityLogSpec_Request_Body) FromStorageSkuSpec(v StorageSkuSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeStorageSkuSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided StorageSkuSpec
-func (t *ActivityLogSpec_Request_Body) MergeStorageSkuSpec(v StorageSkuSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSubnetSpec returns the union data inside the ActivityLogSpec_Request_Body as a SubnetSpec
-func (t ActivityLogSpec_Request_Body) AsSubnetSpec() (SubnetSpec, error) {
-	var body SubnetSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSubnetSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided SubnetSpec
-func (t *ActivityLogSpec_Request_Body) FromSubnetSpec(v SubnetSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSubnetSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided SubnetSpec
-func (t *ActivityLogSpec_Request_Body) MergeSubnetSpec(v SubnetSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsWorkspaceSpec returns the union data inside the ActivityLogSpec_Request_Body as a WorkspaceSpec
-func (t ActivityLogSpec_Request_Body) AsWorkspaceSpec() (WorkspaceSpec, error) {
-	var body WorkspaceSpec
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromWorkspaceSpec overwrites any union data inside the ActivityLogSpec_Request_Body as the provided WorkspaceSpec
-func (t *ActivityLogSpec_Request_Body) FromWorkspaceSpec(v WorkspaceSpec) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeWorkspaceSpec performs a merge with any union data inside the ActivityLogSpec_Request_Body, using the provided WorkspaceSpec
-func (t *ActivityLogSpec_Request_Body) MergeWorkspaceSpec(v WorkspaceSpec) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t ActivityLogSpec_Request_Body) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *ActivityLogSpec_Request_Body) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
 
 // AsReferenceURN returns the union data inside the Reference as a ReferenceURN
 func (t Reference) AsReferenceURN() (ReferenceURN, error) {
@@ -1441,6 +1047,406 @@ func (t Reference) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Reference) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsBlockStorageSpec returns the union data inside the RequestObject_Body as a BlockStorageSpec
+func (t RequestObject_Body) AsBlockStorageSpec() (BlockStorageSpec, error) {
+	var body BlockStorageSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBlockStorageSpec overwrites any union data inside the RequestObject_Body as the provided BlockStorageSpec
+func (t *RequestObject_Body) FromBlockStorageSpec(v BlockStorageSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBlockStorageSpec performs a merge with any union data inside the RequestObject_Body, using the provided BlockStorageSpec
+func (t *RequestObject_Body) MergeBlockStorageSpec(v BlockStorageSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsInstanceSkuSpec returns the union data inside the RequestObject_Body as a InstanceSkuSpec
+func (t RequestObject_Body) AsInstanceSkuSpec() (InstanceSkuSpec, error) {
+	var body InstanceSkuSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromInstanceSkuSpec overwrites any union data inside the RequestObject_Body as the provided InstanceSkuSpec
+func (t *RequestObject_Body) FromInstanceSkuSpec(v InstanceSkuSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeInstanceSkuSpec performs a merge with any union data inside the RequestObject_Body, using the provided InstanceSkuSpec
+func (t *RequestObject_Body) MergeInstanceSkuSpec(v InstanceSkuSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsInstanceSpec returns the union data inside the RequestObject_Body as a InstanceSpec
+func (t RequestObject_Body) AsInstanceSpec() (InstanceSpec, error) {
+	var body InstanceSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromInstanceSpec overwrites any union data inside the RequestObject_Body as the provided InstanceSpec
+func (t *RequestObject_Body) FromInstanceSpec(v InstanceSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeInstanceSpec performs a merge with any union data inside the RequestObject_Body, using the provided InstanceSpec
+func (t *RequestObject_Body) MergeInstanceSpec(v InstanceSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNetworkLoadBalancerSpec returns the union data inside the RequestObject_Body as a NetworkLoadBalancerSpec
+func (t RequestObject_Body) AsNetworkLoadBalancerSpec() (NetworkLoadBalancerSpec, error) {
+	var body NetworkLoadBalancerSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNetworkLoadBalancerSpec overwrites any union data inside the RequestObject_Body as the provided NetworkLoadBalancerSpec
+func (t *RequestObject_Body) FromNetworkLoadBalancerSpec(v NetworkLoadBalancerSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNetworkLoadBalancerSpec performs a merge with any union data inside the RequestObject_Body, using the provided NetworkLoadBalancerSpec
+func (t *RequestObject_Body) MergeNetworkLoadBalancerSpec(v NetworkLoadBalancerSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNetworkSkuSpec returns the union data inside the RequestObject_Body as a NetworkSkuSpec
+func (t RequestObject_Body) AsNetworkSkuSpec() (NetworkSkuSpec, error) {
+	var body NetworkSkuSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNetworkSkuSpec overwrites any union data inside the RequestObject_Body as the provided NetworkSkuSpec
+func (t *RequestObject_Body) FromNetworkSkuSpec(v NetworkSkuSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNetworkSkuSpec performs a merge with any union data inside the RequestObject_Body, using the provided NetworkSkuSpec
+func (t *RequestObject_Body) MergeNetworkSkuSpec(v NetworkSkuSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNetworkSpec returns the union data inside the RequestObject_Body as a NetworkSpec
+func (t RequestObject_Body) AsNetworkSpec() (NetworkSpec, error) {
+	var body NetworkSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNetworkSpec overwrites any union data inside the RequestObject_Body as the provided NetworkSpec
+func (t *RequestObject_Body) FromNetworkSpec(v NetworkSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNetworkSpec performs a merge with any union data inside the RequestObject_Body, using the provided NetworkSpec
+func (t *RequestObject_Body) MergeNetworkSpec(v NetworkSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsNicSpec returns the union data inside the RequestObject_Body as a NicSpec
+func (t RequestObject_Body) AsNicSpec() (NicSpec, error) {
+	var body NicSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromNicSpec overwrites any union data inside the RequestObject_Body as the provided NicSpec
+func (t *RequestObject_Body) FromNicSpec(v NicSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeNicSpec performs a merge with any union data inside the RequestObject_Body, using the provided NicSpec
+func (t *RequestObject_Body) MergeNicSpec(v NicSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsObjectStorageAccountSpec returns the union data inside the RequestObject_Body as a ObjectStorageAccountSpec
+func (t RequestObject_Body) AsObjectStorageAccountSpec() (ObjectStorageAccountSpec, error) {
+	var body ObjectStorageAccountSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromObjectStorageAccountSpec overwrites any union data inside the RequestObject_Body as the provided ObjectStorageAccountSpec
+func (t *RequestObject_Body) FromObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeObjectStorageAccountSpec performs a merge with any union data inside the RequestObject_Body, using the provided ObjectStorageAccountSpec
+func (t *RequestObject_Body) MergeObjectStorageAccountSpec(v ObjectStorageAccountSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPublicIpSpec returns the union data inside the RequestObject_Body as a PublicIpSpec
+func (t RequestObject_Body) AsPublicIpSpec() (PublicIpSpec, error) {
+	var body PublicIpSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPublicIpSpec overwrites any union data inside the RequestObject_Body as the provided PublicIpSpec
+func (t *RequestObject_Body) FromPublicIpSpec(v PublicIpSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePublicIpSpec performs a merge with any union data inside the RequestObject_Body, using the provided PublicIpSpec
+func (t *RequestObject_Body) MergePublicIpSpec(v PublicIpSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRoleAssignmentSpec returns the union data inside the RequestObject_Body as a RoleAssignmentSpec
+func (t RequestObject_Body) AsRoleAssignmentSpec() (RoleAssignmentSpec, error) {
+	var body RoleAssignmentSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoleAssignmentSpec overwrites any union data inside the RequestObject_Body as the provided RoleAssignmentSpec
+func (t *RequestObject_Body) FromRoleAssignmentSpec(v RoleAssignmentSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoleAssignmentSpec performs a merge with any union data inside the RequestObject_Body, using the provided RoleAssignmentSpec
+func (t *RequestObject_Body) MergeRoleAssignmentSpec(v RoleAssignmentSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRoleSpec returns the union data inside the RequestObject_Body as a RoleSpec
+func (t RequestObject_Body) AsRoleSpec() (RoleSpec, error) {
+	var body RoleSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRoleSpec overwrites any union data inside the RequestObject_Body as the provided RoleSpec
+func (t *RequestObject_Body) FromRoleSpec(v RoleSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRoleSpec performs a merge with any union data inside the RequestObject_Body, using the provided RoleSpec
+func (t *RequestObject_Body) MergeRoleSpec(v RoleSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsSecurityGroupSpec returns the union data inside the RequestObject_Body as a SecurityGroupSpec
+func (t RequestObject_Body) AsSecurityGroupSpec() (SecurityGroupSpec, error) {
+	var body SecurityGroupSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSecurityGroupSpec overwrites any union data inside the RequestObject_Body as the provided SecurityGroupSpec
+func (t *RequestObject_Body) FromSecurityGroupSpec(v SecurityGroupSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSecurityGroupSpec performs a merge with any union data inside the RequestObject_Body, using the provided SecurityGroupSpec
+func (t *RequestObject_Body) MergeSecurityGroupSpec(v SecurityGroupSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStorageSkuSpec returns the union data inside the RequestObject_Body as a StorageSkuSpec
+func (t RequestObject_Body) AsStorageSkuSpec() (StorageSkuSpec, error) {
+	var body StorageSkuSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageSkuSpec overwrites any union data inside the RequestObject_Body as the provided StorageSkuSpec
+func (t *RequestObject_Body) FromStorageSkuSpec(v StorageSkuSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageSkuSpec performs a merge with any union data inside the RequestObject_Body, using the provided StorageSkuSpec
+func (t *RequestObject_Body) MergeStorageSkuSpec(v StorageSkuSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsSubnetSpec returns the union data inside the RequestObject_Body as a SubnetSpec
+func (t RequestObject_Body) AsSubnetSpec() (SubnetSpec, error) {
+	var body SubnetSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubnetSpec overwrites any union data inside the RequestObject_Body as the provided SubnetSpec
+func (t *RequestObject_Body) FromSubnetSpec(v SubnetSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubnetSpec performs a merge with any union data inside the RequestObject_Body, using the provided SubnetSpec
+func (t *RequestObject_Body) MergeSubnetSpec(v SubnetSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsWorkspaceSpec returns the union data inside the RequestObject_Body as a WorkspaceSpec
+func (t RequestObject_Body) AsWorkspaceSpec() (WorkspaceSpec, error) {
+	var body WorkspaceSpec
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromWorkspaceSpec overwrites any union data inside the RequestObject_Body as the provided WorkspaceSpec
+func (t *RequestObject_Body) FromWorkspaceSpec(v WorkspaceSpec) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeWorkspaceSpec performs a merge with any union data inside the RequestObject_Body, using the provided WorkspaceSpec
+func (t *RequestObject_Body) MergeWorkspaceSpec(v WorkspaceSpec) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t RequestObject_Body) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *RequestObject_Body) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
