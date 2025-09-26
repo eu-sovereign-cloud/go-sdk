@@ -5,7 +5,9 @@ package schema
 
 // InternetGateway defines model for InternetGateway.
 type InternetGateway struct {
-	Annotations *interface{} `json:"annotations,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
+	Annotations Annotations `json:"annotations,omitempty"`
 
 	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
 	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.

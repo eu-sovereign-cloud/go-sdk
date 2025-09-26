@@ -12,7 +12,9 @@ const (
 
 // KubernetesCluster defines model for KubernetesCluster.
 type KubernetesCluster struct {
-	Annotations *interface{} `json:"annotations,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
+	Annotations Annotations `json:"annotations,omitempty"`
 
 	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
 	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
@@ -82,7 +84,9 @@ type KubernetesClusterStatus struct {
 
 // KubernetesNodePool defines model for KubernetesNodePool.
 type KubernetesNodePool struct {
-	Annotations *interface{} `json:"annotations,omitempty"`
+	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
+	// The number of annotations is eventually limited by the CSP.
+	Annotations Annotations `json:"annotations,omitempty"`
 
 	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
 	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
