@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"k8s.io/utils/ptr"
 )
@@ -17,11 +18,11 @@ type ComputeV1 struct {
 
 // Instance Sku
 
-func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[compute.InstanceSku], error) {
-	iter := Iterator[compute.InstanceSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]compute.InstanceSku, *string, error) {
-			resp, err := api.compute.ListSkusWithResponse(ctx, compute.TenantPathParam(tid), &compute.ListSkusParams{
-				Accept: ptr.To(compute.ListSkusParamsAcceptApplicationjson),
+func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
+	iter := Iterator[schema.InstanceSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
+			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
+				Accept: ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -34,12 +35,12 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[com
 	return &iter, nil
 }
 
-func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*compute.InstanceSku, error) {
+func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.GetSkuWithResponse(ctx, compute.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+	resp, err := api.compute.GetSkuWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -53,11 +54,11 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*comput
 
 // Instance
 
-func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[compute.Instance], error) {
-	iter := Iterator[compute.Instance]{
-		fn: func(ctx context.Context, skipToken *string) ([]compute.Instance, *string, error) {
-			resp, err := api.compute.ListInstancesWithResponse(ctx, compute.TenantPathParam(tid), compute.WorkspacePathParam(wid), &compute.ListInstancesParams{
-				Accept: ptr.To(compute.Applicationjson),
+func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
+	iter := Iterator[schema.Instance]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
+			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
+				Accept: ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -70,12 +71,12 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 	return &iter, nil
 }
 
-func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*compute.Instance, error) {
+func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.GetInstanceWithResponse(ctx, compute.TenantPathParam(wref.Tenant), compute.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -87,12 +88,12 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.CreateOrUpdateInstanceParams) (*compute.Instance, error) {
+func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
 	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, compute.TenantPathParam(inst.Metadata.Tenant), compute.WorkspacePathParam(inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, schema.TenantPathParam(inst.Metadata.Tenant), schema.WorkspacePathParam(inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -108,11 +109,11 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *compute.Instance) (*compute.Instance, error) {
+func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
 	return api.CreateOrUpdateInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.DeleteInstanceParams) error {
+func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
 	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -129,11 +130,11 @@ func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *comput
 	return nil
 }
 
-func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.DeleteInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StartInstanceParams) error {
+func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
 	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -150,11 +151,11 @@ func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *compute
 	return nil
 }
 
-func (api *ComputeV1) StartInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) StartInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.StartInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.StopInstanceParams) error {
+func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
 	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -171,11 +172,11 @@ func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *compute.
 	return nil
 }
 
-func (api *ComputeV1) StopInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) StopInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.StopInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compute.Instance, params *compute.RestartInstanceParams) error {
+func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
 	if err := api.validateMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -192,14 +193,14 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *compu
 	return nil
 }
 
-func (api *ComputeV1) RestartInstance(ctx context.Context, inst *compute.Instance) error {
+func (api *ComputeV1) RestartInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.RestartInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) BuildReferenceURN(urn string) (*compute.Reference, error) {
-	urnRef := compute.ReferenceURN(urn)
+func (api *ComputeV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
+	urnRef := schema.ReferenceURN(urn)
 
-	ref := &compute.Reference{}
+	ref := &schema.Reference{}
 	if err := ref.FromReferenceURN(urnRef); err != nil {
 		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
 	}
@@ -207,7 +208,7 @@ func (api *ComputeV1) BuildReferenceURN(urn string) (*compute.Reference, error) 
 	return ref, nil
 }
 
-func (api *ComputeV1) validateMetadata(metadata *compute.RegionalWorkspaceResourceMetadata) error {
+func (api *ComputeV1) validateMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}

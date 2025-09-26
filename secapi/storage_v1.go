@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 	"k8s.io/utils/ptr"
 )
@@ -17,11 +18,11 @@ type StorageV1 struct {
 
 // Storage Sku
 
-func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[storage.StorageSku], error) {
-	iter := Iterator[storage.StorageSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]storage.StorageSku, *string, error) {
-			resp, err := api.storage.ListSkusWithResponse(ctx, storage.TenantPathParam(tid), &storage.ListSkusParams{
-				Accept: ptr.To(storage.ListSkusParamsAcceptApplicationjson),
+func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error) {
+	iter := Iterator[schema.StorageSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
+			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
+				Accept: ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -34,12 +35,12 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sto
 	return &iter, nil
 }
 
-func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storage.StorageSku, error) {
+func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*schema.StorageSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.GetSkuWithResponse(ctx, storage.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+	resp, err := api.storage.GetSkuWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -53,11 +54,11 @@ func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*storag
 
 // Block Storage
 
-func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[storage.BlockStorage], error) {
-	iter := Iterator[storage.BlockStorage]{
-		fn: func(ctx context.Context, skipToken *string) ([]storage.BlockStorage, *string, error) {
-			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, storage.TenantPathParam(tid), storage.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
-				Accept: ptr.To(storage.ListBlockStoragesParamsAcceptApplicationjson),
+func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error) {
+	iter := Iterator[schema.BlockStorage]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
+			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
+				Accept: ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -70,12 +71,12 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 	return &iter, nil
 }
 
-func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*storage.BlockStorage, error) {
+func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.GetBlockStorageWithResponse(ctx, storage.TenantPathParam(wref.Tenant), storage.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	resp, err := api.storage.GetBlockStorageWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -87,12 +88,12 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*storage.BlockStorage, error) {
+func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
 	if err := api.validateWorkspaceMetadata(block.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, storage.TenantPathParam(block.Metadata.Tenant), storage.WorkspacePathParam(block.Metadata.Workspace), block.Metadata.Name, params, *block, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, schema.TenantPathParam(block.Metadata.Tenant), schema.WorkspacePathParam(block.Metadata.Workspace), block.Metadata.Name, params, *block, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -108,11 +109,11 @@ func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, 
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *storage.BlockStorage) (*storage.BlockStorage, error) {
+func (api *StorageV1) CreateOrUpdateBlockStorage(ctx context.Context, block *schema.BlockStorage) (*schema.BlockStorage, error) {
 	return api.CreateOrUpdateBlockStorageWithParams(ctx, block, nil)
 }
 
-func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *storage.BlockStorage, params *storage.DeleteBlockStorageParams) error {
+func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.DeleteBlockStorageParams) error {
 	if err := api.validateWorkspaceMetadata(block.Metadata); err != nil {
 		return err
 	}
@@ -129,17 +130,17 @@ func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *s
 	return nil
 }
 
-func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *storage.BlockStorage) error {
+func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *schema.BlockStorage) error {
 	return api.DeleteBlockStorageWithParams(ctx, block, nil)
 }
 
 // Image
 
-func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[storage.Image], error) {
-	iter := Iterator[storage.Image]{
-		fn: func(ctx context.Context, skipToken *string) ([]storage.Image, *string, error) {
-			resp, err := api.storage.ListImagesWithResponse(ctx, storage.TenantPathParam(tid), &storage.ListImagesParams{
-				Accept: ptr.To(storage.ListImagesParamsAcceptApplicationjson),
+func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error) {
+	iter := Iterator[schema.Image]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
+			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
+				Accept: ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -152,12 +153,12 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 	return &iter, nil
 }
 
-func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*storage.Image, error) {
+func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.GetImageWithResponse(ctx, storage.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders, api.loadRequestHeaders)
+	resp, err := api.storage.GetImageWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -169,12 +170,12 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*stor
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *storage.Image, params *storage.CreateOrUpdateImageParams) (*storage.Image, error) {
+func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {
 	if err := api.validateRegionalMetadata(image.Metadata); err != nil {
 		return nil, err
 	}
 
-	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, storage.TenantPathParam(image.Metadata.Tenant), image.Metadata.Name, params, *image, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, schema.TenantPathParam(image.Metadata.Tenant), image.Metadata.Name, params, *image, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -190,11 +191,11 @@ func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *
 	}
 }
 
-func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *storage.Image) (*storage.Image, error) {
+func (api *StorageV1) CreateOrUpdateImage(ctx context.Context, image *schema.Image) (*schema.Image, error) {
 	return api.CreateOrUpdateImageWithParams(ctx, image, nil)
 }
 
-func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *storage.Image, params *storage.DeleteImageParams) error {
+func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *schema.Image, params *storage.DeleteImageParams) error {
 	if err := api.validateRegionalMetadata(image.Metadata); err != nil {
 		return err
 	}
@@ -211,14 +212,14 @@ func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *storage.
 	return nil
 }
 
-func (api *StorageV1) DeleteImage(ctx context.Context, image *storage.Image) error {
+func (api *StorageV1) DeleteImage(ctx context.Context, image *schema.Image) error {
 	return api.DeleteImageWithParams(ctx, image, nil)
 }
 
-func (api *StorageV1) BuildReferenceURN(urn string) (*storage.Reference, error) {
-	urnRef := storage.ReferenceURN(urn)
+func (api *StorageV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
+	urnRef := schema.ReferenceURN(urn)
 
-	ref := &storage.Reference{}
+	ref := &schema.Reference{}
 	if err := ref.FromReferenceURN(urnRef); err != nil {
 		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
 	}
@@ -226,7 +227,7 @@ func (api *StorageV1) BuildReferenceURN(urn string) (*storage.Reference, error) 
 	return ref, nil
 }
 
-func (api *StorageV1) validateRegionalMetadata(metadata *storage.RegionalResourceMetadata) error {
+func (api *StorageV1) validateRegionalMetadata(metadata *schema.RegionalResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -238,7 +239,7 @@ func (api *StorageV1) validateRegionalMetadata(metadata *storage.RegionalResourc
 	return nil
 }
 
-func (api *StorageV1) validateWorkspaceMetadata(metadata *storage.RegionalWorkspaceResourceMetadata) error {
+func (api *StorageV1) validateWorkspaceMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}

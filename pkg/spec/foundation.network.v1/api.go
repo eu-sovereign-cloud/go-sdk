@@ -14,8 +14,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
+	externalRef0 "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/oapi-codegen/runtime"
 )
 
@@ -23,1281 +23,133 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for IPVersion.
-const (
-	IPv4 IPVersion = "IPv4"
-	IPv6 IPVersion = "IPv6"
-)
-
-// Defines values for RegionalNetworkResourceMetadataKind.
-const (
-	RegionalNetworkResourceMetadataKindActivityLog          RegionalNetworkResourceMetadataKind = "activity-log"
-	RegionalNetworkResourceMetadataKindBlockStorage         RegionalNetworkResourceMetadataKind = "block-storage"
-	RegionalNetworkResourceMetadataKindImage                RegionalNetworkResourceMetadataKind = "image"
-	RegionalNetworkResourceMetadataKindInstance             RegionalNetworkResourceMetadataKind = "instance"
-	RegionalNetworkResourceMetadataKindInstanceSku          RegionalNetworkResourceMetadataKind = "instance-sku"
-	RegionalNetworkResourceMetadataKindInternetGateway      RegionalNetworkResourceMetadataKind = "internet-gateway"
-	RegionalNetworkResourceMetadataKindNetwork              RegionalNetworkResourceMetadataKind = "network"
-	RegionalNetworkResourceMetadataKindNetworkLoadBalancer  RegionalNetworkResourceMetadataKind = "network-load-balancer"
-	RegionalNetworkResourceMetadataKindNetworkSku           RegionalNetworkResourceMetadataKind = "network-sku"
-	RegionalNetworkResourceMetadataKindNic                  RegionalNetworkResourceMetadataKind = "nic"
-	RegionalNetworkResourceMetadataKindObjectStorageAccount RegionalNetworkResourceMetadataKind = "object-storage-account"
-	RegionalNetworkResourceMetadataKindPublicIp             RegionalNetworkResourceMetadataKind = "public-ip"
-	RegionalNetworkResourceMetadataKindRegion               RegionalNetworkResourceMetadataKind = "region"
-	RegionalNetworkResourceMetadataKindRole                 RegionalNetworkResourceMetadataKind = "role"
-	RegionalNetworkResourceMetadataKindRoleAssignment       RegionalNetworkResourceMetadataKind = "role-assignment"
-	RegionalNetworkResourceMetadataKindRoutingTable         RegionalNetworkResourceMetadataKind = "routing-table"
-	RegionalNetworkResourceMetadataKindSecurityGroup        RegionalNetworkResourceMetadataKind = "security-group"
-	RegionalNetworkResourceMetadataKindSecurityGroupRule    RegionalNetworkResourceMetadataKind = "security-group-rule"
-	RegionalNetworkResourceMetadataKindStorageSku           RegionalNetworkResourceMetadataKind = "storage-sku"
-	RegionalNetworkResourceMetadataKindSubnet               RegionalNetworkResourceMetadataKind = "subnet"
-	RegionalNetworkResourceMetadataKindWorkspace            RegionalNetworkResourceMetadataKind = "workspace"
-)
-
-// Defines values for RegionalWorkspaceResourceMetadataKind.
-const (
-	RegionalWorkspaceResourceMetadataKindActivityLog          RegionalWorkspaceResourceMetadataKind = "activity-log"
-	RegionalWorkspaceResourceMetadataKindBlockStorage         RegionalWorkspaceResourceMetadataKind = "block-storage"
-	RegionalWorkspaceResourceMetadataKindImage                RegionalWorkspaceResourceMetadataKind = "image"
-	RegionalWorkspaceResourceMetadataKindInstance             RegionalWorkspaceResourceMetadataKind = "instance"
-	RegionalWorkspaceResourceMetadataKindInstanceSku          RegionalWorkspaceResourceMetadataKind = "instance-sku"
-	RegionalWorkspaceResourceMetadataKindInternetGateway      RegionalWorkspaceResourceMetadataKind = "internet-gateway"
-	RegionalWorkspaceResourceMetadataKindNetwork              RegionalWorkspaceResourceMetadataKind = "network"
-	RegionalWorkspaceResourceMetadataKindNetworkLoadBalancer  RegionalWorkspaceResourceMetadataKind = "network-load-balancer"
-	RegionalWorkspaceResourceMetadataKindNetworkSku           RegionalWorkspaceResourceMetadataKind = "network-sku"
-	RegionalWorkspaceResourceMetadataKindNic                  RegionalWorkspaceResourceMetadataKind = "nic"
-	RegionalWorkspaceResourceMetadataKindObjectStorageAccount RegionalWorkspaceResourceMetadataKind = "object-storage-account"
-	RegionalWorkspaceResourceMetadataKindPublicIp             RegionalWorkspaceResourceMetadataKind = "public-ip"
-	RegionalWorkspaceResourceMetadataKindRegion               RegionalWorkspaceResourceMetadataKind = "region"
-	RegionalWorkspaceResourceMetadataKindRole                 RegionalWorkspaceResourceMetadataKind = "role"
-	RegionalWorkspaceResourceMetadataKindRoleAssignment       RegionalWorkspaceResourceMetadataKind = "role-assignment"
-	RegionalWorkspaceResourceMetadataKindRoutingTable         RegionalWorkspaceResourceMetadataKind = "routing-table"
-	RegionalWorkspaceResourceMetadataKindSecurityGroup        RegionalWorkspaceResourceMetadataKind = "security-group"
-	RegionalWorkspaceResourceMetadataKindSecurityGroupRule    RegionalWorkspaceResourceMetadataKind = "security-group-rule"
-	RegionalWorkspaceResourceMetadataKindStorageSku           RegionalWorkspaceResourceMetadataKind = "storage-sku"
-	RegionalWorkspaceResourceMetadataKindSubnet               RegionalWorkspaceResourceMetadataKind = "subnet"
-	RegionalWorkspaceResourceMetadataKindWorkspace            RegionalWorkspaceResourceMetadataKind = "workspace"
-)
-
-// Defines values for ResourceState.
-const (
-	ResourceStateActive    ResourceState = "active"
-	ResourceStateCreating  ResourceState = "creating"
-	ResourceStateDeleting  ResourceState = "deleting"
-	ResourceStateError     ResourceState = "error"
-	ResourceStatePending   ResourceState = "pending"
-	ResourceStateSuspended ResourceState = "suspended"
-	ResourceStateUpdating  ResourceState = "updating"
-)
-
-// Defines values for SecurityGroupRuleSpecDirection.
-const (
-	Egress  SecurityGroupRuleSpecDirection = "egress"
-	Ingress SecurityGroupRuleSpecDirection = "ingress"
-)
-
-// Defines values for SecurityGroupRuleSpecProtocol.
-const (
-	Icmp   SecurityGroupRuleSpecProtocol = "icmp"
-	Tcp    SecurityGroupRuleSpecProtocol = "tcp"
-	TcpUdp SecurityGroupRuleSpecProtocol = "tcp+udp"
-	Udp    SecurityGroupRuleSpecProtocol = "udp"
-)
-
-// Defines values for TypeMetadataKind.
-const (
-	TypeMetadataKindActivityLog          TypeMetadataKind = "activity-log"
-	TypeMetadataKindBlockStorage         TypeMetadataKind = "block-storage"
-	TypeMetadataKindImage                TypeMetadataKind = "image"
-	TypeMetadataKindInstance             TypeMetadataKind = "instance"
-	TypeMetadataKindInstanceSku          TypeMetadataKind = "instance-sku"
-	TypeMetadataKindInternetGateway      TypeMetadataKind = "internet-gateway"
-	TypeMetadataKindNetwork              TypeMetadataKind = "network"
-	TypeMetadataKindNetworkLoadBalancer  TypeMetadataKind = "network-load-balancer"
-	TypeMetadataKindNetworkSku           TypeMetadataKind = "network-sku"
-	TypeMetadataKindNic                  TypeMetadataKind = "nic"
-	TypeMetadataKindObjectStorageAccount TypeMetadataKind = "object-storage-account"
-	TypeMetadataKindPublicIp             TypeMetadataKind = "public-ip"
-	TypeMetadataKindRegion               TypeMetadataKind = "region"
-	TypeMetadataKindRole                 TypeMetadataKind = "role"
-	TypeMetadataKindRoleAssignment       TypeMetadataKind = "role-assignment"
-	TypeMetadataKindRoutingTable         TypeMetadataKind = "routing-table"
-	TypeMetadataKindSecurityGroup        TypeMetadataKind = "security-group"
-	TypeMetadataKindSecurityGroupRule    TypeMetadataKind = "security-group-rule"
-	TypeMetadataKindStorageSku           TypeMetadataKind = "storage-sku"
-	TypeMetadataKindSubnet               TypeMetadataKind = "subnet"
-	TypeMetadataKindWorkspace            TypeMetadataKind = "workspace"
-)
-
-// Defines values for AcceptHeader.
-const (
-	AcceptHeaderApplicationjson            AcceptHeader = "application/json"
-	AcceptHeaderApplicationjsonDeletedOnly AcceptHeader = "application/json; deleted=only"
-	AcceptHeaderApplicationjsonDeletedTrue AcceptHeader = "application/json; deleted=true"
-)
-
 // Defines values for ListSkusParamsAccept.
 const (
-	ListSkusParamsAcceptApplicationjson            ListSkusParamsAccept = "application/json"
-	ListSkusParamsAcceptApplicationjsonDeletedOnly ListSkusParamsAccept = "application/json; deleted=only"
-	ListSkusParamsAcceptApplicationjsonDeletedTrue ListSkusParamsAccept = "application/json; deleted=true"
+	ListSkusParamsAcceptAcceptHeaderJson            ListSkusParamsAccept = "application/json"
+	ListSkusParamsAcceptAcceptHeaderJsonDeletedOnly ListSkusParamsAccept = "application/json; deleted=only"
+	ListSkusParamsAcceptAcceptHeaderJsonDeletedTrue ListSkusParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListInternetGatewaysParamsAccept.
 const (
-	ListInternetGatewaysParamsAcceptApplicationjson            ListInternetGatewaysParamsAccept = "application/json"
-	ListInternetGatewaysParamsAcceptApplicationjsonDeletedOnly ListInternetGatewaysParamsAccept = "application/json; deleted=only"
-	ListInternetGatewaysParamsAcceptApplicationjsonDeletedTrue ListInternetGatewaysParamsAccept = "application/json; deleted=true"
+	ListInternetGatewaysParamsAcceptAcceptHeaderJson            ListInternetGatewaysParamsAccept = "application/json"
+	ListInternetGatewaysParamsAcceptAcceptHeaderJsonDeletedOnly ListInternetGatewaysParamsAccept = "application/json; deleted=only"
+	ListInternetGatewaysParamsAcceptAcceptHeaderJsonDeletedTrue ListInternetGatewaysParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListNetworksParamsAccept.
 const (
-	ListNetworksParamsAcceptApplicationjson            ListNetworksParamsAccept = "application/json"
-	ListNetworksParamsAcceptApplicationjsonDeletedOnly ListNetworksParamsAccept = "application/json; deleted=only"
-	ListNetworksParamsAcceptApplicationjsonDeletedTrue ListNetworksParamsAccept = "application/json; deleted=true"
+	ListNetworksParamsAcceptAcceptHeaderJson            ListNetworksParamsAccept = "application/json"
+	ListNetworksParamsAcceptAcceptHeaderJsonDeletedOnly ListNetworksParamsAccept = "application/json; deleted=only"
+	ListNetworksParamsAcceptAcceptHeaderJsonDeletedTrue ListNetworksParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListRouteTablesParamsAccept.
 const (
-	ListRouteTablesParamsAcceptApplicationjson            ListRouteTablesParamsAccept = "application/json"
-	ListRouteTablesParamsAcceptApplicationjsonDeletedOnly ListRouteTablesParamsAccept = "application/json; deleted=only"
-	ListRouteTablesParamsAcceptApplicationjsonDeletedTrue ListRouteTablesParamsAccept = "application/json; deleted=true"
+	ListRouteTablesParamsAcceptAcceptHeaderJson            ListRouteTablesParamsAccept = "application/json"
+	ListRouteTablesParamsAcceptAcceptHeaderJsonDeletedOnly ListRouteTablesParamsAccept = "application/json; deleted=only"
+	ListRouteTablesParamsAcceptAcceptHeaderJsonDeletedTrue ListRouteTablesParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListSubnetsParamsAccept.
 const (
-	ListSubnetsParamsAcceptApplicationjson            ListSubnetsParamsAccept = "application/json"
-	ListSubnetsParamsAcceptApplicationjsonDeletedOnly ListSubnetsParamsAccept = "application/json; deleted=only"
-	ListSubnetsParamsAcceptApplicationjsonDeletedTrue ListSubnetsParamsAccept = "application/json; deleted=true"
+	ListSubnetsParamsAcceptAcceptHeaderJson            ListSubnetsParamsAccept = "application/json"
+	ListSubnetsParamsAcceptAcceptHeaderJsonDeletedOnly ListSubnetsParamsAccept = "application/json; deleted=only"
+	ListSubnetsParamsAcceptAcceptHeaderJsonDeletedTrue ListSubnetsParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListNicsParamsAccept.
 const (
-	ListNicsParamsAcceptApplicationjson            ListNicsParamsAccept = "application/json"
-	ListNicsParamsAcceptApplicationjsonDeletedOnly ListNicsParamsAccept = "application/json; deleted=only"
-	ListNicsParamsAcceptApplicationjsonDeletedTrue ListNicsParamsAccept = "application/json; deleted=true"
+	ListNicsParamsAcceptAcceptHeaderJson            ListNicsParamsAccept = "application/json"
+	ListNicsParamsAcceptAcceptHeaderJsonDeletedOnly ListNicsParamsAccept = "application/json; deleted=only"
+	ListNicsParamsAcceptAcceptHeaderJsonDeletedTrue ListNicsParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListPublicIpsParamsAccept.
 const (
-	ListPublicIpsParamsAcceptApplicationjson            ListPublicIpsParamsAccept = "application/json"
-	ListPublicIpsParamsAcceptApplicationjsonDeletedOnly ListPublicIpsParamsAccept = "application/json; deleted=only"
-	ListPublicIpsParamsAcceptApplicationjsonDeletedTrue ListPublicIpsParamsAccept = "application/json; deleted=true"
+	ListPublicIpsParamsAcceptAcceptHeaderJson            ListPublicIpsParamsAccept = "application/json"
+	ListPublicIpsParamsAcceptAcceptHeaderJsonDeletedOnly ListPublicIpsParamsAccept = "application/json; deleted=only"
+	ListPublicIpsParamsAcceptAcceptHeaderJsonDeletedTrue ListPublicIpsParamsAccept = "application/json; deleted=true"
 )
 
 // Defines values for ListSecurityGroupsParamsAccept.
 const (
-	Applicationjson            ListSecurityGroupsParamsAccept = "application/json"
-	ApplicationjsonDeletedOnly ListSecurityGroupsParamsAccept = "application/json; deleted=only"
-	ApplicationjsonDeletedTrue ListSecurityGroupsParamsAccept = "application/json; deleted=true"
+	ListSecurityGroupsParamsAcceptAcceptHeaderJson            ListSecurityGroupsParamsAccept = "application/json"
+	ListSecurityGroupsParamsAcceptAcceptHeaderJsonDeletedOnly ListSecurityGroupsParamsAccept = "application/json; deleted=only"
+	ListSecurityGroupsParamsAcceptAcceptHeaderJsonDeletedTrue ListSecurityGroupsParamsAccept = "application/json; deleted=true"
 )
-
-// Error A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error struct {
-	// Detail A human-readable explanation specific to this occurrence of the problem.
-	Detail *string `json:"detail,omitempty"`
-
-	// Instance A URI reference that identifies the specific occurrence of the problem.
-	// It may or may not yield further information if dereferenced.
-	Instance string `json:"instance"`
-
-	// Meta A meta object containing non-standard meta-information about the error.
-	Meta    *map[string]interface{} `json:"meta,omitempty"`
-	Sources *[]ErrorSource          `json:"sources,omitempty"`
-
-	// Status The HTTP status type ([http://secapi.eu/errors/-rfc7231], Section 6)
-	// generated by the origin server for this occurrence of the problem.
-	Status float32 `json:"status"`
-
-	// Title A short, human-readable summary of the problem
-	// type.  It SHOULD NOT change from occurrence to occurrence of the
-	// problem, except for purposes of localization (e.g., using
-	// proactive content negotiation; see [RFC7231], Section 3.4).
-	Title string `json:"title"`
-
-	// Type The type of error, expressed as a URI.
-	Type string `json:"type"`
-}
-
-// Error400 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error400 = Error
-
-// Error401 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error401 = Error
-
-// Error403 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error403 = Error
-
-// Error404 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error404 = Error
-
-// Error409 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error409 = Error
-
-// Error412 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error412 = Error
-
-// Error422 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error422 = Error
-
-// Error500 A detailed error response see https://datatracker.ietf.org/doc/html/rfc7807.
-type Error500 = Error
-
-// ErrorSource An object containing references to the source of the error.
-type ErrorSource struct {
-	// Parameter A string indicating which URI query parameter caused the error.
-	Parameter string `json:"parameter"`
-
-	// Pointer A JSON Pointer [RFC6901] to the associated entity in the request document.
-	Pointer string `json:"pointer"`
-}
-
-// IPVersion IP version of the address
-type IPVersion string
-
-// IcmpConfig ICMP specific rule configuration
-type IcmpConfig struct {
-	// Code ICMP code
-	Code int `json:"code"`
-
-	// Type ICMP type
-	Type int `json:"type"`
-}
-
-// InternetGateway defines model for InternetGateway.
-type InternetGateway struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
-	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec The internet gateway will use the reserved IP addres.
-	// the subnet CIDR block to provide internet access to the subnet.
-	Spec InternetGatewaySpec `json:"spec"`
-
-	// Status Current status of the resource
-	Status *Status `json:"status,omitempty"`
-}
 
 // InternetGatewayIterator Iterator for internet gateways
 type InternetGatewayIterator struct {
 	// Items List of internet gateways
-	Items []InternetGateway `json:"items"`
+	Items []externalRef0.InternetGateway `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// InternetGatewaySpec The internet gateway will use the reserved IP addres.
-// the subnet CIDR block to provide internet access to the subnet.
-type InternetGatewaySpec struct {
-	// EgressOnly If set to true, the internet gateway will only allow outgoing traffic
-	// and will not allow incoming traffic. This is useful for public subnets
-	// that should not be accessible from the internet.
-	EgressOnly *bool `json:"egressOnly,omitempty"`
-}
-
-// ModificationMetadata Base metadata for all resources with optional region references
-type ModificationMetadata struct {
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-}
-
-// NameMetadata Metadata for resource names
-type NameMetadata struct {
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-}
-
-// Network defines model for Network.
-type Network struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
-	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec A Network represents a virtual network that can be used to isolate resources.
-	// Key network concepts:
-	//
-	// * Defines a range of IP addresses for compute resources (e.g. instances)
-	// * Enables network segmentation and isolation
-	// * Provides common performance configuration across the network using a SKU
-	//
-	// The `cidr` is the base CIDR block for the network. Additional CIDR blocks can be
-	// added to the network using the `additionalCidrs` field. The `additionalCidrs` can
-	// be changed after the network is created in case they are not used. The main CIDR
-	// block cannot be changed after the network is created. All cidrs must be non-overlapping.
-	// The cidrs have to be part of the RFC 1918 address space in case of IPv4 and or RFC 4193.
-	//
-	// In case the system should automatically assign IP addresses to the network cidrs
-	// only the network prefix is required. E.g. to request a /16 IPv4 CIDR block the
-	// CIDR block would be `0.0.0.0/16` and for a /56 IPv6 CIDR block the CIDR block would
-	// be `::/56`. Most CSP will not allow to use a different IPv6 prefix length than /56.
-	Spec NetworkSpec `json:"spec"`
-
-	// Status The status of the network. The status is read-only and will be set by the
-	// system. The status contains information about the current state of the network
-	// and its CIDR blocks. It will report the status of the CIDR blocks and the network
-	// as a whole including automatically assigned IP networks.
-	Status *NetworkStatus `json:"status,omitempty"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // NetworkIterator Iterator for networks
 type NetworkIterator struct {
 	// Items List of networks
-	Items []Network `json:"items"`
+	Items []externalRef0.Network `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
-
-// NetworkMetadata Metadata for resources with network constraints
-type NetworkMetadata struct {
-	// Network Network identifier
-	Network string `json:"network"`
-}
-
-// NetworkSku defines model for NetworkSku.
-type NetworkSku struct {
-	// Annotations System-defined key/value pairs to annotate the resource.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions System-defined key/value pairs to document available extensions.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels System-defined key/value pairs to filter resources.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for SKU resources.
-	Metadata *SkuResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Specification of the network SKU, including its bandwidth and packets per second.
-	Spec *NetworkSkuSpec `json:"spec,omitempty"`
-}
-
-// NetworkSkuSpec Specification of the network SKU, including its bandwidth and packets per second.
-type NetworkSkuSpec struct {
-	// Bandwidth The bandwidth in Mbps (Megabits per second).
-	Bandwidth int `json:"bandwidth"`
-
-	// Packets The number of packets per second (PPS) that the network SKU can handle.
-	Packets int `json:"packets"`
-}
-
-// NetworkSpec A Network represents a virtual network that can be used to isolate resources.
-// Key network concepts:
-//
-// * Defines a range of IP addresses for compute resources (e.g. instances)
-// * Enables network segmentation and isolation
-// * Provides common performance configuration across the network using a SKU
-//
-// The `cidr` is the base CIDR block for the network. Additional CIDR blocks can be
-// added to the network using the `additionalCidrs` field. The `additionalCidrs` can
-// be changed after the network is created in case they are not used. The main CIDR
-// block cannot be changed after the network is created. All cidrs must be non-overlapping.
-// The cidrs have to be part of the RFC 1918 address space in case of IPv4 and or RFC 4193.
-//
-// In case the system should automatically assign IP addresses to the network cidrs
-// only the network prefix is required. E.g. to request a /16 IPv4 CIDR block the
-// CIDR block would be `0.0.0.0/16` and for a /56 IPv6 CIDR block the CIDR block would
-// be `::/56`. Most CSP will not allow to use a different IPv6 prefix length than /56.
-type NetworkSpec struct {
-	AdditionalCidrs *[]Cidr `json:"additionalCidrs,omitempty"`
-
-	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-	// combinations are possible:
-	//
-	// * IPv4 only
-	// * IPv6 only
-	// * IPv4 and IPv6 (Dual Stack)
-	Cidr Cidr `json:"cidr"`
-
-	// RouteTableRef Reference to the route table used by default for all Subnets.
-	RouteTableRef Reference `json:"routeTableRef"`
-
-	// SkuRef Reference to the SKU used by default for all NIC in this Network.
-	// Can be overridden by the NIC.
-	SkuRef Reference `json:"skuRef"`
-}
-
-// NetworkStatus defines model for NetworkStatus.
-type NetworkStatus struct {
-	AdditionalCidrs *[]Cidr `json:"additionalCidrs,omitempty"`
-
-	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-	// combinations are possible:
-	//
-	// * IPv4 only
-	// * IPv6 only
-	// * IPv4 and IPv6 (Dual Stack)
-	Cidr       Cidr              `json:"cidr"`
-	Conditions []StatusCondition `json:"conditions"`
-
-	// RouteTableRef Reference to the route table used by default for all Subnets.
-	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// Nic defines model for Nic.
-type Nic struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
-	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Specification of the Network Interface Card
-	//
-	// The referenced SKU overwrites the default. In case of different network SKU references
-	// the highest possible network SKU reference is used. The network SKU reference
-	// might be restricted by the instance size.
-	Spec NicSpec `json:"spec"`
-
-	// Status Status of the Network Interface Card (NIC). The status includes the current state
-	// of the NIC and the IP addresses associated with it. The status is read-only and
-	// cannot be modified directly.
-	Status *NicStatus `json:"status,omitempty"`
-}
-
-// NicIp IP address for the NIC. The IP is either IPv4 or IPv6. The IP
-// can be `0.0.0.0` or `::` to indicate that the IP needs to be assigned
-// automatically. The IP can also be a specific IP address.
-// If not provided, the mutate admission controller will populate this value using the default values for ipv4 and ipv6.
-type NicIp = string
 
 // NicIterator Iterator for nics
 type NicIterator struct {
 	// Items List of nics
-	Items []Nic `json:"items"`
+	Items []externalRef0.Nic `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// NicSpec Specification of the Network Interface Card
-//
-// The referenced SKU overwrites the default. In case of different network SKU references
-// the highest possible network SKU reference is used. The network SKU reference
-// might be restricted by the instance size.
-type NicSpec struct {
-	// Addresses List of IP addresses for the NIC. A specific IP address needs to be in the
-	// CIDR range of the subnet and not used by any other NIC in the subnet. Multiple
-	// IP addresses can be assigned to a NIC. The number of IP addresses is might be
-	// limited by the CSP or the subnet size.
-	Addresses []NicIp `json:"addresses"`
-
-	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
-	// and not directly visible on the server/NIC itself.
-	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
-
-	// SkuRef Reference to the SKU of the NIC.
-	SkuRef *Reference `json:"skuRef,omitempty"`
-
-	// SubnetRef Reference to the subnet used by the NIC connections.
-	SubnetRef Reference `json:"subnetRef"`
-}
-
-// NicStatus defines model for NicStatus.
-type NicStatus struct {
-	Addresses  *[]NicIp          `json:"addresses,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
-
-	// MacAddress MAC address of the NIC.
-	MacAddress *string `json:"macAddress,omitempty"`
-
-	// PublicIpRefs Array of public IP addresses associated with this NIC.
-	PublicIpRefs *[]Reference `json:"publicIpRefs,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// PermissionMetadata Metadata for permission management
-type PermissionMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-	Verb     string `json:"verb"`
-}
-
-// Port A valid network port number.
-// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
-type Port = int
-
-// Ports Defines a specific port list or port range for the rule.
-// The configuration allows specifying individual ports, ranges, or a combination of both.
-//
-// Behavior:
-// - If only `from` is specified, the range is interpreted as a single port: `from` to `from`.
-// - If only `to` is specified, the range is interpreted as a single port: `to` to `to`.
-// - If both `from` and `to` are specified, the range spans from `from` to `to`.
-// - The `list` property can be used to explicitly define additional individual ports.
-//
-// The final result is a comprehensive list of ports and/or port ranges.
-type Ports struct {
-	// From A valid network port number.
-	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
-	From *Port   `json:"from,omitempty"`
-	List *[]Port `json:"list,omitempty"`
-
-	// To A valid network port number.
-	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
-	To *Port `json:"to,omitempty"`
-}
-
-// PublicIp defines model for PublicIp.
-type PublicIp struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
-	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Specification of the public IP.
-	Spec PublicIpSpec `json:"spec"`
-
-	// Status Status of the public IP.
-	Status *PublicIpStatus `json:"status,omitempty"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // PublicIpIterator Iterator for public ips
 type PublicIpIterator struct {
 	// Items List of public ips
-	Items []PublicIp `json:"items"`
+	Items []externalRef0.PublicIp `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// PublicIpSpec Specification of the public IP.
-type PublicIpSpec struct {
-	// Address The public IP address in case of BYOIP.
-	Address *string `json:"address,omitempty"`
-
-	// Version IP version of the address
-	Version IPVersion `json:"version"`
-}
-
-// PublicIpStatus defines model for PublicIpStatus.
-type PublicIpStatus struct {
-	// AttachedTo Reference to the instance the public IP is attached to.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
-
-	// IpAddress The public IP address in case.
-	IpAddress *string `json:"ipAddress,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-// The reference can be used to refer to a resource in other resources.
-type Reference struct {
-	union json.RawMessage
-}
-
-// ReferenceObject A reference to a resource using an object. The object contains the
-// same information as the ReferenceURN, but is represented as a structured object.
-// The advantage of this representation is that it can be used to reference
-// resources in different workspaces or regions without the need to specify
-// the full URN.
-type ReferenceObject struct {
-	// Provider Provider of the resource. If not set, the provider is inferred from the context.
-	Provider *string `json:"provider,omitempty"`
-
-	// Region Region of the resource. If not set, the region is inferred from the context.
-	Region *string `json:"region,omitempty"`
-
-	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
-	// The type is the resource type, and the name is the resource name.
-	Resource string `json:"resource"`
-
-	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
-	Tenant *string `json:"tenant,omitempty"`
-
-	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
-	Workspace *string `json:"workspace,omitempty"`
-}
-
-// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
-// is represented as the full URN (Uniform Resource Name) name of the resource.
-//
-// ### Automatic Prefix Inference
-//
-// In most cases, the prefix of the URN can be automatically derived in the given context.
-// To simplify usage, only the resource type and name might be specified as a reference
-// using the `<type>/<name>` notation. The suffix can be made more specific by adding
-// additional segments separated by slashes.
-//
-// The prefix is automatically inferred from the context. For example, if the resource is a
-// block storage in the same workspace the reference can be specified as
-// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
-// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
-//
-// For automatic prefix inference, the following rules apply:
-// - the version is inferred from the current resource version
-// - the workspace is inferred from the current workspace
-// - the region is inferred from the current region
-// - the provider is inferred from the type and context of the usage
-//
-// The prefix inference is resolved on admission into the full URN format, which makes it
-// mostly suitable for human use.
-type ReferenceURN = string
-
-// RegionalMetadata Metadata for regional resources
-type RegionalMetadata struct {
-	// Region Reference to the region where the resource is located
-	Region string `json:"region"`
-}
-
-// RegionalNetworkResourceMetadata defines model for RegionalNetworkResourceMetadata.
-type RegionalNetworkResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind RegionalNetworkResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name string `json:"name"`
-
-	// Network Network identifier
-	Network  string `json:"network"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-
-	// Region Reference to the region where the resource is located
-	Region   string `json:"region"`
-	Resource string `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-
-	// Workspace Workspace identifier
-	Workspace string `json:"workspace"`
-}
-
-// RegionalNetworkResourceMetadataKind Type of the resource
-type RegionalNetworkResourceMetadataKind string
-
-// RegionalWorkspaceResourceMetadata defines model for RegionalWorkspaceResourceMetadata.
-type RegionalWorkspaceResourceMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
-	// Kind Type of the resource
-	Kind RegionalWorkspaceResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
-
-	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
-	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
-	// Each segment follows the same rules.
-	Name     string `json:"name"`
-	Provider string `json:"provider"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-
-	// Region Reference to the region where the resource is located
-	Region   string `json:"region"`
-	Resource string `json:"resource"`
-
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
-
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-	Verb   string `json:"verb"`
-
-	// Workspace Workspace identifier
-	Workspace string `json:"workspace"`
-}
-
-// RegionalWorkspaceResourceMetadataKind Type of the resource
-type RegionalWorkspaceResourceMetadataKind string
-
-// ResourceState Current phase of the resource:
-// - pending: not available, waiting for other resources
-// - creating: not available, creation started
-// - active: available for data layer usage
-// - updating: available for data layer usage
-// - deleting: maybe still available for data layer user, can fail any moment
-// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-type ResourceState string
-
-// ResponseMetadata defines model for ResponseMetadata.
-type ResponseMetadata struct {
-	Provider string `json:"provider"`
-	Resource string `json:"resource"`
-
-	// SkipToken Opaque cursor to get the next page. Field is omitted when there are no more pages available.
-	SkipToken *string `json:"skipToken,omitempty"`
-	Verb      string  `json:"verb"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // RouteTableIterator Iterator for route-tables
 type RouteTableIterator struct {
 	// Items List of route-tables
-	Items []RouteTable `json:"items"`
+	Items []externalRef0.RouteTable `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// RouteSpec The target reference can be an instance,
-// a gateway or an IP address (v4 or v6) that is part of the
-// network the route table is attached to.
-type RouteSpec struct {
-	// DestinationCidrBlock The CIDR block for the destination. The block can be
-	// a specific IP address or a range of addresses. It can be
-	// IPv6 or IPv4.
-	DestinationCidrBlock string `json:"destinationCidrBlock"`
-
-	// TargetRef Reference to the target of the route. The target can be an instance, an gateway or an IP address.
-	TargetRef Reference `json:"targetRef"`
-}
-
-// RouteStatus defines model for RouteStatus.
-type RouteStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// RouteTable defines model for RouteTable.
-type RouteTable struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, workspace, network and region information.
-	Metadata *RegionalNetworkResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec The RouteTableSpec defines the routes that are associated with the route table.
-	Spec RouteTableSpec `json:"spec"`
-
-	// Status The status of the route table. The status is read-only and will be set by the
-	// system. The status contains information about the current state of the route table
-	// and its routes. It will report the status of the routes and the route table as a whole.
-	Status *RouteTableStatus `json:"status,omitempty"`
-}
-
-// RouteTableSpec The RouteTableSpec defines the routes that are associated with the route table.
-type RouteTableSpec struct {
-	Routes []RouteSpec `json:"routes"`
-}
-
-// RouteTableStatus defines model for RouteTableStatus.
-type RouteTableStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
-	Routes     *[]RouteStatus    `json:"routes,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// SecurityGroup defines model for SecurityGroup.
-type SecurityGroup struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
-	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Specification of the security group
-	Spec SecurityGroupSpec `json:"spec"`
-
-	// Status Status of the security group, including the status of its rules.
-	// The status is read-only and reflects the current state of the security group.
-	Status *SecurityGroupStatus `json:"status,omitempty"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // SecurityGroupIterator Iterator for security-groups
 type SecurityGroupIterator struct {
 	// Items List of security-groups
-	Items []SecurityGroup `json:"items"`
+	Items []externalRef0.SecurityGroup `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// SecurityGroupRuleSpec Specification of a security group rule defining network access permissions.
-// If no version is specified, any IP version will be allowed.
-// If no protocol is specified, any network protocol will be allowed.
-type SecurityGroupRuleSpec struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *Annotations `json:"annotations,omitempty"`
-
-	// Direction Direction of the traffic flow:
-	// * ingress: Only incoming traffic is allowed
-	// * egress: Only outgoing traffic is allowed
-	Direction SecurityGroupRuleSpecDirection `json:"direction"`
-
-	// Icmp ICMP specific rule configuration
-	Icmp *IcmpConfig `json:"icmp,omitempty"`
-
-	// Ports Defines a specific port list or port range for the rule.
-	// The configuration allows specifying individual ports, ranges, or a combination of both.
-	//
-	// Behavior:
-	// - If only `from` is specified, the range is interpreted as a single port: `from` to `from`.
-	// - If only `to` is specified, the range is interpreted as a single port: `to` to `to`.
-	// - If both `from` and `to` are specified, the range spans from `from` to `to`.
-	// - The `list` property can be used to explicitly define additional individual ports.
-	//
-	// The final result is a comprehensive list of ports and/or port ranges.
-	Ports *Ports `json:"ports,omitempty"`
-
-	// Protocol Network protocol for the rule
-	Protocol *SecurityGroupRuleSpecProtocol `json:"protocol,omitempty"`
-
-	// SourceRefs List of CIDR blocks, IP addresses, gateways, instances or security group references that are allowed to communicate
-	// with the security group. If a security group is specified, all instances in that group are allowed.
-	// If no sourceRefs are specified, all traffic is allowed.
-	SourceRefs *[]Reference `json:"sourceRefs,omitempty"`
-
-	// Version IP version of the address
-	Version *IPVersion `json:"version,omitempty"`
-}
-
-// SecurityGroupRuleSpecDirection Direction of the traffic flow:
-// * ingress: Only incoming traffic is allowed
-// * egress: Only outgoing traffic is allowed
-type SecurityGroupRuleSpecDirection string
-
-// SecurityGroupRuleSpecProtocol Network protocol for the rule
-type SecurityGroupRuleSpecProtocol string
-
-// SecurityGroupSpec Specification of the security group
-type SecurityGroupSpec struct {
-	// Rules Network access rules defining communication between security groups and external networks.
-	//
-	// Rule Evaluation:
-	// - Default behavior is to deny all traffic not explicitly allowed
-	// - Rules provide granular control over allowed traffic types, sources, and destinations
-	Rules []SecurityGroupRuleSpec `json:"rules"`
-}
-
-// SecurityGroupStatus defines model for SecurityGroupStatus.
-type SecurityGroupStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
-	Rules      *[]Status         `json:"rules,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // SkuIterator Iterator for skus
 type SkuIterator struct {
 	// Items List of skus
-	Items []NetworkSku `json:"items"`
+	Items []externalRef0.NetworkSku `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
-}
-
-// SkuResourceMetadata Metadata for resource names
-type SkuResourceMetadata = NameMetadata
-
-// Status Current status of the resource
-type Status struct {
-	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// StatusCondition StatusCondition describes the state of a resource at a certain point.
-// Conditions are provider-specific and can represent different states depending on the
-// resource type and provider implementation.
-type StatusCondition struct {
-	// LastTransitionAt LastTransitionAt is the last time the condition transitioned from one
-	// status to another. This should be when the underlying condition changed.
-	// If that is not known, then using the time when the API field changed is
-	// acceptable.
-	LastTransitionAt time.Time `json:"lastTransitionAt"`
-
-	// Message A human-readable message indicating details about the transition.
-	Message *string `json:"message,omitempty"`
-
-	// Reason The reason for the condition's last transition in CamelCase.
-	// The specific set of reason values is provider-specific and should be
-	// documented by the provider.
-	Reason *string `json:"reason,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State ResourceState `json:"state"`
-
-	// Type Type of condition. The condition type is provider-specific and should
-	// reflect the specific states relevant to your resource.
-	Type *string `json:"type,omitempty"`
-}
-
-// Subnet defines model for Subnet.
-type Subnet struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-
-	// Metadata Metadata for regional resources with name, permission, modification, type, tenant, workspace, network and region information.
-	Metadata *RegionalNetworkResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Detailed specification of the subnet. Automatic address
-	// assignment is supported, similar to the network configuration. The
-	// subnet's prefix length must be smaller than the network's prefix
-	// length, ensuring proper subdivision of the address space.
-	// The first and last IP addresses in the subnet are reserved
-	// the network address and broadcast address, respectively.
-	//
-	// Most CSP will not allow to use a different IPv6 prefix length than /64.
-	Spec SubnetSpec `json:"spec"`
-
-	// Status The status of the subnet, including the current state and any
-	// associated IP addresses. The status is read-only and provides
-	// information about the subnet's configuration and health.
-	Status *SubnetStatus `json:"status,omitempty"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
 
 // SubnetIterator Iterator for subnets
 type SubnetIterator struct {
 	// Items List of subnets
-	Items []Subnet `json:"items"`
+	Items []externalRef0.Subnet `json:"items"`
 
 	// Metadata Metadata for response objects.
-	Metadata ResponseMetadata `json:"metadata"`
+	Metadata externalRef0.ResponseMetadata `json:"metadata"`
 }
-
-// SubnetSpec Detailed specification of the subnet. Automatic address
-// assignment is supported, similar to the network configuration. The
-// subnet's prefix length must be smaller than the network's prefix
-// length, ensuring proper subdivision of the address space.
-// The first and last IP addresses in the subnet are reserved
-// the network address and broadcast address, respectively.
-//
-// Most CSP will not allow to use a different IPv6 prefix length than /64.
-type SubnetSpec struct {
-	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-	// combinations are possible:
-	//
-	// * IPv4 only
-	// * IPv6 only
-	// * IPv4 and IPv6 (Dual Stack)
-	Cidr Cidr `json:"cidr"`
-
-	// RouteTableRef Reference to the route table used by default for all NICs in this Subnet.
-	// If not provided, the routeTableRef associated with the network of the subnet will be used.
-	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
-
-	// SkuRef Reference to the SKU used by default for all NICs in this Network.
-	// Can be overridden by the NIC
-	SkuRef *Reference `json:"skuRef,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
-}
-
-// SubnetStatus defines model for SubnetStatus.
-type SubnetStatus struct {
-	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-	// combinations are possible:
-	//
-	// * IPv4 only
-	// * IPv6 only
-	// * IPv4 and IPv6 (Dual Stack)
-	Cidr       *Cidr             `json:"cidr,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
-
-	// RouteTableRef The route table used by this subnet.
-	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
-}
-
-// SystemResourceMetadata Metadata for user-defined resource properties
-type SystemResourceMetadata struct {
-	// Annotations System-defined key/value pairs to annotate the resource.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions System-defined key/value pairs to document available extensions.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels System-defined key/value pairs to filter resources.
-	Labels *map[string]string `json:"labels,omitempty"`
-}
-
-// TenantMetadata Metadata for resources with tenant constraints
-type TenantMetadata struct {
-	// Tenant Tenant identifier
-	Tenant string `json:"tenant"`
-}
-
-// TypeMetadata Metadata for all resources with type information.
-type TypeMetadata struct {
-	// ApiVersion API version of the resource
-	ApiVersion string `json:"apiVersion"`
-
-	// Kind Type of the resource
-	Kind TypeMetadataKind `json:"kind"`
-
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
-}
-
-// TypeMetadataKind Type of the resource
-type TypeMetadataKind string
-
-// UserResourceMetadata Metadata for user-defined resource properties
-type UserResourceMetadata struct {
-	// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-	// The number of annotations is eventually limited by the CSP.
-	Annotations *map[string]string `json:"annotations,omitempty"`
-
-	// Extensions User-defined key/value pairs that are mutable and can be used to add extensions.
-	// Extensions are subject to validation by the CSP, and any value that is not accepted will be rejected during admission.
-	Extensions *map[string]string `json:"extensions,omitempty"`
-
-	// Labels User-defined key/value pairs that are mutable and can be used to
-	// organize and categorize resources. They can be used to filter resources.
-	// The number of labels is eventually limited by the CSP.
-	Labels *map[string]string `json:"labels,omitempty"`
-}
-
-// WorkspaceMetadata Metadata for resources with workspace constraints
-type WorkspaceMetadata struct {
-	// Workspace Workspace identifier
-	Workspace string `json:"workspace"`
-}
-
-// Zone Reference to a specific zone within a region
-type Zone = string
-
-// Annotations User-defined key/value pairs that are mutable and can be used to add annotations.
-// The number of annotations is eventually limited by the CSP.
-type Annotations map[string]string
-
-// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-// combinations are possible:
-//
-// * IPv4 only
-// * IPv6 only
-// * IPv4 and IPv6 (Dual Stack)
-type Cidr struct {
-	// Ipv4 IPv4 CIDR block for the subnet.
-	Ipv4 *string `json:"ipv4,omitempty"`
-
-	// Ipv6 IPv6 CIDR block for the subnet.
-	Ipv6 *string `json:"ipv6,omitempty"`
-}
-
-// AcceptHeader defines model for acceptHeader.
-type AcceptHeader string
-
-// IfUnmodifiedSince defines model for ifUnmodifiedSince.
-type IfUnmodifiedSince = int
-
-// LabelSelector defines model for labelSelector.
-type LabelSelector = string
-
-// LimitParam defines model for limitParam.
-type LimitParam = int
-
-// NetworkPathParam defines model for networkPathParam.
-type NetworkPathParam = string
-
-// ResourcePathParam defines model for resourcePathParam.
-type ResourcePathParam = string
-
-// SkipTokenParam defines model for skipTokenParam.
-type SkipTokenParam = string
-
-// TenantPathParam defines model for tenantPathParam.
-type TenantPathParam = string
-
-// WorkspacePathParam defines model for workspacePathParam.
-type WorkspacePathParam = string
 
 // ListSkusParams defines parameters for ListSkus.
 type ListSkusParams struct {
@@ -1308,13 +160,13 @@ type ListSkusParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1335,13 +187,13 @@ type ListInternetGatewaysParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1357,14 +209,14 @@ type ListInternetGatewaysParamsAccept string
 type DeleteInternetGatewayParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateInternetGatewayParams defines parameters for CreateOrUpdateInternetGateway.
 type CreateOrUpdateInternetGatewayParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListNetworksParams defines parameters for ListNetworks.
@@ -1376,13 +228,13 @@ type ListNetworksParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1398,14 +250,14 @@ type ListNetworksParamsAccept string
 type DeleteNetworkParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateNetworkParams defines parameters for CreateOrUpdateNetwork.
 type CreateOrUpdateNetworkParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListRouteTablesParams defines parameters for ListRouteTables.
@@ -1417,13 +269,13 @@ type ListRouteTablesParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1439,14 +291,14 @@ type ListRouteTablesParamsAccept string
 type DeleteRouteTableParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateRouteTableParams defines parameters for CreateOrUpdateRouteTable.
 type CreateOrUpdateRouteTableParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListSubnetsParams defines parameters for ListSubnets.
@@ -1458,13 +310,13 @@ type ListSubnetsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1480,14 +332,14 @@ type ListSubnetsParamsAccept string
 type DeleteSubnetParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateSubnetParams defines parameters for CreateOrUpdateSubnet.
 type CreateOrUpdateSubnetParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListNicsParams defines parameters for ListNics.
@@ -1499,13 +351,13 @@ type ListNicsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1521,14 +373,14 @@ type ListNicsParamsAccept string
 type DeleteNicParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateNicParams defines parameters for CreateOrUpdateNic.
 type CreateOrUpdateNicParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListPublicIpsParams defines parameters for ListPublicIps.
@@ -1540,13 +392,13 @@ type ListPublicIpsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1562,14 +414,14 @@ type ListPublicIpsParamsAccept string
 type DeletePublicIpParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdatePublicIpParams defines parameters for CreateOrUpdatePublicIp.
 type CreateOrUpdatePublicIpParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // ListSecurityGroupsParams defines parameters for ListSecurityGroups.
@@ -1581,13 +433,13 @@ type ListSecurityGroupsParams struct {
 	//   - Wildcards: \*key\*=\*value\* - substring (contains) match on both key and value. Each `*` can appear at start, end or in the middle to mean "any characters". Example: \*env\*=\*prod\* matches a label key containing "env" whose value contains "prod".
 	//   - Numeric: key>value, key<value, key>=value, key<=value
 	//   - Namespaced key examples: 'monitoring:alert-level=high' or 'billing:team=platform'
-	Labels *LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
+	Labels *externalRef0.LabelSelector `form:"labels,omitempty" json:"labels,omitempty"`
 
 	// Limit Maximum number of resources to return in the response
-	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *externalRef0.LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// SkipToken Opaque cursor for pagination. Use the skipToken from the previous response to get the next page of results. Note that skipTokens do not guarantee consistency across pages if the underlying data changes between requests
-	SkipToken *SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
+	SkipToken *externalRef0.SkipTokenParam `form:"skipToken,omitempty" json:"skipToken,omitempty"`
 
 	// Accept Controls whether deleted resources are included:
 	// - `"application/json"`: Returns only non-deleted resources
@@ -1603,98 +455,36 @@ type ListSecurityGroupsParamsAccept string
 type DeleteSecurityGroupParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateSecurityGroupParams defines parameters for CreateOrUpdateSecurityGroup.
 type CreateOrUpdateSecurityGroupParams struct {
 	// IfUnmodifiedSince Returns resources only if they have not been modified since the specified version.
 	// Uses metadata.resourceVersion for comparison.
-	IfUnmodifiedSince *IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
+	IfUnmodifiedSince *externalRef0.IfUnmodifiedSince `json:"if-unmodified-since,omitempty"`
 }
 
 // CreateOrUpdateInternetGatewayJSONRequestBody defines body for CreateOrUpdateInternetGateway for application/json ContentType.
-type CreateOrUpdateInternetGatewayJSONRequestBody = InternetGateway
+type CreateOrUpdateInternetGatewayJSONRequestBody = externalRef0.InternetGateway
 
 // CreateOrUpdateNetworkJSONRequestBody defines body for CreateOrUpdateNetwork for application/json ContentType.
-type CreateOrUpdateNetworkJSONRequestBody = Network
+type CreateOrUpdateNetworkJSONRequestBody = externalRef0.Network
 
 // CreateOrUpdateRouteTableJSONRequestBody defines body for CreateOrUpdateRouteTable for application/json ContentType.
-type CreateOrUpdateRouteTableJSONRequestBody = RouteTable
+type CreateOrUpdateRouteTableJSONRequestBody = externalRef0.RouteTable
 
 // CreateOrUpdateSubnetJSONRequestBody defines body for CreateOrUpdateSubnet for application/json ContentType.
-type CreateOrUpdateSubnetJSONRequestBody = Subnet
+type CreateOrUpdateSubnetJSONRequestBody = externalRef0.Subnet
 
 // CreateOrUpdateNicJSONRequestBody defines body for CreateOrUpdateNic for application/json ContentType.
-type CreateOrUpdateNicJSONRequestBody = Nic
+type CreateOrUpdateNicJSONRequestBody = externalRef0.Nic
 
 // CreateOrUpdatePublicIpJSONRequestBody defines body for CreateOrUpdatePublicIp for application/json ContentType.
-type CreateOrUpdatePublicIpJSONRequestBody = PublicIp
+type CreateOrUpdatePublicIpJSONRequestBody = externalRef0.PublicIp
 
 // CreateOrUpdateSecurityGroupJSONRequestBody defines body for CreateOrUpdateSecurityGroup for application/json ContentType.
-type CreateOrUpdateSecurityGroupJSONRequestBody = SecurityGroup
-
-// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
-func (t Reference) AsReferenceURN() (ReferenceURN, error) {
-	var body ReferenceURN
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
-func (t *Reference) FromReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
-func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
-func (t Reference) AsReferenceObject() (ReferenceObject, error) {
-	var body ReferenceObject
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
-func (t *Reference) FromReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
-func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t Reference) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *Reference) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
+type CreateOrUpdateSecurityGroupJSONRequestBody = externalRef0.SecurityGroup
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -1770,111 +560,111 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// ListSkus request
-	ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSkus(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSku request
-	GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSku(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInternetGateways request
-	ListInternetGateways(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListInternetGateways(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteInternetGateway request
-	DeleteInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetInternetGateway request
-	GetInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateInternetGatewayWithBody request with any body
-	CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListNetworks request
-	ListNetworks(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListNetworks(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNetwork request
-	DeleteNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNetwork request
-	GetNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateNetworkWithBody request with any body
-	CreateOrUpdateNetworkWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetworkWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListRouteTables request
-	ListRouteTables(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListRouteTables(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRouteTable request
-	DeleteRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRouteTable request
-	GetRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateRouteTableWithBody request with any body
-	CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSubnets request
-	ListSubnets(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSubnets(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteSubnet request
-	DeleteSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSubnet request
-	GetSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateSubnetWithBody request with any body
-	CreateOrUpdateSubnetWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnetWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListNics request
-	ListNics(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListNics(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteNic request
-	DeleteNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNic request
-	GetNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateNicWithBody request with any body
-	CreateOrUpdateNicWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNicWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPublicIps request
-	ListPublicIps(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListPublicIps(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeletePublicIp request
-	DeletePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeletePublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPublicIp request
-	GetPublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetPublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdatePublicIpWithBody request with any body
-	CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdatePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdatePublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSecurityGroups request
-	ListSecurityGroups(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListSecurityGroups(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteSecurityGroup request
-	DeleteSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSecurityGroup request
-	GetSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrUpdateSecurityGroupWithBody request with any body
-	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateOrUpdateSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrUpdateSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) ListSkus(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSkus(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSkusRequest(c.Server, tenant, params)
 	if err != nil {
 		return nil, err
@@ -1886,7 +676,7 @@ func (c *Client) ListSkus(ctx context.Context, tenant TenantPathParam, params *L
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSku(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSku(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSkuRequest(c.Server, tenant, name)
 	if err != nil {
 		return nil, err
@@ -1898,7 +688,7 @@ func (c *Client) GetSku(ctx context.Context, tenant TenantPathParam, name Resour
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListInternetGateways(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListInternetGateways(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListInternetGatewaysRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -1910,7 +700,7 @@ func (c *Client) ListInternetGateways(ctx context.Context, tenant TenantPathPara
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteInternetGatewayRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -1922,7 +712,7 @@ func (c *Client) DeleteInternetGateway(ctx context.Context, tenant TenantPathPar
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetInternetGatewayRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1934,7 +724,7 @@ func (c *Client) GetInternetGateway(ctx context.Context, tenant TenantPathParam,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInternetGatewayRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -1946,7 +736,7 @@ func (c *Client) CreateOrUpdateInternetGatewayWithBody(ctx context.Context, tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateInternetGatewayRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -1958,7 +748,7 @@ func (c *Client) CreateOrUpdateInternetGateway(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListNetworks(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListNetworks(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNetworksRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -1970,7 +760,7 @@ func (c *Client) ListNetworks(ctx context.Context, tenant TenantPathParam, works
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNetworkRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -1982,7 +772,7 @@ func (c *Client) DeleteNetwork(ctx context.Context, tenant TenantPathParam, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNetworkRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -1994,7 +784,7 @@ func (c *Client) GetNetwork(ctx context.Context, tenant TenantPathParam, workspa
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2006,7 +796,7 @@ func (c *Client) CreateOrUpdateNetworkWithBody(ctx context.Context, tenant Tenan
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNetworkRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2018,7 +808,7 @@ func (c *Client) CreateOrUpdateNetwork(ctx context.Context, tenant TenantPathPar
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListRouteTables(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListRouteTables(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListRouteTablesRequest(c.Server, tenant, workspace, network, params)
 	if err != nil {
 		return nil, err
@@ -2030,7 +820,7 @@ func (c *Client) ListRouteTables(ctx context.Context, tenant TenantPathParam, wo
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteRouteTableRequest(c.Server, tenant, workspace, network, name, params)
 	if err != nil {
 		return nil, err
@@ -2042,7 +832,7 @@ func (c *Client) DeleteRouteTable(ctx context.Context, tenant TenantPathParam, w
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetRouteTableRequest(c.Server, tenant, workspace, network, name)
 	if err != nil {
 		return nil, err
@@ -2054,7 +844,7 @@ func (c *Client) GetRouteTable(ctx context.Context, tenant TenantPathParam, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRouteTableRequestWithBody(c.Server, tenant, workspace, network, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2066,7 +856,7 @@ func (c *Client) CreateOrUpdateRouteTableWithBody(ctx context.Context, tenant Te
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateRouteTable(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateRouteTable(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateRouteTableRequest(c.Server, tenant, workspace, network, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2078,7 +868,7 @@ func (c *Client) CreateOrUpdateRouteTable(ctx context.Context, tenant TenantPath
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListSubnets(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSubnets(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSubnetsRequest(c.Server, tenant, workspace, network, params)
 	if err != nil {
 		return nil, err
@@ -2090,7 +880,7 @@ func (c *Client) ListSubnets(ctx context.Context, tenant TenantPathParam, worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSubnetRequest(c.Server, tenant, workspace, network, name, params)
 	if err != nil {
 		return nil, err
@@ -2102,7 +892,7 @@ func (c *Client) DeleteSubnet(ctx context.Context, tenant TenantPathParam, works
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSubnetRequest(c.Server, tenant, workspace, network, name)
 	if err != nil {
 		return nil, err
@@ -2114,7 +904,7 @@ func (c *Client) GetSubnet(ctx context.Context, tenant TenantPathParam, workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSubnetRequestWithBody(c.Server, tenant, workspace, network, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2126,7 +916,7 @@ func (c *Client) CreateOrUpdateSubnetWithBody(ctx context.Context, tenant Tenant
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSubnet(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSubnet(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSubnetRequest(c.Server, tenant, workspace, network, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2138,7 +928,7 @@ func (c *Client) CreateOrUpdateSubnet(ctx context.Context, tenant TenantPathPara
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListNics(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListNics(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListNicsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2150,7 +940,7 @@ func (c *Client) ListNics(ctx context.Context, tenant TenantPathParam, workspace
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteNicRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2162,7 +952,7 @@ func (c *Client) DeleteNic(ctx context.Context, tenant TenantPathParam, workspac
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetNicRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2174,7 +964,7 @@ func (c *Client) GetNic(ctx context.Context, tenant TenantPathParam, workspace W
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNicRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2186,7 +976,7 @@ func (c *Client) CreateOrUpdateNicWithBody(ctx context.Context, tenant TenantPat
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateNicRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2198,7 +988,7 @@ func (c *Client) CreateOrUpdateNic(ctx context.Context, tenant TenantPathParam, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListPublicIps(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListPublicIps(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListPublicIpsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2210,7 +1000,7 @@ func (c *Client) ListPublicIps(ctx context.Context, tenant TenantPathParam, work
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeletePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeletePublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeletePublicIpRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2222,7 +1012,7 @@ func (c *Client) DeletePublicIp(ctx context.Context, tenant TenantPathParam, wor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetPublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPublicIpRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2234,7 +1024,7 @@ func (c *Client) GetPublicIp(ctx context.Context, tenant TenantPathParam, worksp
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdatePublicIpRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2246,7 +1036,7 @@ func (c *Client) CreateOrUpdatePublicIpWithBody(ctx context.Context, tenant Tena
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdatePublicIpRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2258,7 +1048,7 @@ func (c *Client) CreateOrUpdatePublicIp(ctx context.Context, tenant TenantPathPa
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListSecurityGroups(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListSecurityGroups(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSecurityGroupsRequest(c.Server, tenant, workspace, params)
 	if err != nil {
 		return nil, err
@@ -2270,7 +1060,7 @@ func (c *Client) ListSecurityGroups(ctx context.Context, tenant TenantPathParam,
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSecurityGroupRequest(c.Server, tenant, workspace, name, params)
 	if err != nil {
 		return nil, err
@@ -2282,7 +1072,7 @@ func (c *Client) DeleteSecurityGroup(ctx context.Context, tenant TenantPathParam
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSecurityGroupRequest(c.Server, tenant, workspace, name)
 	if err != nil {
 		return nil, err
@@ -2294,7 +1084,7 @@ func (c *Client) GetSecurityGroup(ctx context.Context, tenant TenantPathParam, w
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequestWithBody(c.Server, tenant, workspace, name, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -2306,7 +1096,7 @@ func (c *Client) CreateOrUpdateSecurityGroupWithBody(ctx context.Context, tenant
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateOrUpdateSecurityGroupRequest(c.Server, tenant, workspace, name, params, body)
 	if err != nil {
 		return nil, err
@@ -2319,7 +1109,7 @@ func (c *Client) CreateOrUpdateSecurityGroup(ctx context.Context, tenant TenantP
 }
 
 // NewListSkusRequest generates requests for ListSkus
-func NewListSkusRequest(server string, tenant TenantPathParam, params *ListSkusParams) (*http.Request, error) {
+func NewListSkusRequest(server string, tenant externalRef0.TenantPathParam, params *ListSkusParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2422,7 +1212,7 @@ func NewListSkusRequest(server string, tenant TenantPathParam, params *ListSkusP
 }
 
 // NewGetSkuRequest generates requests for GetSku
-func NewGetSkuRequest(server string, tenant TenantPathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetSkuRequest(server string, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2463,7 +1253,7 @@ func NewGetSkuRequest(server string, tenant TenantPathParam, name ResourcePathPa
 }
 
 // NewListInternetGatewaysRequest generates requests for ListInternetGateways
-func NewListInternetGatewaysRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams) (*http.Request, error) {
+func NewListInternetGatewaysRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListInternetGatewaysParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2573,7 +1363,7 @@ func NewListInternetGatewaysRequest(server string, tenant TenantPathParam, works
 }
 
 // NewDeleteInternetGatewayRequest generates requests for DeleteInternetGateway
-func NewDeleteInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams) (*http.Request, error) {
+func NewDeleteInternetGatewayRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteInternetGatewayParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2636,7 +1426,7 @@ func NewDeleteInternetGatewayRequest(server string, tenant TenantPathParam, work
 }
 
 // NewGetInternetGatewayRequest generates requests for GetInternetGateway
-func NewGetInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetInternetGatewayRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2684,7 +1474,7 @@ func NewGetInternetGatewayRequest(server string, tenant TenantPathParam, workspa
 }
 
 // NewCreateOrUpdateInternetGatewayRequest calls the generic CreateOrUpdateInternetGateway builder with application/json body
-func NewCreateOrUpdateInternetGatewayRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateInternetGatewayRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -2695,7 +1485,7 @@ func NewCreateOrUpdateInternetGatewayRequest(server string, tenant TenantPathPar
 }
 
 // NewCreateOrUpdateInternetGatewayRequestWithBody generates requests for CreateOrUpdateInternetGateway with any type of body
-func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2760,7 +1550,7 @@ func NewCreateOrUpdateInternetGatewayRequestWithBody(server string, tenant Tenan
 }
 
 // NewListNetworksRequest generates requests for ListNetworks
-func NewListNetworksRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams) (*http.Request, error) {
+func NewListNetworksRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNetworksParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2870,7 +1660,7 @@ func NewListNetworksRequest(server string, tenant TenantPathParam, workspace Wor
 }
 
 // NewDeleteNetworkRequest generates requests for DeleteNetwork
-func NewDeleteNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams) (*http.Request, error) {
+func NewDeleteNetworkRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNetworkParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2933,7 +1723,7 @@ func NewDeleteNetworkRequest(server string, tenant TenantPathParam, workspace Wo
 }
 
 // NewGetNetworkRequest generates requests for GetNetwork
-func NewGetNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetNetworkRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2981,7 +1771,7 @@ func NewGetNetworkRequest(server string, tenant TenantPathParam, workspace Works
 }
 
 // NewCreateOrUpdateNetworkRequest calls the generic CreateOrUpdateNetwork builder with application/json body
-func NewCreateOrUpdateNetworkRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNetworkRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -2992,7 +1782,7 @@ func NewCreateOrUpdateNetworkRequest(server string, tenant TenantPathParam, work
 }
 
 // NewCreateOrUpdateNetworkRequestWithBody generates requests for CreateOrUpdateNetwork with any type of body
-func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3057,7 +1847,7 @@ func NewCreateOrUpdateNetworkRequestWithBody(server string, tenant TenantPathPar
 }
 
 // NewListRouteTablesRequest generates requests for ListRouteTables
-func NewListRouteTablesRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams) (*http.Request, error) {
+func NewListRouteTablesRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListRouteTablesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3174,7 +1964,7 @@ func NewListRouteTablesRequest(server string, tenant TenantPathParam, workspace 
 }
 
 // NewDeleteRouteTableRequest generates requests for DeleteRouteTable
-func NewDeleteRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams) (*http.Request, error) {
+func NewDeleteRouteTableRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteRouteTableParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3244,7 +2034,7 @@ func NewDeleteRouteTableRequest(server string, tenant TenantPathParam, workspace
 }
 
 // NewGetRouteTableRequest generates requests for GetRouteTable
-func NewGetRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetRouteTableRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3299,7 +2089,7 @@ func NewGetRouteTableRequest(server string, tenant TenantPathParam, workspace Wo
 }
 
 // NewCreateOrUpdateRouteTableRequest calls the generic CreateOrUpdateRouteTable builder with application/json body
-func NewCreateOrUpdateRouteTableRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateRouteTableRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3310,7 +2100,7 @@ func NewCreateOrUpdateRouteTableRequest(server string, tenant TenantPathParam, w
 }
 
 // NewCreateOrUpdateRouteTableRequestWithBody generates requests for CreateOrUpdateRouteTable with any type of body
-func NewCreateOrUpdateRouteTableRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateRouteTableRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3382,7 +2172,7 @@ func NewCreateOrUpdateRouteTableRequestWithBody(server string, tenant TenantPath
 }
 
 // NewListSubnetsRequest generates requests for ListSubnets
-func NewListSubnetsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams) (*http.Request, error) {
+func NewListSubnetsRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListSubnetsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3499,7 +2289,7 @@ func NewListSubnetsRequest(server string, tenant TenantPathParam, workspace Work
 }
 
 // NewDeleteSubnetRequest generates requests for DeleteSubnet
-func NewDeleteSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams) (*http.Request, error) {
+func NewDeleteSubnetRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteSubnetParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3569,7 +2359,7 @@ func NewDeleteSubnetRequest(server string, tenant TenantPathParam, workspace Wor
 }
 
 // NewGetSubnetRequest generates requests for GetSubnet
-func NewGetSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetSubnetRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3624,7 +2414,7 @@ func NewGetSubnetRequest(server string, tenant TenantPathParam, workspace Worksp
 }
 
 // NewCreateOrUpdateSubnetRequest calls the generic CreateOrUpdateSubnet builder with application/json body
-func NewCreateOrUpdateSubnetRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateSubnetRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3635,7 +2425,7 @@ func NewCreateOrUpdateSubnetRequest(server string, tenant TenantPathParam, works
 }
 
 // NewCreateOrUpdateSubnetRequestWithBody generates requests for CreateOrUpdateSubnet with any type of body
-func NewCreateOrUpdateSubnetRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateSubnetRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3707,7 +2497,7 @@ func NewCreateOrUpdateSubnetRequestWithBody(server string, tenant TenantPathPara
 }
 
 // NewListNicsRequest generates requests for ListNics
-func NewListNicsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams) (*http.Request, error) {
+func NewListNicsRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNicsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3817,7 +2607,7 @@ func NewListNicsRequest(server string, tenant TenantPathParam, workspace Workspa
 }
 
 // NewDeleteNicRequest generates requests for DeleteNic
-func NewDeleteNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams) (*http.Request, error) {
+func NewDeleteNicRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNicParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3880,7 +2670,7 @@ func NewDeleteNicRequest(server string, tenant TenantPathParam, workspace Worksp
 }
 
 // NewGetNicRequest generates requests for GetNic
-func NewGetNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetNicRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3928,7 +2718,7 @@ func NewGetNicRequest(server string, tenant TenantPathParam, workspace Workspace
 }
 
 // NewCreateOrUpdateNicRequest calls the generic CreateOrUpdateNic builder with application/json body
-func NewCreateOrUpdateNicRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateNicRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -3939,7 +2729,7 @@ func NewCreateOrUpdateNicRequest(server string, tenant TenantPathParam, workspac
 }
 
 // NewCreateOrUpdateNicRequestWithBody generates requests for CreateOrUpdateNic with any type of body
-func NewCreateOrUpdateNicRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateNicRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4004,7 +2794,7 @@ func NewCreateOrUpdateNicRequestWithBody(server string, tenant TenantPathParam, 
 }
 
 // NewListPublicIpsRequest generates requests for ListPublicIps
-func NewListPublicIpsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams) (*http.Request, error) {
+func NewListPublicIpsRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListPublicIpsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4114,7 +2904,7 @@ func NewListPublicIpsRequest(server string, tenant TenantPathParam, workspace Wo
 }
 
 // NewDeletePublicIpRequest generates requests for DeletePublicIp
-func NewDeletePublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams) (*http.Request, error) {
+func NewDeletePublicIpRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeletePublicIpParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4177,7 +2967,7 @@ func NewDeletePublicIpRequest(server string, tenant TenantPathParam, workspace W
 }
 
 // NewGetPublicIpRequest generates requests for GetPublicIp
-func NewGetPublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetPublicIpRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4225,7 +3015,7 @@ func NewGetPublicIpRequest(server string, tenant TenantPathParam, workspace Work
 }
 
 // NewCreateOrUpdatePublicIpRequest calls the generic CreateOrUpdatePublicIp builder with application/json body
-func NewCreateOrUpdatePublicIpRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdatePublicIpRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -4236,7 +3026,7 @@ func NewCreateOrUpdatePublicIpRequest(server string, tenant TenantPathParam, wor
 }
 
 // NewCreateOrUpdatePublicIpRequestWithBody generates requests for CreateOrUpdatePublicIp with any type of body
-func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4301,7 +3091,7 @@ func NewCreateOrUpdatePublicIpRequestWithBody(server string, tenant TenantPathPa
 }
 
 // NewListSecurityGroupsRequest generates requests for ListSecurityGroups
-func NewListSecurityGroupsRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams) (*http.Request, error) {
+func NewListSecurityGroupsRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListSecurityGroupsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4411,7 +3201,7 @@ func NewListSecurityGroupsRequest(server string, tenant TenantPathParam, workspa
 }
 
 // NewDeleteSecurityGroupRequest generates requests for DeleteSecurityGroup
-func NewDeleteSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams) (*http.Request, error) {
+func NewDeleteSecurityGroupRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteSecurityGroupParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4474,7 +3264,7 @@ func NewDeleteSecurityGroupRequest(server string, tenant TenantPathParam, worksp
 }
 
 // NewGetSecurityGroupRequest generates requests for GetSecurityGroup
-func NewGetSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam) (*http.Request, error) {
+func NewGetSecurityGroupRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4522,7 +3312,7 @@ func NewGetSecurityGroupRequest(server string, tenant TenantPathParam, workspace
 }
 
 // NewCreateOrUpdateSecurityGroupRequest calls the generic CreateOrUpdateSecurityGroup builder with application/json body
-func NewCreateOrUpdateSecurityGroupRequest(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequest(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -4533,7 +3323,7 @@ func NewCreateOrUpdateSecurityGroupRequest(server string, tenant TenantPathParam
 }
 
 // NewCreateOrUpdateSecurityGroupRequestWithBody generates requests for CreateOrUpdateSecurityGroup with any type of body
-func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateOrUpdateSecurityGroupRequestWithBody(server string, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4641,118 +3431,118 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// ListSkusWithResponse request
-	ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
+	ListSkusWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error)
 
 	// GetSkuWithResponse request
-	GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
+	GetSkuWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error)
 
 	// ListInternetGatewaysWithResponse request
-	ListInternetGatewaysWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error)
+	ListInternetGatewaysWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error)
 
 	// DeleteInternetGatewayWithResponse request
-	DeleteInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error)
+	DeleteInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error)
 
 	// GetInternetGatewayWithResponse request
-	GetInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error)
+	GetInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error)
 
 	// CreateOrUpdateInternetGatewayWithBodyWithResponse request with any body
-	CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
+	CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
 
-	CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
+	CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error)
 
 	// ListNetworksWithResponse request
-	ListNetworksWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error)
+	ListNetworksWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error)
 
 	// DeleteNetworkWithResponse request
-	DeleteNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error)
+	DeleteNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error)
 
 	// GetNetworkWithResponse request
-	GetNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error)
+	GetNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error)
 
 	// CreateOrUpdateNetworkWithBodyWithResponse request with any body
-	CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
+	CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
 
-	CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
+	CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error)
 
 	// ListRouteTablesWithResponse request
-	ListRouteTablesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error)
+	ListRouteTablesWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error)
 
 	// DeleteRouteTableWithResponse request
-	DeleteRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error)
+	DeleteRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error)
 
 	// GetRouteTableWithResponse request
-	GetRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error)
+	GetRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error)
 
 	// CreateOrUpdateRouteTableWithBodyWithResponse request with any body
-	CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
+	CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
 
-	CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
+	CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error)
 
 	// ListSubnetsWithResponse request
-	ListSubnetsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error)
+	ListSubnetsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error)
 
 	// DeleteSubnetWithResponse request
-	DeleteSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
+	DeleteSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error)
 
 	// GetSubnetWithResponse request
-	GetSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
+	GetSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error)
 
 	// CreateOrUpdateSubnetWithBodyWithResponse request with any body
-	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
 
-	CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
+	CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error)
 
 	// ListNicsWithResponse request
-	ListNicsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error)
+	ListNicsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error)
 
 	// DeleteNicWithResponse request
-	DeleteNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
+	DeleteNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error)
 
 	// GetNicWithResponse request
-	GetNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
+	GetNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error)
 
 	// CreateOrUpdateNicWithBodyWithResponse request with any body
-	CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
+	CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
 
-	CreateOrUpdateNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
+	CreateOrUpdateNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error)
 
 	// ListPublicIpsWithResponse request
-	ListPublicIpsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error)
+	ListPublicIpsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error)
 
 	// DeletePublicIpWithResponse request
-	DeletePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error)
+	DeletePublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error)
 
 	// GetPublicIpWithResponse request
-	GetPublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error)
+	GetPublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error)
 
 	// CreateOrUpdatePublicIpWithBodyWithResponse request with any body
-	CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
+	CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
 
-	CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
+	CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error)
 
 	// ListSecurityGroupsWithResponse request
-	ListSecurityGroupsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error)
+	ListSecurityGroupsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error)
 
 	// DeleteSecurityGroupWithResponse request
-	DeleteSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
+	DeleteSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error)
 
 	// GetSecurityGroupWithResponse request
-	GetSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
+	GetSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error)
 
 	// CreateOrUpdateSecurityGroupWithBodyWithResponse request with any body
-	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+	CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
 
-	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
+	CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error)
 }
 
 type ListSkusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *SkuIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4774,12 +3564,12 @@ func (r ListSkusResponse) StatusCode() int {
 type GetSkuResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *NetworkSku
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.NetworkSku
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4802,10 +3592,10 @@ type ListInternetGatewaysResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *InternetGatewayIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4827,13 +3617,13 @@ func (r ListInternetGatewaysResponse) StatusCode() int {
 type DeleteInternetGatewayResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4855,12 +3645,12 @@ func (r DeleteInternetGatewayResponse) StatusCode() int {
 type GetInternetGatewayResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *InternetGateway
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.InternetGateway
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4882,16 +3672,16 @@ func (r GetInternetGatewayResponse) StatusCode() int {
 type CreateOrUpdateInternetGatewayResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *InternetGateway
-	JSON201      *InternetGateway
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.InternetGateway
+	JSON201      *externalRef0.InternetGateway
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4914,10 +3704,10 @@ type ListNetworksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *NetworkIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4939,13 +3729,13 @@ func (r ListNetworksResponse) StatusCode() int {
 type DeleteNetworkResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4967,12 +3757,12 @@ func (r DeleteNetworkResponse) StatusCode() int {
 type GetNetworkResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Network
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.Network
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -4994,16 +3784,16 @@ func (r GetNetworkResponse) StatusCode() int {
 type CreateOrUpdateNetworkResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Network
-	JSON201      *Network
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.Network
+	JSON201      *externalRef0.Network
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5026,10 +3816,10 @@ type ListRouteTablesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *RouteTableIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5051,13 +3841,13 @@ func (r ListRouteTablesResponse) StatusCode() int {
 type DeleteRouteTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5079,12 +3869,12 @@ func (r DeleteRouteTableResponse) StatusCode() int {
 type GetRouteTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RouteTable
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.RouteTable
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5106,16 +3896,16 @@ func (r GetRouteTableResponse) StatusCode() int {
 type CreateOrUpdateRouteTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RouteTable
-	JSON201      *RouteTable
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.RouteTable
+	JSON201      *externalRef0.RouteTable
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5138,10 +3928,10 @@ type ListSubnetsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *SubnetIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5163,13 +3953,13 @@ func (r ListSubnetsResponse) StatusCode() int {
 type DeleteSubnetResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5191,12 +3981,12 @@ func (r DeleteSubnetResponse) StatusCode() int {
 type GetSubnetResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Subnet
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.Subnet
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5218,16 +4008,16 @@ func (r GetSubnetResponse) StatusCode() int {
 type CreateOrUpdateSubnetResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Subnet
-	JSON201      *Subnet
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.Subnet
+	JSON201      *externalRef0.Subnet
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5250,10 +4040,10 @@ type ListNicsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *NicIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5275,13 +4065,13 @@ func (r ListNicsResponse) StatusCode() int {
 type DeleteNicResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5303,12 +4093,12 @@ func (r DeleteNicResponse) StatusCode() int {
 type GetNicResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Nic
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.Nic
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5330,16 +4120,16 @@ func (r GetNicResponse) StatusCode() int {
 type CreateOrUpdateNicResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Nic
-	JSON201      *Nic
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.Nic
+	JSON201      *externalRef0.Nic
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5362,10 +4152,10 @@ type ListPublicIpsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *PublicIpIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5387,13 +4177,13 @@ func (r ListPublicIpsResponse) StatusCode() int {
 type DeletePublicIpResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5415,12 +4205,12 @@ func (r DeletePublicIpResponse) StatusCode() int {
 type GetPublicIpResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *PublicIp
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.PublicIp
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5442,16 +4232,16 @@ func (r GetPublicIpResponse) StatusCode() int {
 type CreateOrUpdatePublicIpResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *PublicIp
-	JSON201      *PublicIp
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.PublicIp
+	JSON201      *externalRef0.PublicIp
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5474,10 +4264,10 @@ type ListSecurityGroupsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *SecurityGroupIterator
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5499,13 +4289,13 @@ func (r ListSecurityGroupsResponse) StatusCode() int {
 type DeleteSecurityGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON500      *Error500
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5527,12 +4317,12 @@ func (r DeleteSecurityGroupResponse) StatusCode() int {
 type GetSecurityGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *SecurityGroup
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON500      *Error500
+	JSON200      *externalRef0.SecurityGroup
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5554,16 +4344,16 @@ func (r GetSecurityGroupResponse) StatusCode() int {
 type CreateOrUpdateSecurityGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *SecurityGroup
-	JSON201      *SecurityGroup
-	JSON400      *Error400
-	JSON401      *Error401
-	JSON403      *Error403
-	JSON404      *Error404
-	JSON409      *Error409
-	JSON412      *Error412
-	JSON422      *Error422
-	JSON500      *Error500
+	JSON200      *externalRef0.SecurityGroup
+	JSON201      *externalRef0.SecurityGroup
+	JSON400      *externalRef0.Error400
+	JSON401      *externalRef0.Error401
+	JSON403      *externalRef0.Error403
+	JSON404      *externalRef0.Error404
+	JSON409      *externalRef0.Error409
+	JSON412      *externalRef0.Error412
+	JSON422      *externalRef0.Error422
+	JSON500      *externalRef0.Error500
 }
 
 // Status returns HTTPResponse.Status
@@ -5583,7 +4373,7 @@ func (r CreateOrUpdateSecurityGroupResponse) StatusCode() int {
 }
 
 // ListSkusWithResponse request returning *ListSkusResponse
-func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
+func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, params *ListSkusParams, reqEditors ...RequestEditorFn) (*ListSkusResponse, error) {
 	rsp, err := c.ListSkus(ctx, tenant, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5592,7 +4382,7 @@ func (c *ClientWithResponses) ListSkusWithResponse(ctx context.Context, tenant T
 }
 
 // GetSkuWithResponse request returning *GetSkuResponse
-func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant TenantPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
+func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSkuResponse, error) {
 	rsp, err := c.GetSku(ctx, tenant, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5601,7 +4391,7 @@ func (c *ClientWithResponses) GetSkuWithResponse(ctx context.Context, tenant Ten
 }
 
 // ListInternetGatewaysWithResponse request returning *ListInternetGatewaysResponse
-func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error) {
+func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListInternetGatewaysParams, reqEditors ...RequestEditorFn) (*ListInternetGatewaysResponse, error) {
 	rsp, err := c.ListInternetGateways(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5610,7 +4400,7 @@ func (c *ClientWithResponses) ListInternetGatewaysWithResponse(ctx context.Conte
 }
 
 // DeleteInternetGatewayWithResponse request returning *DeleteInternetGatewayResponse
-func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error) {
+func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteInternetGatewayParams, reqEditors ...RequestEditorFn) (*DeleteInternetGatewayResponse, error) {
 	rsp, err := c.DeleteInternetGateway(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5619,7 +4409,7 @@ func (c *ClientWithResponses) DeleteInternetGatewayWithResponse(ctx context.Cont
 }
 
 // GetInternetGatewayWithResponse request returning *GetInternetGatewayResponse
-func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error) {
+func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetInternetGatewayResponse, error) {
 	rsp, err := c.GetInternetGateway(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5628,7 +4418,7 @@ func (c *ClientWithResponses) GetInternetGatewayWithResponse(ctx context.Context
 }
 
 // CreateOrUpdateInternetGatewayWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateInternetGatewayResponse
-func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
 	rsp, err := c.CreateOrUpdateInternetGatewayWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5636,7 +4426,7 @@ func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithBodyWithResponse(
 	return ParseCreateOrUpdateInternetGatewayResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateInternetGatewayParams, body CreateOrUpdateInternetGatewayJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateInternetGatewayResponse, error) {
 	rsp, err := c.CreateOrUpdateInternetGateway(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5645,7 +4435,7 @@ func (c *ClientWithResponses) CreateOrUpdateInternetGatewayWithResponse(ctx cont
 }
 
 // ListNetworksWithResponse request returning *ListNetworksResponse
-func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error) {
+func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResponse, error) {
 	rsp, err := c.ListNetworks(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5654,7 +4444,7 @@ func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, tena
 }
 
 // DeleteNetworkWithResponse request returning *DeleteNetworkResponse
-func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error) {
+func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNetworkParams, reqEditors ...RequestEditorFn) (*DeleteNetworkResponse, error) {
 	rsp, err := c.DeleteNetwork(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5663,7 +4453,7 @@ func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, ten
 }
 
 // GetNetworkWithResponse request returning *GetNetworkResponse
-func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error) {
+func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNetworkResponse, error) {
 	rsp, err := c.GetNetwork(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5672,7 +4462,7 @@ func (c *ClientWithResponses) GetNetworkWithResponse(ctx context.Context, tenant
 }
 
 // CreateOrUpdateNetworkWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNetworkResponse
-func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
 	rsp, err := c.CreateOrUpdateNetworkWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5680,7 +4470,7 @@ func (c *ClientWithResponses) CreateOrUpdateNetworkWithBodyWithResponse(ctx cont
 	return ParseCreateOrUpdateNetworkResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNetworkParams, body CreateOrUpdateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNetworkResponse, error) {
 	rsp, err := c.CreateOrUpdateNetwork(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5689,7 +4479,7 @@ func (c *ClientWithResponses) CreateOrUpdateNetworkWithResponse(ctx context.Cont
 }
 
 // ListRouteTablesWithResponse request returning *ListRouteTablesResponse
-func (c *ClientWithResponses) ListRouteTablesWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error) {
+func (c *ClientWithResponses) ListRouteTablesWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListRouteTablesParams, reqEditors ...RequestEditorFn) (*ListRouteTablesResponse, error) {
 	rsp, err := c.ListRouteTables(ctx, tenant, workspace, network, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5698,7 +4488,7 @@ func (c *ClientWithResponses) ListRouteTablesWithResponse(ctx context.Context, t
 }
 
 // DeleteRouteTableWithResponse request returning *DeleteRouteTableResponse
-func (c *ClientWithResponses) DeleteRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error) {
+func (c *ClientWithResponses) DeleteRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteRouteTableParams, reqEditors ...RequestEditorFn) (*DeleteRouteTableResponse, error) {
 	rsp, err := c.DeleteRouteTable(ctx, tenant, workspace, network, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5707,7 +4497,7 @@ func (c *ClientWithResponses) DeleteRouteTableWithResponse(ctx context.Context, 
 }
 
 // GetRouteTableWithResponse request returning *GetRouteTableResponse
-func (c *ClientWithResponses) GetRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error) {
+func (c *ClientWithResponses) GetRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetRouteTableResponse, error) {
 	rsp, err := c.GetRouteTable(ctx, tenant, workspace, network, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5716,7 +4506,7 @@ func (c *ClientWithResponses) GetRouteTableWithResponse(ctx context.Context, ten
 }
 
 // CreateOrUpdateRouteTableWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateRouteTableResponse
-func (c *ClientWithResponses) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRouteTableWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
 	rsp, err := c.CreateOrUpdateRouteTableWithBody(ctx, tenant, workspace, network, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5724,7 +4514,7 @@ func (c *ClientWithResponses) CreateOrUpdateRouteTableWithBodyWithResponse(ctx c
 	return ParseCreateOrUpdateRouteTableResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateRouteTableWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateRouteTableParams, body CreateOrUpdateRouteTableJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateRouteTableResponse, error) {
 	rsp, err := c.CreateOrUpdateRouteTable(ctx, tenant, workspace, network, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5733,7 +4523,7 @@ func (c *ClientWithResponses) CreateOrUpdateRouteTableWithResponse(ctx context.C
 }
 
 // ListSubnetsWithResponse request returning *ListSubnetsResponse
-func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error) {
+func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params *ListSubnetsParams, reqEditors ...RequestEditorFn) (*ListSubnetsResponse, error) {
 	rsp, err := c.ListSubnets(ctx, tenant, workspace, network, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5742,7 +4532,7 @@ func (c *ClientWithResponses) ListSubnetsWithResponse(ctx context.Context, tenan
 }
 
 // DeleteSubnetWithResponse request returning *DeleteSubnetResponse
-func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
+func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *DeleteSubnetParams, reqEditors ...RequestEditorFn) (*DeleteSubnetResponse, error) {
 	rsp, err := c.DeleteSubnet(ctx, tenant, workspace, network, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5751,7 +4541,7 @@ func (c *ClientWithResponses) DeleteSubnetWithResponse(ctx context.Context, tena
 }
 
 // GetSubnetWithResponse request returning *GetSubnetResponse
-func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
+func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSubnetResponse, error) {
 	rsp, err := c.GetSubnet(ctx, tenant, workspace, network, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5760,7 +4550,7 @@ func (c *ClientWithResponses) GetSubnetWithResponse(ctx context.Context, tenant 
 }
 
 // CreateOrUpdateSubnetWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSubnetResponse
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
 	rsp, err := c.CreateOrUpdateSubnetWithBody(ctx, tenant, workspace, network, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5768,7 +4558,7 @@ func (c *ClientWithResponses) CreateOrUpdateSubnetWithBodyWithResponse(ctx conte
 	return ParseCreateOrUpdateSubnetResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSubnetParams, body CreateOrUpdateSubnetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSubnetResponse, error) {
 	rsp, err := c.CreateOrUpdateSubnet(ctx, tenant, workspace, network, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5777,7 +4567,7 @@ func (c *ClientWithResponses) CreateOrUpdateSubnetWithResponse(ctx context.Conte
 }
 
 // ListNicsWithResponse request returning *ListNicsResponse
-func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error) {
+func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListNicsParams, reqEditors ...RequestEditorFn) (*ListNicsResponse, error) {
 	rsp, err := c.ListNics(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5786,7 +4576,7 @@ func (c *ClientWithResponses) ListNicsWithResponse(ctx context.Context, tenant T
 }
 
 // DeleteNicWithResponse request returning *DeleteNicResponse
-func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
+func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteNicParams, reqEditors ...RequestEditorFn) (*DeleteNicResponse, error) {
 	rsp, err := c.DeleteNic(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5795,7 +4585,7 @@ func (c *ClientWithResponses) DeleteNicWithResponse(ctx context.Context, tenant 
 }
 
 // GetNicWithResponse request returning *GetNicResponse
-func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
+func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetNicResponse, error) {
 	rsp, err := c.GetNic(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5804,7 +4594,7 @@ func (c *ClientWithResponses) GetNicWithResponse(ctx context.Context, tenant Ten
 }
 
 // CreateOrUpdateNicWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateNicResponse
-func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
 	rsp, err := c.CreateOrUpdateNicWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5812,7 +4602,7 @@ func (c *ClientWithResponses) CreateOrUpdateNicWithBodyWithResponse(ctx context.
 	return ParseCreateOrUpdateNicResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateNicParams, body CreateOrUpdateNicJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateNicResponse, error) {
 	rsp, err := c.CreateOrUpdateNic(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5821,7 +4611,7 @@ func (c *ClientWithResponses) CreateOrUpdateNicWithResponse(ctx context.Context,
 }
 
 // ListPublicIpsWithResponse request returning *ListPublicIpsResponse
-func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error) {
+func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListPublicIpsParams, reqEditors ...RequestEditorFn) (*ListPublicIpsResponse, error) {
 	rsp, err := c.ListPublicIps(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5830,7 +4620,7 @@ func (c *ClientWithResponses) ListPublicIpsWithResponse(ctx context.Context, ten
 }
 
 // DeletePublicIpWithResponse request returning *DeletePublicIpResponse
-func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error) {
+func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeletePublicIpParams, reqEditors ...RequestEditorFn) (*DeletePublicIpResponse, error) {
 	rsp, err := c.DeletePublicIp(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5839,7 +4629,7 @@ func (c *ClientWithResponses) DeletePublicIpWithResponse(ctx context.Context, te
 }
 
 // GetPublicIpWithResponse request returning *GetPublicIpResponse
-func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error) {
+func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetPublicIpResponse, error) {
 	rsp, err := c.GetPublicIp(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5848,7 +4638,7 @@ func (c *ClientWithResponses) GetPublicIpWithResponse(ctx context.Context, tenan
 }
 
 // CreateOrUpdatePublicIpWithBodyWithResponse request with arbitrary body returning *CreateOrUpdatePublicIpResponse
-func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
 	rsp, err := c.CreateOrUpdatePublicIpWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5856,7 +4646,7 @@ func (c *ClientWithResponses) CreateOrUpdatePublicIpWithBodyWithResponse(ctx con
 	return ParseCreateOrUpdatePublicIpResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdatePublicIpParams, body CreateOrUpdatePublicIpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdatePublicIpResponse, error) {
 	rsp, err := c.CreateOrUpdatePublicIp(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5865,7 +4655,7 @@ func (c *ClientWithResponses) CreateOrUpdatePublicIpWithResponse(ctx context.Con
 }
 
 // ListSecurityGroupsWithResponse request returning *ListSecurityGroupsResponse
-func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error) {
+func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params *ListSecurityGroupsParams, reqEditors ...RequestEditorFn) (*ListSecurityGroupsResponse, error) {
 	rsp, err := c.ListSecurityGroups(ctx, tenant, workspace, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5874,7 +4664,7 @@ func (c *ClientWithResponses) ListSecurityGroupsWithResponse(ctx context.Context
 }
 
 // DeleteSecurityGroupWithResponse request returning *DeleteSecurityGroupResponse
-func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
+func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *DeleteSecurityGroupParams, reqEditors ...RequestEditorFn) (*DeleteSecurityGroupResponse, error) {
 	rsp, err := c.DeleteSecurityGroup(ctx, tenant, workspace, name, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5883,7 +4673,7 @@ func (c *ClientWithResponses) DeleteSecurityGroupWithResponse(ctx context.Contex
 }
 
 // GetSecurityGroupWithResponse request returning *GetSecurityGroupResponse
-func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
+func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, reqEditors ...RequestEditorFn) (*GetSecurityGroupResponse, error) {
 	rsp, err := c.GetSecurityGroup(ctx, tenant, workspace, name, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5892,7 +4682,7 @@ func (c *ClientWithResponses) GetSecurityGroupWithResponse(ctx context.Context, 
 }
 
 // CreateOrUpdateSecurityGroupWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateSecurityGroupResponse
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroupWithBody(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5900,7 +4690,7 @@ func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithBodyWithResponse(ct
 	return ParseCreateOrUpdateSecurityGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
+func (c *ClientWithResponses) CreateOrUpdateSecurityGroupWithResponse(ctx context.Context, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params *CreateOrUpdateSecurityGroupParams, body CreateOrUpdateSecurityGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateSecurityGroupResponse, error) {
 	rsp, err := c.CreateOrUpdateSecurityGroup(ctx, tenant, workspace, name, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -5930,28 +4720,28 @@ func ParseListSkusResponse(rsp *http.Response) (*ListSkusResponse, error) {
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -5977,42 +4767,42 @@ func ParseGetSkuResponse(rsp *http.Response) (*GetSkuResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest NetworkSku
+		var dest externalRef0.NetworkSku
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6045,28 +4835,28 @@ func ParseListInternetGatewaysResponse(rsp *http.Response) (*ListInternetGateway
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6092,49 +4882,49 @@ func ParseDeleteInternetGatewayResponse(rsp *http.Response) (*DeleteInternetGate
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6160,42 +4950,42 @@ func ParseGetInternetGatewayResponse(rsp *http.Response) (*GetInternetGatewayRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest InternetGateway
+		var dest externalRef0.InternetGateway
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6221,70 +5011,70 @@ func ParseCreateOrUpdateInternetGatewayResponse(rsp *http.Response) (*CreateOrUp
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest InternetGateway
+		var dest externalRef0.InternetGateway
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest InternetGateway
+		var dest externalRef0.InternetGateway
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6317,28 +5107,28 @@ func ParseListNetworksResponse(rsp *http.Response) (*ListNetworksResponse, error
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6364,49 +5154,49 @@ func ParseDeleteNetworkResponse(rsp *http.Response) (*DeleteNetworkResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6432,42 +5222,42 @@ func ParseGetNetworkResponse(rsp *http.Response) (*GetNetworkResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Network
+		var dest externalRef0.Network
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6493,70 +5283,70 @@ func ParseCreateOrUpdateNetworkResponse(rsp *http.Response) (*CreateOrUpdateNetw
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Network
+		var dest externalRef0.Network
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Network
+		var dest externalRef0.Network
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6589,28 +5379,28 @@ func ParseListRouteTablesResponse(rsp *http.Response) (*ListRouteTablesResponse,
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6636,49 +5426,49 @@ func ParseDeleteRouteTableResponse(rsp *http.Response) (*DeleteRouteTableRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6704,42 +5494,42 @@ func ParseGetRouteTableResponse(rsp *http.Response) (*GetRouteTableResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RouteTable
+		var dest externalRef0.RouteTable
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6765,70 +5555,70 @@ func ParseCreateOrUpdateRouteTableResponse(rsp *http.Response) (*CreateOrUpdateR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RouteTable
+		var dest externalRef0.RouteTable
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest RouteTable
+		var dest externalRef0.RouteTable
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6861,28 +5651,28 @@ func ParseListSubnetsResponse(rsp *http.Response) (*ListSubnetsResponse, error) 
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6908,49 +5698,49 @@ func ParseDeleteSubnetResponse(rsp *http.Response) (*DeleteSubnetResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6976,42 +5766,42 @@ func ParseGetSubnetResponse(rsp *http.Response) (*GetSubnetResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Subnet
+		var dest externalRef0.Subnet
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7037,70 +5827,70 @@ func ParseCreateOrUpdateSubnetResponse(rsp *http.Response) (*CreateOrUpdateSubne
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Subnet
+		var dest externalRef0.Subnet
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Subnet
+		var dest externalRef0.Subnet
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7133,28 +5923,28 @@ func ParseListNicsResponse(rsp *http.Response) (*ListNicsResponse, error) {
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7180,49 +5970,49 @@ func ParseDeleteNicResponse(rsp *http.Response) (*DeleteNicResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7248,42 +6038,42 @@ func ParseGetNicResponse(rsp *http.Response) (*GetNicResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Nic
+		var dest externalRef0.Nic
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7309,70 +6099,70 @@ func ParseCreateOrUpdateNicResponse(rsp *http.Response) (*CreateOrUpdateNicRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Nic
+		var dest externalRef0.Nic
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Nic
+		var dest externalRef0.Nic
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7405,28 +6195,28 @@ func ParseListPublicIpsResponse(rsp *http.Response) (*ListPublicIpsResponse, err
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7452,49 +6242,49 @@ func ParseDeletePublicIpResponse(rsp *http.Response) (*DeletePublicIpResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7520,42 +6310,42 @@ func ParseGetPublicIpResponse(rsp *http.Response) (*GetPublicIpResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PublicIp
+		var dest externalRef0.PublicIp
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7581,70 +6371,70 @@ func ParseCreateOrUpdatePublicIpResponse(rsp *http.Response) (*CreateOrUpdatePub
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PublicIp
+		var dest externalRef0.PublicIp
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest PublicIp
+		var dest externalRef0.PublicIp
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7677,28 +6467,28 @@ func ParseListSecurityGroupsResponse(rsp *http.Response) (*ListSecurityGroupsRes
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7724,49 +6514,49 @@ func ParseDeleteSecurityGroupResponse(rsp *http.Response) (*DeleteSecurityGroupR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7792,42 +6582,42 @@ func ParseGetSecurityGroupResponse(rsp *http.Response) (*GetSecurityGroupRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest SecurityGroup
+		var dest externalRef0.SecurityGroup
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7853,70 +6643,70 @@ func ParseCreateOrUpdateSecurityGroupResponse(rsp *http.Response) (*CreateOrUpda
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest SecurityGroup
+		var dest externalRef0.SecurityGroup
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest SecurityGroup
+		var dest externalRef0.SecurityGroup
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Error400
+		var dest externalRef0.Error400
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Error401
+		var dest externalRef0.Error401
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Error403
+		var dest externalRef0.Error403
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Error404
+		var dest externalRef0.Error404
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Error409
+		var dest externalRef0.Error409
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 412:
-		var dest Error412
+		var dest externalRef0.Error412
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON412 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest Error422
+		var dest externalRef0.Error422
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest Error500
+		var dest externalRef0.Error500
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7931,94 +6721,94 @@ func ParseCreateOrUpdateSecurityGroupResponse(rsp *http.Response) (*CreateOrUpda
 type ServerInterface interface {
 	// List skus
 	// (GET /v1/tenants/{tenant}/skus)
-	ListSkus(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, params ListSkusParams)
+	ListSkus(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, params ListSkusParams)
 	// Get sku
 	// (GET /v1/tenants/{tenant}/skus/{name})
-	GetSku(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, name ResourcePathParam)
+	GetSku(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, name externalRef0.ResourcePathParam)
 	// List internet gateways
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways)
-	ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListInternetGatewaysParams)
+	ListInternetGateways(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListInternetGatewaysParams)
 	// Delete internet gateway
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteInternetGatewayParams)
+	DeleteInternetGateway(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeleteInternetGatewayParams)
 	// Get internet gateway
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetInternetGateway(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update internet gateway
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/internet-gateways/{name})
-	CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateInternetGatewayParams)
+	CreateOrUpdateInternetGateway(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateInternetGatewayParams)
 	// List networks
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks)
-	ListNetworks(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListNetworksParams)
+	ListNetworks(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListNetworksParams)
 	// Delete network
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteNetworkParams)
+	DeleteNetwork(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeleteNetworkParams)
 	// Get network
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	GetNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetNetwork(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update network
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{name})
-	CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateNetworkParams)
+	CreateOrUpdateNetwork(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateNetworkParams)
 	// List route-tables
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables)
-	ListRouteTables(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params ListRouteTablesParams)
+	ListRouteTables(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params ListRouteTablesParams)
 	// Delete route-table
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
-	DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params DeleteRouteTableParams)
+	DeleteRouteTable(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params DeleteRouteTableParams)
 	// Get route-table
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
-	GetRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam)
+	GetRouteTable(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam)
 	// Create or update route-table
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/route-tables/{name})
-	CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params CreateOrUpdateRouteTableParams)
+	CreateOrUpdateRouteTable(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateRouteTableParams)
 	// List subnets
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets)
-	ListSubnets(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, params ListSubnetsParams)
+	ListSubnets(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, params ListSubnetsParams)
 	// Delete subnet
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
-	DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params DeleteSubnetParams)
+	DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params DeleteSubnetParams)
 	// Get subnet
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
-	GetSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam)
+	GetSubnet(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam)
 	// Create or update subnet
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/networks/{network}/subnets/{name})
-	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, network NetworkPathParam, name ResourcePathParam, params CreateOrUpdateSubnetParams)
+	CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, network externalRef0.NetworkPathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateSubnetParams)
 	// List nics
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/nics)
-	ListNics(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListNicsParams)
+	ListNics(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListNicsParams)
 	// Delete nic
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	DeleteNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteNicParams)
+	DeleteNic(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeleteNicParams)
 	// Get nic
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	GetNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetNic(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update nic
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/nics/{name})
-	CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateNicParams)
+	CreateOrUpdateNic(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateNicParams)
 	// List public ips
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/public-ips)
-	ListPublicIps(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListPublicIpsParams)
+	ListPublicIps(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListPublicIpsParams)
 	// Delete public ip
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeletePublicIpParams)
+	DeletePublicIp(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeletePublicIpParams)
 	// Get public ip
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	GetPublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetPublicIp(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update public ip
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/public-ips/{name})
-	CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdatePublicIpParams)
+	CreateOrUpdatePublicIp(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdatePublicIpParams)
 	// List security-groups
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/security-groups)
-	ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, params ListSecurityGroupsParams)
+	ListSecurityGroups(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, params ListSecurityGroupsParams)
 	// Delete security group
 	// (DELETE /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params DeleteSecurityGroupParams)
+	DeleteSecurityGroup(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params DeleteSecurityGroupParams)
 	// Get security group
 	// (GET /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam)
+	GetSecurityGroup(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam)
 	// Create or update security group
 	// (PUT /v1/tenants/{tenant}/workspaces/{workspace}/security-groups/{name})
-	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant TenantPathParam, workspace WorkspacePathParam, name ResourcePathParam, params CreateOrUpdateSecurityGroupParams)
+	CreateOrUpdateSecurityGroup(w http.ResponseWriter, r *http.Request, tenant externalRef0.TenantPathParam, workspace externalRef0.WorkspacePathParam, name externalRef0.ResourcePathParam, params CreateOrUpdateSecurityGroupParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -8036,7 +6826,7 @@ func (siw *ServerInterfaceWrapper) ListSkus(w http.ResponseWriter, r *http.Reque
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8115,7 +6905,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8124,7 +6914,7 @@ func (siw *ServerInterfaceWrapper) GetSku(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8155,7 +6945,7 @@ func (siw *ServerInterfaceWrapper) ListInternetGateways(w http.ResponseWriter, r
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8164,7 +6954,7 @@ func (siw *ServerInterfaceWrapper) ListInternetGateways(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8243,7 +7033,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8252,7 +7042,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8261,7 +7051,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8282,7 +7072,7 @@ func (siw *ServerInterfaceWrapper) DeleteInternetGateway(w http.ResponseWriter, 
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -8316,7 +7106,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8325,7 +7115,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8334,7 +7124,7 @@ func (siw *ServerInterfaceWrapper) GetInternetGateway(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8365,7 +7155,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8374,7 +7164,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8383,7 +7173,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8404,7 +7194,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateInternetGateway(w http.Response
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -8438,7 +7228,7 @@ func (siw *ServerInterfaceWrapper) ListNetworks(w http.ResponseWriter, r *http.R
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8447,7 +7237,7 @@ func (siw *ServerInterfaceWrapper) ListNetworks(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8526,7 +7316,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8535,7 +7325,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8544,7 +7334,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8565,7 +7355,7 @@ func (siw *ServerInterfaceWrapper) DeleteNetwork(w http.ResponseWriter, r *http.
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -8599,7 +7389,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8608,7 +7398,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8617,7 +7407,7 @@ func (siw *ServerInterfaceWrapper) GetNetwork(w http.ResponseWriter, r *http.Req
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8648,7 +7438,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8657,7 +7447,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8666,7 +7456,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8687,7 +7477,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNetwork(w http.ResponseWriter, 
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -8721,7 +7511,7 @@ func (siw *ServerInterfaceWrapper) ListRouteTables(w http.ResponseWriter, r *htt
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8730,7 +7520,7 @@ func (siw *ServerInterfaceWrapper) ListRouteTables(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8739,7 +7529,7 @@ func (siw *ServerInterfaceWrapper) ListRouteTables(w http.ResponseWriter, r *htt
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8818,7 +7608,7 @@ func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *ht
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8827,7 +7617,7 @@ func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8836,7 +7626,7 @@ func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8845,7 +7635,7 @@ func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8866,7 +7656,7 @@ func (siw *ServerInterfaceWrapper) DeleteRouteTable(w http.ResponseWriter, r *ht
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -8900,7 +7690,7 @@ func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8909,7 +7699,7 @@ func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8918,7 +7708,7 @@ func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8927,7 +7717,7 @@ func (siw *ServerInterfaceWrapper) GetRouteTable(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8958,7 +7748,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWrite
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8967,7 +7757,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWrite
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8976,7 +7766,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWrite
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -8985,7 +7775,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWrite
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9006,7 +7796,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateRouteTable(w http.ResponseWrite
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9040,7 +7830,7 @@ func (siw *ServerInterfaceWrapper) ListSubnets(w http.ResponseWriter, r *http.Re
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9049,7 +7839,7 @@ func (siw *ServerInterfaceWrapper) ListSubnets(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9058,7 +7848,7 @@ func (siw *ServerInterfaceWrapper) ListSubnets(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9137,7 +7927,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9146,7 +7936,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9155,7 +7945,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9164,7 +7954,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9185,7 +7975,7 @@ func (siw *ServerInterfaceWrapper) DeleteSubnet(w http.ResponseWriter, r *http.R
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9219,7 +8009,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9228,7 +8018,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9237,7 +8027,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9246,7 +8036,7 @@ func (siw *ServerInterfaceWrapper) GetSubnet(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9277,7 +8067,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9286,7 +8076,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9295,7 +8085,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "network" -------------
-	var network NetworkPathParam
+	var network externalRef0.NetworkPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "network", r.PathValue("network"), &network, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9304,7 +8094,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9325,7 +8115,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSubnet(w http.ResponseWriter, r
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9359,7 +8149,7 @@ func (siw *ServerInterfaceWrapper) ListNics(w http.ResponseWriter, r *http.Reque
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9368,7 +8158,7 @@ func (siw *ServerInterfaceWrapper) ListNics(w http.ResponseWriter, r *http.Reque
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9447,7 +8237,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9456,7 +8246,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9465,7 +8255,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9486,7 +8276,7 @@ func (siw *ServerInterfaceWrapper) DeleteNic(w http.ResponseWriter, r *http.Requ
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9520,7 +8310,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9529,7 +8319,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9538,7 +8328,7 @@ func (siw *ServerInterfaceWrapper) GetNic(w http.ResponseWriter, r *http.Request
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9569,7 +8359,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9578,7 +8368,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9587,7 +8377,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9608,7 +8398,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateNic(w http.ResponseWriter, r *h
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9642,7 +8432,7 @@ func (siw *ServerInterfaceWrapper) ListPublicIps(w http.ResponseWriter, r *http.
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9651,7 +8441,7 @@ func (siw *ServerInterfaceWrapper) ListPublicIps(w http.ResponseWriter, r *http.
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9730,7 +8520,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9739,7 +8529,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9748,7 +8538,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9769,7 +8559,7 @@ func (siw *ServerInterfaceWrapper) DeletePublicIp(w http.ResponseWriter, r *http
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9803,7 +8593,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9812,7 +8602,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9821,7 +8611,7 @@ func (siw *ServerInterfaceWrapper) GetPublicIp(w http.ResponseWriter, r *http.Re
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9852,7 +8642,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9861,7 +8651,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9870,7 +8660,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9891,7 +8681,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdatePublicIp(w http.ResponseWriter,
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -9925,7 +8715,7 @@ func (siw *ServerInterfaceWrapper) ListSecurityGroups(w http.ResponseWriter, r *
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -9934,7 +8724,7 @@ func (siw *ServerInterfaceWrapper) ListSecurityGroups(w http.ResponseWriter, r *
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10013,7 +8803,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10022,7 +8812,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10031,7 +8821,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10052,7 +8842,7 @@ func (siw *ServerInterfaceWrapper) DeleteSecurityGroup(w http.ResponseWriter, r 
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})
@@ -10086,7 +8876,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10095,7 +8885,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10104,7 +8894,7 @@ func (siw *ServerInterfaceWrapper) GetSecurityGroup(w http.ResponseWriter, r *ht
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10135,7 +8925,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	var err error
 
 	// ------------- Path parameter "tenant" -------------
-	var tenant TenantPathParam
+	var tenant externalRef0.TenantPathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "tenant", r.PathValue("tenant"), &tenant, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10144,7 +8934,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "workspace" -------------
-	var workspace WorkspacePathParam
+	var workspace externalRef0.WorkspacePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "workspace", r.PathValue("workspace"), &workspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10153,7 +8943,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 	}
 
 	// ------------- Path parameter "name" -------------
-	var name ResourcePathParam
+	var name externalRef0.ResourcePathParam
 
 	err = runtime.BindStyledParameterWithOptions("simple", "name", r.PathValue("name"), &name, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {
@@ -10174,7 +8964,7 @@ func (siw *ServerInterfaceWrapper) CreateOrUpdateSecurityGroup(w http.ResponseWr
 
 	// ------------- Optional header parameter "if-unmodified-since" -------------
 	if valueList, found := headers[http.CanonicalHeaderKey("if-unmodified-since")]; found {
-		var IfUnmodifiedSince IfUnmodifiedSince
+		var IfUnmodifiedSince externalRef0.IfUnmodifiedSince
 		n := len(valueList)
 		if n != 1 {
 			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "if-unmodified-since", Count: n})

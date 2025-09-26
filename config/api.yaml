@@ -1,0 +1,35 @@
+generate:
+  models: true
+  client: true
+  std-http-server: true
+output-options:
+  # to make sure that all types are generated
+  skip-prune: true
+import-mapping:
+  "./schemas/activity-log.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/block-storage.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/errors.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/image.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/instance-sku.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/instance.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/internet-gateway.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/kubernetes-sku.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/kubernetes.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/load-balancer.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/nat-gateway.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/network-sku.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/network.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/nic.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/object-storage.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/parameters.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/public-ip.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/rbac.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/region.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/resource.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/route-table.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/security-group.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/security.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/storage-sku.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/subnet.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/wellknown.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+  "./schemas/workspace.yaml": "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"

@@ -8,7 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
-	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
@@ -47,7 +47,7 @@ func TestListInstancesSku(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	labels := *resp[0].Labels
+	labels := resp[0].Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
@@ -86,7 +86,7 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
 
-	labels := *resp.Labels
+	labels := resp.Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
 
@@ -213,13 +213,13 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	inst := &compute.Instance{
-		Metadata: &compute.RegionalWorkspaceResourceMetadata{
+	inst := &schema.Instance{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 			Name:      secatest.Instance1Name,
 		},
-		Spec: compute.InstanceSpec{
+		Spec: schema.InstanceSpec{
 			SkuRef: *instanceSkuRef,
 			Zone:   secatest.ZoneA,
 		},
@@ -252,8 +252,8 @@ func TestStartInstanace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	inst := &compute.Instance{
-		Metadata: &compute.RegionalWorkspaceResourceMetadata{
+	inst := &schema.Instance{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: secatest.Workspace1Name,
@@ -278,8 +278,8 @@ func TestRestartInstanace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	inst := &compute.Instance{
-		Metadata: &compute.RegionalWorkspaceResourceMetadata{
+	inst := &schema.Instance{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: secatest.Workspace1Name,
@@ -304,8 +304,8 @@ func TestStopInstanace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	inst := &compute.Instance{
-		Metadata: &compute.RegionalWorkspaceResourceMetadata{
+	inst := &schema.Instance{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
 			Workspace: secatest.Workspace1Name,

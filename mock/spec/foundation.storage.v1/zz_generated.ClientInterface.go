@@ -10,6 +10,8 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
+	schema "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 )
 
@@ -27,7 +29,7 @@ func (_m *MockClientInterface) EXPECT() *MockClientInterface_Expecter {
 }
 
 // CreateOrUpdateBlockStorage provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateBlockStorage(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, body storage.CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateBlockStorage(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, body storage.CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -43,10 +45,10 @@ func (_m *MockClientInterface) CreateOrUpdateBlockStorage(ctx context.Context, t
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -54,7 +56,7 @@ func (_m *MockClientInterface) CreateOrUpdateBlockStorage(ctx context.Context, t
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -70,9 +72,9 @@ type MockClientInterface_CreateOrUpdateBlockStorage_Call struct {
 
 // CreateOrUpdateBlockStorage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - workspace storage.WorkspacePathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.CreateOrUpdateBlockStorageParams
 //   - body storage.CreateOrUpdateBlockStorageJSONRequestBody
 //   - reqEditors ...storage.RequestEditorFn
@@ -81,7 +83,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateBlockStorage(ctx interface
 		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, body storage.CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateBlockStorage_Call {
+func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, body storage.CreateOrUpdateBlockStorageJSONRequestBody, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateBlockStorage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -89,7 +91,7 @@ func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) Run(run func(ctx 
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.WorkspacePathParam), args[3].(storage.ResourcePathParam), args[4].(*storage.CreateOrUpdateBlockStorageParams), args[5].(storage.CreateOrUpdateBlockStorageJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*storage.CreateOrUpdateBlockStorageParams), args[5].(storage.CreateOrUpdateBlockStorageJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -99,13 +101,13 @@ func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) Return(_a0 *http.
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateBlockStorage_Call {
+func (_c *MockClientInterface_CreateOrUpdateBlockStorage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, storage.CreateOrUpdateBlockStorageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateBlockStorage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateBlockStorageWithBody provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateBlockStorageWithBody(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -121,10 +123,10 @@ func (_m *MockClientInterface) CreateOrUpdateBlockStorageWithBody(ctx context.Co
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -132,7 +134,7 @@ func (_m *MockClientInterface) CreateOrUpdateBlockStorageWithBody(ctx context.Co
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -148,9 +150,9 @@ type MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call struct {
 
 // CreateOrUpdateBlockStorageWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - workspace storage.WorkspacePathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.CreateOrUpdateBlockStorageParams
 //   - contentType string
 //   - body io.Reader
@@ -160,7 +162,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateBlockStorageWithBody(ctx i
 		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateBlockStorageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-7)
 		for i, a := range args[7:] {
@@ -168,7 +170,7 @@ func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) Run(run f
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.WorkspacePathParam), args[3].(storage.ResourcePathParam), args[4].(*storage.CreateOrUpdateBlockStorageParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*storage.CreateOrUpdateBlockStorageParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -178,13 +180,13 @@ func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) Return(_a
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.CreateOrUpdateBlockStorageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateBlockStorageWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateImage provides a mock function with given fields: ctx, tenant, name, params, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateImage(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateImageParams, body storage.CreateOrUpdateImageJSONRequestBody, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateImage(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateImageParams, body storage.CreateOrUpdateImageJSONRequestBody, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -200,10 +202,10 @@ func (_m *MockClientInterface) CreateOrUpdateImage(ctx context.Context, tenant s
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -211,7 +213,7 @@ func (_m *MockClientInterface) CreateOrUpdateImage(ctx context.Context, tenant s
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -227,8 +229,8 @@ type MockClientInterface_CreateOrUpdateImage_Call struct {
 
 // CreateOrUpdateImage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.CreateOrUpdateImageParams
 //   - body storage.CreateOrUpdateImageJSONRequestBody
 //   - reqEditors ...storage.RequestEditorFn
@@ -237,7 +239,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateImage(ctx interface{}, ten
 		append([]interface{}{ctx, tenant, name, params, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateImage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateImageParams, body storage.CreateOrUpdateImageJSONRequestBody, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateImage_Call {
+func (_c *MockClientInterface_CreateOrUpdateImage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateImageParams, body storage.CreateOrUpdateImageJSONRequestBody, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateImage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -245,7 +247,7 @@ func (_c *MockClientInterface_CreateOrUpdateImage_Call) Run(run func(ctx context
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.ResourcePathParam), args[3].(*storage.CreateOrUpdateImageParams), args[4].(storage.CreateOrUpdateImageJSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*storage.CreateOrUpdateImageParams), args[4].(storage.CreateOrUpdateImageJSONRequestBody), variadicArgs...)
 	})
 	return _c
 }
@@ -255,13 +257,13 @@ func (_c *MockClientInterface_CreateOrUpdateImage_Call) Return(_a0 *http.Respons
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateImage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateImage_Call {
+func (_c *MockClientInterface_CreateOrUpdateImage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, storage.CreateOrUpdateImageJSONRequestBody, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateImage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateOrUpdateImageWithBody provides a mock function with given fields: ctx, tenant, name, params, contentType, body, reqEditors
-func (_m *MockClientInterface) CreateOrUpdateImageWithBody(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) CreateOrUpdateImageWithBody(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -277,10 +279,10 @@ func (_m *MockClientInterface) CreateOrUpdateImageWithBody(ctx context.Context, 
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -288,7 +290,7 @@ func (_m *MockClientInterface) CreateOrUpdateImageWithBody(ctx context.Context, 
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, contentType, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -304,8 +306,8 @@ type MockClientInterface_CreateOrUpdateImageWithBody_Call struct {
 
 // CreateOrUpdateImageWithBody is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.CreateOrUpdateImageParams
 //   - contentType string
 //   - body io.Reader
@@ -315,7 +317,7 @@ func (_e *MockClientInterface_Expecter) CreateOrUpdateImageWithBody(ctx interfac
 		append([]interface{}{ctx, tenant, name, params, contentType, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateImageWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.CreateOrUpdateImageParams, contentType string, body io.Reader, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_CreateOrUpdateImageWithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-6)
 		for i, a := range args[6:] {
@@ -323,7 +325,7 @@ func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) Run(run func(ctx
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.ResourcePathParam), args[3].(*storage.CreateOrUpdateImageParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*storage.CreateOrUpdateImageParams), args[4].(string), args[5].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
@@ -333,13 +335,13 @@ func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) Return(_a0 *http
 	return _c
 }
 
-func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateImageWithBody_Call {
+func (_c *MockClientInterface_CreateOrUpdateImageWithBody_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.CreateOrUpdateImageParams, string, io.Reader, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_CreateOrUpdateImageWithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteBlockStorage provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
-func (_m *MockClientInterface) DeleteBlockStorage(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.DeleteBlockStorageParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteBlockStorage(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.DeleteBlockStorageParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -355,10 +357,10 @@ func (_m *MockClientInterface) DeleteBlockStorage(ctx context.Context, tenant st
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -366,7 +368,7 @@ func (_m *MockClientInterface) DeleteBlockStorage(ctx context.Context, tenant st
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -382,9 +384,9 @@ type MockClientInterface_DeleteBlockStorage_Call struct {
 
 // DeleteBlockStorage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - workspace storage.WorkspacePathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.DeleteBlockStorageParams
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteBlockStorage(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteBlockStorage_Call {
@@ -392,7 +394,7 @@ func (_e *MockClientInterface_Expecter) DeleteBlockStorage(ctx interface{}, tena
 		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteBlockStorage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, params *storage.DeleteBlockStorageParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_DeleteBlockStorage_Call {
+func (_c *MockClientInterface_DeleteBlockStorage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *storage.DeleteBlockStorageParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_DeleteBlockStorage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-5)
 		for i, a := range args[5:] {
@@ -400,7 +402,7 @@ func (_c *MockClientInterface_DeleteBlockStorage_Call) Run(run func(ctx context.
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.WorkspacePathParam), args[3].(storage.ResourcePathParam), args[4].(*storage.DeleteBlockStorageParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*storage.DeleteBlockStorageParams), variadicArgs...)
 	})
 	return _c
 }
@@ -410,13 +412,13 @@ func (_c *MockClientInterface_DeleteBlockStorage_Call) Return(_a0 *http.Response
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteBlockStorage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteBlockStorage_Call {
+func (_c *MockClientInterface_DeleteBlockStorage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *storage.DeleteBlockStorageParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteBlockStorage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteImage provides a mock function with given fields: ctx, tenant, name, params, reqEditors
-func (_m *MockClientInterface) DeleteImage(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.DeleteImageParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) DeleteImage(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.DeleteImageParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -432,10 +434,10 @@ func (_m *MockClientInterface) DeleteImage(ctx context.Context, tenant storage.T
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -443,7 +445,7 @@ func (_m *MockClientInterface) DeleteImage(ctx context.Context, tenant storage.T
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -459,8 +461,8 @@ type MockClientInterface_DeleteImage_Call struct {
 
 // DeleteImage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - params *storage.DeleteImageParams
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) DeleteImage(ctx interface{}, tenant interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_DeleteImage_Call {
@@ -468,7 +470,7 @@ func (_e *MockClientInterface_Expecter) DeleteImage(ctx interface{}, tenant inte
 		append([]interface{}{ctx, tenant, name, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_DeleteImage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, params *storage.DeleteImageParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_DeleteImage_Call {
+func (_c *MockClientInterface_DeleteImage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, params *storage.DeleteImageParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_DeleteImage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -476,7 +478,7 @@ func (_c *MockClientInterface_DeleteImage_Call) Run(run func(ctx context.Context
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.ResourcePathParam), args[3].(*storage.DeleteImageParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), args[3].(*storage.DeleteImageParams), variadicArgs...)
 	})
 	return _c
 }
@@ -486,13 +488,13 @@ func (_c *MockClientInterface_DeleteImage_Call) Return(_a0 *http.Response, _a1 e
 	return _c
 }
 
-func (_c *MockClientInterface_DeleteImage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteImage_Call {
+func (_c *MockClientInterface_DeleteImage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, *storage.DeleteImageParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_DeleteImage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetBlockStorage provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
-func (_m *MockClientInterface) GetBlockStorage(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetBlockStorage(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -508,10 +510,10 @@ func (_m *MockClientInterface) GetBlockStorage(ctx context.Context, tenant stora
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -519,7 +521,7 @@ func (_m *MockClientInterface) GetBlockStorage(ctx context.Context, tenant stora
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -535,16 +537,16 @@ type MockClientInterface_GetBlockStorage_Call struct {
 
 // GetBlockStorage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - workspace storage.WorkspacePathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetBlockStorage(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetBlockStorage_Call {
 	return &MockClientInterface_GetBlockStorage_Call{Call: _e.mock.On("GetBlockStorage",
 		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetBlockStorage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetBlockStorage_Call {
+func (_c *MockClientInterface_GetBlockStorage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetBlockStorage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -552,7 +554,7 @@ func (_c *MockClientInterface_GetBlockStorage_Call) Run(run func(ctx context.Con
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.WorkspacePathParam), args[3].(storage.ResourcePathParam), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -562,13 +564,13 @@ func (_c *MockClientInterface_GetBlockStorage_Call) Return(_a0 *http.Response, _
 	return _c
 }
 
-func (_c *MockClientInterface_GetBlockStorage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetBlockStorage_Call {
+func (_c *MockClientInterface_GetBlockStorage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetBlockStorage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetImage provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientInterface) GetImage(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetImage(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -584,10 +586,10 @@ func (_m *MockClientInterface) GetImage(ctx context.Context, tenant storage.Tena
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -595,7 +597,7 @@ func (_m *MockClientInterface) GetImage(ctx context.Context, tenant storage.Tena
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -611,15 +613,15 @@ type MockClientInterface_GetImage_Call struct {
 
 // GetImage is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetImage(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetImage_Call {
 	return &MockClientInterface_GetImage_Call{Call: _e.mock.On("GetImage",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetImage_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetImage_Call {
+func (_c *MockClientInterface_GetImage_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetImage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -627,7 +629,7 @@ func (_c *MockClientInterface_GetImage_Call) Run(run func(ctx context.Context, t
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.ResourcePathParam), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -637,13 +639,13 @@ func (_c *MockClientInterface_GetImage_Call) Return(_a0 *http.Response, _a1 erro
 	return _c
 }
 
-func (_c *MockClientInterface_GetImage_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetImage_Call {
+func (_c *MockClientInterface_GetImage_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetImage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetSku provides a mock function with given fields: ctx, tenant, name, reqEditors
-func (_m *MockClientInterface) GetSku(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) GetSku(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -659,10 +661,10 @@ func (_m *MockClientInterface) GetSku(ctx context.Context, tenant storage.Tenant
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, name, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -670,7 +672,7 @@ func (_m *MockClientInterface) GetSku(ctx context.Context, tenant storage.Tenant
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, name, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -686,15 +688,15 @@ type MockClientInterface_GetSku_Call struct {
 
 // GetSku is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - name storage.ResourcePathParam
+//   - tenant schema.TenantPathParam
+//   - name schema.ResourcePathParam
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) GetSku(ctx interface{}, tenant interface{}, name interface{}, reqEditors ...interface{}) *MockClientInterface_GetSku_Call {
 	return &MockClientInterface_GetSku_Call{Call: _e.mock.On("GetSku",
 		append([]interface{}{ctx, tenant, name}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_GetSku_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, name storage.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetSku_Call {
+func (_c *MockClientInterface_GetSku_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, name schema.ResourcePathParam, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_GetSku_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -702,7 +704,7 @@ func (_c *MockClientInterface_GetSku_Call) Run(run func(ctx context.Context, ten
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.ResourcePathParam), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.ResourcePathParam), variadicArgs...)
 	})
 	return _c
 }
@@ -712,13 +714,13 @@ func (_c *MockClientInterface_GetSku_Call) Return(_a0 *http.Response, _a1 error)
 	return _c
 }
 
-func (_c *MockClientInterface_GetSku_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetSku_Call {
+func (_c *MockClientInterface_GetSku_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.ResourcePathParam, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetSku_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListBlockStorages provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
-func (_m *MockClientInterface) ListBlockStorages(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, params *storage.ListBlockStoragesParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListBlockStorages(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params *storage.ListBlockStoragesParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -734,10 +736,10 @@ func (_m *MockClientInterface) ListBlockStorages(ctx context.Context, tenant sto
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, workspace, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -745,7 +747,7 @@ func (_m *MockClientInterface) ListBlockStorages(ctx context.Context, tenant sto
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -761,8 +763,8 @@ type MockClientInterface_ListBlockStorages_Call struct {
 
 // ListBlockStorages is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
-//   - workspace storage.WorkspacePathParam
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
 //   - params *storage.ListBlockStoragesParams
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListBlockStorages(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListBlockStorages_Call {
@@ -770,7 +772,7 @@ func (_e *MockClientInterface_Expecter) ListBlockStorages(ctx interface{}, tenan
 		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListBlockStorages_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, workspace storage.WorkspacePathParam, params *storage.ListBlockStoragesParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListBlockStorages_Call {
+func (_c *MockClientInterface_ListBlockStorages_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params *storage.ListBlockStoragesParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListBlockStorages_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -778,7 +780,7 @@ func (_c *MockClientInterface_ListBlockStorages_Call) Run(run func(ctx context.C
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(storage.WorkspacePathParam), args[3].(*storage.ListBlockStoragesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(*storage.ListBlockStoragesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -788,13 +790,13 @@ func (_c *MockClientInterface_ListBlockStorages_Call) Return(_a0 *http.Response,
 	return _c
 }
 
-func (_c *MockClientInterface_ListBlockStorages_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, storage.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListBlockStorages_Call {
+func (_c *MockClientInterface_ListBlockStorages_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *storage.ListBlockStoragesParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListBlockStorages_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListImages provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientInterface) ListImages(ctx context.Context, tenant storage.TenantPathParam, params *storage.ListImagesParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListImages(ctx context.Context, tenant schema.TenantPathParam, params *storage.ListImagesParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -810,10 +812,10 @@ func (_m *MockClientInterface) ListImages(ctx context.Context, tenant storage.Te
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -821,7 +823,7 @@ func (_m *MockClientInterface) ListImages(ctx context.Context, tenant storage.Te
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -837,7 +839,7 @@ type MockClientInterface_ListImages_Call struct {
 
 // ListImages is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
+//   - tenant schema.TenantPathParam
 //   - params *storage.ListImagesParams
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListImages(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListImages_Call {
@@ -845,7 +847,7 @@ func (_e *MockClientInterface_Expecter) ListImages(ctx interface{}, tenant inter
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListImages_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, params *storage.ListImagesParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListImages_Call {
+func (_c *MockClientInterface_ListImages_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, params *storage.ListImagesParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListImages_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -853,7 +855,7 @@ func (_c *MockClientInterface_ListImages_Call) Run(run func(ctx context.Context,
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(*storage.ListImagesParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(*storage.ListImagesParams), variadicArgs...)
 	})
 	return _c
 }
@@ -863,13 +865,13 @@ func (_c *MockClientInterface_ListImages_Call) Return(_a0 *http.Response, _a1 er
 	return _c
 }
 
-func (_c *MockClientInterface_ListImages_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListImages_Call {
+func (_c *MockClientInterface_ListImages_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, *storage.ListImagesParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListImages_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ListSkus provides a mock function with given fields: ctx, tenant, params, reqEditors
-func (_m *MockClientInterface) ListSkus(ctx context.Context, tenant storage.TenantPathParam, params *storage.ListSkusParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
+func (_m *MockClientInterface) ListSkus(ctx context.Context, tenant schema.TenantPathParam, params *storage.ListSkusParams, reqEditors ...storage.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
@@ -885,10 +887,10 @@ func (_m *MockClientInterface) ListSkus(ctx context.Context, tenant storage.Tena
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) (*http.Response, error)); ok {
 		return rf(ctx, tenant, params, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) *http.Response); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) *http.Response); ok {
 		r0 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
@@ -896,7 +898,7 @@ func (_m *MockClientInterface) ListSkus(ctx context.Context, tenant storage.Tena
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, storage.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) error); ok {
 		r1 = rf(ctx, tenant, params, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
@@ -912,7 +914,7 @@ type MockClientInterface_ListSkus_Call struct {
 
 // ListSkus is a helper method to define mock.On call
 //   - ctx context.Context
-//   - tenant storage.TenantPathParam
+//   - tenant schema.TenantPathParam
 //   - params *storage.ListSkusParams
 //   - reqEditors ...storage.RequestEditorFn
 func (_e *MockClientInterface_Expecter) ListSkus(ctx interface{}, tenant interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListSkus_Call {
@@ -920,7 +922,7 @@ func (_e *MockClientInterface_Expecter) ListSkus(ctx interface{}, tenant interfa
 		append([]interface{}{ctx, tenant, params}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_ListSkus_Call) Run(run func(ctx context.Context, tenant storage.TenantPathParam, params *storage.ListSkusParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListSkus_Call {
+func (_c *MockClientInterface_ListSkus_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, params *storage.ListSkusParams, reqEditors ...storage.RequestEditorFn)) *MockClientInterface_ListSkus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]storage.RequestEditorFn, len(args)-3)
 		for i, a := range args[3:] {
@@ -928,7 +930,7 @@ func (_c *MockClientInterface_ListSkus_Call) Run(run func(ctx context.Context, t
 				variadicArgs[i] = a.(storage.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(storage.TenantPathParam), args[2].(*storage.ListSkusParams), variadicArgs...)
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(*storage.ListSkusParams), variadicArgs...)
 	})
 	return _c
 }
@@ -938,7 +940,7 @@ func (_c *MockClientInterface_ListSkus_Call) Return(_a0 *http.Response, _a1 erro
 	return _c
 }
 
-func (_c *MockClientInterface_ListSkus_Call) RunAndReturn(run func(context.Context, storage.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListSkus_Call {
+func (_c *MockClientInterface_ListSkus_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, *storage.ListSkusParams, ...storage.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListSkus_Call {
 	_c.Call.Return(run)
 	return _c
 }
