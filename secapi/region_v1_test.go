@@ -8,24 +8,35 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
 )
 
 // Region
-
 func TestListRegionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
 	sim := mockregion.NewMockServerInterface(t)
-	secatest.MockListRegionsV1(sim, secatest.RegionResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
-		Providers: []secatest.RegionResponseProviderV1{
-			{
-				Name:    secatest.ProviderNetworkName,
-				URL:     secatest.ProviderNetworkEndpoint,
-				Version: secatest.ProviderVersion1,
+	secatest.MockListRegionsV1(sim, []secatest.RegionResponseV1{
+		{
+			Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
+			Providers: []secatest.RegionResponseProviderV1{
+				{
+					Name:    secatest.ProviderNetworkName,
+					URL:     secatest.ProviderNetworkEndpoint,
+					Version: secatest.ProviderVersion1,
+				},
+			},
+		}, {
+			Metadata: secatest.MetadataResponseV1{Name: secatest.Region2Name},
+			Providers: []secatest.RegionResponseProviderV1{
+				{
+					Name:    secatest.ProviderNetworkName,
+					URL:     secatest.ProviderNetworkEndpoint,
+					Version: secatest.ProviderVersion1,
+				},
 			},
 		},
 	})
@@ -41,7 +52,20 @@ func TestListRegionsV1(t *testing.T) {
 
 	resp, err := iter.All(ctx)
 	assert.NoError(t, err)
-	assert.Len(t, resp, 1)
+	assert.Len(t, resp, 2)
+
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
+
+	assert.Len(t, resp[0].Spec.Providers, 1)
+	assert.Contains(t, resp[0].Spec.Providers[0].Name, secatest.ProviderNetworkName)
+	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
+	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
+
+	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ptr.To(1), nil)
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
 
