@@ -35,7 +35,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 	return &iter, nil
 }
 
-func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, limit *int, labels *schema.LabelSelector) (*Iterator[schema.Region], error) {
+func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, limit *int, labels *string) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
