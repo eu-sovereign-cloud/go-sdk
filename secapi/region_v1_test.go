@@ -8,6 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
@@ -61,7 +62,18 @@ func TestListRegionsV1(t *testing.T) {
 	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
 	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
 
-	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ptr.To(1), nil)
+	labels := builders.NewLabelsBuilder().
+		Equals("env", "test").
+		Equals("*env*", "*prod*").
+		NsEquals("monitoring", "alert-level", "high").
+		Neq("tier", "frontend").
+		Gt("version", 1).
+		Lt("version", 3).
+		Gte("uptime", 99).
+		Lte("load", 75).
+		Build()
+
+	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ptr.To(1), ptr.To(labels))
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
