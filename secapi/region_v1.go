@@ -21,7 +21,28 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
-				Accept: ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, limit *int, labels *string) (*Iterator[schema.Region], error) {
+	iter := Iterator[schema.Region]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
+			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
+				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
