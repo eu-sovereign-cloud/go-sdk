@@ -1,2 +1,5 @@
+.vscode/
+.idea/
+
 coverage.html
 coverage.out
