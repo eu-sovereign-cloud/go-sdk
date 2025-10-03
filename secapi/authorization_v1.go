@@ -33,6 +33,7 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 
 	return &iter, nil
 }
+
 func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.Role], error) {
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
@@ -134,6 +135,7 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 
 	return &iter, nil
 }
+
 func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.RoleAssignment], error) {
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
@@ -153,6 +155,7 @@ func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, 
 
 	return &iter, nil
 }
+
 func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err

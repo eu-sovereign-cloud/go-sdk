@@ -90,6 +90,7 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 
 	return &iter, nil
 }
+
 func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, limit *int, labels *string) (*Iterator[schema.BlockStorage], error) {
 	iter := Iterator[schema.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
@@ -109,6 +110,7 @@ func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid Tena
 
 	return &iter, nil
 }
+
 func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err

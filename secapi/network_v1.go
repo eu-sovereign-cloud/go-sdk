@@ -110,6 +110,7 @@ func (api *NetworkV1) ListNetworksWithFilters(ctx context.Context, tid TenantID,
 
 	return &iter, nil
 }
+
 func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
@@ -273,6 +274,7 @@ func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid Wor
 
 	return &iter, nil
 }
+
 func (api *NetworkV1) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, limit *int, labels *string) (*Iterator[schema.RouteTable], error) {
 	iter := Iterator[schema.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
@@ -292,6 +294,7 @@ func (api *NetworkV1) ListRouteTablesWithFilters(ctx context.Context, tid Tenant
 
 	return &iter, nil
 }
+
 func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
@@ -679,6 +682,7 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 
 	return &iter, nil
 }
+
 func (api *NetworkV1) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, limit *int, labels *string) (*Iterator[schema.PublicIp], error) {
 	iter := Iterator[schema.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
@@ -698,6 +702,7 @@ func (api *NetworkV1) ListPublicIpsWithFilters(ctx context.Context, tid TenantID
 
 	return &iter, nil
 }
+
 func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err

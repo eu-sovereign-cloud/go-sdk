@@ -33,6 +33,7 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 
 	return &iter, nil
 }
+
 func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.Workspace], error) {
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
@@ -52,6 +53,7 @@ func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid Tenan
 
 	return &iter, nil
 }
+
 func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err

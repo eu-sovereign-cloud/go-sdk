@@ -54,6 +54,7 @@ func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, lim
 
 	return &iter, nil
 }
+
 func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
@@ -109,6 +110,7 @@ func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 
 	return &iter, nil
 }
+
 func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
