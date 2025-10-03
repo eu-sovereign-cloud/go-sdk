@@ -35,6 +35,25 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	return &iter, nil
 }
 
+func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.InstanceSku], error) {
+	iter := Iterator[schema.InstanceSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
+			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
+				Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
 func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
@@ -71,6 +90,25 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 	return &iter, nil
 }
 
+func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, limit *int, labels *string) (*Iterator[schema.Instance], error) {
+	iter := Iterator[schema.Instance]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
+			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
+				Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
 func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err

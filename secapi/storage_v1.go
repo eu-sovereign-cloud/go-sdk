@@ -35,6 +35,26 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	return &iter, nil
 }
 
+func (api *StorageV1) ListSkusWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.StorageSku], error) {
+	iter := Iterator[schema.StorageSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
+			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
+				Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
 func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*schema.StorageSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
@@ -70,7 +90,25 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 
 	return &iter, nil
 }
+func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, limit *int, labels *string) (*Iterator[schema.BlockStorage], error) {
+	iter := Iterator[schema.BlockStorage]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
+			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
+				Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
 
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
 func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
@@ -141,6 +179,26 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
 			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
 				Accept: ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *StorageV1) ListImagesWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.Image], error) {
+	iter := Iterator[schema.Image]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
+			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
+				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    labels,
+				Limit:     limit,
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
