@@ -9,6 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
@@ -48,6 +49,24 @@ func TestListStorageSkus(t *testing.T) {
 	assert.Equal(t, secatest.StorageSku1Tier, labels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.StorageV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetStorageSku(t *testing.T) {
@@ -129,6 +148,24 @@ func TestListBlockStorages(t *testing.T) {
 	assert.Equal(t, *storageSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetBlockStorage(t *testing.T) {
@@ -308,6 +345,24 @@ func TestListImages(t *testing.T) {
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetImage(t *testing.T) {

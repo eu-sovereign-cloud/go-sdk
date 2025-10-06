@@ -9,6 +9,8 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
+	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -50,6 +52,24 @@ func TestListRoles(t *testing.T) {
 	assert.Equal(t, secatest.Role1PermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = client.AuthorizationV1.ListRolesWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetRole(t *testing.T) {

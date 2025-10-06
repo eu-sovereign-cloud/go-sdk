@@ -9,6 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
@@ -47,12 +48,30 @@ func TestListInstancesSku(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	labels := resp[0].Labels
-	assert.Len(t, labels, 1)
-	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
+	respLabels := resp[0].Labels
+	assert.Len(t, respLabels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, respLabels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.ComputeV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetInstanceSkU(t *testing.T) {
@@ -138,6 +157,24 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals("env", "test").
+		Equals("*env*", "*prod*").
+		NsEquals("monitoring", "alert-level", "high").
+		Neq("tier", "frontend").
+		Gt("version", 1).
+		Lt("version", 3).
+		Gte("uptime", 99).
+		Lte("load", 75).
+		Build()
+
+	iter, err = regionalClient.ComputeV1.ListInstancesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetInstance(t *testing.T) {

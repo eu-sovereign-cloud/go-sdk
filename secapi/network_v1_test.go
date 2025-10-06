@@ -9,6 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mocknetwork "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.network.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
 	"k8s.io/utils/ptr"
@@ -54,6 +55,24 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Bandwidth, resp[0].Spec.Bandwidth)
 	assert.Equal(t, secatest.NetworkSku1Packets, resp[0].Spec.Packets)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetNetworkSkuV1(t *testing.T) {
@@ -312,6 +331,24 @@ func TestListSubnetsV1(t *testing.T) {
 	assert.Equal(t, *networkSkuRef, *resp[0].Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListSubnetsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetSubnetV1(t *testing.T) {
@@ -490,6 +527,24 @@ func TestListRouteTablesV1(t *testing.T) {
 	assert.Equal(t, *targetRef, resp[0].Spec.Routes[0].TargetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListRouteTablesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetRouteTableV1(t *testing.T) {
@@ -674,6 +729,24 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	assert.Equal(t, false, *resp[0].Spec.EgressOnly)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListInternetGatewaysWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetInternetGatewayV1(t *testing.T) {
@@ -824,6 +897,24 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Rules[0].Direction))
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetSecurityGroupV1(t *testing.T) {
@@ -992,6 +1083,24 @@ func TestListNicsV1(t *testing.T) {
 	assert.Equal(t, *subnetRef, resp[0].Spec.SubnetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListNicsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetNicV1(t *testing.T) {
@@ -1153,6 +1262,24 @@ func TestListPublicIpsV1(t *testing.T) {
 	assert.Equal(t, secatest.Address1, *resp[0].Spec.Address)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75).
+		Build()
+
+	iter, err = regionalClient.NetworkV1.ListPublicIpsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetPublicIpV1(t *testing.T) {
