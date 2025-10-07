@@ -10,7 +10,6 @@ import (
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
-	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -61,10 +60,11 @@ func TestListRoles(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = client.AuthorizationV1.ListRolesWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = client.AuthorizationV1.ListRolesWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)

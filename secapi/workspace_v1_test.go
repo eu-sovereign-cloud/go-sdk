@@ -9,6 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -47,6 +48,24 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err = regionalClient.WorkspaceV1.ListWorkspacesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetWorkspaces(t *testing.T) {

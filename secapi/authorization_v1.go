@@ -6,7 +6,7 @@ import (
 
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
+	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 )
 
@@ -34,13 +34,13 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.Role], error) {
+func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
 				Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    labels,
-				Limit:     limit,
+				Labels:    opts.Labels,
+				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -136,13 +136,13 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
 				Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    labels,
-				Limit:     limit,
+				Labels:    opts.Labels,
+				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {

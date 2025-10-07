@@ -64,10 +64,11 @@ func TestListNetworkSkusV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -340,10 +341,11 @@ func TestListSubnetsV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListSubnetsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListSubnetsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -536,10 +538,11 @@ func TestListRouteTablesV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListRouteTablesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListRouteTablesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -738,10 +741,11 @@ func TestListInternetGatewaysV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListInternetGatewaysWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListInternetGatewaysWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -906,10 +910,10 @@ func TestListSecurityGroupsV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err = regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -1092,10 +1096,11 @@ func TestListNicsV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListNicsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListNicsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -1271,10 +1276,11 @@ func TestListPublicIpsV1(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.NetworkV1.ListPublicIpsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.NetworkV1.ListPublicIpsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)

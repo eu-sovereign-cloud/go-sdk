@@ -63,10 +63,11 @@ func TestListInstancesSku(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.ComputeV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.ComputeV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -159,17 +160,18 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 
 	labelsParams := builders.NewLabelsBuilder().
-		Equals("env", "test").
-		Equals("*env*", "*prod*").
-		NsEquals("monitoring", "alert-level", "high").
-		Neq("tier", "frontend").
-		Gt("version", 1).
-		Lt("version", 3).
-		Gte("uptime", 99).
-		Lte("load", 75).
-		Build()
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.ComputeV1.ListInstancesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.ComputeV1.ListInstancesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)

@@ -58,10 +58,11 @@ func TestListStorageSkus(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.StorageV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.StorageV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -157,10 +158,11 @@ func TestListBlockStorages(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -354,10 +356,11 @@ func TestListImages(t *testing.T) {
 		Gt(secatest.LabelVersion, 1).
 		Lt(secatest.LabelVersion, 3).
 		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75).
-		Build()
+		Lte(secatest.LabelLoad, 75)
 
-	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, ptr.To(1), ptr.To(labelsParams))
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)

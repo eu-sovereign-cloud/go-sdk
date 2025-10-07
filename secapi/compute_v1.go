@@ -7,7 +7,7 @@ import (
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
+	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 )
 
@@ -35,13 +35,13 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	return &iter, nil
 }
 
-func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, limit *int, labels *string) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
 				Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    labels,
-				Limit:     limit,
+				Labels:    opts.Labels,
+				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
@@ -91,13 +91,13 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 	return &iter, nil
 }
 
-func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, limit *int, labels *string) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
 				Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    labels,
-				Limit:     limit,
+				Labels:    opts.Labels,
+				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
