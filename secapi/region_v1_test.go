@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
-	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -70,10 +69,10 @@ func TestListRegionsV1(t *testing.T) {
 		Gt("version", 1).
 		Lt("version", 3).
 		Gte("uptime", 99).
-		Lte("load", 75).
-		Build()
+		Lte("load", 75)
 
-	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ptr.To(1), ptr.To(labels))
+	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labels)
+	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)

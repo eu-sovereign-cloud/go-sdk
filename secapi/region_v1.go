@@ -6,7 +6,7 @@ import (
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
+	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 )
 
@@ -35,13 +35,13 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 	return &iter, nil
 }
 
-func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, limit *int, labels *string) (*Iterator[schema.Region], error) {
+func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    labels,
-				Limit:     limit,
+				Labels:    opts.Labels,
+				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
