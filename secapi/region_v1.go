@@ -36,15 +36,11 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 }
 
 func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
-	labelsStr := ""
-	if opts.Labels != nil {
-		labelsStr = opts.Labels.Build()
-	}
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    &labelsStr,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
