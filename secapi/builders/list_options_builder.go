@@ -2,7 +2,7 @@ package builders
 
 type ListOptions struct {
 	Limit  *int
-	Labels *string
+	Labels *LabelsBuilder
 }
 
 const defaultLimit = 1000
@@ -20,7 +20,6 @@ func (o *ListOptions) WithLimit(limit int) *ListOptions {
 }
 
 func (o *ListOptions) WithLabels(labels *LabelsBuilder) *ListOptions {
-	labelsStr := labels.Build()
-	o.Labels = &labelsStr
+	o.Labels = labels
 	return o
 }
