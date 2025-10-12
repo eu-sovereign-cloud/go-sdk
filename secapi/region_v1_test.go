@@ -8,6 +8,8 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -19,15 +21,9 @@ func TestListRegionsV1(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockregion.NewMockServerInterface(t)
-	secatest.MockListRegionsV1(sim, secatest.RegionResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
-		Providers: []secatest.RegionResponseProviderV1{
-			{
-				Name:    secatest.ProviderNetworkName,
-				URL:     secatest.ProviderNetworkEndpoint,
-				Version: secatest.ProviderVersion1,
-			},
-		},
+	spec := buildResponseRegionSpec(secatest.ProviderNetworkName, secatest.ProviderNetworkEndpoint, secatest.ProviderVersion1)
+	secatest.MockListRegionsV1(sim, []schema.Region{
+		*buildResponseRegion(secatest.Region1Name, secatest.Tenant1Name, spec),
 	})
 	secatest.ConfigureRegionHandler(sim, sm)
 
@@ -56,16 +52,8 @@ func TestGetRegionV1(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockregion.NewMockServerInterface(t)
-	secatest.MockGetRegionV1(sim, secatest.RegionResponseV1{
-		Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
-		Providers: []secatest.RegionResponseProviderV1{
-			{
-				Name:    secatest.ProviderNetworkName,
-				URL:     secatest.ProviderNetworkEndpoint,
-				Version: secatest.ProviderVersion1,
-			},
-		},
-	})
+	spec := buildResponseRegionSpec(secatest.ProviderNetworkName, secatest.ProviderNetworkEndpoint, secatest.ProviderVersion1)
+	secatest.MockGetRegionV1(sim, buildResponseRegion(secatest.Region1Name, secatest.Tenant1Name, spec))
 	secatest.ConfigureRegionHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -81,4 +69,23 @@ func TestGetRegionV1(t *testing.T) {
 	assert.Contains(t, resp.Spec.Providers[0].Name, secatest.ProviderNetworkName)
 	assert.Contains(t, resp.Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
 	assert.Equal(t, secatest.ProviderVersion1, resp.Spec.Providers[0].Version)
+}
+
+func buildResponseRegion(name string, tenant string, spec *schema.RegionSpec) *schema.Region {
+	return &schema.Region{
+		Metadata: secalib.BuildResponseGlobalResourceMetadata(name, tenant),
+		Spec:     *spec,
+	}
+}
+
+func buildResponseRegionSpec(providerName, providerUrl, providerVersion string) *schema.RegionSpec {
+	return &schema.RegionSpec{
+		Providers: []schema.Provider{
+			{
+				Name:    providerName,
+				Url:     providerUrl,
+				Version: providerVersion,
+			},
+		},
+	}
 }

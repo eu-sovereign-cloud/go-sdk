@@ -9,6 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -22,12 +23,8 @@ func TestListWorkspacesV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockListWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Workspace1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	secatest.MockListWorkspaceV1(sim, []schema.Workspace{
+		*buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive),
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -56,13 +53,7 @@ func TestGetWorkspaces(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Workspace1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive))
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -87,13 +78,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Workspace1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
-	})
+	secatest.MockCreateOrUpdateWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateCreating))
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -124,13 +109,7 @@ func TestDeleteWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Workspace1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive))
 	secatest.MockDeleteWorkspaceV1(sim)
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -145,4 +124,14 @@ func TestDeleteWorkspace(t *testing.T) {
 
 	err = regionalClient.WorkspaceV1.DeleteWorkspace(ctx, resp)
 	assert.NoError(t, err)
+}
+
+func buildResponseWorkspace(name string, tenant string, state string) *schema.Workspace {
+	return &schema.Workspace{
+		Metadata: secalib.BuildResponseRegionalResourceMetadata(name, tenant),
+		Spec:     schema.WorkspaceSpec{},
+		Status: &schema.WorkspaceStatus{
+			State: secalib.BuildResponseResourceState(state),
+		},
+	}
 }

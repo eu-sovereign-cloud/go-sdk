@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
@@ -195,17 +194,6 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *schem
 
 func (api *ComputeV1) RestartInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.RestartInstanceWithParams(ctx, inst, nil)
-}
-
-func (api *ComputeV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
-	urnRef := schema.ReferenceURN(urn)
-
-	ref := &schema.Reference{}
-	if err := ref.FromReferenceURN(urnRef); err != nil {
-		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
-	}
-
-	return ref, nil
 }
 
 func (api *ComputeV1) validateMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {

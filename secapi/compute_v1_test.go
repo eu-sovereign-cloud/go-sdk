@@ -9,7 +9,7 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"k8s.io/utils/ptr"
+	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -23,14 +23,10 @@ func TestListInstancesSku(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockListInstanceSkusV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.InstanceSku1Name,
-		},
-		Tier: secatest.InstanceSku1Tier,
-		VCPU: secatest.InstanceSku1VCPU,
-		Ram:  secatest.InstanceSku1RAM,
+	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
+	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
+	secatest.MockListInstanceSkusV1(sim, []schema.InstanceSku{
+		*buildResponseInstanceSku(secatest.InstanceSku1Name, labels, spec),
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -47,9 +43,8 @@ func TestListInstancesSku(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	labels := resp[0].Labels
-	assert.Len(t, labels, 1)
-	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
+	assert.Len(t, resp[0].Labels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, resp[0].Labels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
@@ -62,15 +57,9 @@ func TestGetInstanceSkU(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockGetInstanceSkuV1(sim, secatest.InstanceSkuResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Tenant: secatest.Tenant1Name,
-			Name:   secatest.InstanceSku1Name,
-		},
-		Tier: secatest.InstanceSku1Tier,
-		VCPU: secatest.InstanceSku1VCPU,
-		Ram:  secatest.InstanceSku1RAM,
-	})
+	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
+	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
+	secatest.MockGetInstanceSkuV1(sim, buildResponseInstanceSku(secatest.InstanceSku1Name, labels, spec))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -86,9 +75,8 @@ func TestGetInstanceSkU(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
 
-	labels := resp.Labels
-	assert.Len(t, labels, 1)
-	assert.Equal(t, secatest.InstanceSku1Tier, labels[secatest.LabelKeyTier])
+	assert.Len(t, resp.Labels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, resp.Labels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp.Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1RAM, resp.Spec.Ram)
@@ -103,14 +91,9 @@ func TestListInstances(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockListInstancesV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Instance1Name,
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
-		SkuRef: secatest.InstanceSku1Ref,
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockListInstancesV1(sim, []schema.Instance{
+		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive),
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -119,7 +102,7 @@ func TestListInstances(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -145,16 +128,10 @@ func TestGetInstance(t *testing.T) {
 	sm := http.NewServeMux()
 
 	secatest.ConfigureRegionV1Handler(t, sm)
+
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockGetInstanceV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Instance1Name,
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
-		SkuRef: secatest.InstanceSku1Ref,
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -162,7 +139,7 @@ func TestGetInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,15 +169,8 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateInstanceV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Instance1Name,
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
-		SkuRef: secatest.InstanceSku1Ref,
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateCreating},
-	})
+	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateCreating))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -208,16 +178,16 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := regionalClient.ComputeV1.BuildReferenceURN(secatest.InstanceSku1Ref)
+	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
+			Name:      secatest.Instance1Name,
 			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
-			Name:      secatest.Instance1Name,
 		},
 		Spec: schema.InstanceSpec{
 			SkuRef: *instanceSkuRef,
@@ -252,10 +222,11 @@ func TestStartInstanace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	// TODO Create a builder to new instances
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 		},
 	}
@@ -280,8 +251,8 @@ func TestRestartInstanace(t *testing.T) {
 
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 		},
 	}
@@ -306,8 +277,8 @@ func TestStopInstanace(t *testing.T) {
 
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
-			Tenant:    secatest.Tenant1Name,
 			Name:      secatest.Instance1Name,
+			Tenant:    secatest.Tenant1Name,
 			Workspace: secatest.Workspace1Name,
 		},
 	}
@@ -322,15 +293,8 @@ func TestDeleteInstance(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	secatest.MockGetInstanceV1(sim, secatest.InstanceResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:      secatest.Instance1Name,
-			Tenant:    secatest.Tenant1Name,
-			Workspace: ptr.To(secatest.Workspace1Name),
-		},
-		SkuRef: secatest.InstanceSku1Ref,
-		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive))
 
 	secatest.MockDeleteInstanceV1(sim)
 	secatest.ConfigureComputeHandler(sim, sm)
@@ -339,6 +303,7 @@ func TestDeleteInstance(t *testing.T) {
 	defer server.Close()
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
 	wref := WorkspaceReference{
 		Tenant:    secatest.Tenant1Name,
 		Workspace: secatest.Workspace1Name,
@@ -350,4 +315,41 @@ func TestDeleteInstance(t *testing.T) {
 
 	err = regionalClient.ComputeV1.DeleteInstance(ctx, resp)
 	assert.NoError(t, err)
+}
+
+func buildResponseInstanceSku(name string, labels schema.Labels, spec *schema.InstanceSkuSpec) *schema.InstanceSku {
+	return &schema.InstanceSku{
+		Metadata: secalib.BuildResponseSkuResourceMetadata(name),
+		Labels:   labels,
+		Spec:     spec,
+	}
+}
+
+func buildResponseInstanceSkuSpec(vCPU int, ram int) *schema.InstanceSkuSpec {
+	return &schema.InstanceSkuSpec{
+		VCPU: vCPU,
+		Ram:  ram,
+	}
+}
+
+func buildResponseInstance(name string, tenant string, workspace string, spec *schema.InstanceSpec, state string) *schema.Instance {
+	return &schema.Instance{
+		Metadata: secalib.BuildResponseRegionalWorkspaceResourceMetadata(name, tenant, workspace),
+		Spec:     *spec,
+		Status: &schema.InstanceStatus{
+			State: secalib.BuildResponseResourceState(state),
+		},
+	}
+}
+
+func buildResponseInstanceSpec(t *testing.T, skuRef string, zone string) *schema.InstanceSpec {
+	urnRef, err := BuildReferenceFromURN(skuRef)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return &schema.InstanceSpec{
+		SkuRef: *urnRef,
+		Zone:   zone,
+	}
 }

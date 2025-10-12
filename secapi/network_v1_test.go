@@ -117,7 +117,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.RouteTable1Ref)
+	routeTableRef, err := BuildReferenceFromURN(secatest.RouteTable1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -159,7 +159,7 @@ func TestGetNetworkV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.RouteTable1Ref)
+	routeTableRef, err := BuildReferenceFromURN(secatest.RouteTable1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -197,12 +197,12 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.RouteTable1Ref)
+	routeTableRef, err := BuildReferenceFromURN(secatest.RouteTable1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	networkSkuRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.NetworkSku1Ref)
+	networkSkuRef, err := BuildReferenceFromURN(secatest.NetworkSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -293,7 +293,7 @@ func TestListSubnetsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	networkSkuRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.NetworkSku1Ref)
+	networkSkuRef, err := BuildReferenceFromURN(secatest.NetworkSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -338,7 +338,7 @@ func TestGetSubnetV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	networkSkuRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.NetworkSku1Ref)
+	networkSkuRef, err := BuildReferenceFromURN(secatest.NetworkSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -377,7 +377,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	networkSkuRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.NetworkSku1Ref)
+	networkSkuRef, err := BuildReferenceFromURN(secatest.NetworkSku1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -467,7 +467,7 @@ func TestListRouteTablesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	targetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Instance1Ref)
+	targetRef, err := BuildReferenceFromURN(secatest.Instance1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -517,7 +517,7 @@ func TestGetRouteTableV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	targetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Instance1Ref)
+	targetRef, err := BuildReferenceFromURN(secatest.Instance1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -563,7 +563,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	targetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Instance1Ref)
+	targetRef, err := BuildReferenceFromURN(secatest.Instance1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -973,7 +973,7 @@ func TestListNicsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	subnetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Subnet1Ref)
+	subnetRef, err := BuildReferenceFromURN(secatest.Subnet1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1017,7 +1017,7 @@ func TestGetNicV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	subnetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Subnet1Ref)
+	subnetRef, err := BuildReferenceFromURN(secatest.Subnet1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1058,7 +1058,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	// TODO Create a builder to simplify this request creation
-	subnetRef, err := regionalClient.NetworkV1.BuildReferenceURN(secatest.Subnet1Ref)
+	subnetRef, err := BuildReferenceFromURN(secatest.Subnet1Ref)
 	if err != nil {
 		t.Fatal(err)
 	}

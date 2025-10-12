@@ -16,29 +16,37 @@ import (
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 )
 
 func ConfigureRegionV1Handler(t *testing.T, sm *http.ServeMux) *mockregion.MockServerInterface {
 	sim := mockregion.NewMockServerInterface(t)
 
-	MockGetRegionV1(sim, RegionResponseV1{
-		Metadata: MetadataResponseV1{Name: Region1Name},
-		Providers: []RegionResponseProviderV1{
-			{
-				Name: ProviderWorkspaceName,
-				URL:  ProviderWorkspaceEndpoint,
-			},
-			{
-				Name: ProviderNetworkName,
-				URL:  ProviderNetworkEndpoint,
-			},
-			{
-				Name: ProviderComputeName,
-				URL:  ProviderComputeEndpoint,
-			},
-			{
-				Name: ProviderStorageName,
-				URL:  ProviderStorageEndpoint,
+	MockGetRegionV1(sim, &schema.Region{
+		Metadata: secalib.BuildResponseGlobalResourceMetadata(InstanceSku1Name, Tenant1Name),
+		Spec: schema.RegionSpec{
+			Providers: []schema.Provider{
+				{
+					Name:    ProviderWorkspaceName,
+					Url:     ProviderWorkspaceEndpoint,
+					Version: ProviderVersion1,
+				},
+				{
+					Name:    ProviderNetworkName,
+					Url:     ProviderNetworkEndpoint,
+					Version: ProviderVersion1,
+				},
+				{
+					Name:    ProviderComputeName,
+					Url:     ProviderComputeEndpoint,
+					Version: ProviderVersion1,
+				},
+				{
+					Name:    ProviderStorageName,
+					Url:     ProviderStorageEndpoint,
+					Version: ProviderVersion1,
+				},
 			},
 		},
 	})
