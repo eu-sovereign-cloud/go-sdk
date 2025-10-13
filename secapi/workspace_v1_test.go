@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -126,12 +125,12 @@ func TestDeleteWorkspace(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+// Builders
+
 func buildResponseWorkspace(name string, tenant string, state string) *schema.Workspace {
 	return &schema.Workspace{
-		Metadata: secalib.BuildResponseRegionalResourceMetadata(name, tenant),
+		Metadata: secatest.NewRegionalResourceMetadata(name, tenant),
 		Spec:     schema.WorkspaceSpec{},
-		Status: &schema.WorkspaceStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewWorkspaceStatus(state),
 	}
 }

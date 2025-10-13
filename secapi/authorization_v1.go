@@ -52,7 +52,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
-	if err := api.validateMetadata(role.Metadata); err != nil {
+	if err := api.validateGlobalMetadata(role.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -77,7 +77,7 @@ func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *schema
 }
 
 func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
-	if err := api.validateMetadata(role.Metadata); err != nil {
+	if err := api.validateGlobalMetadata(role.Metadata); err != nil {
 		return err
 	}
 
@@ -134,7 +134,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
-	if err := api.validateMetadata(assign.Metadata); err != nil {
+	if err := api.validateGlobalMetadata(assign.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -159,7 +159,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, as
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
-	if err := api.validateMetadata(assign.Metadata); err != nil {
+	if err := api.validateGlobalMetadata(assign.Metadata); err != nil {
 		return err
 	}
 
@@ -177,18 +177,6 @@ func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, 
 
 func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
 	return api.DeleteRoleAssignmentWithParams(ctx, assign, nil)
-}
-
-func (api *AuthorizationV1) validateMetadata(metadata *schema.GlobalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
 }
 
 func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {

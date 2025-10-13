@@ -17,14 +17,13 @@ import (
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 )
 
 func ConfigureRegionV1Handler(t *testing.T, sm *http.ServeMux) *mockregion.MockServerInterface {
 	sim := mockregion.NewMockServerInterface(t)
 
 	MockGetRegionV1(sim, &schema.Region{
-		Metadata: secalib.BuildResponseGlobalResourceMetadata(InstanceSku1Name, Tenant1Name),
+		Metadata: NewGlobalResourceMetadata(InstanceSku1Name),
 		Spec: schema.RegionSpec{
 			Providers: []schema.Provider{
 				{

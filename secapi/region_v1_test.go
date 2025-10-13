@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -23,7 +22,7 @@ func TestListRegionsV1(t *testing.T) {
 	sim := mockregion.NewMockServerInterface(t)
 	spec := buildResponseRegionSpec(secatest.ProviderNetworkName, secatest.ProviderNetworkEndpoint, secatest.ProviderVersion1)
 	secatest.MockListRegionsV1(sim, []schema.Region{
-		*buildResponseRegion(secatest.Region1Name, secatest.Tenant1Name, spec),
+		*buildResponseRegion(secatest.Region1Name, spec),
 	})
 	secatest.ConfigureRegionHandler(sim, sm)
 
@@ -53,7 +52,7 @@ func TestGetRegionV1(t *testing.T) {
 
 	sim := mockregion.NewMockServerInterface(t)
 	spec := buildResponseRegionSpec(secatest.ProviderNetworkName, secatest.ProviderNetworkEndpoint, secatest.ProviderVersion1)
-	secatest.MockGetRegionV1(sim, buildResponseRegion(secatest.Region1Name, secatest.Tenant1Name, spec))
+	secatest.MockGetRegionV1(sim, buildResponseRegion(secatest.Region1Name, spec))
 	secatest.ConfigureRegionHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -71,9 +70,11 @@ func TestGetRegionV1(t *testing.T) {
 	assert.Equal(t, secatest.ProviderVersion1, resp.Spec.Providers[0].Version)
 }
 
-func buildResponseRegion(name string, tenant string, spec *schema.RegionSpec) *schema.Region {
+// Builders
+
+func buildResponseRegion(name string, spec *schema.RegionSpec) *schema.Region {
 	return &schema.Region{
-		Metadata: secalib.BuildResponseGlobalResourceMetadata(name, tenant),
+		Metadata: secatest.NewGlobalResourceMetadata(name),
 		Spec:     *spec,
 	}
 }

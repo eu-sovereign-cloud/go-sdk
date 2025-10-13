@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -93,7 +92,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	role := schema.Role{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
@@ -223,7 +222,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	assign := &schema.RoleAssignment{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
@@ -273,13 +272,13 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+// Builders
+
 func buildResponseRole(name string, tenant string, spec *schema.RoleSpec, state string) *schema.Role {
 	return &schema.Role{
-		Metadata: secalib.BuildResponseGlobalResourceMetadata(name, tenant),
+		Metadata: secatest.NewGlobalTenantResourceMetadata(name, tenant),
 		Spec:     *spec,
-		Status: &schema.RoleStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewRoleStatus(state),
 	}
 }
 
@@ -297,11 +296,9 @@ func buildResponseRoleSpec(provider string, resources []string, verbs []string) 
 
 func buildResponseRoleAssignment(name string, tenant string, spec *schema.RoleAssignmentSpec, state string) *schema.RoleAssignment {
 	return &schema.RoleAssignment{
-		Metadata: secalib.BuildResponseGlobalResourceMetadata(name, tenant),
+		Metadata: secatest.NewGlobalTenantResourceMetadata(name, tenant),
 		Spec:     *spec,
-		Status: &schema.RoleStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewRoleAssignmentStatus(state),
 	}
 }
 

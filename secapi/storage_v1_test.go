@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -26,7 +25,7 @@ func TestListStorageSkus(t *testing.T) {
 	labels := schema.Labels{secatest.LabelKeyTier: secatest.StorageSku1Tier}
 	spec := buildResponseStorageSkuSpec(secatest.StorageSku1Iops)
 	secatest.MockListStorageSkusV1(sim, []schema.StorageSku{
-		*buildResponseStorageSku(secatest.StorageSku1Name, labels, spec),
+		*buildResponseStorageSku(secatest.StorageSku1Name, secatest.Tenant1Name, labels, spec),
 	})
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -58,7 +57,7 @@ func TestGetStorageSku(t *testing.T) {
 	sim := mockstorage.NewMockServerInterface(t)
 	labels := schema.Labels{secatest.LabelKeyTier: secatest.StorageSku1Tier}
 	spec := buildResponseStorageSkuSpec(secatest.StorageSku1Iops)
-	secatest.MockGetStorageSkusV1(sim, buildResponseStorageSku(secatest.StorageSku1Name, labels, spec))
+	secatest.MockGetStorageSkusV1(sim, buildResponseStorageSku(secatest.StorageSku1Name, secatest.Tenant1Name, labels, spec))
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -335,7 +334,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	}
 
 	image := &schema.Image{
-		Metadata: secalib.BuildResponseRegionalResourceMetadata(secatest.Image1Name, secatest.Tenant1Name),
+		Metadata: secatest.NewRegionalResourceMetadata(secatest.Image1Name, secatest.Tenant1Name),
 		Spec: schema.ImageSpec{
 			BlockStorageRef: *blockStorageRef,
 			CpuArchitecture: secatest.Image1CpuArch,
@@ -382,9 +381,11 @@ func TestDeleteImage(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func buildResponseStorageSku(name string, labels schema.Labels, spec *schema.StorageSkuSpec) *schema.StorageSku {
+// Builders
+
+func buildResponseStorageSku(name string, tenant string, labels schema.Labels, spec *schema.StorageSkuSpec) *schema.StorageSku {
 	return &schema.StorageSku{
-		Metadata: secalib.BuildResponseSkuResourceMetadata(name),
+		Metadata: secatest.NewSkuResourceMetadata(name, tenant),
 		Labels:   labels,
 		Spec:     spec,
 	}
@@ -398,11 +399,9 @@ func buildResponseStorageSkuSpec(iops int) *schema.StorageSkuSpec {
 
 func buildResponseBlockStorage(name string, tenant string, workspace string, spec *schema.BlockStorageSpec, state string) *schema.BlockStorage {
 	return &schema.BlockStorage{
-		Metadata: secalib.BuildResponseRegionalWorkspaceResourceMetadata(name, tenant, workspace),
+		Metadata: secatest.NewRegionalWorkspaceResourceMetadata(name, tenant, workspace),
 		Spec:     *spec,
-		Status: &schema.BlockStorageStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewBlockStorageStatus(state),
 	}
 }
 
@@ -420,11 +419,9 @@ func buildResponseBlockStorageSpec(t *testing.T, skuRef string, sizeGB int) *sch
 
 func buildResponseImage(name string, tenant string, spec *schema.ImageSpec, state string) *schema.Image {
 	return &schema.Image{
-		Metadata: secalib.BuildResponseRegionalResourceMetadata(name, tenant),
+		Metadata: secatest.NewRegionalResourceMetadata(name, tenant),
 		Spec:     *spec,
-		Status: &schema.ImageStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewImageStatus(state),
 	}
 }
 

@@ -9,7 +9,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secalib"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -26,7 +25,7 @@ func TestListInstancesSku(t *testing.T) {
 	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
 	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
 	secatest.MockListInstanceSkusV1(sim, []schema.InstanceSku{
-		*buildResponseInstanceSku(secatest.InstanceSku1Name, labels, spec),
+		*buildResponseInstanceSku(secatest.InstanceSku1Name, secatest.Tenant1Name, labels, spec),
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -59,7 +58,7 @@ func TestGetInstanceSkU(t *testing.T) {
 	sim := mockcompute.NewMockServerInterface(t)
 	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
 	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
-	secatest.MockGetInstanceSkuV1(sim, buildResponseInstanceSku(secatest.InstanceSku1Name, labels, spec))
+	secatest.MockGetInstanceSkuV1(sim, buildResponseInstanceSku(secatest.InstanceSku1Name, secatest.Tenant1Name, labels, spec))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -222,7 +221,6 @@ func TestStartInstanace(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	// TODO Create a builder to new instances
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
 			Name:      secatest.Instance1Name,
@@ -317,9 +315,11 @@ func TestDeleteInstance(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func buildResponseInstanceSku(name string, labels schema.Labels, spec *schema.InstanceSkuSpec) *schema.InstanceSku {
+// Builders
+
+func buildResponseInstanceSku(name string, tenant string, labels schema.Labels, spec *schema.InstanceSkuSpec) *schema.InstanceSku {
 	return &schema.InstanceSku{
-		Metadata: secalib.BuildResponseSkuResourceMetadata(name),
+		Metadata: secatest.NewSkuResourceMetadata(name, tenant),
 		Labels:   labels,
 		Spec:     spec,
 	}
@@ -334,11 +334,9 @@ func buildResponseInstanceSkuSpec(vCPU int, ram int) *schema.InstanceSkuSpec {
 
 func buildResponseInstance(name string, tenant string, workspace string, spec *schema.InstanceSpec, state string) *schema.Instance {
 	return &schema.Instance{
-		Metadata: secalib.BuildResponseRegionalWorkspaceResourceMetadata(name, tenant, workspace),
+		Metadata: secatest.NewRegionalWorkspaceResourceMetadata(name, tenant, workspace),
 		Spec:     *spec,
-		Status: &schema.InstanceStatus{
-			State: secalib.BuildResponseResourceState(state),
-		},
+		Status:   secatest.NewInstanceStatus(state),
 	}
 }
 
