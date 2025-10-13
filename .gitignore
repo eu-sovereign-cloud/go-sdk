@@ -1,2 +1,10 @@
-coverage.html
-coverage.out
+# IDE
+.vscode
+.idea
+
+# Tests
+coverage.*
+
+## Sonar
+.scannerwork/
+.sonarlint/
