@@ -23,7 +23,7 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	sim := mockworkspace.NewMockServerInterface(t)
 	secatest.MockListWorkspaceV1(sim, []schema.Workspace{
-		*buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive),
+		*buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive),
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -41,6 +41,7 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
@@ -52,7 +53,7 @@ func TestGetWorkspaces(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive))
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive))
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -66,6 +67,7 @@ func TestGetWorkspaces(t *testing.T) {
 
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
@@ -77,7 +79,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateCreating))
+	secatest.MockCreateOrUpdateWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateCreating))
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -95,8 +97,9 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)	
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
@@ -108,7 +111,7 @@ func TestDeleteWorkspace(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.StatusStateActive))
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive))
 	secatest.MockDeleteWorkspaceV1(sim)
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
@@ -127,9 +130,9 @@ func TestDeleteWorkspace(t *testing.T) {
 
 // Builders
 
-func buildResponseWorkspace(name string, tenant string, state string) *schema.Workspace {
+func buildResponseWorkspace(name string, tenant string, region string, state string) *schema.Workspace {
 	return &schema.Workspace{
-		Metadata: secatest.NewRegionalResourceMetadata(name, tenant),
+		Metadata: secatest.NewRegionalResourceMetadata(name, tenant, region),
 		Spec:     schema.WorkspaceSpec{},
 		Status:   secatest.NewWorkspaceStatus(state),
 	}

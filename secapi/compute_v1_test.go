@@ -92,7 +92,7 @@ func TestListInstances(t *testing.T) {
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockListInstancesV1(sim, []schema.Instance{
-		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive),
+		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive),
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -116,6 +116,7 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, secatest.Instance1Name, resp[0].Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
@@ -130,7 +131,7 @@ func TestGetInstance(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive))
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -155,6 +156,7 @@ func TestGetInstance(t *testing.T) {
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
@@ -169,7 +171,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateCreating))
+	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateCreating))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -200,6 +202,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
@@ -292,7 +295,7 @@ func TestDeleteInstance(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, spec, secatest.StatusStateActive))
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive))
 
 	secatest.MockDeleteInstanceV1(sim)
 	secatest.ConfigureComputeHandler(sim, sm)
@@ -332,9 +335,9 @@ func buildResponseInstanceSkuSpec(vCPU int, ram int) *schema.InstanceSkuSpec {
 	}
 }
 
-func buildResponseInstance(name string, tenant string, workspace string, spec *schema.InstanceSpec, state string) *schema.Instance {
+func buildResponseInstance(name string, tenant string, workspace string, region string, spec *schema.InstanceSpec, state string) *schema.Instance {
 	return &schema.Instance{
-		Metadata: secatest.NewRegionalWorkspaceResourceMetadata(name, tenant, workspace),
+		Metadata: secatest.NewRegionalWorkspaceResourceMetadata(name, tenant, workspace, region),
 		Spec:     *spec,
 		Status:   secatest.NewInstanceStatus(state),
 	}

@@ -23,7 +23,7 @@ func ConfigureRegionV1Handler(t *testing.T, sm *http.ServeMux) *mockregion.MockS
 	sim := mockregion.NewMockServerInterface(t)
 
 	MockGetRegionV1(sim, &schema.Region{
-		Metadata: NewGlobalResourceMetadata(InstanceSku1Name),
+		Metadata: NewGlobalResourceMetadata(Region1Name),
 		Spec: schema.RegionSpec{
 			Providers: []schema.Provider{
 				{
