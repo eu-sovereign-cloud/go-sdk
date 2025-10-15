@@ -98,7 +98,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)	
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))

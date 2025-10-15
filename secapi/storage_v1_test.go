@@ -350,7 +350,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	assert.Equal(t, secatest.Image1Name, resp.Metadata.Name)
-	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)	
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)

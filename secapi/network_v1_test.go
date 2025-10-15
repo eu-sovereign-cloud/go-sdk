@@ -928,7 +928,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Nic1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)	
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
@@ -1055,7 +1055,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	assert.Equal(t, secatest.PublicIp1Name, resp.Metadata.Name)
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
-	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)	
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
