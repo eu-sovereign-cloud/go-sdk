@@ -39,7 +39,7 @@ func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid Tenant
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
 				Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -141,7 +141,7 @@ func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, 
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
 				Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)

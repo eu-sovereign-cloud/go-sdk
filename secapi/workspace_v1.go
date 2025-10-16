@@ -39,7 +39,7 @@ func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid Tenan
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
 				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)

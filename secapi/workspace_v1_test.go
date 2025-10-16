@@ -48,6 +48,28 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestListWorkspacesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockListWorkspaceV1(sim, secatest.WorkspaceTypeResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Workspace1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Status: secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
+	secatest.ConfigureWorkspaceHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -60,15 +82,15 @@ func TestListWorkspacesV1(t *testing.T) {
 		Lte(secatest.LabelLoad, 75)
 
 	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err = regionalClient.WorkspaceV1.ListWorkspacesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err := regionalClient.WorkspaceV1.ListWorkspacesWithFilters(ctx, secatest.Tenant1Name, listOptions)
 	assert.NoError(t, err)
 
-	resp, err = iter.All(ctx)
+	resp, err := iter.All(ctx)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, resp)
 }
 
-func TestGetWorkspaces(t *testing.T) {
+func TestGetWorkspacesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -99,7 +121,7 @@ func TestGetWorkspaces(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateWorkspace(t *testing.T) {
+func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -136,7 +158,7 @@ func TestCreateOrUpdateWorkspace(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestDeleteWorkspace(t *testing.T) {
+func TestDeleteWorkspaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 

@@ -40,7 +40,7 @@ func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
 				Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -96,7 +96,7 @@ func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
 				Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)

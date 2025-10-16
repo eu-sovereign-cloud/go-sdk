@@ -41,7 +41,7 @@ func (api *NetworkV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
 			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
 				Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -97,7 +97,7 @@ func (api *NetworkV1) ListNetworksWithFilters(ctx context.Context, tid TenantID,
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
 			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
 				Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -199,7 +199,7 @@ func (api *NetworkV1) ListSubnetsWithFilters(ctx context.Context, tid TenantID, 
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
 			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
 				Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -301,7 +301,7 @@ func (api *NetworkV1) ListRouteTablesWithFilters(ctx context.Context, tid Tenant
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
 			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
 				Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -403,7 +403,7 @@ func (api *NetworkV1) ListInternetGatewaysWithFilters(ctx context.Context, tid T
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
 			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
 				Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -505,7 +505,7 @@ func (api *NetworkV1) ListSecurityGroupsWithFilters(ctx context.Context, tid Ten
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
 			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
 				Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -607,7 +607,7 @@ func (api *NetworkV1) ListNicsWithFilters(ctx context.Context, tid TenantID, wid
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
 			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
 				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -627,7 +627,7 @@ func (api *NetworkV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
 			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
 				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
@@ -729,7 +729,7 @@ func (api *NetworkV1) ListPublicIpsWithFilters(ctx context.Context, tid TenantID
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
 			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
 				Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)

@@ -61,6 +61,7 @@ func TestListRegionsV1(t *testing.T) {
 	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
 	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
 }
+
 func TestListRegionsWithFiltersV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -93,17 +94,17 @@ func TestListRegionsWithFiltersV1(t *testing.T) {
 	defer server.Close()
 
 	client := newTestGlobalClientV1(t, server)
-	labels := builders.NewLabelsBuilder().
-		Equals("env", "test").
-		Equals("*env*", "*prod*").
-		NsEquals("monitoring", "alert-level", "high").
-		Neq("tier", "frontend").
-		Gt("version", 1).
-		Lt("version", 3).
-		Gte("uptime", 99).
-		Lte("load", 75)
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
 
-	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labels)
+	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
 	iter, err := client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
 	assert.NoError(t, err)
 
