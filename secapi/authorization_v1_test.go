@@ -9,13 +9,14 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
 )
 
 // Role
 
-func TestListRoles(t *testing.T) {
+func TestListRolesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -52,7 +53,47 @@ func TestListRoles(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
-func TestGetRole(t *testing.T) {
+func TestListRolesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockListRolesV1(sim, secatest.RoleResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.Role1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		PermissionVerb: secatest.Role1PermissionVerb,
+		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client := newTestGlobalClientV1(t, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := client.AuthorizationV1.ListRolesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
+func TestGetRoleV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -87,7 +128,7 @@ func TestGetRole(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateRole(t *testing.T) {
+func TestCreateOrUpdateRoleV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -108,7 +149,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	role := schema.Role{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
@@ -136,7 +177,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestDeleteRole(t *testing.T) {
+func TestDeleteRoleV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -168,7 +209,7 @@ func TestDeleteRole(t *testing.T) {
 
 // Role Assignment
 
-func TestListRoleAssignments(t *testing.T) {
+func TestListRoleAssignmentsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -205,7 +246,55 @@ func TestListRoleAssignments(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
-func TestGetRoleAssignment(t *testing.T) {
+func TestListRoleAssignmentsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	secatest.MockListRoleAssignmentsV1(sim, secatest.RoleAssignmentResponseV1{
+		Metadata: secatest.MetadataResponseV1{
+			Name:   secatest.RoleAssignment1Name,
+			Tenant: secatest.Tenant1Name,
+		},
+		Subject: secatest.RoleAssignment1Subject,
+		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	})
+	secatest.ConfigureAuthorizationHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client := newTestGlobalClientV1(t, server)
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := client.AuthorizationV1.ListRoleAssignmentsWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+	assert.NotNil(t, iter)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
+
+	assert.Equal(t, secatest.RoleAssignment1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+
+	assert.Len(t, resp[0].Spec.Subs, 1)
+	assert.Equal(t, secatest.RoleAssignment1Subject, resp[0].Spec.Subs[0])
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestGetRoleAssignmentV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -239,7 +328,7 @@ func TestGetRoleAssignment(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateRoleAssignment(t *testing.T) {
+func TestCreateOrUpdateRoleAssignmentV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -260,7 +349,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	assign := &schema.RoleAssignment{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
@@ -287,7 +376,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestDeleteRoleAssignment(t *testing.T) {
+func TestDeleteRoleAssignmentV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
