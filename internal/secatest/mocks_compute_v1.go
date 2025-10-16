@@ -11,47 +11,49 @@ import (
 )
 
 // Instance Sku
-func MockListInstanceSkusV1(sim *mockcompute.MockServerInterface, resp InstanceSkuResponseV1) {
+func MockListInstanceSkusV1(sim *mockcompute.MockServerInterface, resp []schema.InstanceSku) {
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, params compute.ListSkusParams) {
-			if err := configGetHttpResponse(w, instanceSkusResponseTemplateV1, resp); err != nil {
+			iter := compute.SkuIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetInstanceSkuV1(sim *mockcompute.MockServerInterface, resp InstanceSkuResponseV1) {
+func MockGetInstanceSkuV1(sim *mockcompute.MockServerInterface, resp *schema.InstanceSku) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, instanceSkuResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
 // Instance
-func MockListInstancesV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
+func MockListInstancesV1(sim *mockcompute.MockServerInterface, resp []schema.Instance) {
 	sim.EXPECT().ListInstances(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params compute.ListInstancesParams) {
-			if err := configGetHttpResponse(w, instancesResponseTemplateV1, resp); err != nil {
+			iter := compute.InstanceIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
+func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance) {
 	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, instanceResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp InstanceResponseV1) {
+func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance) {
 	sim.EXPECT().CreateOrUpdateInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.TenantPathParam, lwp compute.CreateOrUpdateInstanceParams) {
-			if err := configPutHttpResponse(w, instanceResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})

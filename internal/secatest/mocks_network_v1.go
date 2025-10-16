@@ -11,47 +11,49 @@ import (
 )
 
 // Network Sku
-func MockListNetworkSkusV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
+func MockListNetworkSkusV1(sim *mocknetwork.MockServerInterface, resp []schema.NetworkSku) {
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, params network.ListSkusParams) {
-			if err := configGetHttpResponse(w, networkSkusResponseTemplateV1, resp); err != nil {
+			iter := &network.SkuIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetNetworkSkuV1(sim *mocknetwork.MockServerInterface, resp NetworkSkuResponseV1) {
+func MockGetNetworkSkuV1(sim *mocknetwork.MockServerInterface, resp *schema.NetworkSku) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
-			if err := configGetHttpResponse(w, networkSkuResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
 // Network
-func MockListNetworksV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
+func MockListNetworksV1(sim *mocknetwork.MockServerInterface, resp []schema.Network) {
 	sim.EXPECT().ListNetworks(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListNetworksParams) {
-			if err := configGetHttpResponse(w, networksResponseTemplateV1, resp); err != nil {
+			iter := &network.NetworkIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
+func MockGetNetworkV1(sim *mocknetwork.MockServerInterface, resp *schema.Network) {
 	sim.EXPECT().GetNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			if err := configGetHttpResponse(w, networkResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateNetworkV1(sim *mocknetwork.MockServerInterface, resp NetworkResponseV1) {
+func MockCreateOrUpdateNetworkV1(sim *mocknetwork.MockServerInterface, resp *schema.Network) {
 	sim.EXPECT().CreateOrUpdateNetwork(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNetworkParams) {
-			if err := configPutHttpResponse(w, networkResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -65,28 +67,29 @@ func MockDeleteNetworkV1(sim *mocknetwork.MockServerInterface) {
 }
 
 // Subnet
-func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
+func MockListSubnetsV1(sim *mocknetwork.MockServerInterface, resp []schema.Subnet) {
 	sim.EXPECT().ListSubnets(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, params network.ListSubnetsParams) {
-			if err := configGetHttpResponse(w, subnetsResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, params network.ListSubnetsParams) {
+			iter := &network.SubnetIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
+func MockGetSubnetV1(sim *mocknetwork.MockServerInterface, resp *schema.Subnet) {
 	sim.EXPECT().GetSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, params schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, subnetResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, params schema.ResourcePathParam) {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp SubnetResponseV1) {
+func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp *schema.Subnet) {
 	sim.EXPECT().CreateOrUpdateSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, name schema.ResourcePathParam, params network.CreateOrUpdateSubnetParams) {
-			if err := configPutHttpResponse(w, subnetResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, name schema.ResourcePathParam, params network.CreateOrUpdateSubnetParams) {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -94,34 +97,35 @@ func MockCreateOrUpdateSubnetV1(sim *mocknetwork.MockServerInterface, resp Subne
 
 func MockDeleteSubnetV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteSubnet(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, name schema.ResourcePathParam, params network.DeleteSubnetParams) {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, name schema.ResourcePathParam, params network.DeleteSubnetParams) {
 			configDeleteHttpResponse(w)
 		})
 }
 
 // Route Table
-func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
+func MockListRouteTablesV1(sim *mocknetwork.MockServerInterface, resp []schema.RouteTable) {
 	sim.EXPECT().ListRouteTables(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, params network.ListRouteTablesParams) {
-			if err := configGetHttpResponse(w, routeTablesResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, params network.ListRouteTablesParams) {
+			iter := &network.RouteTableIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
+func MockGetRouteTableV1(sim *mocknetwork.MockServerInterface, resp *schema.RouteTable) {
 	sim.EXPECT().GetRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, routeTableResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, name schema.ResourcePathParam) {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp RouteTableResponseV1) {
+func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp *schema.RouteTable) {
 	sim.EXPECT().CreateOrUpdateRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, name schema.ResourcePathParam, params network.CreateOrUpdateRouteTableParams) {
-			if err := configPutHttpResponse(w, routeTableResponseTemplateV1, resp); err != nil {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, name schema.ResourcePathParam, params network.CreateOrUpdateRouteTableParams) {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -129,34 +133,35 @@ func MockCreateOrUpdateRouteTableV1(sim *mocknetwork.MockServerInterface, resp R
 
 func MockDeleteRouteTableV1(sim *mocknetwork.MockServerInterface) {
 	sim.EXPECT().DeleteRouteTable(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, network schema.NetworkPathParam, name schema.ResourcePathParam, params network.DeleteRouteTableParams) {
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, networkPath schema.NetworkPathParam, name schema.ResourcePathParam, params network.DeleteRouteTableParams) {
 			configDeleteHttpResponse(w)
 		})
 }
 
 // Internet Gateway
-func MockListInternetGatewaysV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
+func MockListInternetGatewaysV1(sim *mocknetwork.MockServerInterface, resp []schema.InternetGateway) {
 	sim.EXPECT().ListInternetGateways(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListInternetGatewaysParams) {
-			if err := configGetHttpResponse(w, internetGatewaysResponseTemplateV1, resp); err != nil {
+			iter := &network.InternetGatewayIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
+func MockGetInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp *schema.InternetGateway) {
 	sim.EXPECT().GetInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			if err := configGetHttpResponse(w, internetGatewayResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp InternetGatewayResponseV1) {
+func MockCreateOrUpdateInternetGatewayV1(sim *mocknetwork.MockServerInterface, resp *schema.InternetGateway) {
 	sim.EXPECT().CreateOrUpdateInternetGateway(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateInternetGatewayParams) {
-			if err := configPutHttpResponse(w, internetGatewayResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -170,28 +175,29 @@ func MockDeleteInternetGatewayV1(sim *mocknetwork.MockServerInterface) {
 }
 
 // Security Group
-func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
+func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp []schema.SecurityGroup) {
 	sim.EXPECT().ListSecurityGroups(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListSecurityGroupsParams) {
-			if err := configGetHttpResponse(w, securityGroupsResponseTemplateV1, resp); err != nil {
+			iter := &network.SecurityGroupIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
+func MockGetSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp *schema.SecurityGroup) {
 	sim.EXPECT().GetSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			if err := configGetHttpResponse(w, securityGroupResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp SecurityGroupResponseV1) {
+func MockCreateOrUpdateSecurityGroupV1(sim *mocknetwork.MockServerInterface, resp *schema.SecurityGroup) {
 	sim.EXPECT().CreateOrUpdateSecurityGroup(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSecurityGroupParams) {
-			if err := configPutHttpResponse(w, securityGroupResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -205,28 +211,29 @@ func MockDeleteSecurityGroupV1(sim *mocknetwork.MockServerInterface) {
 }
 
 // Nic
-func MockListNicsV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
+func MockListNicsV1(sim *mocknetwork.MockServerInterface, resp []schema.Nic) {
 	sim.EXPECT().ListNics(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListNicsParams) {
-			if err := configGetHttpResponse(w, nicsResponseTemplateV1, resp); err != nil {
+			iter := &network.NicIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
+func MockGetNicV1(sim *mocknetwork.MockServerInterface, resp *schema.Nic) {
 	sim.EXPECT().GetNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			if err := configGetHttpResponse(w, nicResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateNicV1(sim *mocknetwork.MockServerInterface, resp NicResponseV1) {
+func MockCreateOrUpdateNicV1(sim *mocknetwork.MockServerInterface, resp *schema.Nic) {
 	sim.EXPECT().CreateOrUpdateNic(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateNicParams) {
-			if err := configPutHttpResponse(w, nicResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -240,28 +247,29 @@ func MockDeleteNicV1(sim *mocknetwork.MockServerInterface) {
 }
 
 // Public Ip
-func MockListPublicIpsV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
+func MockListPublicIpsV1(sim *mocknetwork.MockServerInterface, resp []schema.PublicIp) {
 	sim.EXPECT().ListPublicIps(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListPublicIpsParams) {
-			if err := configGetHttpResponse(w, publicIpsResponseTemplateV1, resp); err != nil {
+			iter := &network.PublicIpIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetPublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
+func MockGetPublicIpV1(sim *mocknetwork.MockServerInterface, resp *schema.PublicIp) {
 	sim.EXPECT().GetPublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
-			if err := configGetHttpResponse(w, publicIpResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdatePublicIpV1(sim *mocknetwork.MockServerInterface, resp PublicIpResponseV1) {
+func MockCreateOrUpdatePublicIpV1(sim *mocknetwork.MockServerInterface, resp *schema.PublicIp) {
 	sim.EXPECT().CreateOrUpdatePublicIp(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace, name string, params network.CreateOrUpdatePublicIpParams) {
-			if err := configPutHttpResponse(w, publicIpResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})

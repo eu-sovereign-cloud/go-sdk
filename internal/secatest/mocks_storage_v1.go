@@ -11,47 +11,49 @@ import (
 )
 
 // Storage Sku
-func MockListStorageSkusV1(sim *mockstorage.MockServerInterface, resp StorageSkuResponseV1) {
+func MockListStorageSkusV1(sim *mockstorage.MockServerInterface, resp []schema.StorageSku) {
 	sim.EXPECT().ListSkus(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, params storage.ListSkusParams) {
-			if err := configGetHttpResponse(w, storageSkusResponseTemplateV1, resp); err != nil {
+			iter := storage.SkuIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetStorageSkusV1(sim *mockstorage.MockServerInterface, resp StorageSkuResponseV1) {
+func MockGetStorageSkusV1(sim *mockstorage.MockServerInterface, resp *schema.StorageSku) {
 	sim.EXPECT().GetSku(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, storageSkuResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
 // Block Storage
-func MockListBlockStoragesV1(sim *mockstorage.MockServerInterface, resp BlockStorageResponseV1) {
+func MockListBlockStoragesV1(sim *mockstorage.MockServerInterface, resp []schema.BlockStorage) {
 	sim.EXPECT().ListBlockStorages(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params storage.ListBlockStoragesParams) {
-			if err := configGetHttpResponse(w, blockStoragesResponseTemplateV1, resp); err != nil {
+			iter := storage.BlockStorageIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp BlockStorageResponseV1) {
+func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.BlockStorage) {
 	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, blockStorageResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateBlockStorageV1(sim *mockstorage.MockServerInterface, resp BlockStorageResponseV1) {
+func MockCreateOrUpdateBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.BlockStorage) {
 	sim.EXPECT().CreateOrUpdateBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params storage.CreateOrUpdateBlockStorageParams) {
-			if err := configPutHttpResponse(w, blockStorageResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
@@ -65,28 +67,29 @@ func MockDeleteBlockStorageV1(sim *mockstorage.MockServerInterface) {
 }
 
 // Image
-func MockListStorageImagesV1(sim *mockstorage.MockServerInterface, resp ImageResponseV1) {
+func MockListStorageImagesV1(sim *mockstorage.MockServerInterface, resp []schema.Image) {
 	sim.EXPECT().ListImages(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, params storage.ListImagesParams) {
-			if err := configGetHttpResponse(w, imagesResponseTemplateV1, resp); err != nil {
+			iter := storage.ImageIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockGetStorageImageV1(sim *mockstorage.MockServerInterface, resp ImageResponseV1) {
+func MockGetStorageImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image) {
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
-			if err := configGetHttpResponse(w, imageResponseTemplateV1, resp); err != nil {
+			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})
 }
 
-func MockCreateOrUpdateImageV1(sim *mockstorage.MockServerInterface, resp ImageResponseV1) {
+func MockCreateOrUpdateImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image) {
 	sim.EXPECT().CreateOrUpdateImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam, params storage.CreateOrUpdateImageParams) {
-			if err := configPutHttpResponse(w, imageResponseTemplateV1, resp); err != nil {
+			if err := configPutHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 		})

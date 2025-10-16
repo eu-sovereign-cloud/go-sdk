@@ -1,2 +1,4 @@
-coverage.html
-coverage.out
+.vscode/
+.idea/
+
+coverage.*

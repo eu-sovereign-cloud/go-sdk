@@ -20,13 +20,9 @@ func TestListRoles(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockListRolesV1(sim, secatest.RoleResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		PermissionVerb: secatest.Role1PermissionVerb,
-		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
+	secatest.MockListRolesV1(sim, []schema.Role{
+		*buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive),
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
@@ -57,14 +53,8 @@ func TestGetRole(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		PermissionVerb: secatest.Role1PermissionVerb,
-		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
+	secatest.MockGetRoleV1(sim, buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive))
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -92,14 +82,8 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRoleV1(sim, secatest.RoleResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		PermissionVerb: secatest.Role1PermissionVerb,
-		Status:         secatest.StatusResponseV1{State: secatest.StatusStateCreating},
-	})
+	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
+	secatest.MockCreateOrUpdateRoleV1(sim, buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, secatest.StatusStateCreating))
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -108,7 +92,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	role := schema.Role{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
@@ -141,15 +125,9 @@ func TestDeleteRole(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockGetRoleV1(sim, secatest.RoleResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.Role1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		PermissionVerb: secatest.Role1PermissionVerb,
-		Status:         secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
 
+	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
+	secatest.MockGetRoleV1(sim, buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive))
 	secatest.MockDeleteRoleV1(sim)
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
@@ -173,13 +151,9 @@ func TestListRoleAssignments(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockListRoleAssignmentsV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.RoleAssignment1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Subject: secatest.RoleAssignment1Subject,
-		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
+	spec := buildResponseRoleAssignmentSpec([]string{secatest.Role1Name}, []string{secatest.RoleAssignment1Subject})
+	secatest.MockListRoleAssignmentsV1(sim, []schema.RoleAssignment{
+		*buildResponseRoleAssignment(secatest.RoleAssignment1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive),
 	})
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
@@ -210,14 +184,8 @@ func TestGetRoleAssignment(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockGetRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.RoleAssignment1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Subject: secatest.RoleAssignment1Subject,
-		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
+	spec := buildResponseRoleAssignmentSpec([]string{secatest.Role1Name}, []string{secatest.RoleAssignment1Subject})
+	secatest.MockGetRoleAssignmentV1(sim, buildResponseRoleAssignment(secatest.RoleAssignment1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive))
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -244,14 +212,8 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockCreateOrUpdateRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.RoleAssignment1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Subject: secatest.RoleAssignment1Subject,
-		Status:  secatest.StatusResponseV1{State: secatest.StatusStateCreating},
-	})
+	spec := buildResponseRoleAssignmentSpec([]string{secatest.Role1Name}, []string{secatest.RoleAssignment1Subject})
+	secatest.MockCreateOrUpdateRoleAssignmentV1(sim, buildResponseRoleAssignment(secatest.RoleAssignment1Name, secatest.Tenant1Name, spec, secatest.StatusStateCreating))
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -260,7 +222,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	assign := &schema.RoleAssignment{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
@@ -292,15 +254,8 @@ func TestDeleteRoleAssignment(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockGetRoleAssignmentV1(sim, secatest.RoleAssignmentResponseV1{
-		Metadata: secatest.MetadataResponseV1{
-			Name:   secatest.RoleAssignment1Name,
-			Tenant: secatest.Tenant1Name,
-		},
-		Subject: secatest.RoleAssignment1Subject,
-		Status:  secatest.StatusResponseV1{State: secatest.StatusStateActive},
-	})
-
+	spec := buildResponseRoleAssignmentSpec([]string{secatest.Role1Name}, []string{secatest.RoleAssignment1Subject})
+	secatest.MockGetRoleAssignmentV1(sim, buildResponseRoleAssignment(secatest.RoleAssignment1Name, secatest.Tenant1Name, spec, secatest.StatusStateActive))
 	secatest.MockDeleteRoleAssignmentV1(sim)
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
@@ -315,4 +270,41 @@ func TestDeleteRoleAssignment(t *testing.T) {
 
 	err = client.AuthorizationV1.DeleteRoleAssignment(ctx, resp)
 	assert.NoError(t, err)
+}
+
+// Builders
+
+func buildResponseRole(name string, tenant string, spec *schema.RoleSpec, state string) *schema.Role {
+	return &schema.Role{
+		Metadata: secatest.NewGlobalTenantResourceMetadata(name, tenant),
+		Spec:     *spec,
+		Status:   secatest.NewRoleStatus(state),
+	}
+}
+
+func buildResponseRoleSpec(provider string, resources []string, verbs []string) *schema.RoleSpec {
+	return &schema.RoleSpec{
+		Permissions: []schema.Permission{
+			{
+				Provider:  provider,
+				Resources: resources,
+				Verb:      verbs,
+			},
+		},
+	}
+}
+
+func buildResponseRoleAssignment(name string, tenant string, spec *schema.RoleAssignmentSpec, state string) *schema.RoleAssignment {
+	return &schema.RoleAssignment{
+		Metadata: secatest.NewGlobalTenantResourceMetadata(name, tenant),
+		Spec:     *spec,
+		Status:   secatest.NewRoleAssignmentStatus(state),
+	}
+}
+
+func buildResponseRoleAssignmentSpec(roles []string, subs []string) *schema.RoleAssignmentSpec {
+	return &schema.RoleAssignmentSpec{
+		Roles: roles,
+		Subs:  subs,
+	}
 }

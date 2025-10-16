@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
@@ -214,17 +213,6 @@ func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *schema.I
 
 func (api *StorageV1) DeleteImage(ctx context.Context, image *schema.Image) error {
 	return api.DeleteImageWithParams(ctx, image, nil)
-}
-
-func (api *StorageV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
-	urnRef := schema.ReferenceURN(urn)
-
-	ref := &schema.Reference{}
-	if err := ref.FromReferenceURN(urnRef); err != nil {
-		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
-	}
-
-	return ref, nil
 }
 
 func (api *StorageV1) validateRegionalMetadata(metadata *schema.RegionalResourceMetadata) error {
