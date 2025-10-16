@@ -5,13 +5,15 @@ const (
 	regionsTemplateV1 = `
 	{
 		"items": [
+			{{- range $i, $r := . }}
+			{{if $i}},{{end}}
 			{
 				"metadata": {
-					"name": "{{.Metadata.Name}}"
+					"name": "{{$r.Metadata.Name}}"
 				},
 				"spec": {
 					"providers": [
-						{{- range $i, $p := .Providers }}
+						{{- range $i, $p := $r.Providers }}
 						{{if $i}},{{end}}
 						{
 							"name": "{{$p.Name}}",
@@ -21,8 +23,8 @@ const (
 						{{- end}}
 					]
 				}
-			}
-		]
+			}{{- end}}
+			]
 	}`
 	regionResponseTemplateV1 = `
 	{

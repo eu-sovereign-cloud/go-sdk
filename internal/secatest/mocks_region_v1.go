@@ -10,15 +10,15 @@ import (
 )
 
 // Region
-func MockListRegionsV1(sim *mockregion.MockServerInterface, resp RegionResponseV1) {
+func MockListRegionsV1(sim *mockregion.MockServerInterface, resp []RegionResponseV1) {
 	sim.EXPECT().ListRegions(mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, lrp region.ListRegionsParams) {
 			configHttpResponse(w, http.StatusOK)
-
-			for i := range resp.Providers {
-				resp.Providers[i].URL = "http://" + r.Host + resp.Providers[i].URL
+			for _, region := range resp {
+				for i := range region.Providers {
+					region.Providers[i].URL = "http://" + r.Host + region.Providers[i].URL
+				}
 			}
-
 			if err := processTemplate(w, regionsTemplateV1, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
