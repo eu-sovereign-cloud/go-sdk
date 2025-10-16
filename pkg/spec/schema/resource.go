@@ -586,17 +586,8 @@ type SkuResourceMetadata struct {
 	// ApiVersion API version of the resource
 	ApiVersion string `json:"apiVersion"`
 
-	// CreatedAt Indicates the time when the resource was created. The field is set by the provider and should not be modified by the user.
-	CreatedAt time.Time `json:"createdAt"`
-
-	// DeletedAt If set, indicates the time when the resource was marked for deletion. Resources with this field set are considered pending deletion.
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-
 	// Kind Type of the resource
 	Kind SkuResourceMetadataKind `json:"kind"`
-
-	// LastModifiedAt Indicates the time when the resource was created or last modified. Field is used for "If-Unmodified-Since" logic for concurrency control. The provider guarantees that a modification on a single resource can happen only once every millisecond.
-	LastModifiedAt time.Time `json:"lastModifiedAt"`
 
 	// Name Resource identifier in dash-case (kebab-case) format. Must start and end with an alphanumeric character.
 	// Can contain lowercase letters, numbers, and hyphens. Multiple segments can be joined with dots.
@@ -606,11 +597,11 @@ type SkuResourceMetadata struct {
 
 	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
 	// The reference can be used to refer to a resource in other resources.
-	Ref      *Reference `json:"ref,omitempty"`
-	Resource string     `json:"resource"`
+	Ref *Reference `json:"ref,omitempty"`
 
-	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
-	ResourceVersion int `json:"resourceVersion"`
+	// Region Reference to the region where the resource is located
+	Region   string `json:"region"`
+	Resource string `json:"resource"`
 
 	// Tenant Tenant identifier
 	Tenant string `json:"tenant"`
