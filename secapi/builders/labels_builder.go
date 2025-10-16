@@ -51,3 +51,13 @@ func (b *LabelsBuilder) Lte(key string, value int) *LabelsBuilder {
 func (b *LabelsBuilder) Build() string {
 	return strings.Join(b.Items, ",")
 }
+
+func (b *LabelsBuilder) BuildPtr() *string {
+	labelsStr := b.Build()
+
+	if labelsStr == "" {
+		return nil
+	}
+
+	return &labelsStr
+}

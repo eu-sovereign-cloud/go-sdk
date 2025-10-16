@@ -40,7 +40,7 @@ func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptio
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
 				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels,
+				Labels:    opts.Labels.BuildPtr(),
 				Limit:     opts.Limit,
 				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
