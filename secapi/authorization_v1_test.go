@@ -128,7 +128,7 @@ func TestCreateOrUpdateRole(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	role := schema.Role{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.Role1Name,
 		},
@@ -280,7 +280,7 @@ func TestCreateOrUpdateRoleAssignment(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	assign := &schema.RoleAssignment{
-		Metadata: &schema.GlobalResourceMetadata{
+		Metadata: &schema.GlobalTenantResourceMetadata{
 			Tenant: secatest.Tenant1Name,
 			Name:   secatest.RoleAssignment1Name,
 		},
