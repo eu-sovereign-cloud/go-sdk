@@ -179,7 +179,7 @@ func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *sc
 	return api.DeleteRoleAssignmentWithParams(ctx, assign, nil)
 }
 
-func (api *AuthorizationV1) validateMetadata(metadata *schema.GlobalResourceMetadata) error {
+func (api *AuthorizationV1) validateMetadata(metadata *schema.GlobalTenantResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
