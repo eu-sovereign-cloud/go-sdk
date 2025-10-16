@@ -30,6 +30,7 @@ const (
 	Tenant1Name    = "tenant-1"
 	Workspace1Name = "workspace-1"
 	Region1Name    = "region-1"
+	Region2Name    = "region-2"
 	ZoneA          = "a"
 
 	// Labels
