@@ -9,8 +9,10 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mocknetwork "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.network.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"k8s.io/utils/ptr"
 )
 
@@ -49,6 +51,55 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Bandwidth, resp[0].Spec.Bandwidth)
 	assert.Equal(t, secatest.NetworkSku1Packets, resp[0].Spec.Packets)
+}
+
+func TestListNetworkSkusWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	secatest.MockListNetworkSkusV1(sim, []schema.NetworkSku{
+		{
+			Metadata: &schema.SkuResourceMetadata{
+				Tenant: secatest.Tenant1Name,
+				Name:   secatest.NetworkSku1Name,
+			},
+			Labels: schema.Labels{
+				secatest.LabelKeyTier: secatest.NetworkSku1Tier,
+			},
+			Spec: &schema.NetworkSkuSpec{
+				Bandwidth: secatest.NetworkSku1Bandwidth,
+				Packets:   secatest.NetworkSku1Packets,
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetNetworkSkuV1(t *testing.T) {
@@ -120,6 +171,63 @@ func TestListNetworksV1(t *testing.T) {
 	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestListNetworksWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	ref, err := BuildReferenceFromURN(secatest.RouteTable1Ref)
+	require.NoError(t, err)
+
+	secatest.MockListNetworksV1(sim, []schema.Network{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.Network1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.NetworkSpec{
+				RouteTableRef: *ref,
+			},
+			Status: &schema.NetworkStatus{
+				State: ptr.To(schema.ResourceStateCreating),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListNetworksWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
+
+	assert.Equal(t, secatest.Network1Name, resp[0].Metadata.Name)
+
+	assert.Equal(t, *ref, resp[0].Spec.RouteTableRef)
+
+	assert.Equal(t, secatest.StatusStateCreating, string(*resp[0].Status.State))
 }
 
 func TestGetNetworkV1(t *testing.T) {
@@ -279,6 +387,58 @@ func TestListSubnetsV1(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
+func TestListSubnetsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	ref, err := BuildReferenceFromURN(secatest.NetworkSku1Ref)
+	require.NoError(t, err)
+	secatest.MockListSubnetsV1(sim, []schema.Subnet{
+		{
+			Metadata: &schema.RegionalNetworkResourceMetadata{
+				Name:      secatest.Subnet1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+				Network:   secatest.Network1Name,
+			},
+			Spec: schema.SubnetSpec{
+				SkuRef: ref,
+			},
+			Status: &schema.SubnetStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListSubnetsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
 func TestGetSubnetV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -431,6 +591,63 @@ func TestListRouteTablesV1(t *testing.T) {
 	assert.Equal(t, *targetRef, resp[0].Spec.Routes[0].TargetRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestListRouteTablesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	ref, err := BuildReferenceFromURN(secatest.Instance1Ref)
+	require.NoError(t, err)
+	secatest.MockListRouteTablesV1(sim, []schema.RouteTable{
+		{
+			Metadata: &schema.RegionalNetworkResourceMetadata{
+				Name:      secatest.RouteTable1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+				Network:   secatest.Network1Name,
+			},
+			Spec: schema.RouteTableSpec{
+				Routes: []schema.RouteSpec{
+					{
+						DestinationCidrBlock: secatest.CidrIpv4,
+						TargetRef:            *ref,
+					},
+				},
+			},
+			Status: &schema.RouteTableStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListRouteTablesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetRouteTableV1(t *testing.T) {
@@ -589,6 +806,53 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
+func TestListInternetGatewaysWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	secatest.MockListInternetGatewaysV1(sim, []schema.InternetGateway{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.InternetGateway1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.InternetGatewaySpec{},
+			Status: &schema.Status{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListInternetGatewaysWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
 func TestGetInternetGatewayV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -714,6 +978,58 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Rules[0].Direction))
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestListSecurityGroupsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	secatest.MockListSecurityGroupsV1(sim, []schema.SecurityGroup{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.SecurityGroup1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.SecurityGroupSpec{
+				Rules: []schema.SecurityGroupRuleSpec{
+					{
+						Direction: schema.SecurityGroupRuleDirectionIngress,
+					},
+				},
+			},
+			Status: &schema.SecurityGroupStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetSecurityGroupV1(t *testing.T) {
@@ -861,6 +1177,57 @@ func TestListNicsV1(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
+func TestListNicsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	ref, err := BuildReferenceFromURN(secatest.Subnet1Ref)
+	require.NoError(t, err)
+	secatest.MockListNicsV1(sim, []schema.Nic{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.Nic1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.NicSpec{
+				SubnetRef: *ref,
+			},
+			Status: &schema.NicStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListNicsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
 func TestGetNicV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -996,6 +1363,55 @@ func TestListPublicIpsV1(t *testing.T) {
 	assert.Equal(t, secatest.Address1, *resp[0].Spec.Address)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+}
+
+func TestListPublicIpsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	secatest.MockListPublicIpsV1(sim, []schema.PublicIp{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.PublicIp1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.PublicIpSpec{
+				Address: ptr.To(secatest.Address1),
+			},
+			Status: &schema.PublicIpStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.NetworkV1.ListPublicIpsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
 func TestGetPublicIpV1(t *testing.T) {

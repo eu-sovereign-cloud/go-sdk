@@ -9,13 +9,16 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
+	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Instance Sku
 
-func TestListInstancesSku(t *testing.T) {
+func TestListInstancesSkuV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -42,14 +45,34 @@ func TestListInstancesSku(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
 
-	assert.Len(t, resp[0].Labels, 1)
-	assert.Equal(t, secatest.InstanceSku1Tier, resp[0].Labels[secatest.LabelKeyTier])
+	respLabels := resp[0].Labels
+	assert.Len(t, respLabels, 1)
+	assert.Equal(t, secatest.InstanceSku1Tier, respLabels[secatest.LabelKeyTier])
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.ComputeV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
-func TestGetInstanceSkU(t *testing.T) {
+func TestGetInstanceSkUV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -83,7 +106,7 @@ func TestGetInstanceSkU(t *testing.T) {
 
 // Instance
 
-func TestListInstances(t *testing.T) {
+func TestListInstancesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -121,9 +144,80 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.ComputeV1.ListInstancesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
-func TestGetInstance(t *testing.T) {
+func TestListInstancesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+
+	ref, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
+	require.NoError(t, err)
+	secatest.MockListInstancesV1(sim, []schema.Instance{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.Instance1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.InstanceSpec{
+				SkuRef: *ref,
+			},
+			Status: &schema.InstanceStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.ComputeV1.ListInstancesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
+func TestGetInstanceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -163,7 +257,7 @@ func TestGetInstance(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateInstance(t *testing.T) {
+func TestCreateOrUpdateInstanceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -209,7 +303,7 @@ func TestCreateOrUpdateInstance(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestStartInstanace(t *testing.T) {
+func TestStartInstanaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -235,7 +329,7 @@ func TestStartInstanace(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestRestartInstanace(t *testing.T) {
+func TestRestartInstanaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -261,7 +355,7 @@ func TestRestartInstanace(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestStopInstanace(t *testing.T) {
+func TestStopInstanaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -287,7 +381,7 @@ func TestStopInstanace(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestDeleteInstance(t *testing.T) {
+func TestDeleteInstanceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 

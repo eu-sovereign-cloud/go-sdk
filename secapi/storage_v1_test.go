@@ -9,13 +9,16 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
+	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Storage Sku
 
-func TestListStorageSkus(t *testing.T) {
+func TestListStorageSkusV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -48,7 +51,50 @@ func TestListStorageSkus(t *testing.T) {
 	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
 }
 
-func TestGetStorageSku(t *testing.T) {
+func TestListStorageSkusWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockstorage.NewMockServerInterface(t)
+	secatest.MockListStorageSkusV1(sim, []schema.StorageSku{
+		{
+			Metadata: &schema.SkuResourceMetadata{
+				Name: secatest.StorageSku1Name,
+			},
+			Labels: schema.Labels{
+				secatest.LabelKeyTier: secatest.StorageSku1Tier,
+			},
+			Spec: &schema.StorageSkuSpec{
+				Iops: secatest.StorageSku1Iops,
+				Type: secatest.StorageSku1Tier,
+			},
+		},
+	})
+	secatest.ConfigureStorageHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+
+	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
+
+	labels := resp[0].Labels
+	assert.Len(t, labels, 1)
+	assert.Equal(t, secatest.StorageSku1Tier, labels[secatest.LabelKeyTier])
+
+	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
+}
+
+func TestGetStorageSkuV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -82,7 +128,7 @@ func TestGetStorageSku(t *testing.T) {
 
 // Block Storage
 
-func TestListBlockStorages(t *testing.T) {
+func TestListBlockStoragesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -122,7 +168,59 @@ func TestListBlockStorages(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
 }
 
-func TestGetBlockStorage(t *testing.T) {
+func TestListBlockStoragesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockstorage.NewMockServerInterface(t)
+	ref, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
+	require.NoError(t, err)
+	secatest.MockListBlockStoragesV1(sim, []schema.BlockStorage{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.BlockStorage1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.BlockStorageSpec{
+				SkuRef: *ref,
+			},
+			Status: &schema.BlockStorageStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+
+	secatest.ConfigureStorageHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
+func TestGetBlockStorageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -162,7 +260,7 @@ func TestGetBlockStorage(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateBlockStorage(t *testing.T) {
+func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -208,7 +306,7 @@ func TestCreateOrUpdateBlockStorage(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestDeleteBlockStorage(t *testing.T) {
+func TestDeleteBlockStorageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -240,7 +338,7 @@ func TestDeleteBlockStorage(t *testing.T) {
 
 // Image
 
-func TestListImages(t *testing.T) {
+func TestListImagesV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -277,9 +375,79 @@ func TestListImages(t *testing.T) {
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
 	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err = iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
 }
 
-func TestGetImage(t *testing.T) {
+func TestListImagesWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockstorage.NewMockServerInterface(t)
+
+	ref, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
+	require.NoError(t, err)
+
+	secatest.MockListStorageImagesV1(sim, []schema.Image{
+		{
+			Metadata: &schema.RegionalResourceMetadata{
+				Name:   secatest.Image1Name,
+				Tenant: secatest.Tenant1Name,
+			},
+			Spec: schema.ImageSpec{
+				BlockStorageRef: *ref,
+			},
+			Status: &schema.ImageStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureStorageHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
+func TestGetImageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -317,7 +485,7 @@ func TestGetImage(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
 }
 
-func TestCreateOrUpdateImage(t *testing.T) {
+func TestCreateOrUpdateImageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -358,7 +526,7 @@ func TestCreateOrUpdateImage(t *testing.T) {
 	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
 }
 
-func TestDeleteImage(t *testing.T) {
+func TestDeleteImageV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
