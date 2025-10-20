@@ -1,9 +1,8 @@
 package secatest
 
 import (
-	"bytes"
+	"encoding/json"
 	"net/http"
-	"text/template"
 )
 
 const (
@@ -11,19 +10,11 @@ const (
 	headerContentTypeJSON = "application/json"
 )
 
-func processTemplate(w http.ResponseWriter, name string, data any) error {
-	tmpl := template.Must(template.New("response").Parse(name))
-
-	var buffer bytes.Buffer
-	if err := tmpl.Execute(&buffer, data); err != nil {
+func encodeResponseBody(w http.ResponseWriter, data any) error {
+	encoder := json.NewEncoder(w)
+	if err := encoder.Encode(data); err != nil {
 		return err
 	}
-
-	_, err := w.Write(buffer.Bytes())
-	if err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -32,20 +23,20 @@ func configHttpResponse(w http.ResponseWriter, statusCode int) {
 	w.WriteHeader(statusCode)
 }
 
-func configGetHttpResponse(w http.ResponseWriter, template string, data any) error {
+func configGetHttpResponse(w http.ResponseWriter, data any) error {
 	configHttpResponse(w, http.StatusOK)
 
-	if err := processTemplate(w, template, data); err != nil {
+	if err := encodeResponseBody(w, data); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func configPutHttpResponse(w http.ResponseWriter, template string, data any) error {
+func configPutHttpResponse(w http.ResponseWriter, data any) error {
 	configHttpResponse(w, http.StatusOK)
 
-	if err := processTemplate(w, template, data); err != nil {
+	if err := encodeResponseBody(w, data); err != nil {
 		return err
 	}
 

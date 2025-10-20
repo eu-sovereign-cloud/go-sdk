@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
@@ -805,17 +804,6 @@ func (api *NetworkV1) DeletePublicIpWithParams(ctx context.Context, ip *schema.P
 
 func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
 	return api.DeletePublicIpWithParams(ctx, ip, nil)
-}
-
-func (api *NetworkV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
-	urnRef := schema.ReferenceURN(urn)
-
-	ref := &schema.Reference{}
-	if err := ref.FromReferenceURN(urnRef); err != nil {
-		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
-	}
-
-	return ref, nil
 }
 
 func (api *NetworkV1) validateRegionalMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
