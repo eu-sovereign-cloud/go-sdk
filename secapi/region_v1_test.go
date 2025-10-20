@@ -60,22 +60,55 @@ func TestListRegionsV1(t *testing.T) {
 	assert.Contains(t, resp[0].Spec.Providers[0].Name, secatest.ProviderNetworkName)
 	assert.Contains(t, resp[0].Spec.Providers[0].Url, secatest.ProviderNetworkEndpoint)
 	assert.Equal(t, secatest.ProviderVersion1, resp[0].Spec.Providers[0].Version)
+}
 
-	labels := builders.NewLabelsBuilder().
-		Equals("env", "test").
-		Equals("*env*", "*prod*").
-		NsEquals("monitoring", "alert-level", "high").
-		Neq("tier", "frontend").
-		Gt("version", 1).
-		Lt("version", 3).
-		Gte("uptime", 99).
-		Lte("load", 75)
+func TestListRegionsWithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
 
-	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labels)
-	iter, err = client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
+	sim := mockregion.NewMockServerInterface(t)
+	secatest.MockListRegionsV1(sim, []secatest.RegionResponseV1{
+		{
+			Metadata: secatest.MetadataResponseV1{Name: secatest.Region1Name},
+			Providers: []secatest.RegionResponseProviderV1{
+				{
+					Name:    secatest.ProviderNetworkName,
+					URL:     secatest.ProviderNetworkEndpoint,
+					Version: secatest.ProviderVersion1,
+				},
+			},
+		}, {
+			Metadata: secatest.MetadataResponseV1{Name: secatest.Region2Name},
+			Providers: []secatest.RegionResponseProviderV1{
+				{
+					Name:    secatest.ProviderNetworkName,
+					URL:     secatest.ProviderNetworkEndpoint,
+					Version: secatest.ProviderVersion1,
+				},
+			},
+		},
+	})
+	secatest.ConfigureRegionHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client := newTestGlobalClientV1(t, server)
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
 	assert.NoError(t, err)
 
-	resp, err = iter.All(ctx)
+	resp, err := iter.All(ctx)
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Name)
