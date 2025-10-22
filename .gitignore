@@ -1,4 +1,10 @@
-.vscode/
-.idea/
+# IDE
+.vscode
+.idea
 
+# Tests
 coverage.*
+
+## Sonar
+.scannerwork/
+.sonarlint/
