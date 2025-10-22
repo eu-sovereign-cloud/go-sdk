@@ -77,10 +77,15 @@ sec:
 .PHONY: lint
 lint: fmt golint vet sec
 
+.PHONY: sonar
+sonar: test
+	@echo "Running SonarQube scan..."
+	sonar-scanner
+
 .PHONY: clean
 clean:
 	@echo "Cleaning..."
-	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
+	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock coverage.*
 
 .PHONY: generate
 generate: clean spec schemas mock
