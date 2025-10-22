@@ -6,7 +6,7 @@ import (
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
+	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 )
 
@@ -22,6 +22,26 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
 				Accept: ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+	iter := Iterator[schema.Workspace]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
+				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -52,7 +72,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 }
 
 func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
-	if err := api.validateMetadata(ws.Metadata); err != nil {
+	if err := api.validateRegionalMetadata(ws.Metadata); err != nil {
 		return nil, err
 	}
 
@@ -77,7 +97,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.
 }
 
 func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
-	if err := api.validateMetadata(ws.Metadata); err != nil {
+	if err := api.validateRegionalMetadata(ws.Metadata); err != nil {
 		return err
 	}
 
@@ -95,18 +115,6 @@ func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *schem
 
 func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
 	return api.DeleteWorkspaceWithParams(ctx, ws, nil)
-}
-
-func (api *WorkspaceV1) validateMetadata(metadata *schema.RegionalResourceMetadata) error {
-	if metadata == nil {
-		return ErrNoMetatada
-	}
-
-	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
-	}
-
-	return nil
 }
 
 func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {

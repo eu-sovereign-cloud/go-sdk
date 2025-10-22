@@ -30,10 +30,21 @@ const (
 	Tenant1Name    = "tenant-1"
 	Workspace1Name = "workspace-1"
 	Region1Name    = "region-1"
+	Region2Name    = "region-2"
 	ZoneA          = "a"
 
 	// Labels
-	LabelKeyTier = "tier"
+	LabelKeyTier         = "tier"
+	LabelEnvKey          = "env"
+	LabelEnvValue        = "test"
+	LabelMonitoringValue = "monitoring"
+	LabelAlertLevelValue = "alert-level"
+	LabelHightValue      = "high"
+	LabelTierKey         = "tier"
+	LabelTierValue       = "backend"
+	LabelVersion         = "version"
+	LabelUptime          = "uptime"
+	LabelLoad            = "load"
 
 	/// Network
 	NetworkSku1Name      = "sku-1"

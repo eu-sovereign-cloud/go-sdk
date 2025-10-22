@@ -2,12 +2,11 @@ package secapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
+	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 	"k8s.io/utils/ptr"
 )
 
@@ -23,6 +22,26 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
 			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
 				Accept: ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *StorageV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
+	iter := Iterator[schema.StorageSku]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
+			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
+				Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -59,6 +78,26 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
 			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
 				Accept: ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
+	iter := Iterator[schema.BlockStorage]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
+			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
+				Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -153,6 +192,26 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 	return &iter, nil
 }
 
+func (api *StorageV1) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
+	iter := Iterator[schema.Image]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
+			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
+				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
 func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
@@ -214,17 +273,6 @@ func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *schema.I
 
 func (api *StorageV1) DeleteImage(ctx context.Context, image *schema.Image) error {
 	return api.DeleteImageWithParams(ctx, image, nil)
-}
-
-func (api *StorageV1) BuildReferenceURN(urn string) (*schema.Reference, error) {
-	urnRef := schema.ReferenceURN(urn)
-
-	ref := &schema.Reference{}
-	if err := ref.FromReferenceURN(urnRef); err != nil {
-		return nil, fmt.Errorf("error building referenceURN from URN %s: %s", urn, err)
-	}
-
-	return ref, nil
 }
 
 func (api *StorageV1) validateRegionalMetadata(metadata *schema.RegionalResourceMetadata) error {
