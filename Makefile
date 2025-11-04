@@ -57,26 +57,13 @@ test:
 
 .PHONY: fmt
 fmt:
-	@echo "Running gofumpt..."
+	@echo "Formating code..."
 	$(GO_TOOL) mvdan.cc/gofumpt -w .
 
-.PHONY: golint
-golint:
-	@echo "Running golint..."
-	$(GO_TOOL) github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout 5m -c .golangci.yml
-
-.PHONY: vet
-vet:
-	@echo "Running vet..."
-	$(GO) vet ./...
-
-.PHONY: sec
-sec:
-	@echo "Running gosec..."
-	$(GO_TOOL) github.com/securego/gosec/v2/cmd/gosec ./...
-
 .PHONY: lint
-lint: fmt golint vet sec
+lint:
+	@echo "Linting code..."
+	$(GO_TOOL) github.com/golangci/golangci-lint/cmd/golangci-lint run --verbose -c .golangci.yml
 
 .PHONY: clean
 clean:

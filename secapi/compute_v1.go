@@ -132,7 +132,7 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst
 		return nil, err
 	}
 
-	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, schema.TenantPathParam(inst.Metadata.Tenant), schema.WorkspacePathParam(inst.Metadata.Workspace), inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
+	resp, err := api.compute.CreateOrUpdateInstanceWithResponse(ctx, inst.Metadata.Tenant, inst.Metadata.Workspace, inst.Metadata.Name, params, *inst, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}

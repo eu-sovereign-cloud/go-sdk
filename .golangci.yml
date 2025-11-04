@@ -1,6 +1,34 @@
+version: "2"
+
 run:
-  timeout: 6m
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+  # Bug prevention
+  - errcheck      # Unchecked errors
+  - gosimple      # Simplify code
+  - govet         # Suspicious constructs
+  - ineffassign   # Ineffectual assignments
+  - staticcheck   # Static analysis checks
+  - typecheck     # Type-checking errors
+  - unused        # Unused code
+  # Code style
+  - gofmt         # Code formatting
+  - goimports     # Import formatting  
+  - misspell      # Spelling mistakes
+  # Code quality
+  - dupl          # Code duplication
+  - goconst       # Repeated strings
+  - unconvert     # Unnecessary type conversions
+  # Safe code
+  - gosec         # Security issues
+
+linters-settings:
+  dupl:
+    threshold: 300 # the goal is reach 100
 
 issues:
-  exclude-files:
-  - "zz_generated\\..+\\.go$"
+  exclude-dirs:
+    - pkg/spec

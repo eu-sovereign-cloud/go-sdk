@@ -132,7 +132,7 @@ func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, 
 		return nil, err
 	}
 
-	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, schema.TenantPathParam(block.Metadata.Tenant), schema.WorkspacePathParam(block.Metadata.Workspace), block.Metadata.Name, params, *block, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateBlockStorageWithResponse(ctx, block.Metadata.Tenant, block.Metadata.Workspace, block.Metadata.Name, params, *block, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *
 		return nil, err
 	}
 
-	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, schema.TenantPathParam(image.Metadata.Tenant), image.Metadata.Name, params, *image, api.loadRequestHeaders)
+	resp, err := api.storage.CreateOrUpdateImageWithResponse(ctx, image.Metadata.Tenant, image.Metadata.Name, params, *image, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
