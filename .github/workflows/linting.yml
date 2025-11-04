@@ -1,6 +1,6 @@
 on:
   push:
-    branches: ["*"]
+    branches: ["main"]
     paths-ignore:
       - "*.md"
   pull_request:
