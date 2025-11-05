@@ -133,7 +133,7 @@ func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, net *
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, schema.TenantPathParam(net.Metadata.Tenant), schema.WorkspacePathParam(net.Metadata.Workspace), net.Metadata.Name, params, *net, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNetworkWithResponse(ctx, net.Metadata.Tenant, net.Metadata.Workspace, net.Metadata.Name, params, *net, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*sc
 		return nil, err
 	}
 
-	resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), schema.ResourcePathParam(nref.Name), api.loadRequestHeaders)
+	resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *s
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, schema.TenantPathParam(sub.Metadata.Tenant), sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, *sub, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSubnetWithResponse(ctx, sub.Metadata.Tenant, sub.Metadata.Workspace, sub.Metadata.Network, sub.Metadata.Name, params, *sub, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +320,7 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) 
 		return nil, err
 	}
 
-	resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), schema.ResourcePathParam(nref.Name), api.loadRequestHeaders)
+	resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, ro
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, schema.TenantPathParam(route.Metadata.Tenant), route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, *route, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateRouteTableWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Network, route.Metadata.Name, params, *route, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -439,7 +439,7 @@ func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Contex
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, schema.TenantPathParam(gtw.Metadata.Tenant), schema.WorkspacePathParam(gtw.Metadata.Workspace), gtw.Metadata.Name, params, *gtw, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateInternetGatewayWithResponse(ctx, gtw.Metadata.Tenant, gtw.Metadata.Workspace, gtw.Metadata.Name, params, *gtw, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +541,7 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context,
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, schema.TenantPathParam(group.Metadata.Tenant), schema.WorkspacePathParam(group.Metadata.Workspace), group.Metadata.Name, params, *group, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateSecurityGroupWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, *group, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -663,7 +663,7 @@ func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, nic *sche
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, schema.TenantPathParam(nic.Metadata.Tenant), schema.WorkspacePathParam(nic.Metadata.Workspace), nic.Metadata.Name, params, *nic, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdateNicWithResponse(ctx, nic.Metadata.Tenant, nic.Metadata.Workspace, nic.Metadata.Name, params, *nic, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -765,7 +765,7 @@ func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *
 		return nil, err
 	}
 
-	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, schema.TenantPathParam(ip.Metadata.Tenant), schema.WorkspacePathParam(ip.Metadata.Workspace), ip.Metadata.Name, params, *ip, api.loadRequestHeaders)
+	resp, err := api.network.CreateOrUpdatePublicIpWithResponse(ctx, ip.Metadata.Tenant, ip.Metadata.Workspace, ip.Metadata.Name, params, *ip, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}

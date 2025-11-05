@@ -59,7 +59,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, ro
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, schema.TenantPathParam(role.Metadata.Tenant), string(role.Metadata.Name), params, *role, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleWithResponse(ctx, role.Metadata.Tenant, role.Metadata.Name, params, *role, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 		return nil, err
 	}
 
-	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.C
 		return nil, err
 	}
 
-	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, schema.TenantPathParam(assign.Metadata.Tenant), string(assign.Metadata.Name), params, *assign, api.loadRequestHeaders)
+	resp, err := api.authorization.CreateOrUpdateRoleAssignmentWithResponse(ctx, assign.Metadata.Tenant, assign.Metadata.Name, params, *assign, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}

@@ -59,7 +59,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 		return nil, err
 	}
 
-	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), string(tref.Name), api.loadRequestHeaders)
+	resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, w
 		return nil, err
 	}
 
-	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, schema.TenantPathParam(ws.Metadata.Tenant), string(ws.Metadata.Name), params, *ws, api.loadRequestHeaders)
+	resp, err := api.workspace.CreateOrUpdateWorkspaceWithResponse(ctx, ws.Metadata.Tenant, ws.Metadata.Name, params, *ws, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
