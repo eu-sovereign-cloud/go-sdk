@@ -3,6 +3,7 @@ package secapi
 import (
 	"context"
 	"net/http"
+	"time"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -125,6 +126,36 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, expectedState schema.ResourceState, delay time.Duration, interval time.Duration, maxAttempts int) (*schema.Instance, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Instance]{
+		delay:       delay,
+		interval:    interval,
+		maxAttempts: maxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Instance, error) {
+			resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {

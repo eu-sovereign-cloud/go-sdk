@@ -225,7 +225,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive))
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -244,6 +244,47 @@ func TestGetInstanceV1(t *testing.T) {
 		Name:      secatest.Instance1Name,
 	}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	assert.Equal(t, secatest.Instance1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+
+	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+}
+
+func TestGetInstanceUntilStateV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateCreating), 2)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	wref := WorkspaceReference{
+		Tenant:    secatest.Tenant1Name,
+		Workspace: secatest.Workspace1Name,
+		Name:      secatest.Instance1Name,
+	}
+	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, secatest.StatusStateActive, 0, 0, 5)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
@@ -389,7 +430,7 @@ func TestDeleteInstanceV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive))
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
 
 	secatest.MockDeleteInstanceV1(sim)
 	secatest.ConfigureComputeHandler(sim, sm)
