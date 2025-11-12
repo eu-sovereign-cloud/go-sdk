@@ -21,7 +21,8 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
-				Accept: ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -77,7 +78,8 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
-				Accept: ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err

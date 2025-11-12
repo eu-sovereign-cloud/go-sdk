@@ -21,7 +21,8 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
-				Accept: ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err

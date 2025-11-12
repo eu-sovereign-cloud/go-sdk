@@ -22,7 +22,8 @@ func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	iter := Iterator[schema.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
 			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
-				Accept: ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -78,7 +79,8 @@ func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid Worksp
 	iter := Iterator[schema.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
 			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
-				Accept: ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -210,7 +212,8 @@ func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid Workspa
 	iter := Iterator[schema.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
 			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
-				Accept: ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -342,7 +345,8 @@ func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid Wor
 	iter := Iterator[schema.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
 			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
-				Accept: ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -474,7 +478,8 @@ func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wi
 	iter := Iterator[schema.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
 			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
-				Accept: ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -606,7 +611,8 @@ func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid 
 	iter := Iterator[schema.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
 			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
-				Accept: ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -738,7 +744,8 @@ func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceI
 	iter := Iterator[schema.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
 			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
-				Accept: ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -890,7 +897,8 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 	iter := Iterator[schema.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
 			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
-				Accept: ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err

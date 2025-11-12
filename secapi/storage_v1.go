@@ -21,7 +21,8 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	iter := Iterator[schema.StorageSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
 			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
-				Accept: ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -77,7 +78,8 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 	iter := Iterator[schema.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
 			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
-				Accept: ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -209,7 +211,8 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 	iter := Iterator[schema.Image]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
 			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
-				Accept: ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
