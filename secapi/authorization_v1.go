@@ -78,9 +78,9 @@ func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantRe
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Role]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Role, error) {
 			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -95,7 +95,7 @@ func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -211,9 +211,9 @@ func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tre
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.RoleAssignment]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
 			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -228,7 +228,7 @@ func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tre
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}

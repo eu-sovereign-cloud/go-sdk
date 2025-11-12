@@ -135,9 +135,9 @@ func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref Worksp
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.BlockStorage]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.BlockStorage, error) {
 			resp, err := api.storage.GetBlockStorageWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -152,7 +152,7 @@ func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -269,9 +269,9 @@ func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReferen
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Image]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Image, error) {
 			resp, err := api.storage.GetImageWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -286,7 +286,7 @@ func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReferen
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}

@@ -136,9 +136,9 @@ func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceRe
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Network]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Network, error) {
 			resp, err := api.network.GetNetworkWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -153,7 +153,7 @@ func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -269,9 +269,9 @@ func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkRefer
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Subnet]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Subnet, error) {
 			resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -286,7 +286,7 @@ func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkRefer
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -402,9 +402,9 @@ func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkR
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.RouteTable]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.RouteTable, error) {
 			resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -419,7 +419,7 @@ func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -535,9 +535,9 @@ func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref Wor
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.InternetGateway]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.InternetGateway, error) {
 			resp, err := api.network.GetInternetGatewayWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -552,7 +552,7 @@ func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref Wor
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -668,9 +668,9 @@ func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref Works
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroup]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.SecurityGroup, error) {
 			resp, err := api.network.GetSecurityGroupWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -685,7 +685,7 @@ func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref Works
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -821,9 +821,9 @@ func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceRefere
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Nic]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Nic, error) {
 			resp, err := api.network.GetNicWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -838,7 +838,7 @@ func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceRefere
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -954,9 +954,9 @@ func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceR
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.PublicIp]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.PublicIp, error) {
 			resp, err := api.network.GetPublicIpWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -971,7 +971,7 @@ func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}

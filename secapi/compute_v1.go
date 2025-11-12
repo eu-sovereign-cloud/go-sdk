@@ -135,9 +135,9 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Instance]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Instance, error) {
 			resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -152,7 +152,7 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}

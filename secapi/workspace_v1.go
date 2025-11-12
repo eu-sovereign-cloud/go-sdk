@@ -78,9 +78,9 @@ func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantR
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Workspace]{
-		delay:       config.delay,
-		interval:    config.interval,
-		maxAttempts: config.maxAttempts,
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Workspace, error) {
 			resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -95,7 +95,7 @@ func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValue)
 	if err != nil {
 		return nil, err
 	}

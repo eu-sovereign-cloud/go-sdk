@@ -13,10 +13,10 @@ type API struct {
 }
 
 type ResourceObserverConfig[T any] struct {
-	expectedValue T
-	delay         time.Duration
-	interval      time.Duration
-	maxAttempts   int
+	ExpectedValue T
+	Delay         time.Duration
+	Interval      time.Duration
+	MaxAttempts   int
 }
 
 func (api *API) loadRequestHeaders(ctx context.Context, req *http.Request) error {
