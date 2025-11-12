@@ -21,7 +21,8 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
-				Accept: ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
@@ -123,7 +124,8 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
-				Accept: ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
+				Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
 			}, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
