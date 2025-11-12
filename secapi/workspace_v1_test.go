@@ -90,14 +90,14 @@ func TestListWorkspacesWithFiltersV1(t *testing.T) {
 	assert.NotEmpty(t, resp)
 }
 
-func TestGetWorkspacesV1(t *testing.T) {
+func TestGetWorkspaceV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive))
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive), 1)
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -105,7 +105,37 @@ func TestGetWorkspacesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name})
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
+	resp, err := regionalClient.WorkspaceV1.GetWorkspace(ctx, tref)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+
+	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+}
+
+func TestGetWorkspaceUntilStateV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateCreating), 2)
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive), 1)
+	secatest.ConfigureWorkspaceHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
+	config := ResourceStateObserverConfig{expectedState: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
+	resp, err := regionalClient.WorkspaceV1.GetWorkspaceUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
@@ -155,7 +185,7 @@ func TestDeleteWorkspaceV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockworkspace.NewMockServerInterface(t)
-	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive))
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, secatest.StatusStateActive), 1)
 	secatest.MockDeleteWorkspaceV1(sim)
 	secatest.ConfigureWorkspaceHandler(sim, sm)
 

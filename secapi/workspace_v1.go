@@ -71,6 +71,36 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 	}
 }
 
+func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.Workspace, error) {
+	if err := tref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Workspace]{
+		delay:       config.delay,
+		interval:    config.interval,
+		maxAttempts: config.maxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Workspace, error) {
+			resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.expectedState)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
 	if err := api.validateRegionalMetadata(ws.Metadata); err != nil {
 		return nil, err

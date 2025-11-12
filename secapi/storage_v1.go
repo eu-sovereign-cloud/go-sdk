@@ -127,6 +127,36 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
+func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.BlockStorage, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.BlockStorage]{
+		delay:       config.delay,
+		interval:    config.interval,
+		maxAttempts: config.maxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.BlockStorage, error) {
+			resp, err := api.storage.GetBlockStorageWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.expectedState)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
 	if err := api.validateWorkspaceMetadata(block.Metadata); err != nil {
 		return nil, err
@@ -227,6 +257,37 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*sche
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+// TODO Put the expected state and retry parameters in a struct
+func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.Image, error) {
+	if err := tref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Image]{
+		delay:       config.delay,
+		interval:    config.interval,
+		maxAttempts: config.maxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Image, error) {
+			resp, err := api.storage.GetImageWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.expectedState)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {

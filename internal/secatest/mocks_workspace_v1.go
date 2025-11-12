@@ -21,13 +21,13 @@ func MockListWorkspaceV1(sim *mockworkspace.MockServerInterface, resp []schema.W
 		})
 }
 
-func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Workspace) {
+func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Workspace, times int) {
 	sim.EXPECT().GetWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
 			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-		})
+		}).Times(times)
 }
 
 func MockCreateOrUpdateWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Workspace) {

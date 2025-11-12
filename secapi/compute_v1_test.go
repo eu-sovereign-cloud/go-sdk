@@ -89,10 +89,7 @@ func TestGetInstanceSkUV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{
-		Tenant: secatest.Tenant1Name,
-		Name:   secatest.InstanceSku1Name,
-	})
+	resp, err := regionalClient.ComputeV1.GetSku(ctx, TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.InstanceSku1Name})
 	assert.NoError(t, err)
 
 	assert.Equal(t, secatest.InstanceSku1Name, resp.Metadata.Name)
@@ -238,11 +235,7 @@ func TestGetInstanceV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Instance1Name,
-	}
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -279,12 +272,9 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	wref := WorkspaceReference{
-		Tenant:    secatest.Tenant1Name,
-		Workspace: secatest.Workspace1Name,
-		Name:      secatest.Instance1Name,
-	}
-	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, secatest.StatusStateActive, 0, 0, 5)
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
+	config := ResourceStateObserverConfig{expectedState: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
+	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 

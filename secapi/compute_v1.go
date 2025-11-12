@@ -3,7 +3,6 @@ package secapi
 import (
 	"context"
 	"net/http"
-	"time"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -128,15 +127,15 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, expectedState schema.ResourceState, delay time.Duration, interval time.Duration, maxAttempts int) (*schema.Instance, error) {
+func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
 
 	observer := resourceStateObserver[schema.ResourceState, schema.Instance]{
-		delay:       delay,
-		interval:    interval,
-		maxAttempts: maxAttempts,
+		delay:       config.delay,
+		interval:    config.interval,
+		maxAttempts: config.maxAttempts,
 		actFunc: func() (schema.ResourceState, *schema.Instance, error) {
 			resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
@@ -151,7 +150,7 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil(config.expectedState)
 	if err != nil {
 		return nil, err
 	}
