@@ -129,7 +129,7 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.BlockStorage, error) {
+func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*sche
 }
 
 // TODO Put the expected state and retry parameters in a struct
-func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.Image, error) {
+func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -286,7 +286,7 @@ func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReferen
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}

@@ -12,8 +12,8 @@ type API struct {
 	authToken string
 }
 
-type ResourceStateObserverConfig struct {
-	expectedState schema.ResourceState
+type ResourceObserverConfig[T any] struct {
+	expectedValue T
 	delay         time.Duration
 	interval      time.Duration
 	maxAttempts   int

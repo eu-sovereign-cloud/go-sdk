@@ -72,7 +72,7 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 	}
 }
 
-func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.Workspace, error) {
+func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}

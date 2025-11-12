@@ -147,7 +147,7 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
-	config := ResourceStateObserverConfig{expectedState: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{expectedValue: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -362,7 +362,7 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
-	config := ResourceStateObserverConfig{expectedState: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{expectedValue: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleAssignmentUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

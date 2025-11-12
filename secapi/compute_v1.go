@@ -129,7 +129,7 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.Instance, error) {
+func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}

@@ -130,7 +130,7 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
-func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.Network, error) {
+func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*sc
 	}
 }
 
-func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceStateObserverConfig) (*schema.Subnet, error) {
+func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -286,7 +286,7 @@ func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkRefer
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +396,7 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) 
 	}
 }
 
-func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceStateObserverConfig) (*schema.RouteTable, error) {
+func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -419,7 +419,7 @@ func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -529,7 +529,7 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	}
 }
 
-func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.InternetGateway, error) {
+func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -552,7 +552,7 @@ func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref Wor
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +662,7 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	}
 }
 
-func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.SecurityGroup, error) {
+func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -685,7 +685,7 @@ func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref Works
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -815,7 +815,7 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*sch
 	}
 }
 
-func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.Nic, error) {
+func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -838,7 +838,7 @@ func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceRefere
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -948,7 +948,7 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceStateObserverConfig) (*schema.PublicIp, error) {
+func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -971,7 +971,7 @@ func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}

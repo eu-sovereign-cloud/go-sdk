@@ -134,7 +134,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
-	config := ResourceStateObserverConfig{expectedState: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{expectedValue: secatest.StatusStateActive, delay: 0, interval: 0, maxAttempts: 5}
 	resp, err := regionalClient.WorkspaceV1.GetWorkspaceUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

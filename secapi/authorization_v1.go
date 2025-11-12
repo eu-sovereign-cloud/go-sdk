@@ -72,7 +72,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
-func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.Role, error) {
+func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	}
 }
 
-func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceStateObserverConfig) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -228,7 +228,7 @@ func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tre
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.expectedState)
+	resp, err := observer.WaitUntil(config.expectedValue)
 	if err != nil {
 		return nil, err
 	}
