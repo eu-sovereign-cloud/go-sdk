@@ -7,7 +7,7 @@ import (
 )
 
 type Reference interface {
-	TenantReference | WorkspaceReference
+	TenantReference | WorkspaceReference | NetworkReference
 }
 
 type ReferencedResource[Ref Reference, Data any] struct {
