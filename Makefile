@@ -72,3 +72,9 @@ clean:
 
 .PHONY: generate
 generate: clean spec schemas mock
+
+.PHONY: tag
+tag:
+	@echo "Tagging..."
+	git tag $(filter-out $@,$(MAKECMDGOALS))
+	git push origin $(filter-out $@,$(MAKECMDGOALS))
