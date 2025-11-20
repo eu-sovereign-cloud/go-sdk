@@ -10,7 +10,8 @@ const defaultLimit = 1000
 func NewListOptions() *ListOptions {
 	limit := defaultLimit
 	return &ListOptions{
-		Limit: &limit,
+		Limit:  &limit,
+		Labels: NewLabelsBuilder(),
 	}
 }
 
