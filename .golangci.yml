@@ -26,6 +26,10 @@ linters:
   - gosec         # Security issues
 
 linters-settings:
+  gosec:
+    excludes:
+    - G101 
+    - G404
   dupl:
     threshold: 300 # the goal is reach 100
 

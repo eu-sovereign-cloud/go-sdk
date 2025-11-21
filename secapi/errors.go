@@ -11,4 +11,6 @@ var (
 	ErrNoPathMetadata = errors.New("network path param is empty")
 
 	ErrResourceNotFound = errors.New("resource not found")
+
+	ErrRetryMaxAttemptsReached = errors.New("max retry attempts reached")
 )

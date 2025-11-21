@@ -129,6 +129,36 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
+func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Instance]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Instance, error) {
+			resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return nil, err

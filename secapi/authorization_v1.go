@@ -72,6 +72,36 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
+func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+	if err := tref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Role]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Role, error) {
+			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
 	if err := api.validateGlobalMetadata(role.Metadata); err != nil {
 		return nil, err
@@ -173,6 +203,36 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+	if err := tref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.RoleAssignment]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
+			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {

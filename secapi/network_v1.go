@@ -130,6 +130,36 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
+func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Network]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Network, error) {
+			resp, err := api.network.GetNetworkWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
 	if err := api.validateRegionalMetadata(net.Metadata); err != nil {
 		return nil, err
@@ -231,6 +261,36 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*sc
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+	if err := nref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Subnet]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Subnet, error) {
+			resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
@@ -336,6 +396,36 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) 
 	}
 }
 
+func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+	if err := nref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.RouteTable]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.RouteTable, error) {
+			resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
 	if err := api.validateNetworkMetadata(route.Metadata); err != nil {
 		return nil, err
@@ -439,6 +529,36 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	}
 }
 
+func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.InternetGateway]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.InternetGateway, error) {
+			resp, err := api.network.GetInternetGatewayWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
 	if err := api.validateRegionalMetadata(gtw.Metadata); err != nil {
 		return nil, err
@@ -540,6 +660,36 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroup]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.SecurityGroup, error) {
+			resp, err := api.network.GetSecurityGroupWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
@@ -665,6 +815,36 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*sch
 	}
 }
 
+func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Nic]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.Nic, error) {
+			resp, err := api.network.GetNicWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
 	if err := api.validateRegionalMetadata(nic.Metadata); err != nil {
 		return nil, err
@@ -766,6 +946,36 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	} else {
 		return resp.JSON200, nil
 	}
+}
+
+func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.PublicIp]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.PublicIp, error) {
+			resp, err := api.network.GetPublicIpWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {

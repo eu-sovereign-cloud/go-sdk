@@ -41,13 +41,13 @@ func MockListInstancesV1(sim *mockcompute.MockServerInterface, resp []schema.Ins
 		})
 }
 
-func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance) {
+func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance, times int) {
 	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
 			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-		})
+		}).Times(times)
 }
 
 func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance) {

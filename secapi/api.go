@@ -3,12 +3,20 @@ package secapi
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 type API struct {
 	authToken string
+}
+
+type ResourceObserverConfig[T any] struct {
+	ExpectedValue T
+	Delay         time.Duration
+	Interval      time.Duration
+	MaxAttempts   int
 }
 
 func (api *API) loadRequestHeaders(ctx context.Context, req *http.Request) error {
