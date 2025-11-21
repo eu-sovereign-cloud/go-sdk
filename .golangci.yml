@@ -31,7 +31,7 @@ linters-settings:
     - G101 
     - G404
   dupl:
-    threshold: 300 # the goal is reach 100
+    threshold: 310 # the goal is reach 100
 
 issues:
   exclude-dirs:

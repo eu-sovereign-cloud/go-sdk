@@ -76,8 +76,6 @@ const (
 
 	Address1 = "0.0.0.0"
 
-	SecurityGroupRuleDirectionIngress = "ingress"
-
 	/// Compute
 	InstanceSku1Ref  = "skus/sku-1"
 	InstanceSku1Name = "sku-1"
@@ -107,10 +105,5 @@ const (
 	BlockStorage1Name   = "storage-1"
 	BlockStorage1SizeGB = 10
 
-	Image1Name    = "image-1"
-	Image1CpuArch = "amd64"
-
-	/// Status
-	StatusStateActive   = "active"
-	StatusStateCreating = "creating"
+	Image1Name = "image-1"
 )

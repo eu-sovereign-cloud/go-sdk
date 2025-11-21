@@ -112,7 +112,7 @@ func TestListInstancesV1(t *testing.T) {
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockListInstancesV1(sim, []schema.Instance{
-		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive),
+		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateActive)),
 	})
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -140,7 +140,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, string(schema.ResourceStateActive), string(*resp[0].Status.State))
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -222,7 +222,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateActive)), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -247,7 +247,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, string(schema.ResourceStateActive), string(*resp.Status.State))
 }
 
 func TestGetInstanceUntilStateV1(t *testing.T) {
@@ -258,8 +258,8 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateCreating), 2)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateCreating)), 2)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateActive)), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -273,7 +273,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: secatest.StatusStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -285,7 +285,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, secatest.StatusStateActive, string(*resp.Status.State))
+	assert.Equal(t, string(schema.ResourceStateActive), string(*resp.Status.State))
 }
 
 func TestCreateOrUpdateInstanceV1(t *testing.T) {
@@ -296,7 +296,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateCreating))
+	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateCreating)))
 	secatest.ConfigureComputeHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -331,7 +331,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, secatest.StatusStateCreating, string(*resp.Status.State))
+	assert.Equal(t, string(schema.ResourceStateCreating), string(*resp.Status.State))
 }
 
 func TestStartInstanaceV1(t *testing.T) {
@@ -420,7 +420,7 @@ func TestDeleteInstanceV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
-	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.StatusStateActive), 1)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, string(schema.ResourceStateActive)), 1)
 
 	secatest.MockDeleteInstanceV1(sim)
 	secatest.ConfigureComputeHandler(sim, sm)
