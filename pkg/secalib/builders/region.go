@@ -30,20 +30,15 @@ func NewRegionBuilder() *RegionBuilder {
 	return builder
 }
 
-func (builder *RegionBuilder) BuildResponse() (*schema.Region, error) {
-	medatata, err := builder.metadata.Kind(schema.GlobalResourceMetadataKindResourceKindRegion).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *RegionBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.AvailableZones,
 		builder.spec.Providers,
 	); err != nil {
-		return nil, err
+		return err
 	}
+
 	// Validate each provider
 	for _, provider := range builder.spec.Providers {
 		if err := validateRequired(builder.validator,
@@ -51,8 +46,32 @@ func (builder *RegionBuilder) BuildResponse() (*schema.Region, error) {
 			provider.Version,
 			provider.Url,
 		); err != nil {
-			return nil, err
+			return err
 		}
+	}
+
+	return nil
+}
+
+func (builder *RegionBuilder) BuildRequest() (*schema.Region, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.Region{
+		Metadata: nil,
+		Spec:     *builder.spec,
+	}, nil
+}
+
+func (builder *RegionBuilder) BuildResponse() (*schema.Region, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	medatata, err := builder.metadata.Kind(schema.GlobalResourceMetadataKindResourceKindRegion).BuildResponse()
+	if err != nil {
+		return nil, err
 	}
 
 	return &schema.Region{

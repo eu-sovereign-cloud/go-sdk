@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
@@ -36,7 +35,7 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 	return &iter, nil
 }
 
-func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *builders.ListOptions) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{

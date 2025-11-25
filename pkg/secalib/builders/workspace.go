@@ -8,9 +8,8 @@ import (
 
 type WorkspaceBuilder struct {
 	*regionalResourceBuilder[WorkspaceBuilder, schema.WorkspaceSpec]
-	labels   schema.Labels
 	metadata *RegionalResourceMetadataBuilder
-	spec     *schema.WorkspaceSpec
+	labels   schema.Labels
 }
 
 func NewWorkspaceBuilder() *WorkspaceBuilder {
@@ -25,7 +24,7 @@ func NewWorkspaceBuilder() *WorkspaceBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-			setSpec:       func(spec *schema.WorkspaceSpec) { builder.spec = spec },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 		},
 		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
 		setRegion: func(region string) { builder.metadata.Region(region) },
@@ -34,19 +33,13 @@ func NewWorkspaceBuilder() *WorkspaceBuilder {
 	return builder
 }
 
-func (builder *WorkspaceBuilder) Labels(labels schema.Labels) *WorkspaceBuilder {
-	builder.labels = labels
-	return builder
-}
-
-func (builder *WorkspaceBuilder) Tenant(tenant string) *WorkspaceBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *WorkspaceBuilder) Region(region string) *WorkspaceBuilder {
-	builder.metadata.Region(region)
-	return builder
+func (builder *WorkspaceBuilder) BuildRequest() (*schema.Workspace, error) {
+	return &schema.Workspace{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     schema.WorkspaceSpec{},
+		Status:   nil,
+	}, nil
 }
 
 func (builder *WorkspaceBuilder) BuildResponse() (*schema.Workspace, error) {

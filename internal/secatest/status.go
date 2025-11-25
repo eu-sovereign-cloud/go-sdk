@@ -16,13 +16,13 @@ func buildResponseStatusConditions(state string) []schema.StatusCondition {
 	}
 }
 
-func buildResponseStatus[T any](state string, ctor func(*schema.ResourceState, []schema.StatusCondition) *T) *T {
-	return ctor(ptr.To(schema.ResourceState(state)), buildResponseStatusConditions(state))
+func buildResponseStatus[T any](state schema.ResourceState, ctor func(*schema.ResourceState, []schema.StatusCondition) *T) *T {
+	return ctor(ptr.To(state), buildResponseStatusConditions(string(state)))
 }
 
 // Authorization
 
-func NewRoleStatus(state string) *schema.RoleStatus {
+func NewRoleStatus(state schema.ResourceState) *schema.RoleStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.RoleStatus {
 		return &schema.RoleStatus{
 			State:      s,
@@ -31,7 +31,7 @@ func NewRoleStatus(state string) *schema.RoleStatus {
 	})
 }
 
-func NewRoleAssignmentStatus(state string) *schema.RoleAssignmentStatus {
+func NewRoleAssignmentStatus(state schema.ResourceState) *schema.RoleAssignmentStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.RoleAssignmentStatus {
 		return &schema.RoleAssignmentStatus{
 			State:      s,
@@ -42,7 +42,7 @@ func NewRoleAssignmentStatus(state string) *schema.RoleAssignmentStatus {
 
 // Compute
 
-func NewInstanceStatus(state string) *schema.InstanceStatus {
+func NewInstanceStatus(state schema.ResourceState) *schema.InstanceStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.InstanceStatus {
 		return &schema.InstanceStatus{
 			State:      s,
@@ -53,7 +53,7 @@ func NewInstanceStatus(state string) *schema.InstanceStatus {
 
 // Storage
 
-func NewBlockStorageStatus(state string) *schema.BlockStorageStatus {
+func NewBlockStorageStatus(state schema.ResourceState) *schema.BlockStorageStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.BlockStorageStatus {
 		return &schema.BlockStorageStatus{
 			State:      s,
@@ -62,7 +62,7 @@ func NewBlockStorageStatus(state string) *schema.BlockStorageStatus {
 	})
 }
 
-func NewImageStatus(state string) *schema.ImageStatus {
+func NewImageStatus(state schema.ResourceState) *schema.ImageStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.ImageStatus {
 		return &schema.ImageStatus{
 			State:      s,
@@ -73,7 +73,7 @@ func NewImageStatus(state string) *schema.ImageStatus {
 
 // Network
 
-func NewNetworkStatus(state string) *schema.NetworkStatus {
+func NewNetworkStatus(state schema.ResourceState) *schema.NetworkStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.NetworkStatus {
 		return &schema.NetworkStatus{
 			State:      s,
@@ -82,7 +82,7 @@ func NewNetworkStatus(state string) *schema.NetworkStatus {
 	})
 }
 
-func NewSubnetStatus(state string) *schema.SubnetStatus {
+func NewSubnetStatus(state schema.ResourceState) *schema.SubnetStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.SubnetStatus {
 		return &schema.SubnetStatus{
 			State:      s,
@@ -91,7 +91,7 @@ func NewSubnetStatus(state string) *schema.SubnetStatus {
 	})
 }
 
-func NewRouteTableStatus(state string) *schema.RouteTableStatus {
+func NewRouteTableStatus(state schema.ResourceState) *schema.RouteTableStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.RouteTableStatus {
 		return &schema.RouteTableStatus{
 			State:      s,
@@ -100,7 +100,7 @@ func NewRouteTableStatus(state string) *schema.RouteTableStatus {
 	})
 }
 
-func NewInternetGatewayStatus(state string) *schema.InternetGatewayStatus {
+func NewInternetGatewayStatus(state schema.ResourceState) *schema.InternetGatewayStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.InternetGatewayStatus {
 		return &schema.InternetGatewayStatus{
 			State:      s,
@@ -109,7 +109,7 @@ func NewInternetGatewayStatus(state string) *schema.InternetGatewayStatus {
 	})
 }
 
-func NewSecurityGroupStatus(state string) *schema.SecurityGroupStatus {
+func NewSecurityGroupStatus(state schema.ResourceState) *schema.SecurityGroupStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.SecurityGroupStatus {
 		return &schema.SecurityGroupStatus{
 			State:      s,
@@ -118,7 +118,7 @@ func NewSecurityGroupStatus(state string) *schema.SecurityGroupStatus {
 	})
 }
 
-func NewNicStatus(state string) *schema.NicStatus {
+func NewNicStatus(state schema.ResourceState) *schema.NicStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.NicStatus {
 		return &schema.NicStatus{
 			State:      s,
@@ -127,7 +127,7 @@ func NewNicStatus(state string) *schema.NicStatus {
 	})
 }
 
-func NewPublicIpStatus(state string) *schema.PublicIpStatus {
+func NewPublicIpStatus(state schema.ResourceState) *schema.PublicIpStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.PublicIpStatus {
 		return &schema.PublicIpStatus{
 			State:      s,
@@ -138,7 +138,7 @@ func NewPublicIpStatus(state string) *schema.PublicIpStatus {
 
 // Workspace
 
-func NewWorkspaceStatus(state string) *schema.WorkspaceStatus {
+func NewWorkspaceStatus(state schema.ResourceState) *schema.WorkspaceStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.WorkspaceStatus {
 		return &schema.WorkspaceStatus{
 			State:      s,

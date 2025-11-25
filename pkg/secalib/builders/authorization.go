@@ -9,6 +9,7 @@ import (
 type RoleBuilder struct {
 	*globalTenantResourceBuilder[RoleBuilder, schema.RoleSpec]
 	metadata *GlobalTenantResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.RoleSpec
 }
 
@@ -25,6 +26,7 @@ func NewRoleBuilder() *RoleBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RoleSpec) { builder.spec = spec },
 		},
 		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -62,7 +64,7 @@ func (builder *RoleBuilder) BuildRequest() (*schema.Role, error) {
 
 	return &schema.Role{
 		Metadata: nil,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   nil,
 	}, nil
@@ -80,7 +82,7 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 
 	return &schema.Role{
 		Metadata: medatata,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.RoleStatus{},
 	}, nil
@@ -91,6 +93,7 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 type RoleAssignmentBuilder struct {
 	*globalTenantResourceBuilder[RoleAssignmentBuilder, schema.RoleAssignmentSpec]
 	metadata *GlobalTenantResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.RoleAssignmentSpec
 }
 
@@ -107,6 +110,7 @@ func NewRoleAssignmentBuilder() *RoleAssignmentBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RoleAssignmentSpec) { builder.spec = spec },
 		},
 		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -146,7 +150,7 @@ func (builder *RoleAssignmentBuilder) BuildRequest() (*schema.RoleAssignment, er
 
 	return &schema.RoleAssignment{
 		Metadata: nil,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   nil,
 	}, nil
@@ -164,7 +168,7 @@ func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, e
 
 	return &schema.RoleAssignment{
 		Metadata: medatata,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.RoleAssignmentStatus{},
 	}, nil

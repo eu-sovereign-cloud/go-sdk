@@ -9,6 +9,7 @@ import (
 type InstanceBuilder struct {
 	*regionalWorkspaceResourceBuilder[InstanceBuilder, schema.InstanceSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.InstanceSpec
 }
 
@@ -25,6 +26,7 @@ func NewInstanceBuilder() *InstanceBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.InstanceSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -56,7 +58,7 @@ func (builder *InstanceBuilder) BuildRequest() (*schema.Instance, error) {
 
 	return &schema.Instance{
 		Metadata: nil,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   nil,
 	}, nil
@@ -74,7 +76,7 @@ func (builder *InstanceBuilder) BuildResponse() (*schema.Instance, error) {
 
 	return &schema.Instance{
 		Metadata: medatata,
-		Labels:   schema.Labels{},
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.InstanceStatus{},
 	}, nil

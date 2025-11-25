@@ -109,8 +109,4 @@ const (
 
 	Image1Name    = "image-1"
 	Image1CpuArch = "amd64"
-
-	/// Status
-	StatusStateActive   = "active"
-	StatusStateCreating = "creating"
 )

@@ -9,6 +9,7 @@ import (
 type NetworkBuilder struct {
 	*regionalWorkspaceResourceBuilder[NetworkBuilder, schema.NetworkSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.NetworkSpec
 }
 
@@ -25,6 +26,7 @@ func NewNetworkBuilder() *NetworkBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.NetworkSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -35,30 +37,51 @@ func NewNetworkBuilder() *NetworkBuilder {
 	return builder
 }
 
-func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNetwork).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *NetworkBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Cidr,
 		builder.spec.SkuRef,
 		builder.spec.RouteTableRef,
 	); err != nil {
-		return nil, err
+		return err
 	}
 	if err := validateOneRequired(builder.validator,
 		builder.spec.Cidr.Ipv4,
 		builder.spec.Cidr.Ipv6,
 	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (builder *NetworkBuilder) BuildRequest() (*schema.Network, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.Network{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNetwork).BuildResponse()
+	if err != nil {
 		return nil, err
 	}
 
 	return &schema.Network{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.NetworkStatus{},
 	}, nil
@@ -69,6 +92,7 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 type InternetGatewayBuilder struct {
 	*regionalWorkspaceResourceBuilder[InternetGatewayBuilder, schema.InternetGatewaySpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.InternetGatewaySpec
 }
 
@@ -85,6 +109,7 @@ func NewInternetGatewayBuilder() *InternetGatewayBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.InternetGatewaySpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -95,22 +120,43 @@ func NewInternetGatewayBuilder() *InternetGatewayBuilder {
 	return builder
 }
 
+func (builder *InternetGatewayBuilder) validateSpec() error {
+	if err := validateRequired(builder.validator,
+		builder.spec,
+		builder.spec.EgressOnly,
+	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (builder *InternetGatewayBuilder) BuildRequest() (*schema.InternetGateway, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.InternetGateway{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
 func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
 	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindInternetGateway).BuildResponse()
 	if err != nil {
 		return nil, err
 	}
 
-	// Validate the spec
-	if err := validateRequired(builder.validator,
-		builder.spec,
-		builder.spec.EgressOnly,
-	); err != nil {
-		return nil, err
-	}
-
 	return &schema.InternetGateway{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.InternetGatewayStatus{},
 	}, nil
@@ -121,6 +167,7 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 type RouteTableBuilder struct {
 	*regionalNetworkResourceBuilder[RouteTableBuilder, schema.RouteTableSpec]
 	metadata *RegionalNetworkResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.RouteTableSpec
 }
 
@@ -137,6 +184,7 @@ func NewRouteTableBuilder() *RouteTableBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RouteTableSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -148,30 +196,52 @@ func NewRouteTableBuilder() *RouteTableBuilder {
 	return builder
 }
 
-func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
-	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindRoutingTable).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *RouteTableBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec.Routes,
 	); err != nil {
-		return nil, err
+		return err
 	}
+
 	// Validate each route
 	for _, route := range builder.spec.Routes {
 		if err := validateRequired(builder.validator,
 			route.DestinationCidrBlock,
 			route.TargetRef,
 		); err != nil {
-			return nil, err
+			return err
 		}
+	}
+
+	return nil
+}
+
+func (builder *RouteTableBuilder) BuildRequest() (*schema.RouteTable, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.RouteTable{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindRoutingTable).BuildResponse()
+	if err != nil {
+		return nil, err
 	}
 
 	return &schema.RouteTable{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.RouteTableStatus{},
 	}, nil
@@ -182,6 +252,7 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 type SubnetBuilder struct {
 	*regionalNetworkResourceBuilder[SubnetBuilder, schema.SubnetSpec]
 	metadata *RegionalNetworkResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.SubnetSpec
 }
 
@@ -198,6 +269,7 @@ func NewSubnetBuilder() *SubnetBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.SubnetSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -209,23 +281,44 @@ func NewSubnetBuilder() *SubnetBuilder {
 	return builder
 }
 
-func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
-	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindSubnet).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *SubnetBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Cidr,
 		builder.spec.Zone,
 	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (builder *SubnetBuilder) BuildRequest() (*schema.Subnet, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.Subnet{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindSubnet).BuildResponse()
+	if err != nil {
 		return nil, err
 	}
 
 	return &schema.Subnet{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.SubnetStatus{},
 	}, nil
@@ -236,6 +329,7 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 type PublicIpBuilder struct {
 	*regionalWorkspaceResourceBuilder[PublicIpBuilder, schema.PublicIpSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.PublicIpSpec
 }
 
@@ -252,6 +346,7 @@ func NewPublicIpBuilder() *PublicIpBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.PublicIpSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -262,22 +357,43 @@ func NewPublicIpBuilder() *PublicIpBuilder {
 	return builder
 }
 
+func (builder *PublicIpBuilder) validateSpec() error {
+	if err := validateRequired(builder.validator,
+		builder.spec,
+		builder.spec.Version,
+	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (builder *PublicIpBuilder) BuildRequest() (*schema.PublicIp, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.PublicIp{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
 func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
 	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindPublicIP).BuildResponse()
 	if err != nil {
 		return nil, err
 	}
 
-	// Validate the spec
-	if err := validateRequired(builder.validator,
-		builder.spec,
-		builder.spec.Version,
-	); err != nil {
-		return nil, err
-	}
-
 	return &schema.PublicIp{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.PublicIpStatus{},
 	}, nil
@@ -288,6 +404,7 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 type NicBuilder struct {
 	*regionalWorkspaceResourceBuilder[NicBuilder, schema.NicSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.NicSpec
 }
 
@@ -304,6 +421,7 @@ func NewNicBuilder() *NicBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.NicSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -314,23 +432,44 @@ func NewNicBuilder() *NicBuilder {
 	return builder
 }
 
-func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNic).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *NicBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Addresses,
 		builder.spec.SubnetRef,
 	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (builder *NicBuilder) BuildRequest() (*schema.Nic, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.Nic{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNic).BuildResponse()
+	if err != nil {
 		return nil, err
 	}
 
 	return &schema.Nic{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.NicStatus{},
 	}, nil
@@ -341,6 +480,7 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 type SecurityGroupBuilder struct {
 	*regionalWorkspaceResourceBuilder[SecurityGroupBuilder, schema.SecurityGroupSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
+	labels   schema.Labels
 	spec     *schema.SecurityGroupSpec
 }
 
@@ -357,6 +497,7 @@ func NewSecurityGroupBuilder() *SecurityGroupBuilder {
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
 			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.SecurityGroupSpec) { builder.spec = spec },
 		},
 		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
@@ -367,30 +508,52 @@ func NewSecurityGroupBuilder() *SecurityGroupBuilder {
 	return builder
 }
 
-func (builder *SecurityGroupBuilder) BuildResponse() (*schema.SecurityGroup, error) {
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindSecurityGroup).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *SecurityGroupBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Rules,
 	); err != nil {
-		return nil, err
+		return err
 	}
+
 	// Validate each rule
 	for _, rule := range builder.spec.Rules {
 		if err := validateRequired(builder.validator,
 			rule.Direction,
 		); err != nil {
-			return nil, err
+			return err
 		}
+	}
+
+	return nil
+}
+
+func (builder *SecurityGroupBuilder) BuildRequest() (*schema.SecurityGroup, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.SecurityGroup{
+		Metadata: nil,
+		Labels:   builder.labels,
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *SecurityGroupBuilder) BuildResponse() (*schema.SecurityGroup, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindSecurityGroup).BuildResponse()
+	if err != nil {
+		return nil, err
 	}
 
 	return &schema.SecurityGroup{
 		Metadata: metadata,
+		Labels:   builder.labels,
 		Spec:     *builder.spec,
 		Status:   &schema.SecurityGroupStatus{},
 	}, nil

@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
@@ -36,7 +35,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 	return &iter, nil
 }
 
-func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *builders.ListOptions) (*Iterator[schema.Region], error) {
+func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{

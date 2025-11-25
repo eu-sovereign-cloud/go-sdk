@@ -2,6 +2,7 @@ package builders
 
 import (
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -78,6 +79,7 @@ type globalResourceBuilder[B any, S secalib.SpecType] struct {
 	setProvider   func(string)
 	setResource   func(string)
 	setApiVersion func(string)
+	setLabels     func(schema.Labels)
 	setSpec       func(*S)
 }
 
@@ -87,6 +89,7 @@ type newGlobalResourceBuilderParams[B any, S secalib.SpecType] struct {
 	setProvider   func(string)
 	setResource   func(string)
 	setApiVersion func(string)
+	setLabels     func(schema.Labels)
 	setSpec       func(*S)
 }
 
@@ -98,6 +101,7 @@ func newGlobalResourceBuilder[B any, S secalib.SpecType](params newGlobalResourc
 		setProvider:   params.setProvider,
 		setResource:   params.setResource,
 		setApiVersion: params.setApiVersion,
+		setLabels:     params.setLabels,
 		setSpec:       params.setSpec,
 	}
 }
@@ -119,6 +123,11 @@ func (builder *globalResourceBuilder[B, S]) Resource(resource string) *B {
 
 func (builder *globalResourceBuilder[B, S]) ApiVersion(apiVersion string) *B {
 	builder.setApiVersion(apiVersion)
+	return builder.parent
+}
+
+func (builder *globalResourceBuilder[B, S]) Labels(labels schema.Labels) *B {
+	builder.setLabels(labels)
 	return builder.parent
 }
 
@@ -150,6 +159,7 @@ func newGlobalTenantResourceBuilder[B any, S secalib.SpecType](params newGlobalT
 			setProvider:   params.setProvider,
 			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
+			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
 		},
 		setTenant: params.setTenant,
@@ -186,6 +196,7 @@ func newRegionalResourceBuilder[B any, S secalib.SpecType](params newRegionalRes
 			setProvider:   params.setProvider,
 			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
+			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
 		},
 		setTenant: params.setTenant,
@@ -230,6 +241,7 @@ func newRegionalWorkspaceResourceBuilder[B any, S secalib.SpecType](params newRe
 			setProvider:   params.setProvider,
 			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
+			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
 		},
 		setTenant:    params.setTenant,
@@ -282,6 +294,7 @@ func newRegionalNetworkResourceBuilder[B any, S secalib.SpecType](params newRegi
 			setProvider:   params.setProvider,
 			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
+			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
 		},
 		setTenant:    params.setTenant,

@@ -1,8 +1,10 @@
-package builders
+package secapi
+
+import "github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
 
 type ListOptions struct {
 	Limit  *int
-	Labels *LabelsBuilder
+	Labels *builders.LabelsBuilder
 }
 
 const defaultLimit = 1000
@@ -11,7 +13,7 @@ func NewListOptions() *ListOptions {
 	limit := defaultLimit
 	return &ListOptions{
 		Limit:  &limit,
-		Labels: NewLabelsBuilder(),
+		Labels: builders.NewLabelsBuilder(),
 	}
 }
 
@@ -20,7 +22,7 @@ func (o *ListOptions) WithLimit(limit int) *ListOptions {
 	return o
 }
 
-func (o *ListOptions) WithLabels(labels *LabelsBuilder) *ListOptions {
+func (o *ListOptions) WithLabels(labels *builders.LabelsBuilder) *ListOptions {
 	o.Labels = labels
 	return o
 }

@@ -98,7 +98,7 @@ func TestListRegionsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	ListOptions := builders.NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	ListOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 	iter, err := client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
 	assert.NoError(t, err)
 
