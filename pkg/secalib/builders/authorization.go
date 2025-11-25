@@ -7,7 +7,7 @@ import (
 // Role
 
 type RoleBuilder struct {
-	*resourceBuilder[RoleBuilder, schema.RoleSpec]
+	*globalTenantResourceBuilder[RoleBuilder, schema.RoleSpec]
 	metadata *GlobalTenantResourceMetadataBuilder
 	spec     *schema.RoleSpec
 }
@@ -18,36 +18,29 @@ func NewRoleBuilder() *RoleBuilder {
 		spec:     &schema.RoleSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[RoleBuilder, schema.RoleSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.RoleSpec) { builder.spec = spec },
+	builder.globalTenantResourceBuilder = newGlobalTenantResourceBuilder(newGlobalTenantResourceBuilderParams[RoleBuilder, schema.RoleSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[RoleBuilder, schema.RoleSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.RoleSpec) { builder.spec = spec },
+		},
+		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
 	})
 
 	return builder
 }
 
-func (builder *RoleBuilder) Tenant(tenant string) *RoleBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
-	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRole).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *RoleBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Permissions,
 	); err != nil {
-		return nil, err
+		return err
 	}
+
 	// Validate each permission
 	for _, permission := range builder.spec.Permissions {
 		if err := validateRequired(builder.validator,
@@ -55,8 +48,34 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 			permission.Resources,
 			permission.Verb,
 		); err != nil {
-			return nil, err
+			return err
 		}
+	}
+
+	return nil
+}
+
+func (builder *RoleBuilder) BuildRequest() (*schema.Role, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.Role{
+		Metadata: nil,
+		Labels:   schema.Labels{},
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRole).BuildResponse()
+	if err != nil {
+		return nil, err
 	}
 
 	return &schema.Role{
@@ -70,7 +89,7 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 // RoleAssignment
 
 type RoleAssignmentBuilder struct {
-	*resourceBuilder[RoleAssignmentBuilder, schema.RoleAssignmentSpec]
+	*globalTenantResourceBuilder[RoleAssignmentBuilder, schema.RoleAssignmentSpec]
 	metadata *GlobalTenantResourceMetadataBuilder
 	spec     *schema.RoleAssignmentSpec
 }
@@ -81,38 +100,31 @@ func NewRoleAssignmentBuilder() *RoleAssignmentBuilder {
 		spec:     &schema.RoleAssignmentSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[RoleAssignmentBuilder, schema.RoleAssignmentSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.RoleAssignmentSpec) { builder.spec = spec },
+	builder.globalTenantResourceBuilder = newGlobalTenantResourceBuilder(newGlobalTenantResourceBuilderParams[RoleAssignmentBuilder, schema.RoleAssignmentSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[RoleAssignmentBuilder, schema.RoleAssignmentSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.RoleAssignmentSpec) { builder.spec = spec },
+		},
+		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
 	})
 
 	return builder
 }
 
-func (builder *RoleAssignmentBuilder) Tenant(tenant string) *RoleAssignmentBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, error) {
-	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRoleAssignment).BuildResponse()
-	if err != nil {
-		return nil, err
-	}
-
-	// Validate the spec
+func (builder *RoleAssignmentBuilder) validateSpec() error {
 	if err := validateRequired(builder.validator,
 		builder.spec,
 		builder.spec.Subs,
 		builder.spec.Scopes,
 		builder.spec.Roles,
 	); err != nil {
-		return nil, err
+		return err
 	}
+
 	// Validate each scope
 	for _, scope := range builder.spec.Scopes {
 		if err := validateOneRequired(builder.validator,
@@ -120,10 +132,35 @@ func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, e
 			scope.Workspaces,
 			scope.Regions,
 		); err != nil {
-			return nil, err
+			return err
 		}
 	}
-	// TODO Validate each scope, if all fields are nil
+
+	return nil
+}
+
+func (builder *RoleAssignmentBuilder) BuildRequest() (*schema.RoleAssignment, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	return &schema.RoleAssignment{
+		Metadata: nil,
+		Labels:   schema.Labels{},
+		Spec:     *builder.spec,
+		Status:   nil,
+	}, nil
+}
+
+func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, error) {
+	if err := builder.validateSpec(); err != nil {
+		return nil, err
+	}
+
+	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRoleAssignment).BuildResponse()
+	if err != nil {
+		return nil, err
+	}
 
 	return &schema.RoleAssignment{
 		Metadata: medatata,

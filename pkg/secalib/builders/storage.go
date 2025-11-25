@@ -7,7 +7,7 @@ import (
 // BlockStorage
 
 type BlockStorageBuilder struct {
-	*resourceBuilder[BlockStorageBuilder, schema.BlockStorageSpec]
+	*regionalWorkspaceResourceBuilder[BlockStorageBuilder, schema.BlockStorageSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.BlockStorageSpec
 }
@@ -18,30 +18,20 @@ func NewBlockStorageBuilder() *BlockStorageBuilder {
 		spec:     &schema.BlockStorageSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[BlockStorageBuilder, schema.BlockStorageSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.BlockStorageSpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[BlockStorageBuilder, schema.BlockStorageSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[BlockStorageBuilder, schema.BlockStorageSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.BlockStorageSpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *BlockStorageBuilder) Tenant(tenant string) *BlockStorageBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *BlockStorageBuilder) Workspace(workspace string) *BlockStorageBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *BlockStorageBuilder) Region(region string) *BlockStorageBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -71,7 +61,7 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 // Image
 
 type ImageBuilder struct {
-	*resourceBuilder[ImageBuilder, schema.ImageSpec]
+	*regionalResourceBuilder[ImageBuilder, schema.ImageSpec]
 	metadata *RegionalResourceMetadataBuilder
 	spec     *schema.ImageSpec
 }
@@ -82,13 +72,17 @@ func NewImageBuilder() *ImageBuilder {
 		spec:     &schema.ImageSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[ImageBuilder, schema.ImageSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.ImageSpec) { builder.spec = spec },
+	builder.regionalResourceBuilder = newRegionalResourceBuilder(newRegionalResourceBuilderParams[ImageBuilder, schema.ImageSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[ImageBuilder, schema.ImageSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.ImageSpec) { builder.spec = spec },
+		},
+		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
+		setRegion: func(region string) { builder.metadata.Region(region) },
 	})
 
 	return builder

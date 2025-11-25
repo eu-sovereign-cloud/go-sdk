@@ -7,7 +7,7 @@ import (
 // Network
 
 type NetworkBuilder struct {
-	*resourceBuilder[NetworkBuilder, schema.NetworkSpec]
+	*regionalWorkspaceResourceBuilder[NetworkBuilder, schema.NetworkSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.NetworkSpec
 }
@@ -18,30 +18,20 @@ func NewNetworkBuilder() *NetworkBuilder {
 		spec:     &schema.NetworkSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[NetworkBuilder, schema.NetworkSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.NetworkSpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[NetworkBuilder, schema.NetworkSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[NetworkBuilder, schema.NetworkSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.NetworkSpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *NetworkBuilder) Tenant(tenant string) *NetworkBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *NetworkBuilder) Workspace(workspace string) *NetworkBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *NetworkBuilder) Region(region string) *NetworkBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -77,7 +67,7 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 // Internet Gateway
 
 type InternetGatewayBuilder struct {
-	*resourceBuilder[InternetGatewayBuilder, schema.InternetGatewaySpec]
+	*regionalWorkspaceResourceBuilder[InternetGatewayBuilder, schema.InternetGatewaySpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.InternetGatewaySpec
 }
@@ -88,30 +78,20 @@ func NewInternetGatewayBuilder() *InternetGatewayBuilder {
 		spec:     &schema.InternetGatewaySpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[InternetGatewayBuilder, schema.InternetGatewaySpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.InternetGatewaySpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[InternetGatewayBuilder, schema.InternetGatewaySpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[InternetGatewayBuilder, schema.InternetGatewaySpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.InternetGatewaySpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *InternetGatewayBuilder) Tenant(tenant string) *InternetGatewayBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *InternetGatewayBuilder) Workspace(workspace string) *InternetGatewayBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *InternetGatewayBuilder) Region(region string) *InternetGatewayBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -139,7 +119,7 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 // Route Table
 
 type RouteTableBuilder struct {
-	*resourceBuilder[RouteTableBuilder, schema.RouteTableSpec]
+	*regionalNetworkResourceBuilder[RouteTableBuilder, schema.RouteTableSpec]
 	metadata *RegionalNetworkResourceMetadataBuilder
 	spec     *schema.RouteTableSpec
 }
@@ -150,35 +130,20 @@ func NewRouteTableBuilder() *RouteTableBuilder {
 		spec:     &schema.RouteTableSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[RouteTableBuilder, schema.RouteTableSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.RouteTableSpec) { builder.spec = spec },
+	builder.regionalNetworkResourceBuilder = newRegionalNetworkResourceBuilder(newRegionalNetworkResourceBuilderParams[RouteTableBuilder, schema.RouteTableSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[RouteTableBuilder, schema.RouteTableSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setNetwork:   func(network string) { builder.metadata.Network(network) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *RouteTableBuilder) Tenant(tenant string) *RouteTableBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *RouteTableBuilder) Workspace(workspace string) *RouteTableBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *RouteTableBuilder) Network(network string) *RouteTableBuilder {
-	builder.metadata.Network(network)
-	return builder
-}
-
-func (builder *RouteTableBuilder) Region(region string) *RouteTableBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -214,7 +179,7 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 // Subnet
 
 type SubnetBuilder struct {
-	*resourceBuilder[SubnetBuilder, schema.SubnetSpec]
+	*regionalNetworkResourceBuilder[SubnetBuilder, schema.SubnetSpec]
 	metadata *RegionalNetworkResourceMetadataBuilder
 	spec     *schema.SubnetSpec
 }
@@ -225,35 +190,20 @@ func NewSubnetBuilder() *SubnetBuilder {
 		spec:     &schema.SubnetSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[SubnetBuilder, schema.SubnetSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.SubnetSpec) { builder.spec = spec },
+	builder.regionalNetworkResourceBuilder = newRegionalNetworkResourceBuilder(newRegionalNetworkResourceBuilderParams[SubnetBuilder, schema.SubnetSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[SubnetBuilder, schema.SubnetSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setNetwork:   func(network string) { builder.metadata.Network(network) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *SubnetBuilder) Tenant(tenant string) *SubnetBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *SubnetBuilder) Workspace(workspace string) *SubnetBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *SubnetBuilder) Network(network string) *SubnetBuilder {
-	builder.metadata.Network(network)
-	return builder
-}
-
-func (builder *SubnetBuilder) Region(region string) *SubnetBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -282,7 +232,7 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 // Public Ip
 
 type PublicIpBuilder struct {
-	*resourceBuilder[PublicIpBuilder, schema.PublicIpSpec]
+	*regionalWorkspaceResourceBuilder[PublicIpBuilder, schema.PublicIpSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.PublicIpSpec
 }
@@ -293,30 +243,20 @@ func NewPublicIpBuilder() *PublicIpBuilder {
 		spec:     &schema.PublicIpSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[PublicIpBuilder, schema.PublicIpSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.PublicIpSpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[PublicIpBuilder, schema.PublicIpSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[PublicIpBuilder, schema.PublicIpSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.PublicIpSpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *PublicIpBuilder) Tenant(tenant string) *PublicIpBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *PublicIpBuilder) Workspace(workspace string) *PublicIpBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *PublicIpBuilder) Region(region string) *PublicIpBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -344,7 +284,7 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 // Nic
 
 type NicBuilder struct {
-	*resourceBuilder[NicBuilder, schema.NicSpec]
+	*regionalWorkspaceResourceBuilder[NicBuilder, schema.NicSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.NicSpec
 }
@@ -355,30 +295,20 @@ func NewNicBuilder() *NicBuilder {
 		spec:     &schema.NicSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[NicBuilder, schema.NicSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.NicSpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[NicBuilder, schema.NicSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[NicBuilder, schema.NicSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.NicSpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *NicBuilder) Tenant(tenant string) *NicBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *NicBuilder) Workspace(workspace string) *NicBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *NicBuilder) Region(region string) *NicBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 
@@ -407,7 +337,7 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 // Security Group
 
 type SecurityGroupBuilder struct {
-	*resourceBuilder[SecurityGroupBuilder, schema.SecurityGroupSpec]
+	*regionalWorkspaceResourceBuilder[SecurityGroupBuilder, schema.SecurityGroupSpec]
 	metadata *RegionalWorkspaceResourceMetadataBuilder
 	spec     *schema.SecurityGroupSpec
 }
@@ -418,30 +348,20 @@ func NewSecurityGroupBuilder() *SecurityGroupBuilder {
 		spec:     &schema.SecurityGroupSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[SecurityGroupBuilder, schema.SecurityGroupSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.SecurityGroupSpec) { builder.spec = spec },
+	builder.regionalWorkspaceResourceBuilder = newRegionalWorkspaceResourceBuilder(newRegionalWorkspaceResourceBuilderParams[SecurityGroupBuilder, schema.SecurityGroupSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[SecurityGroupBuilder, schema.SecurityGroupSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.SecurityGroupSpec) { builder.spec = spec },
+		},
+		setTenant:    func(tenant string) { builder.metadata.Tenant(tenant) },
+		setWorkspace: func(workspace string) { builder.metadata.Workspace(workspace) },
+		setRegion:    func(region string) { builder.metadata.Region(region) },
 	})
 
-	return builder
-}
-
-func (builder *SecurityGroupBuilder) Tenant(tenant string) *SecurityGroupBuilder {
-	builder.metadata.Tenant(tenant)
-	return builder
-}
-
-func (builder *SecurityGroupBuilder) Workspace(workspace string) *SecurityGroupBuilder {
-	builder.metadata.Workspace(workspace)
-	return builder
-}
-
-func (builder *SecurityGroupBuilder) Region(region string) *SecurityGroupBuilder {
-	builder.metadata.Region(region)
 	return builder
 }
 

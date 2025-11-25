@@ -7,7 +7,7 @@ import (
 // Region
 
 type RegionBuilder struct {
-	*resourceBuilder[RegionBuilder, schema.RegionSpec]
+	*globalResourceBuilder[RegionBuilder, schema.RegionSpec]
 	metadata *GlobalResourceMetadataBuilder
 	spec     *schema.RegionSpec
 }
@@ -18,7 +18,7 @@ func NewRegionBuilder() *RegionBuilder {
 		spec:     &schema.RegionSpec{},
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[RegionBuilder, schema.RegionSpec]{
+	builder.globalResourceBuilder = newGlobalResourceBuilder(newGlobalResourceBuilderParams[RegionBuilder, schema.RegionSpec]{
 		parent:        builder,
 		setName:       func(name string) { builder.metadata.setName(name) },
 		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },

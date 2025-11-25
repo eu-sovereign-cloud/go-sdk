@@ -7,7 +7,7 @@ import (
 // workspace
 
 type WorkspaceBuilder struct {
-	*resourceBuilder[WorkspaceBuilder, schema.WorkspaceSpec]
+	*regionalResourceBuilder[WorkspaceBuilder, schema.WorkspaceSpec]
 	labels   schema.Labels
 	metadata *RegionalResourceMetadataBuilder
 	spec     *schema.WorkspaceSpec
@@ -18,13 +18,17 @@ func NewWorkspaceBuilder() *WorkspaceBuilder {
 		metadata: NewRegionalResourceMetadataBuilder(),
 	}
 
-	builder.resourceBuilder = newResourceBuilder(newResourceBuilderParams[WorkspaceBuilder, schema.WorkspaceSpec]{
-		parent:        builder,
-		setName:       func(name string) { builder.metadata.setName(name) },
-		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
-		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
-		setSpec:       func(spec *schema.WorkspaceSpec) { builder.spec = spec },
+	builder.regionalResourceBuilder = newRegionalResourceBuilder(newRegionalResourceBuilderParams[WorkspaceBuilder, schema.WorkspaceSpec]{
+		newGlobalResourceBuilderParams: &newGlobalResourceBuilderParams[WorkspaceBuilder, schema.WorkspaceSpec]{
+			parent:        builder,
+			setName:       func(name string) { builder.metadata.setName(name) },
+			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
+			setResource:   func(resource string) { builder.metadata.setResource(resource) },
+			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
+			setSpec:       func(spec *schema.WorkspaceSpec) { builder.spec = spec },
+		},
+		setTenant: func(tenant string) { builder.metadata.Tenant(tenant) },
+		setRegion: func(region string) { builder.metadata.Region(region) },
 	})
 
 	return builder

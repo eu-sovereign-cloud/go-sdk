@@ -69,24 +69,9 @@ func (builder *metadataBuilder[B, K]) Kind(kind K) *B {
 
 // resource
 
-type resourceBuilderType interface {
-	RegionBuilder |
-		RoleBuilder |
-		RoleAssignmentBuilder |
-		WorkspaceBuilder |
-		BlockStorageBuilder |
-		ImageBuilder |
-		InstanceBuilder |
-		NetworkBuilder |
-		InternetGatewayBuilder |
-		RouteTableBuilder |
-		SubnetBuilder |
-		PublicIpBuilder |
-		NicBuilder |
-		SecurityGroupBuilder
-}
+/// globalResourceBuilder
 
-type resourceBuilder[B resourceBuilderType, S secalib.SpecType] struct {
+type globalResourceBuilder[B any, S secalib.SpecType] struct {
 	validator     *validator.Validate
 	parent        *B
 	setName       func(string)
@@ -96,7 +81,7 @@ type resourceBuilder[B resourceBuilderType, S secalib.SpecType] struct {
 	setSpec       func(*S)
 }
 
-type newResourceBuilderParams[B resourceBuilderType, S secalib.SpecType] struct {
+type newGlobalResourceBuilderParams[B any, S secalib.SpecType] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
@@ -105,8 +90,8 @@ type newResourceBuilderParams[B resourceBuilderType, S secalib.SpecType] struct 
 	setSpec       func(*S)
 }
 
-func newResourceBuilder[B resourceBuilderType, S secalib.SpecType](params newResourceBuilderParams[B, S]) *resourceBuilder[B, S] {
-	return &resourceBuilder[B, S]{
+func newGlobalResourceBuilder[B any, S secalib.SpecType](params newGlobalResourceBuilderParams[B, S]) *globalResourceBuilder[B, S] {
+	return &globalResourceBuilder[B, S]{
 		validator:     validator.New(),
 		parent:        params.parent,
 		setName:       params.setName,
@@ -117,27 +102,211 @@ func newResourceBuilder[B resourceBuilderType, S secalib.SpecType](params newRes
 	}
 }
 
-func (builder *resourceBuilder[B, S]) Name(name string) *B {
+func (builder *globalResourceBuilder[B, S]) Name(name string) *B {
 	builder.setName(name)
 	return builder.parent
 }
 
-func (builder *resourceBuilder[B, S]) Provider(provider string) *B {
+func (builder *globalResourceBuilder[B, S]) Provider(provider string) *B {
 	builder.setProvider(provider)
 	return builder.parent
 }
 
-func (builder *resourceBuilder[B, S]) Resource(resource string) *B {
+func (builder *globalResourceBuilder[B, S]) Resource(resource string) *B {
 	builder.setResource(resource)
 	return builder.parent
 }
 
-func (builder *resourceBuilder[B, S]) ApiVersion(apiVersion string) *B {
+func (builder *globalResourceBuilder[B, S]) ApiVersion(apiVersion string) *B {
 	builder.setApiVersion(apiVersion)
 	return builder.parent
 }
 
-func (builder *resourceBuilder[B, S]) Spec(spec *S) *B {
+func (builder *globalResourceBuilder[B, S]) Spec(spec *S) *B {
 	builder.setSpec(spec)
+	return builder.parent
+}
+
+/// globalTenantResourceBuilder
+
+type globalTenantResourceBuilder[B any, S secalib.SpecType] struct {
+	*globalResourceBuilder[B, S]
+
+	setTenant func(string)
+}
+
+type newGlobalTenantResourceBuilderParams[B any, S secalib.SpecType] struct {
+	*newGlobalResourceBuilderParams[B, S]
+
+	setTenant func(string)
+}
+
+func newGlobalTenantResourceBuilder[B any, S secalib.SpecType](params newGlobalTenantResourceBuilderParams[B, S]) *globalTenantResourceBuilder[B, S] {
+	return &globalTenantResourceBuilder[B, S]{
+		globalResourceBuilder: &globalResourceBuilder[B, S]{
+			validator:     validator.New(),
+			parent:        params.parent,
+			setName:       params.setName,
+			setProvider:   params.setProvider,
+			setResource:   params.setResource,
+			setApiVersion: params.setApiVersion,
+			setSpec:       params.setSpec,
+		},
+		setTenant: params.setTenant,
+	}
+}
+
+func (builder *globalTenantResourceBuilder[B, S]) Tenant(name string) *B {
+	builder.setTenant(name)
+	return builder.parent
+}
+
+// regionalResource
+
+type regionalResourceBuilder[B any, S secalib.SpecType] struct {
+	*globalResourceBuilder[B, S]
+
+	setTenant func(string)
+	setRegion func(string)
+}
+
+type newRegionalResourceBuilderParams[B any, S secalib.SpecType] struct {
+	*newGlobalResourceBuilderParams[B, S]
+
+	setTenant func(string)
+	setRegion func(string)
+}
+
+func newRegionalResourceBuilder[B any, S secalib.SpecType](params newRegionalResourceBuilderParams[B, S]) *regionalResourceBuilder[B, S] {
+	return &regionalResourceBuilder[B, S]{
+		globalResourceBuilder: &globalResourceBuilder[B, S]{
+			validator:     validator.New(),
+			parent:        params.parent,
+			setName:       params.setName,
+			setProvider:   params.setProvider,
+			setResource:   params.setResource,
+			setApiVersion: params.setApiVersion,
+			setSpec:       params.setSpec,
+		},
+		setTenant: params.setTenant,
+		setRegion: params.setRegion,
+	}
+}
+
+func (builder *regionalResourceBuilder[B, S]) Tenant(name string) *B {
+	builder.setTenant(name)
+	return builder.parent
+}
+
+func (builder *regionalResourceBuilder[B, S]) Region(region string) *B {
+	builder.setRegion(region)
+	return builder.parent
+}
+
+// regionalWorkspaceResource
+
+type regionalWorkspaceResourceBuilder[B any, S secalib.SpecType] struct {
+	*globalResourceBuilder[B, S]
+
+	setTenant    func(string)
+	setWorkspace func(string)
+	setRegion    func(string)
+}
+
+type newRegionalWorkspaceResourceBuilderParams[B any, S secalib.SpecType] struct {
+	*newGlobalResourceBuilderParams[B, S]
+
+	setTenant    func(string)
+	setWorkspace func(string)
+	setRegion    func(string)
+}
+
+func newRegionalWorkspaceResourceBuilder[B any, S secalib.SpecType](params newRegionalWorkspaceResourceBuilderParams[B, S]) *regionalWorkspaceResourceBuilder[B, S] {
+	return &regionalWorkspaceResourceBuilder[B, S]{
+		globalResourceBuilder: &globalResourceBuilder[B, S]{
+			validator:     validator.New(),
+			parent:        params.parent,
+			setName:       params.setName,
+			setProvider:   params.setProvider,
+			setResource:   params.setResource,
+			setApiVersion: params.setApiVersion,
+			setSpec:       params.setSpec,
+		},
+		setTenant:    params.setTenant,
+		setWorkspace: params.setWorkspace,
+		setRegion:    params.setRegion,
+	}
+}
+
+func (builder *regionalWorkspaceResourceBuilder[B, S]) Tenant(name string) *B {
+	builder.setTenant(name)
+	return builder.parent
+}
+
+func (builder *regionalWorkspaceResourceBuilder[B, S]) Workspace(workspace string) *B {
+	builder.setWorkspace(workspace)
+	return builder.parent
+}
+
+func (builder *regionalWorkspaceResourceBuilder[B, S]) Region(region string) *B {
+	builder.setRegion(region)
+	return builder.parent
+}
+
+// regionalNetworkResource
+
+type regionalNetworkResourceBuilder[B any, S secalib.SpecType] struct {
+	*globalResourceBuilder[B, S]
+
+	setTenant    func(string)
+	setWorkspace func(string)
+	setNetwork   func(string)
+	setRegion    func(string)
+}
+
+type newRegionalNetworkResourceBuilderParams[B any, S secalib.SpecType] struct {
+	*newGlobalResourceBuilderParams[B, S]
+
+	setTenant    func(string)
+	setWorkspace func(string)
+	setNetwork   func(string)
+	setRegion    func(string)
+}
+
+func newRegionalNetworkResourceBuilder[B any, S secalib.SpecType](params newRegionalNetworkResourceBuilderParams[B, S]) *regionalNetworkResourceBuilder[B, S] {
+	return &regionalNetworkResourceBuilder[B, S]{
+		globalResourceBuilder: &globalResourceBuilder[B, S]{
+			validator:     validator.New(),
+			parent:        params.parent,
+			setName:       params.setName,
+			setProvider:   params.setProvider,
+			setResource:   params.setResource,
+			setApiVersion: params.setApiVersion,
+			setSpec:       params.setSpec,
+		},
+		setTenant:    params.setTenant,
+		setWorkspace: params.setWorkspace,
+		setNetwork:   params.setNetwork,
+		setRegion:    params.setRegion,
+	}
+}
+
+func (builder *regionalNetworkResourceBuilder[B, S]) Tenant(name string) *B {
+	builder.setTenant(name)
+	return builder.parent
+}
+
+func (builder *regionalNetworkResourceBuilder[B, S]) Workspace(workspace string) *B {
+	builder.setWorkspace(workspace)
+	return builder.parent
+}
+
+func (builder *regionalNetworkResourceBuilder[B, S]) Network(network string) *B {
+	builder.setNetwork(network)
+	return builder.parent
+}
+
+func (builder *regionalNetworkResourceBuilder[B, S]) Region(region string) *B {
+	builder.setRegion(region)
 	return builder.parent
 }
