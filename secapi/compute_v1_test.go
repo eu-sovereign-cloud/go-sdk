@@ -8,12 +8,12 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
-	"k8s.io/utils/ptr"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"k8s.io/utils/ptr"
 )
 
 // Instance Sku

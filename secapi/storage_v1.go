@@ -4,9 +4,10 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
+
 	"k8s.io/utils/ptr"
 )
 
@@ -35,7 +36,7 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	return &iter, nil
 }
 
-func (api *StorageV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
+func (api *StorageV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *builders.ListOptions) (*Iterator[schema.StorageSku], error) {
 	iter := Iterator[schema.StorageSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
 			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
@@ -92,7 +93,7 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 	return &iter, nil
 }
 
-func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
+func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *builders.ListOptions) (*Iterator[schema.BlockStorage], error) {
 	iter := Iterator[schema.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
 			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
@@ -225,7 +226,7 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 	return &iter, nil
 }
 
-func (api *StorageV1) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
+func (api *StorageV1) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *builders.ListOptions) (*Iterator[schema.Image], error) {
 	iter := Iterator[schema.Image]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
 			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
