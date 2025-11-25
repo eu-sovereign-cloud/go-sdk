@@ -162,7 +162,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListBlockStoragesWithFiltersV1(t *testing.T) {
@@ -250,7 +250,7 @@ func TestGetBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetBlockStorageUntilStateV1(t *testing.T) {
@@ -288,7 +288,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
@@ -334,7 +334,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteBlockStorageV1(t *testing.T) {
@@ -405,7 +405,7 @@ func TestListImagesV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -510,7 +510,7 @@ func TestGetImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetImageUntilStateV1(t *testing.T) {
@@ -547,7 +547,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateImageV1(t *testing.T) {
@@ -588,7 +588,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteImageV1(t *testing.T) {

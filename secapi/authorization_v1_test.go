@@ -47,7 +47,7 @@ func TestListRolesV1(t *testing.T) {
 	assert.Len(t, resp[0].Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp[0].Spec.Permissions[0].Verb[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListRolesWithFiltersV1(t *testing.T) {
@@ -128,7 +128,7 @@ func TestGetRoleV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetRoleUntilStateV1(t *testing.T) {
@@ -159,7 +159,7 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateRoleV1(t *testing.T) {
@@ -202,7 +202,7 @@ func TestCreateOrUpdateRoleV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Permissions[0].Verb, 1)
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteRoleV1(t *testing.T) {
@@ -261,7 +261,7 @@ func TestListRoleAssignmentsV1(t *testing.T) {
 	assert.Len(t, resp[0].Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp[0].Spec.Subs[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListRoleAssignmentsWithFiltersV1(t *testing.T) {
@@ -315,7 +315,7 @@ func TestListRoleAssignmentsWithFiltersV1(t *testing.T) {
 	assert.Len(t, resp[0].Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp[0].Spec.Subs[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestGetRoleAssignmentV1(t *testing.T) {
@@ -343,7 +343,7 @@ func TestGetRoleAssignmentV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
@@ -373,7 +373,7 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateRoleAssignmentV1(t *testing.T) {
@@ -415,7 +415,7 @@ func TestCreateOrUpdateRoleAssignmentV1(t *testing.T) {
 	assert.Len(t, resp.Spec.Subs, 1)
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteRoleAssignmentV1(t *testing.T) {

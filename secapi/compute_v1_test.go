@@ -140,7 +140,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -247,7 +247,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetInstanceUntilStateV1(t *testing.T) {
@@ -285,7 +285,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateInstanceV1(t *testing.T) {
@@ -331,7 +331,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestStartInstanaceV1(t *testing.T) {

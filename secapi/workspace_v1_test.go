@@ -45,7 +45,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListWorkspacesWithFiltersV1(t *testing.T) {
@@ -114,7 +114,7 @@ func TestGetWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetWorkspaceUntilStateV1(t *testing.T) {
@@ -143,7 +143,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
@@ -175,7 +175,7 @@ func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteWorkspaceV1(t *testing.T) {

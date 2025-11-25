@@ -170,7 +170,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListNetworksWithFiltersV1(t *testing.T) {
@@ -227,7 +227,7 @@ func TestListNetworksWithFiltersV1(t *testing.T) {
 
 	assert.Equal(t, *ref, resp[0].Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp[0].Status.State)
 }
 
 func TestGetNetworkV1(t *testing.T) {
@@ -262,7 +262,7 @@ func TestGetNetworkV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetNetworkUntilStateV1(t *testing.T) {
@@ -299,7 +299,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
@@ -350,7 +350,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteNetworkV1(t *testing.T) {
@@ -422,7 +422,7 @@ func TestListSubnetsV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListSubnetsWithFiltersV1(t *testing.T) {
@@ -510,7 +510,7 @@ func TestGetSubnetV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetSubnetUntilStateV1(t *testing.T) {
@@ -548,7 +548,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateSubnetV1(t *testing.T) {
@@ -595,7 +595,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteSubnetV1(t *testing.T) {
@@ -667,7 +667,7 @@ func TestListRouteTablesV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, resp[0].Spec.Routes[0].DestinationCidrBlock)
 	assert.Equal(t, *targetRef, resp[0].Spec.Routes[0].TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListRouteTablesWithFiltersV1(t *testing.T) {
@@ -764,7 +764,7 @@ func TestGetRouteTableV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, route.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, route.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetRouteTableUntilStateV1(t *testing.T) {
@@ -806,7 +806,7 @@ func TestGetRouteTableUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, route.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, route.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateRouteTableV1(t *testing.T) {
@@ -861,7 +861,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, respRoute.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, respRoute.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteRouteTableV1(t *testing.T) {
@@ -923,7 +923,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp[0].Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListInternetGatewaysWithFiltersV1(t *testing.T) {
@@ -1000,7 +1000,7 @@ func TestGetInternetGatewayV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetInternetGatewayUntilStateV1(t *testing.T) {
@@ -1032,7 +1032,7 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
@@ -1068,7 +1068,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteInternetGatewayV1(t *testing.T) {
@@ -1130,7 +1130,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Rules[0].Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListSecurityGroupsWithFiltersV1(t *testing.T) {
@@ -1212,7 +1212,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetSecurityGroupUntilStateV1(t *testing.T) {
@@ -1244,7 +1244,7 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
@@ -1293,7 +1293,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Rules[0].Direction))
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteSecurityGroupV1(t *testing.T) {
@@ -1360,7 +1360,7 @@ func TestListNicsV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp[0].Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListNicsWithFiltersV1(t *testing.T) {
@@ -1446,7 +1446,7 @@ func TestGetNicV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetNicUntilStateV1(t *testing.T) {
@@ -1482,7 +1482,7 @@ func TestGetNicUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdateNicV1(t *testing.T) {
@@ -1523,7 +1523,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeleteNicV1(t *testing.T) {
@@ -1585,7 +1585,7 @@ func TestListPublicIpsV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Address1, *resp[0].Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp[0].Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
 func TestListPublicIpsWithFiltersV1(t *testing.T) {
@@ -1664,7 +1664,7 @@ func TestGetPublicIpV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestGetPublicIpUntilStateV1(t *testing.T) {
@@ -1696,7 +1696,7 @@ func TestGetPublicIpUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
 func TestCreateOrUpdatePublicIpV1(t *testing.T) {
@@ -1732,7 +1732,7 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateCreating, string(*resp.Status.State))
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
 }
 
 func TestDeletePublicIpV1(t *testing.T) {
