@@ -6,7 +6,7 @@ import (
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-	. "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
+
 	"k8s.io/utils/ptr"
 )
 
