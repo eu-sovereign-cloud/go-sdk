@@ -8,9 +8,12 @@ type ResourceType interface {
 		schema.RoleAssignment |
 		schema.Workspace |
 		schema.BlockStorage |
+		schema.StorageSku |
 		schema.Image |
 		schema.Instance |
+		schema.InstanceSku |
 		schema.Network |
+		schema.NetworkSku |
 		schema.InternetGateway |
 		schema.RouteTable |
 		schema.Subnet |
@@ -34,9 +37,12 @@ type SpecType interface {
 		schema.RoleAssignmentSpec |
 		schema.WorkspaceSpec |
 		schema.BlockStorageSpec |
+		schema.StorageSkuSpec |
 		schema.ImageSpec |
 		schema.InstanceSpec |
+		schema.InstanceSkuSpec |
 		schema.NetworkSpec |
+		schema.NetworkSkuSpec |
 		schema.InternetGatewaySpec |
 		schema.RouteTableSpec |
 		schema.SubnetSpec |
