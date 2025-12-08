@@ -3,6 +3,7 @@ module github.com/eu-sovereign-cloud/go-sdk
 go 1.24
 
 require (
+	github.com/apparentlymart/go-cidr v1.1.0
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/go-playground/validator/v10 v10.14.1
 	github.com/oapi-codegen/runtime v1.1.2
