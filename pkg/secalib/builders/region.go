@@ -91,7 +91,7 @@ func (builder *RegionBuilder) BuildResponse() (*schema.Region, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}

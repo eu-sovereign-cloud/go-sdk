@@ -96,7 +96,7 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +298,7 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +396,7 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -492,7 +492,7 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -589,7 +589,7 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -694,7 +694,7 @@ func (builder *SecurityGroupBuilder) BuildResponse() (*schema.SecurityGroup, err
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.buildResponse()
+	metadata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}

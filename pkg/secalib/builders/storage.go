@@ -89,7 +89,7 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +185,7 @@ func (builder *ImageBuilder) BuildResponse() (*schema.Image, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}

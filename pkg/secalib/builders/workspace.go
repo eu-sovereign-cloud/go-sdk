@@ -65,7 +65,7 @@ func (builder *WorkspaceBuilder) BuildRequest() (*schema.Workspace, error) {
 }
 
 func (builder *WorkspaceBuilder) BuildResponse() (*schema.Workspace, error) {
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}

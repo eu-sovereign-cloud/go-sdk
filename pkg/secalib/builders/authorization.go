@@ -97,7 +97,7 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, e
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.buildResponse()
+	medatata, err := builder.metadata.BuildResponse()
 	if err != nil {
 		return nil, err
 	}
