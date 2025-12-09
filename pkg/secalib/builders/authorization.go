@@ -1,21 +1,47 @@
 package builders
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/generators"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 // Role
 
+type RoleMetadataBuilder struct {
+	*globalTenantResourceMetadataBuilder
+}
+
+func NewRoleMetadataBuilder() *RoleMetadataBuilder {
+	builder := &RoleMetadataBuilder{
+		globalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *RoleMetadataBuilder) BuildResponse() (*schema.GlobalTenantResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.GlobalTenantResourceMetadataKindResourceKindRole).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateRoleResource(builder.metadata.Tenant, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type RoleBuilder struct {
 	*globalTenantResourceBuilder[RoleBuilder, schema.RoleSpec]
-	metadata *GlobalTenantResourceMetadataBuilder
+	metadata *RoleMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.RoleSpec
 }
 
 func NewRoleBuilder() *RoleBuilder {
 	builder := &RoleBuilder{
-		metadata: NewGlobalTenantResourceMetadataBuilder(),
+		metadata: NewRoleMetadataBuilder(),
 		spec:     &schema.RoleSpec{},
 	}
 
@@ -24,7 +50,6 @@ func NewRoleBuilder() *RoleBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RoleSpec) { builder.spec = spec },
@@ -75,7 +100,7 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRole).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -90,16 +115,41 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 
 // RoleAssignment
 
+type RoleAssignmentMetadataBuilder struct {
+	*globalTenantResourceMetadataBuilder
+}
+
+func NewRoleAssignmentMetadataBuilder() *RoleAssignmentMetadataBuilder {
+	builder := &RoleAssignmentMetadataBuilder{
+		globalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *RoleAssignmentMetadataBuilder) BuildResponse() (*schema.GlobalTenantResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.GlobalTenantResourceMetadataKindResourceKindRoleAssignment).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateRoleAssignmentResource(builder.metadata.Tenant, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type RoleAssignmentBuilder struct {
 	*globalTenantResourceBuilder[RoleAssignmentBuilder, schema.RoleAssignmentSpec]
-	metadata *GlobalTenantResourceMetadataBuilder
+	metadata *RoleAssignmentMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.RoleAssignmentSpec
 }
 
 func NewRoleAssignmentBuilder() *RoleAssignmentBuilder {
 	builder := &RoleAssignmentBuilder{
-		metadata: NewGlobalTenantResourceMetadataBuilder(),
+		metadata: NewRoleAssignmentMetadataBuilder(),
 		spec:     &schema.RoleAssignmentSpec{},
 	}
 
@@ -108,7 +158,6 @@ func NewRoleAssignmentBuilder() *RoleAssignmentBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RoleAssignmentSpec) { builder.spec = spec },
@@ -161,7 +210,7 @@ func (builder *RoleAssignmentBuilder) BuildResponse() (*schema.RoleAssignment, e
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.Kind(schema.GlobalTenantResourceMetadataKindResourceKindRoleAssignment).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}

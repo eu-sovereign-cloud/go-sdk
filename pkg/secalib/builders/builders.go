@@ -9,7 +9,7 @@ import (
 // metadata
 
 type metadataBuilderType interface {
-	GlobalResourceMetadataBuilder | GlobalTenantResourceMetadataBuilder | RegionalResourceMetadataBuilder | RegionalWorkspaceResourceMetadataBuilder | RegionalNetworkResourceMetadataBuilder
+	globalResourceMetadataBuilder | globalTenantResourceMetadataBuilder | regionalResourceMetadataBuilder | regionalWorkspaceResourceMetadataBuilder | regionalNetworkResourceMetadataBuilder
 }
 
 type metadataBuilder[B metadataBuilderType, K any] struct {
@@ -17,7 +17,6 @@ type metadataBuilder[B metadataBuilderType, K any] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
-	setResource   func(string)
 	setApiVersion func(string)
 	setKind       func(K)
 }
@@ -26,7 +25,6 @@ type newMetadataBuilderParams[B metadataBuilderType, K any] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
-	setResource   func(string)
 	setApiVersion func(string)
 	setKind       func(K)
 }
@@ -37,7 +35,6 @@ func newMetadataBuilder[B metadataBuilderType, K any](params newMetadataBuilderP
 		parent:        params.parent,
 		setName:       params.setName,
 		setProvider:   params.setProvider,
-		setResource:   params.setResource,
 		setApiVersion: params.setApiVersion,
 		setKind:       params.setKind,
 	}
@@ -53,17 +50,12 @@ func (builder *metadataBuilder[B, K]) Provider(provider string) *B {
 	return builder.parent
 }
 
-func (builder *metadataBuilder[B, K]) Resource(resource string) *B {
-	builder.setResource(resource)
-	return builder.parent
-}
-
 func (builder *metadataBuilder[B, K]) ApiVersion(apiVersion string) *B {
 	builder.setApiVersion(apiVersion)
 	return builder.parent
 }
 
-func (builder *metadataBuilder[B, K]) Kind(kind K) *B {
+func (builder *metadataBuilder[B, K]) kind(kind K) *B {
 	builder.setKind(kind)
 	return builder.parent
 }
@@ -77,7 +69,6 @@ type globalResourceBuilder[B any, S secalib.SpecType] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
-	setResource   func(string)
 	setApiVersion func(string)
 	setLabels     func(schema.Labels)
 	setSpec       func(*S)
@@ -87,7 +78,6 @@ type newGlobalResourceBuilderParams[B any, S secalib.SpecType] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
-	setResource   func(string)
 	setApiVersion func(string)
 	setLabels     func(schema.Labels)
 	setSpec       func(*S)
@@ -99,7 +89,6 @@ func newGlobalResourceBuilder[B any, S secalib.SpecType](params newGlobalResourc
 		parent:        params.parent,
 		setName:       params.setName,
 		setProvider:   params.setProvider,
-		setResource:   params.setResource,
 		setApiVersion: params.setApiVersion,
 		setLabels:     params.setLabels,
 		setSpec:       params.setSpec,
@@ -113,11 +102,6 @@ func (builder *globalResourceBuilder[B, S]) Name(name string) *B {
 
 func (builder *globalResourceBuilder[B, S]) Provider(provider string) *B {
 	builder.setProvider(provider)
-	return builder.parent
-}
-
-func (builder *globalResourceBuilder[B, S]) Resource(resource string) *B {
-	builder.setResource(resource)
 	return builder.parent
 }
 
@@ -157,7 +141,6 @@ func newGlobalTenantResourceBuilder[B any, S secalib.SpecType](params newGlobalT
 			parent:        params.parent,
 			setName:       params.setName,
 			setProvider:   params.setProvider,
-			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
 			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
@@ -194,7 +177,6 @@ func newRegionalResourceBuilder[B any, S secalib.SpecType](params newRegionalRes
 			parent:        params.parent,
 			setName:       params.setName,
 			setProvider:   params.setProvider,
-			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
 			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
@@ -239,7 +221,6 @@ func newRegionalWorkspaceResourceBuilder[B any, S secalib.SpecType](params newRe
 			parent:        params.parent,
 			setName:       params.setName,
 			setProvider:   params.setProvider,
-			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
 			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,
@@ -292,7 +273,6 @@ func newRegionalNetworkResourceBuilder[B any, S secalib.SpecType](params newRegi
 			parent:        params.parent,
 			setName:       params.setName,
 			setProvider:   params.setProvider,
-			setResource:   params.setResource,
 			setApiVersion: params.setApiVersion,
 			setLabels:     params.setLabels,
 			setSpec:       params.setSpec,

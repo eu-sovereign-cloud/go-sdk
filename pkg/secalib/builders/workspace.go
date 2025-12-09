@@ -1,20 +1,46 @@
 package builders
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/generators"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 // workspace
 
+type WorkspaceMetadataBuilder struct {
+	*regionalResourceMetadataBuilder
+}
+
+func NewWorkspaceMetadataBuilder() *WorkspaceMetadataBuilder {
+	builder := &WorkspaceMetadataBuilder{
+		regionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *WorkspaceMetadataBuilder) BuildResponse() (*schema.RegionalResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalResourceMetadataKindResourceKindWorkspace).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateWorkspaceResource(builder.metadata.Tenant, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type WorkspaceBuilder struct {
 	*regionalResourceBuilder[WorkspaceBuilder, schema.WorkspaceSpec]
-	metadata *RegionalResourceMetadataBuilder
+	metadata *WorkspaceMetadataBuilder
 	labels   schema.Labels
 }
 
 func NewWorkspaceBuilder() *WorkspaceBuilder {
 	builder := &WorkspaceBuilder{
-		metadata: NewRegionalResourceMetadataBuilder(),
+		metadata: NewWorkspaceMetadataBuilder(),
 	}
 
 	builder.regionalResourceBuilder = newRegionalResourceBuilder(newRegionalResourceBuilderParams[WorkspaceBuilder, schema.WorkspaceSpec]{
@@ -22,7 +48,6 @@ func NewWorkspaceBuilder() *WorkspaceBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 		},
@@ -43,7 +68,7 @@ func (builder *WorkspaceBuilder) BuildRequest() (*schema.Workspace, error) {
 }
 
 func (builder *WorkspaceBuilder) BuildResponse() (*schema.Workspace, error) {
-	medatata, err := builder.metadata.Kind(schema.RegionalResourceMetadataKindResourceKindWorkspace).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}

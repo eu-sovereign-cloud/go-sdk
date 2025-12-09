@@ -1,21 +1,47 @@
 package builders
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/generators"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 // Network
 
+type NetworkMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewNetworkMetadataBuilder() *NetworkMetadataBuilder {
+	builder := &NetworkMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *NetworkMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNetwork).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateNetworkResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type NetworkBuilder struct {
 	*regionalWorkspaceResourceBuilder[NetworkBuilder, schema.NetworkSpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *NetworkMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.NetworkSpec
 }
 
 func NewNetworkBuilder() *NetworkBuilder {
 	builder := &NetworkBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewNetworkMetadataBuilder(),
 		spec:     &schema.NetworkSpec{},
 	}
 
@@ -24,7 +50,6 @@ func NewNetworkBuilder() *NetworkBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.NetworkSpec) { builder.spec = spec },
@@ -74,7 +99,7 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNetwork).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -89,16 +114,41 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 
 // Internet Gateway
 
+type InternetGatewayMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewInternetGatewayMetadataBuilder() *InternetGatewayMetadataBuilder {
+	builder := &InternetGatewayMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *InternetGatewayMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindInternetGateway).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateInternetGatewayResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type InternetGatewayBuilder struct {
 	*regionalWorkspaceResourceBuilder[InternetGatewayBuilder, schema.InternetGatewaySpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *InternetGatewayMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.InternetGatewaySpec
 }
 
 func NewInternetGatewayBuilder() *InternetGatewayBuilder {
 	builder := &InternetGatewayBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewInternetGatewayMetadataBuilder(),
 		spec:     &schema.InternetGatewaySpec{},
 	}
 
@@ -107,7 +157,6 @@ func NewInternetGatewayBuilder() *InternetGatewayBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.InternetGatewaySpec) { builder.spec = spec },
@@ -149,7 +198,7 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindInternetGateway).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -164,16 +213,41 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 
 // Route Table
 
+type RouteTableMetadataBuilder struct {
+	*regionalNetworkResourceMetadataBuilder
+}
+
+func NewRouteTableMetadataBuilder() *RouteTableMetadataBuilder {
+	builder := &RouteTableMetadataBuilder{
+		regionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *RouteTableMetadataBuilder) BuildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalNetworkResourceMetadataKindResourceKindRoutingTable).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateRouteTableResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Network, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type RouteTableBuilder struct {
 	*regionalNetworkResourceBuilder[RouteTableBuilder, schema.RouteTableSpec]
-	metadata *RegionalNetworkResourceMetadataBuilder
+	metadata *RouteTableMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.RouteTableSpec
 }
 
 func NewRouteTableBuilder() *RouteTableBuilder {
 	builder := &RouteTableBuilder{
-		metadata: NewRegionalNetworkResourceMetadataBuilder(),
+		metadata: NewRouteTableMetadataBuilder(),
 		spec:     &schema.RouteTableSpec{},
 	}
 
@@ -182,7 +256,6 @@ func NewRouteTableBuilder() *RouteTableBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.RouteTableSpec) { builder.spec = spec },
@@ -234,7 +307,7 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindRoutingTable).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -249,16 +322,41 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 
 // Subnet
 
+type SubnetMetadataBuilder struct {
+	*regionalNetworkResourceMetadataBuilder
+}
+
+func NewSubnetMetadataBuilder() *SubnetMetadataBuilder {
+	builder := &SubnetMetadataBuilder{
+		regionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *SubnetMetadataBuilder) BuildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalNetworkResourceMetadataKindResourceKindSubnet).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateSubnetResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Network, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type SubnetBuilder struct {
 	*regionalNetworkResourceBuilder[SubnetBuilder, schema.SubnetSpec]
-	metadata *RegionalNetworkResourceMetadataBuilder
+	metadata *SubnetMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.SubnetSpec
 }
 
 func NewSubnetBuilder() *SubnetBuilder {
 	builder := &SubnetBuilder{
-		metadata: NewRegionalNetworkResourceMetadataBuilder(),
+		metadata: NewSubnetMetadataBuilder(),
 		spec:     &schema.SubnetSpec{},
 	}
 
@@ -267,7 +365,6 @@ func NewSubnetBuilder() *SubnetBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.SubnetSpec) { builder.spec = spec },
@@ -311,7 +408,7 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalNetworkResourceMetadataKindResourceKindSubnet).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -326,16 +423,41 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 
 // Public Ip
 
+type PublicIpMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewPublicIpMetadataBuilder() *PublicIpMetadataBuilder {
+	builder := &PublicIpMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *PublicIpMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindPublicIP).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GeneratePublicIpResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type PublicIpBuilder struct {
 	*regionalWorkspaceResourceBuilder[PublicIpBuilder, schema.PublicIpSpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *PublicIpMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.PublicIpSpec
 }
 
 func NewPublicIpBuilder() *PublicIpBuilder {
 	builder := &PublicIpBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewPublicIpMetadataBuilder(),
 		spec:     &schema.PublicIpSpec{},
 	}
 
@@ -344,7 +466,6 @@ func NewPublicIpBuilder() *PublicIpBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.PublicIpSpec) { builder.spec = spec },
@@ -386,7 +507,7 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindPublicIP).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -401,16 +522,41 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 
 // Nic
 
+type NicMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewNicMetadataBuilder() *NicMetadataBuilder {
+	builder := &NicMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *NicMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNic).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateNicResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type NicBuilder struct {
 	*regionalWorkspaceResourceBuilder[NicBuilder, schema.NicSpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *NicMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.NicSpec
 }
 
 func NewNicBuilder() *NicBuilder {
 	builder := &NicBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewNicMetadataBuilder(),
 		spec:     &schema.NicSpec{},
 	}
 
@@ -419,7 +565,6 @@ func NewNicBuilder() *NicBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.NicSpec) { builder.spec = spec },
@@ -462,7 +607,7 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNic).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -477,16 +622,41 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 
 // Security Group
 
+type SecurityGroupMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewSecurityGroupMetadataBuilder() *SecurityGroupMetadataBuilder {
+	builder := &SecurityGroupMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *SecurityGroupMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindSecurityGroup).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateSecurityGroupResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type SecurityGroupBuilder struct {
 	*regionalWorkspaceResourceBuilder[SecurityGroupBuilder, schema.SecurityGroupSpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *SecurityGroupMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.SecurityGroupSpec
 }
 
 func NewSecurityGroupBuilder() *SecurityGroupBuilder {
 	builder := &SecurityGroupBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewSecurityGroupMetadataBuilder(),
 		spec:     &schema.SecurityGroupSpec{},
 	}
 
@@ -495,7 +665,6 @@ func NewSecurityGroupBuilder() *SecurityGroupBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.SecurityGroupSpec) { builder.spec = spec },
@@ -546,7 +715,7 @@ func (builder *SecurityGroupBuilder) BuildResponse() (*schema.SecurityGroup, err
 		return nil, err
 	}
 
-	metadata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindSecurityGroup).BuildResponse()
+	metadata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}

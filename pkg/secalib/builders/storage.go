@@ -1,21 +1,47 @@
 package builders
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/generators"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 // BlockStorage
 
+type BlockStorageMetadataBuilder struct {
+	*regionalWorkspaceResourceMetadataBuilder
+}
+
+func NewBlockStorageMetadataBuilder() *BlockStorageMetadataBuilder {
+	builder := &BlockStorageMetadataBuilder{
+		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *BlockStorageMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindBlockStorage).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateBlockStorageResource(builder.metadata.Tenant, builder.metadata.Workspace, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type BlockStorageBuilder struct {
 	*regionalWorkspaceResourceBuilder[BlockStorageBuilder, schema.BlockStorageSpec]
-	metadata *RegionalWorkspaceResourceMetadataBuilder
+	metadata *BlockStorageMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.BlockStorageSpec
 }
 
 func NewBlockStorageBuilder() *BlockStorageBuilder {
 	builder := &BlockStorageBuilder{
-		metadata: NewRegionalWorkspaceResourceMetadataBuilder(),
+		metadata: NewBlockStorageMetadataBuilder(),
 		spec:     &schema.BlockStorageSpec{},
 	}
 
@@ -24,7 +50,6 @@ func NewBlockStorageBuilder() *BlockStorageBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.BlockStorageSpec) { builder.spec = spec },
@@ -67,7 +92,7 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.Kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindBlockStorage).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
@@ -82,16 +107,41 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 
 // Image
 
+type ImageMetadataBuilder struct {
+	*regionalResourceMetadataBuilder
+}
+
+func NewImageMetadataBuilder() *ImageMetadataBuilder {
+	builder := &ImageMetadataBuilder{
+		regionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *ImageMetadataBuilder) BuildResponse() (*schema.RegionalResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.RegionalResourceMetadataKindResourceKindImage).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateImageResource(builder.metadata.Tenant, builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type ImageBuilder struct {
 	*regionalResourceBuilder[ImageBuilder, schema.ImageSpec]
-	metadata *RegionalResourceMetadataBuilder
+	metadata *ImageMetadataBuilder
 	labels   schema.Labels
 	spec     *schema.ImageSpec
 }
 
 func NewImageBuilder() *ImageBuilder {
 	builder := &ImageBuilder{
-		metadata: NewRegionalResourceMetadataBuilder(),
+		metadata: NewImageMetadataBuilder(),
 		spec:     &schema.ImageSpec{},
 	}
 
@@ -100,7 +150,6 @@ func NewImageBuilder() *ImageBuilder {
 			parent:        builder,
 			setName:       func(name string) { builder.metadata.setName(name) },
 			setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-			setResource:   func(resource string) { builder.metadata.setResource(resource) },
 			setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 			setLabels:     func(labels schema.Labels) { builder.labels = labels },
 			setSpec:       func(spec *schema.ImageSpec) { builder.spec = spec },
@@ -142,7 +191,7 @@ func (builder *ImageBuilder) BuildResponse() (*schema.Image, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.Kind(schema.RegionalResourceMetadataKindResourceKindImage).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}

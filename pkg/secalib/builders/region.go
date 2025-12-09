@@ -1,20 +1,46 @@
 package builders
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/generators"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 // Region
 
+type RegionMetadataBuilder struct {
+	*globalResourceMetadataBuilder
+}
+
+func NewRegionMetadataBuilder() *RegionMetadataBuilder {
+	builder := &RegionMetadataBuilder{
+		globalResourceMetadataBuilder: newGlobalResourceMetadataBuilder(),
+	}
+
+	return builder
+}
+
+func (builder *RegionMetadataBuilder) BuildResponse() (*schema.GlobalResourceMetadata, error) {
+
+	medatata, err := builder.kind(schema.GlobalResourceMetadataKindResourceKindRegion).buildResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	resource := generators.GenerateRegionResource(builder.metadata.Name)
+	medatata.Resource = resource
+
+	return medatata, nil
+}
+
 type RegionBuilder struct {
 	*globalResourceBuilder[RegionBuilder, schema.RegionSpec]
-	metadata *GlobalResourceMetadataBuilder
+	metadata *RegionMetadataBuilder
 	spec     *schema.RegionSpec
 }
 
 func NewRegionBuilder() *RegionBuilder {
 	builder := &RegionBuilder{
-		metadata: NewGlobalResourceMetadataBuilder(),
+		metadata: NewRegionMetadataBuilder(),
 		spec:     &schema.RegionSpec{},
 	}
 
@@ -22,7 +48,6 @@ func NewRegionBuilder() *RegionBuilder {
 		parent:        builder,
 		setName:       func(name string) { builder.metadata.setName(name) },
 		setProvider:   func(provider string) { builder.metadata.setProvider(provider) },
-		setResource:   func(resource string) { builder.metadata.setResource(resource) },
 		setApiVersion: func(apiVersion string) { builder.metadata.setApiVersion(apiVersion) },
 		setSpec:       func(spec *schema.RegionSpec) { builder.spec = spec },
 	})
@@ -69,7 +94,7 @@ func (builder *RegionBuilder) BuildResponse() (*schema.Region, error) {
 		return nil, err
 	}
 
-	medatata, err := builder.metadata.Kind(schema.GlobalResourceMetadataKindResourceKindRegion).BuildResponse()
+	medatata, err := builder.metadata.buildResponse()
 	if err != nil {
 		return nil, err
 	}
