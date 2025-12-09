@@ -9,7 +9,7 @@ import (
 // metadata
 
 type metadataBuilderType interface {
-	globalResourceMetadataBuilder | globalTenantResourceMetadataBuilder | regionalResourceMetadataBuilder | regionalWorkspaceResourceMetadataBuilder | regionalNetworkResourceMetadataBuilder
+	GlobalResourceMetadataBuilder | GlobalTenantResourceMetadataBuilder | RegionalResourceMetadataBuilder | RegionalWorkspaceResourceMetadataBuilder | RegionalNetworkResourceMetadataBuilder
 }
 
 type metadataBuilder[B metadataBuilderType, K any] struct {

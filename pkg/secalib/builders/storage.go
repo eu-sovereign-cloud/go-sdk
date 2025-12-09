@@ -8,12 +8,12 @@ import (
 // BlockStorage
 
 type BlockStorageMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewBlockStorageMetadataBuilder() *BlockStorageMetadataBuilder {
 	builder := &BlockStorageMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -108,12 +108,12 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 // Image
 
 type ImageMetadataBuilder struct {
-	*regionalResourceMetadataBuilder
+	*RegionalResourceMetadataBuilder
 }
 
 func NewImageMetadataBuilder() *ImageMetadataBuilder {
 	builder := &ImageMetadataBuilder{
-		regionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
+		RegionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
 	}
 
 	return builder

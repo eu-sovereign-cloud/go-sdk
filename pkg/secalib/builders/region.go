@@ -8,12 +8,12 @@ import (
 // Region
 
 type RegionMetadataBuilder struct {
-	*globalResourceMetadataBuilder
+	*GlobalResourceMetadataBuilder
 }
 
 func NewRegionMetadataBuilder() *RegionMetadataBuilder {
 	builder := &RegionMetadataBuilder{
-		globalResourceMetadataBuilder: newGlobalResourceMetadataBuilder(),
+		GlobalResourceMetadataBuilder: newGlobalResourceMetadataBuilder(),
 	}
 
 	return builder

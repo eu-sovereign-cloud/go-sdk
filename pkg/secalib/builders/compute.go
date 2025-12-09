@@ -8,12 +8,12 @@ import (
 // Instance
 
 type InstanceMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewInstanceMetadataBuilder() *InstanceMetadataBuilder {
 	builder := &InstanceMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder

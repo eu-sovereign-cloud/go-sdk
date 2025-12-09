@@ -8,12 +8,12 @@ import (
 // workspace
 
 type WorkspaceMetadataBuilder struct {
-	*regionalResourceMetadataBuilder
+	*RegionalResourceMetadataBuilder
 }
 
 func NewWorkspaceMetadataBuilder() *WorkspaceMetadataBuilder {
 	builder := &WorkspaceMetadataBuilder{
-		regionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
+		RegionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
 	}
 
 	return builder

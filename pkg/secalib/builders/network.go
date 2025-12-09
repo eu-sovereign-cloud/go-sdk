@@ -8,12 +8,12 @@ import (
 // Network
 
 type NetworkMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewNetworkMetadataBuilder() *NetworkMetadataBuilder {
 	builder := &NetworkMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -115,12 +115,12 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 // Internet Gateway
 
 type InternetGatewayMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewInternetGatewayMetadataBuilder() *InternetGatewayMetadataBuilder {
 	builder := &InternetGatewayMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -214,12 +214,12 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 // Route Table
 
 type RouteTableMetadataBuilder struct {
-	*regionalNetworkResourceMetadataBuilder
+	*RegionalNetworkResourceMetadataBuilder
 }
 
 func NewRouteTableMetadataBuilder() *RouteTableMetadataBuilder {
 	builder := &RouteTableMetadataBuilder{
-		regionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
+		RegionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -323,12 +323,12 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 // Subnet
 
 type SubnetMetadataBuilder struct {
-	*regionalNetworkResourceMetadataBuilder
+	*RegionalNetworkResourceMetadataBuilder
 }
 
 func NewSubnetMetadataBuilder() *SubnetMetadataBuilder {
 	builder := &SubnetMetadataBuilder{
-		regionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
+		RegionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -424,12 +424,12 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 // Public Ip
 
 type PublicIpMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewPublicIpMetadataBuilder() *PublicIpMetadataBuilder {
 	builder := &PublicIpMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -523,12 +523,12 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 // Nic
 
 type NicMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewNicMetadataBuilder() *NicMetadataBuilder {
 	builder := &NicMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -623,12 +623,12 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 // Security Group
 
 type SecurityGroupMetadataBuilder struct {
-	*regionalWorkspaceResourceMetadataBuilder
+	*RegionalWorkspaceResourceMetadataBuilder
 }
 
 func NewSecurityGroupMetadataBuilder() *SecurityGroupMetadataBuilder {
 	builder := &SecurityGroupMetadataBuilder{
-		regionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
+		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
 	}
 
 	return builder

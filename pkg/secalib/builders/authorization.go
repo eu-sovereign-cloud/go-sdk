@@ -8,12 +8,12 @@ import (
 // Role
 
 type RoleMetadataBuilder struct {
-	*globalTenantResourceMetadataBuilder
+	*GlobalTenantResourceMetadataBuilder
 }
 
 func NewRoleMetadataBuilder() *RoleMetadataBuilder {
 	builder := &RoleMetadataBuilder{
-		globalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
+		GlobalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
 	}
 
 	return builder
@@ -116,12 +116,12 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 // RoleAssignment
 
 type RoleAssignmentMetadataBuilder struct {
-	*globalTenantResourceMetadataBuilder
+	*GlobalTenantResourceMetadataBuilder
 }
 
 func NewRoleAssignmentMetadataBuilder() *RoleAssignmentMetadataBuilder {
 	builder := &RoleAssignmentMetadataBuilder{
-		globalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
+		GlobalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
 	}
 
 	return builder
