@@ -8,19 +8,16 @@ import (
 // Role
 
 type RoleMetadataBuilder struct {
-	*GlobalTenantResourceMetadataBuilder
+	*globalTenantResourceMetadataBuilder[RoleMetadataBuilder]
 }
 
 func NewRoleMetadataBuilder() *RoleMetadataBuilder {
-	builder := &RoleMetadataBuilder{
-		GlobalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
-	}
-
+	builder := &RoleMetadataBuilder{}
+	builder.globalTenantResourceMetadataBuilder = newGlobalTenantResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *RoleMetadataBuilder) BuildResponse() (*schema.GlobalTenantResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.GlobalTenantResourceMetadataKindResourceKindRole).buildResponse()
 	if err != nil {
 		return nil, err
@@ -116,19 +113,16 @@ func (builder *RoleBuilder) BuildResponse() (*schema.Role, error) {
 // RoleAssignment
 
 type RoleAssignmentMetadataBuilder struct {
-	*GlobalTenantResourceMetadataBuilder
+	*globalTenantResourceMetadataBuilder[RoleAssignmentMetadataBuilder]
 }
 
 func NewRoleAssignmentMetadataBuilder() *RoleAssignmentMetadataBuilder {
-	builder := &RoleAssignmentMetadataBuilder{
-		GlobalTenantResourceMetadataBuilder: newGlobalTenantResourceMetadataBuilder(),
-	}
-
+	builder := &RoleAssignmentMetadataBuilder{}
+	builder.globalTenantResourceMetadataBuilder = newGlobalTenantResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *RoleAssignmentMetadataBuilder) BuildResponse() (*schema.GlobalTenantResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.GlobalTenantResourceMetadataKindResourceKindRoleAssignment).buildResponse()
 	if err != nil {
 		return nil, err

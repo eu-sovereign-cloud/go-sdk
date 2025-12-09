@@ -8,19 +8,16 @@ import (
 // Network
 
 type NetworkMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[NetworkMetadataBuilder]
 }
 
 func NewNetworkMetadataBuilder() *NetworkMetadataBuilder {
-	builder := &NetworkMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &NetworkMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *NetworkMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNetwork).buildResponse()
 	if err != nil {
 		return nil, err
@@ -115,19 +112,16 @@ func (builder *NetworkBuilder) BuildResponse() (*schema.Network, error) {
 // Internet Gateway
 
 type InternetGatewayMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[InternetGatewayMetadataBuilder]
 }
 
 func NewInternetGatewayMetadataBuilder() *InternetGatewayMetadataBuilder {
-	builder := &InternetGatewayMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &InternetGatewayMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *InternetGatewayMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindInternetGateway).buildResponse()
 	if err != nil {
 		return nil, err
@@ -214,19 +208,16 @@ func (builder *InternetGatewayBuilder) BuildResponse() (*schema.InternetGateway,
 // Route Table
 
 type RouteTableMetadataBuilder struct {
-	*RegionalNetworkResourceMetadataBuilder
+	*regionalNetworkResourceMetadataBuilder[RouteTableMetadataBuilder]
 }
 
 func NewRouteTableMetadataBuilder() *RouteTableMetadataBuilder {
-	builder := &RouteTableMetadataBuilder{
-		RegionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
-	}
-
+	builder := &RouteTableMetadataBuilder{}
+	builder.regionalNetworkResourceMetadataBuilder = newRegionalNetworkResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *RouteTableMetadataBuilder) BuildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalNetworkResourceMetadataKindResourceKindRoutingTable).buildResponse()
 	if err != nil {
 		return nil, err
@@ -323,19 +314,16 @@ func (builder *RouteTableBuilder) BuildResponse() (*schema.RouteTable, error) {
 // Subnet
 
 type SubnetMetadataBuilder struct {
-	*RegionalNetworkResourceMetadataBuilder
+	*regionalNetworkResourceMetadataBuilder[SubnetMetadataBuilder]
 }
 
 func NewSubnetMetadataBuilder() *SubnetMetadataBuilder {
-	builder := &SubnetMetadataBuilder{
-		RegionalNetworkResourceMetadataBuilder: newRegionalNetworkResourceMetadataBuilder(),
-	}
-
+	builder := &SubnetMetadataBuilder{}
+	builder.regionalNetworkResourceMetadataBuilder = newRegionalNetworkResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *SubnetMetadataBuilder) BuildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalNetworkResourceMetadataKindResourceKindSubnet).buildResponse()
 	if err != nil {
 		return nil, err
@@ -424,19 +412,16 @@ func (builder *SubnetBuilder) BuildResponse() (*schema.Subnet, error) {
 // Public Ip
 
 type PublicIpMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[PublicIpMetadataBuilder]
 }
 
 func NewPublicIpMetadataBuilder() *PublicIpMetadataBuilder {
-	builder := &PublicIpMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &PublicIpMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *PublicIpMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindPublicIP).buildResponse()
 	if err != nil {
 		return nil, err
@@ -523,19 +508,16 @@ func (builder *PublicIpBuilder) BuildResponse() (*schema.PublicIp, error) {
 // Nic
 
 type NicMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[NicMetadataBuilder]
 }
 
 func NewNicMetadataBuilder() *NicMetadataBuilder {
-	builder := &NicMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &NicMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *NicMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindNic).buildResponse()
 	if err != nil {
 		return nil, err
@@ -623,19 +605,16 @@ func (builder *NicBuilder) BuildResponse() (*schema.Nic, error) {
 // Security Group
 
 type SecurityGroupMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[SecurityGroupMetadataBuilder]
 }
 
 func NewSecurityGroupMetadataBuilder() *SecurityGroupMetadataBuilder {
-	builder := &SecurityGroupMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &SecurityGroupMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *SecurityGroupMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindSecurityGroup).buildResponse()
 	if err != nil {
 		return nil, err

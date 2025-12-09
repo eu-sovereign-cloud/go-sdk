@@ -8,19 +8,16 @@ import (
 // Instance
 
 type InstanceMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[InstanceMetadataBuilder]
 }
 
 func NewInstanceMetadataBuilder() *InstanceMetadataBuilder {
-	builder := &InstanceMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &InstanceMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *InstanceMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindInstance).buildResponse()
 	if err != nil {
 		return nil, err

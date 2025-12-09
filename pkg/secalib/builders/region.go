@@ -8,19 +8,16 @@ import (
 // Region
 
 type RegionMetadataBuilder struct {
-	*GlobalResourceMetadataBuilder
+	*globalResourceMetadataBuilder[RegionMetadataBuilder]
 }
 
 func NewRegionMetadataBuilder() *RegionMetadataBuilder {
-	builder := &RegionMetadataBuilder{
-		GlobalResourceMetadataBuilder: newGlobalResourceMetadataBuilder(),
-	}
-
+	builder := &RegionMetadataBuilder{}
+	builder.globalResourceMetadataBuilder = newGlobalResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *RegionMetadataBuilder) BuildResponse() (*schema.GlobalResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.GlobalResourceMetadataKindResourceKindRegion).buildResponse()
 	if err != nil {
 		return nil, err

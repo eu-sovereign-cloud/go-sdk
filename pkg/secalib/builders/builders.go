@@ -8,11 +8,7 @@ import (
 
 // metadata
 
-type metadataBuilderType interface {
-	GlobalResourceMetadataBuilder | GlobalTenantResourceMetadataBuilder | RegionalResourceMetadataBuilder | RegionalWorkspaceResourceMetadataBuilder | RegionalNetworkResourceMetadataBuilder
-}
-
-type metadataBuilder[B metadataBuilderType, K any] struct {
+type metadataBuilder[B any, K any] struct {
 	validator     *validator.Validate
 	parent        *B
 	setName       func(string)
@@ -21,7 +17,7 @@ type metadataBuilder[B metadataBuilderType, K any] struct {
 	setKind       func(K)
 }
 
-type newMetadataBuilderParams[B metadataBuilderType, K any] struct {
+type newMetadataBuilderParams[B any, K any] struct {
 	parent        *B
 	setName       func(string)
 	setProvider   func(string)
@@ -29,7 +25,7 @@ type newMetadataBuilderParams[B metadataBuilderType, K any] struct {
 	setKind       func(K)
 }
 
-func newMetadataBuilder[B metadataBuilderType, K any](params newMetadataBuilderParams[B, K]) *metadataBuilder[B, K] {
+func newMetadataBuilder[B any, K any](params newMetadataBuilderParams[B, K]) *metadataBuilder[B, K] {
 	return &metadataBuilder[B, K]{
 		validator:     validator.New(),
 		parent:        params.parent,

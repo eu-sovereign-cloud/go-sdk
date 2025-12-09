@@ -8,19 +8,16 @@ import (
 // BlockStorage
 
 type BlockStorageMetadataBuilder struct {
-	*RegionalWorkspaceResourceMetadataBuilder
+	*regionalWorkspaceResourceMetadataBuilder[BlockStorageMetadataBuilder]
 }
 
 func NewBlockStorageMetadataBuilder() *BlockStorageMetadataBuilder {
-	builder := &BlockStorageMetadataBuilder{
-		RegionalWorkspaceResourceMetadataBuilder: newRegionalWorkspaceResourceMetadataBuilder(),
-	}
-
+	builder := &BlockStorageMetadataBuilder{}
+	builder.regionalWorkspaceResourceMetadataBuilder = newRegionalWorkspaceResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *BlockStorageMetadataBuilder) BuildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalWorkspaceResourceMetadataKindResourceKindBlockStorage).buildResponse()
 	if err != nil {
 		return nil, err
@@ -108,19 +105,16 @@ func (builder *BlockStorageBuilder) BuildResponse() (*schema.BlockStorage, error
 // Image
 
 type ImageMetadataBuilder struct {
-	*RegionalResourceMetadataBuilder
+	*regionalResourceMetadataBuilder[ImageMetadataBuilder]
 }
 
 func NewImageMetadataBuilder() *ImageMetadataBuilder {
-	builder := &ImageMetadataBuilder{
-		RegionalResourceMetadataBuilder: newRegionalResourceMetadataBuilder(),
-	}
-
+	builder := &ImageMetadataBuilder{}
+	builder.regionalResourceMetadataBuilder = newRegionalResourceMetadataBuilder(builder)
 	return builder
 }
 
 func (builder *ImageMetadataBuilder) BuildResponse() (*schema.RegionalResourceMetadata, error) {
-
 	medatata, err := builder.kind(schema.RegionalResourceMetadataKindResourceKindImage).buildResponse()
 	if err != nil {
 		return nil, err

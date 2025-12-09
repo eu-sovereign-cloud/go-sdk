@@ -75,9 +75,10 @@ generate: clean spec schemas mock
 
 .PHONY: tag
 tag:
-ifndef VERSION
-    $(error VERSION is required. Usage: make tag VERSION=v0.3.20)
-endif
+	@if [ -z "$(VERSION)" ]; then \
+		echo "ERROR: VERSION is required. Usage: make tag VERSION=v0.3.20"; \
+		exit 1; \
+	fi
 	@echo "Tagging $(VERSION)..."
 	git tag $(VERSION)
 	git push origin $(VERSION)

@@ -4,18 +4,18 @@ import "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 
 // GlobalResourceMetadataBuilder
 
-type GlobalResourceMetadataBuilder struct {
-	*metadataBuilder[GlobalResourceMetadataBuilder, schema.GlobalResourceMetadataKind]
+type globalResourceMetadataBuilder[B any] struct {
+	*metadataBuilder[B, schema.GlobalResourceMetadataKind]
 	metadata *schema.GlobalResourceMetadata
 }
 
-func newGlobalResourceMetadataBuilder() *GlobalResourceMetadataBuilder {
-	builder := &GlobalResourceMetadataBuilder{
+func newGlobalResourceMetadataBuilder[B any](parent *B) *globalResourceMetadataBuilder[B] {
+	builder := &globalResourceMetadataBuilder[B]{
 		metadata: &schema.GlobalResourceMetadata{},
 	}
 
-	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[GlobalResourceMetadataBuilder, schema.GlobalResourceMetadataKind]{
-		parent:        builder,
+	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[B, schema.GlobalResourceMetadataKind]{
+		parent:        parent,
 		setName:       func(name string) { builder.metadata.Name = name },
 		setProvider:   func(provider string) { builder.metadata.Provider = provider },
 		setApiVersion: func(apiVersion string) { builder.metadata.ApiVersion = apiVersion },
@@ -25,7 +25,7 @@ func newGlobalResourceMetadataBuilder() *GlobalResourceMetadataBuilder {
 	return builder
 }
 
-func (builder *GlobalResourceMetadataBuilder) buildResponse() (*schema.GlobalResourceMetadata, error) {
+func (builder *globalResourceMetadataBuilder[B]) buildResponse() (*schema.GlobalResourceMetadata, error) {
 	if err := validateRequired(builder.validator,
 		builder.metadata,
 		builder.metadata.Name,
@@ -42,18 +42,18 @@ func (builder *GlobalResourceMetadataBuilder) buildResponse() (*schema.GlobalRes
 
 // GlobalTenantResourceMetadataBuilder
 
-type GlobalTenantResourceMetadataBuilder struct {
-	*metadataBuilder[GlobalTenantResourceMetadataBuilder, schema.GlobalTenantResourceMetadataKind]
+type globalTenantResourceMetadataBuilder[B any] struct {
+	*metadataBuilder[B, schema.GlobalTenantResourceMetadataKind]
 	metadata *schema.GlobalTenantResourceMetadata
 }
 
-func newGlobalTenantResourceMetadataBuilder() *GlobalTenantResourceMetadataBuilder {
-	builder := &GlobalTenantResourceMetadataBuilder{
+func newGlobalTenantResourceMetadataBuilder[B any](parent *B) *globalTenantResourceMetadataBuilder[B] {
+	builder := &globalTenantResourceMetadataBuilder[B]{
 		metadata: &schema.GlobalTenantResourceMetadata{},
 	}
 
-	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[GlobalTenantResourceMetadataBuilder, schema.GlobalTenantResourceMetadataKind]{
-		parent:        builder,
+	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[B, schema.GlobalTenantResourceMetadataKind]{
+		parent:        parent,
 		setName:       func(name string) { builder.metadata.Name = name },
 		setProvider:   func(provider string) { builder.metadata.Provider = provider },
 		setApiVersion: func(apiVersion string) { builder.metadata.ApiVersion = apiVersion },
@@ -63,12 +63,12 @@ func newGlobalTenantResourceMetadataBuilder() *GlobalTenantResourceMetadataBuild
 	return builder
 }
 
-func (builder *GlobalTenantResourceMetadataBuilder) Tenant(tenant string) *GlobalTenantResourceMetadataBuilder {
+func (builder *globalTenantResourceMetadataBuilder[B]) Tenant(tenant string) *B {
 	builder.metadata.Tenant = tenant
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *GlobalTenantResourceMetadataBuilder) buildResponse() (*schema.GlobalTenantResourceMetadata, error) {
+func (builder *globalTenantResourceMetadataBuilder[B]) buildResponse() (*schema.GlobalTenantResourceMetadata, error) {
 	if err := validateRequired(builder.validator,
 		builder.metadata,
 		builder.metadata.Name,
@@ -86,18 +86,18 @@ func (builder *GlobalTenantResourceMetadataBuilder) buildResponse() (*schema.Glo
 
 // RegionalResourceMetadata
 
-type RegionalResourceMetadataBuilder struct {
-	*metadataBuilder[RegionalResourceMetadataBuilder, schema.RegionalResourceMetadataKind]
+type regionalResourceMetadataBuilder[B any] struct {
+	*metadataBuilder[B, schema.RegionalResourceMetadataKind]
 	metadata *schema.RegionalResourceMetadata
 }
 
-func newRegionalResourceMetadataBuilder() *RegionalResourceMetadataBuilder {
-	builder := &RegionalResourceMetadataBuilder{
+func newRegionalResourceMetadataBuilder[B any](parent *B) *regionalResourceMetadataBuilder[B] {
+	builder := &regionalResourceMetadataBuilder[B]{
 		metadata: &schema.RegionalResourceMetadata{},
 	}
 
-	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[RegionalResourceMetadataBuilder, schema.RegionalResourceMetadataKind]{
-		parent:        builder,
+	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[B, schema.RegionalResourceMetadataKind]{
+		parent:        parent,
 		setName:       func(name string) { builder.metadata.Name = name },
 		setProvider:   func(provider string) { builder.metadata.Provider = provider },
 		setApiVersion: func(apiVersion string) { builder.metadata.ApiVersion = apiVersion },
@@ -107,17 +107,17 @@ func newRegionalResourceMetadataBuilder() *RegionalResourceMetadataBuilder {
 	return builder
 }
 
-func (builder *RegionalResourceMetadataBuilder) Tenant(tenant string) *RegionalResourceMetadataBuilder {
+func (builder *regionalResourceMetadataBuilder[B]) Tenant(tenant string) *B {
 	builder.metadata.Tenant = tenant
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalResourceMetadataBuilder) Region(region string) *RegionalResourceMetadataBuilder {
+func (builder *regionalResourceMetadataBuilder[B]) Region(region string) *B {
 	builder.metadata.Region = region
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalResourceMetadataBuilder) buildResponse() (*schema.RegionalResourceMetadata, error) {
+func (builder *regionalResourceMetadataBuilder[B]) buildResponse() (*schema.RegionalResourceMetadata, error) {
 	if err := validateRequired(builder.validator,
 		builder.metadata,
 		builder.metadata.Name,
@@ -135,18 +135,18 @@ func (builder *RegionalResourceMetadataBuilder) buildResponse() (*schema.Regiona
 
 // RegionalWorkspaceResourceMetadata
 
-type RegionalWorkspaceResourceMetadataBuilder struct {
-	*metadataBuilder[RegionalWorkspaceResourceMetadataBuilder, schema.RegionalWorkspaceResourceMetadataKind]
+type regionalWorkspaceResourceMetadataBuilder[B any] struct {
+	*metadataBuilder[B, schema.RegionalWorkspaceResourceMetadataKind]
 	metadata *schema.RegionalWorkspaceResourceMetadata
 }
 
-func newRegionalWorkspaceResourceMetadataBuilder() *RegionalWorkspaceResourceMetadataBuilder {
-	builder := &RegionalWorkspaceResourceMetadataBuilder{
+func newRegionalWorkspaceResourceMetadataBuilder[B any](parent *B) *regionalWorkspaceResourceMetadataBuilder[B] {
+	builder := &regionalWorkspaceResourceMetadataBuilder[B]{
 		metadata: &schema.RegionalWorkspaceResourceMetadata{},
 	}
 
-	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[RegionalWorkspaceResourceMetadataBuilder, schema.RegionalWorkspaceResourceMetadataKind]{
-		parent:        builder,
+	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[B, schema.RegionalWorkspaceResourceMetadataKind]{
+		parent:        parent,
 		setName:       func(name string) { builder.metadata.Name = name },
 		setProvider:   func(provider string) { builder.metadata.Provider = provider },
 		setApiVersion: func(apiVersion string) { builder.metadata.ApiVersion = apiVersion },
@@ -156,22 +156,22 @@ func newRegionalWorkspaceResourceMetadataBuilder() *RegionalWorkspaceResourceMet
 	return builder
 }
 
-func (builder *RegionalWorkspaceResourceMetadataBuilder) Tenant(tenant string) *RegionalWorkspaceResourceMetadataBuilder {
+func (builder *regionalWorkspaceResourceMetadataBuilder[B]) Tenant(tenant string) *B {
 	builder.metadata.Tenant = tenant
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalWorkspaceResourceMetadataBuilder) Workspace(workspace string) *RegionalWorkspaceResourceMetadataBuilder {
+func (builder *regionalWorkspaceResourceMetadataBuilder[B]) Workspace(workspace string) *B {
 	builder.metadata.Workspace = workspace
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalWorkspaceResourceMetadataBuilder) Region(region string) *RegionalWorkspaceResourceMetadataBuilder {
+func (builder *regionalWorkspaceResourceMetadataBuilder[B]) Region(region string) *B {
 	builder.metadata.Region = region
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalWorkspaceResourceMetadataBuilder) buildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
+func (builder *regionalWorkspaceResourceMetadataBuilder[B]) buildResponse() (*schema.RegionalWorkspaceResourceMetadata, error) {
 	if err := validateRequired(builder.validator,
 		builder.metadata,
 		builder.metadata.Name,
@@ -190,18 +190,18 @@ func (builder *RegionalWorkspaceResourceMetadataBuilder) buildResponse() (*schem
 
 // RegionalNetworkResourceMetadata
 
-type RegionalNetworkResourceMetadataBuilder struct {
-	*metadataBuilder[RegionalNetworkResourceMetadataBuilder, schema.RegionalNetworkResourceMetadataKind]
+type regionalNetworkResourceMetadataBuilder[B any] struct {
+	*metadataBuilder[B, schema.RegionalNetworkResourceMetadataKind]
 	metadata *schema.RegionalNetworkResourceMetadata
 }
 
-func newRegionalNetworkResourceMetadataBuilder() *RegionalNetworkResourceMetadataBuilder {
-	builder := &RegionalNetworkResourceMetadataBuilder{
+func newRegionalNetworkResourceMetadataBuilder[B any](parent *B) *regionalNetworkResourceMetadataBuilder[B] {
+	builder := &regionalNetworkResourceMetadataBuilder[B]{
 		metadata: &schema.RegionalNetworkResourceMetadata{},
 	}
 
-	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[RegionalNetworkResourceMetadataBuilder, schema.RegionalNetworkResourceMetadataKind]{
-		parent:        builder,
+	builder.metadataBuilder = newMetadataBuilder(newMetadataBuilderParams[B, schema.RegionalNetworkResourceMetadataKind]{
+		parent:        parent,
 		setName:       func(name string) { builder.metadata.Name = name },
 		setProvider:   func(provider string) { builder.metadata.Provider = provider },
 		setApiVersion: func(apiVersion string) { builder.metadata.ApiVersion = apiVersion },
@@ -211,27 +211,27 @@ func newRegionalNetworkResourceMetadataBuilder() *RegionalNetworkResourceMetadat
 	return builder
 }
 
-func (builder *RegionalNetworkResourceMetadataBuilder) Tenant(tenant string) *RegionalNetworkResourceMetadataBuilder {
+func (builder *regionalNetworkResourceMetadataBuilder[B]) Tenant(tenant string) *B {
 	builder.metadata.Tenant = tenant
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalNetworkResourceMetadataBuilder) Workspace(workspace string) *RegionalNetworkResourceMetadataBuilder {
+func (builder *regionalNetworkResourceMetadataBuilder[B]) Workspace(workspace string) *B {
 	builder.metadata.Workspace = workspace
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalNetworkResourceMetadataBuilder) Network(network string) *RegionalNetworkResourceMetadataBuilder {
+func (builder *regionalNetworkResourceMetadataBuilder[B]) Network(network string) *B {
 	builder.metadata.Network = network
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalNetworkResourceMetadataBuilder) Region(region string) *RegionalNetworkResourceMetadataBuilder {
+func (builder *regionalNetworkResourceMetadataBuilder[B]) Region(region string) *B {
 	builder.metadata.Region = region
-	return builder
+	return builder.metadataBuilder.parent
 }
 
-func (builder *RegionalNetworkResourceMetadataBuilder) buildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
+func (builder *regionalNetworkResourceMetadataBuilder[B]) buildResponse() (*schema.RegionalNetworkResourceMetadata, error) {
 	if err := validateRequired(builder.validator,
 		builder.metadata,
 		builder.metadata.Name,
