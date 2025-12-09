@@ -30,7 +30,6 @@ func (builder *globalResourceMetadataBuilder[B]) buildResponse() (*schema.Global
 		builder.metadata,
 		builder.metadata.Name,
 		builder.metadata.Provider,
-		builder.metadata.Resource,
 		builder.metadata.ApiVersion,
 		builder.metadata.Kind,
 	); err != nil {
@@ -73,7 +72,6 @@ func (builder *globalTenantResourceMetadataBuilder[B]) buildResponse() (*schema.
 		builder.metadata,
 		builder.metadata.Name,
 		builder.metadata.Provider,
-		builder.metadata.Resource,
 		builder.metadata.ApiVersion,
 		builder.metadata.Kind,
 		builder.metadata.Tenant,
