@@ -75,6 +75,9 @@ generate: clean spec schemas mock
 
 .PHONY: tag
 tag:
-	@echo "Tagging..."
-	git tag $(filter-out $@,$(MAKECMDGOALS))
-	git push origin $(filter-out $@,$(MAKECMDGOALS))
+ifndef VERSION
+    $(error VERSION is required. Usage: make tag VERSION=v0.3.20)
+endif
+	@echo "Tagging $(VERSION)..."
+	git tag $(VERSION)
+	git push origin $(VERSION)
