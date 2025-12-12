@@ -1,6 +1,6 @@
 package secapi
 
-import "github.com/eu-sovereign-cloud/go-sdk/pkg/secalib/builders"
+import "github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 type ListOptions struct {
 	Limit  *int
