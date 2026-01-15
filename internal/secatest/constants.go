@@ -1,26 +1,8 @@
 package secatest
 
 const (
-	// Providers
-	ProviderRegionName     = "seca.region/v1"
-	ProviderRegionEndpoint = "/providers/seca.regions"
-
-	ProviderAuthorizationName     = "seca.authorization"
-	ProviderAuthorizationEndpoint = "/providers/seca.authorization"
-
-	ProviderWorkspaceName     = "seca.workspace"
-	ProviderWorkspaceEndpoint = "/providers/seca.workspace"
-
-	ProviderNetworkName     = "seca.network"
-	ProviderNetworkEndpoint = "/providers/seca.network"
-
-	ProviderComputeName     = "seca.compute"
-	ProviderComputeEndpoint = "/providers/seca.compute"
-
-	ProviderStorageName     = "seca.storage"
-	ProviderStorageEndpoint = "/providers/seca.storage"
-
-	ProviderVersion1 = "v1"
+	// Endpoints
+	providersEndpointPrefix = "/providers"
 
 	// Test Data
 
