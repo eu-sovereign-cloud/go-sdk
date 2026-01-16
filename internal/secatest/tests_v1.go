@@ -10,6 +10,7 @@ import (
 	mockregion "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.region.v1"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
 	mockworkspace "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.workspace.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
@@ -27,30 +28,30 @@ func ConfigureRegionV1Handler(t *testing.T, sm *http.ServeMux) *mockregion.MockS
 		Spec: schema.RegionSpec{
 			Providers: []schema.Provider{
 				{
-					Name:    ProviderWorkspaceName,
-					Url:     ProviderWorkspaceEndpoint,
-					Version: ProviderVersion1,
+					Name:    constants.WorkspaceProviderName,
+					Url:     ProviderWorkspaceV1Endpoint,
+					Version: constants.ApiVersion1,
 				},
 				{
-					Name:    ProviderNetworkName,
-					Url:     ProviderNetworkEndpoint,
-					Version: ProviderVersion1,
+					Name:    constants.NetworkProviderName,
+					Url:     ProviderNetworkV1Endpoint,
+					Version: constants.ApiVersion1,
 				},
 				{
-					Name:    ProviderComputeName,
-					Url:     ProviderComputeEndpoint,
-					Version: ProviderVersion1,
+					Name:    constants.ComputeProviderName,
+					Url:     ProviderComputeV1Endpoint,
+					Version: constants.ApiVersion1,
 				},
 				{
-					Name:    ProviderStorageName,
-					Url:     ProviderStorageEndpoint,
-					Version: ProviderVersion1,
+					Name:    constants.StorageProviderName,
+					Url:     ProviderStorageV1Endpoint,
+					Version: constants.ApiVersion1,
 				},
 			},
 		},
 	})
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
-		BaseURL:    ProviderRegionEndpoint,
+		BaseURL:    ProviderRegionV1Endpoint,
 		BaseRouter: sm,
 	})
 
@@ -59,42 +60,42 @@ func ConfigureRegionV1Handler(t *testing.T, sm *http.ServeMux) *mockregion.MockS
 
 func ConfigureAuthorizationHandler(sim *mockauthorization.MockServerInterface, sm *http.ServeMux) {
 	authorization.HandlerWithOptions(sim, authorization.StdHTTPServerOptions{
-		BaseURL:    ProviderAuthorizationEndpoint,
+		BaseURL:    ProviderAuthorizationV1Endpoint,
 		BaseRouter: sm,
 	})
 }
 
 func ConfigureComputeHandler(sim *mockcompute.MockServerInterface, sm *http.ServeMux) {
 	compute.HandlerWithOptions(sim, compute.StdHTTPServerOptions{
-		BaseURL:    ProviderComputeEndpoint,
+		BaseURL:    ProviderComputeV1Endpoint,
 		BaseRouter: sm,
 	})
 }
 
 func ConfigureNetworkHandler(sim *mocknetwork.MockServerInterface, sm *http.ServeMux) {
 	network.HandlerWithOptions(sim, network.StdHTTPServerOptions{
-		BaseURL:    ProviderNetworkEndpoint,
+		BaseURL:    ProviderNetworkV1Endpoint,
 		BaseRouter: sm,
 	})
 }
 
 func ConfigureRegionHandler(sim *mockregion.MockServerInterface, sm *http.ServeMux) {
 	region.HandlerWithOptions(sim, region.StdHTTPServerOptions{
-		BaseURL:    ProviderRegionEndpoint,
+		BaseURL:    ProviderRegionV1Endpoint,
 		BaseRouter: sm,
 	})
 }
 
 func ConfigureStorageHandler(sim *mockstorage.MockServerInterface, sm *http.ServeMux) {
 	storage.HandlerWithOptions(sim, storage.StdHTTPServerOptions{
-		BaseURL:    ProviderStorageEndpoint,
+		BaseURL:    ProviderStorageV1Endpoint,
 		BaseRouter: sm,
 	})
 }
 
 func ConfigureWorkspaceHandler(sim *mockworkspace.MockServerInterface, sm *http.ServeMux) {
 	workspace.HandlerWithOptions(sim, workspace.StdHTTPServerOptions{
-		BaseURL:    ProviderWorkspaceEndpoint,
+		BaseURL:    ProviderWorkspaceV1Endpoint,
 		BaseRouter: sm,
 	})
 }
