@@ -813,6 +813,163 @@ func (_c *MockClientWithResponsesInterface_CreateOrUpdateRouteTableWithResponse_
 	return _c
 }
 
+// CreateOrUpdateSecurityGroupRuleWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupRuleWithBodyWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupRuleParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, tenant, workspace, name, params, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CreateOrUpdateSecurityGroupRuleWithBodyWithResponse")
+	}
+
+	var r0 *network.CreateOrUpdateSecurityGroupRuleResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error)); ok {
+		return rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, string, io.Reader, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupRuleResponse); ok {
+		r0 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*network.CreateOrUpdateSecurityGroupRuleResponse)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, string, io.Reader, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, name, params, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateSecurityGroupRuleWithBodyWithResponse'
+type MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call struct {
+	*mock.Call
+}
+
+// CreateOrUpdateSecurityGroupRuleWithBodyWithResponse is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - params *network.CreateOrUpdateSecurityGroupRuleParams
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...network.RequestEditorFn
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSecurityGroupRuleWithBodyWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call {
+	return &MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call{Call: _e.mock.On("CreateOrUpdateSecurityGroupRuleWithBodyWithResponse",
+		append([]interface{}{ctx, tenant, workspace, name, params, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupRuleParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-7)
+		for i, a := range args[7:] {
+			if a != nil {
+				variadicArgs[i] = a.(network.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*network.CreateOrUpdateSecurityGroupRuleParams), args[5].(string), args[6].(io.Reader), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call) Return(_a0 *network.CreateOrUpdateSecurityGroupRuleResponse, _a1 error) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, string, io.Reader, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithBodyWithResponse_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// CreateOrUpdateSecurityGroupRuleWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, body, reqEditors
+func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupRuleWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupRuleParams, body network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, tenant, workspace, name, params, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CreateOrUpdateSecurityGroupRuleWithResponse")
+	}
+
+	var r0 *network.CreateOrUpdateSecurityGroupRuleResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error)); ok {
+		return rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, ...network.RequestEditorFn) *network.CreateOrUpdateSecurityGroupRuleResponse); ok {
+		r0 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*network.CreateOrUpdateSecurityGroupRuleResponse)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, name, params, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateSecurityGroupRuleWithResponse'
+type MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call struct {
+	*mock.Call
+}
+
+// CreateOrUpdateSecurityGroupRuleWithResponse is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - params *network.CreateOrUpdateSecurityGroupRuleParams
+//   - body network.CreateOrUpdateSecurityGroupRuleJSONRequestBody
+//   - reqEditors ...network.RequestEditorFn
+func (_e *MockClientWithResponsesInterface_Expecter) CreateOrUpdateSecurityGroupRuleWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, body interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call {
+	return &MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call{Call: _e.mock.On("CreateOrUpdateSecurityGroupRuleWithResponse",
+		append([]interface{}{ctx, tenant, workspace, name, params, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupRuleParams, body network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-6)
+		for i, a := range args[6:] {
+			if a != nil {
+				variadicArgs[i] = a.(network.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*network.CreateOrUpdateSecurityGroupRuleParams), args[5].(network.CreateOrUpdateSecurityGroupRuleJSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call) Return(_a0 *network.CreateOrUpdateSecurityGroupRuleResponse, _a1 error) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.CreateOrUpdateSecurityGroupRuleParams, network.CreateOrUpdateSecurityGroupRuleJSONRequestBody, ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupRuleResponse, error)) *MockClientWithResponsesInterface_CreateOrUpdateSecurityGroupRuleWithResponse_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // CreateOrUpdateSecurityGroupWithBodyWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, contentType, body, reqEditors
 func (_m *MockClientWithResponsesInterface) CreateOrUpdateSecurityGroupWithBodyWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.CreateOrUpdateSecurityGroupParams, contentType string, body io.Reader, reqEditors ...network.RequestEditorFn) (*network.CreateOrUpdateSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
@@ -1515,6 +1672,83 @@ func (_c *MockClientWithResponsesInterface_DeleteRouteTableWithResponse_Call) Ru
 	return _c
 }
 
+// DeleteSecurityGroupRuleWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
+func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupRuleWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.DeleteSecurityGroupRuleParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSecurityGroupRuleResponse, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, tenant, workspace, name, params)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteSecurityGroupRuleWithResponse")
+	}
+
+	var r0 *network.DeleteSecurityGroupRuleResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.DeleteSecurityGroupRuleParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupRuleResponse, error)); ok {
+		return rf(ctx, tenant, workspace, name, params, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.DeleteSecurityGroupRuleParams, ...network.RequestEditorFn) *network.DeleteSecurityGroupRuleResponse); ok {
+		r0 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*network.DeleteSecurityGroupRuleResponse)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.DeleteSecurityGroupRuleParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, name, params, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteSecurityGroupRuleWithResponse'
+type MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call struct {
+	*mock.Call
+}
+
+// DeleteSecurityGroupRuleWithResponse is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - params *network.DeleteSecurityGroupRuleParams
+//   - reqEditors ...network.RequestEditorFn
+func (_e *MockClientWithResponsesInterface_Expecter) DeleteSecurityGroupRuleWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call {
+	return &MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call{Call: _e.mock.On("DeleteSecurityGroupRuleWithResponse",
+		append([]interface{}{ctx, tenant, workspace, name, params}, reqEditors...)...)}
+}
+
+func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.DeleteSecurityGroupRuleParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
+			if a != nil {
+				variadicArgs[i] = a.(network.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), args[4].(*network.DeleteSecurityGroupRuleParams), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call) Return(_a0 *network.DeleteSecurityGroupRuleResponse, _a1 error) *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, *network.DeleteSecurityGroupRuleParams, ...network.RequestEditorFn) (*network.DeleteSecurityGroupRuleResponse, error)) *MockClientWithResponsesInterface_DeleteSecurityGroupRuleWithResponse_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // DeleteSecurityGroupWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, params, reqEditors
 func (_m *MockClientWithResponsesInterface) DeleteSecurityGroupWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params *network.DeleteSecurityGroupParams, reqEditors ...network.RequestEditorFn) (*network.DeleteSecurityGroupResponse, error) {
 	_va := make([]interface{}, len(reqEditors))
@@ -2047,6 +2281,82 @@ func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) Retur
 }
 
 func (_c *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.NetworkPathParam, schema.ResourcePathParam, ...network.RequestEditorFn) (*network.GetRouteTableResponse, error)) *MockClientWithResponsesInterface_GetRouteTableWithResponse_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetSecurityGroupRuleWithResponse provides a mock function with given fields: ctx, tenant, workspace, name, reqEditors
+func (_m *MockClientWithResponsesInterface) GetSecurityGroupRuleWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, reqEditors ...network.RequestEditorFn) (*network.GetSecurityGroupRuleResponse, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, tenant, workspace, name)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetSecurityGroupRuleWithResponse")
+	}
+
+	var r0 *network.GetSecurityGroupRuleResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSecurityGroupRuleResponse, error)); ok {
+		return rf(ctx, tenant, workspace, name, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...network.RequestEditorFn) *network.GetSecurityGroupRuleResponse); ok {
+		r0 = rf(ctx, tenant, workspace, name, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*network.GetSecurityGroupRuleResponse)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, name, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSecurityGroupRuleWithResponse'
+type MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call struct {
+	*mock.Call
+}
+
+// GetSecurityGroupRuleWithResponse is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - reqEditors ...network.RequestEditorFn
+func (_e *MockClientWithResponsesInterface_Expecter) GetSecurityGroupRuleWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, name interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call {
+	return &MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call{Call: _e.mock.On("GetSecurityGroupRuleWithResponse",
+		append([]interface{}{ctx, tenant, workspace, name}, reqEditors...)...)}
+}
+
+func (_c *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(network.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(schema.ResourcePathParam), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call) Return(_a0 *network.GetSecurityGroupRuleResponse, _a1 error) *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, ...network.RequestEditorFn) (*network.GetSecurityGroupRuleResponse, error)) *MockClientWithResponsesInterface_GetSecurityGroupRuleWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -2656,6 +2966,82 @@ func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) Ret
 }
 
 func (_c *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, schema.NetworkPathParam, *network.ListRouteTablesParams, ...network.RequestEditorFn) (*network.ListRouteTablesResponse, error)) *MockClientWithResponsesInterface_ListRouteTablesWithResponse_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// ListSecurityGroupRulesWithResponse provides a mock function with given fields: ctx, tenant, workspace, params, reqEditors
+func (_m *MockClientWithResponsesInterface) ListSecurityGroupRulesWithResponse(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params *network.ListSecurityGroupRulesParams, reqEditors ...network.RequestEditorFn) (*network.ListSecurityGroupRulesResponse, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, tenant, workspace, params)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for ListSecurityGroupRulesWithResponse")
+	}
+
+	var r0 *network.ListSecurityGroupRulesResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *network.ListSecurityGroupRulesParams, ...network.RequestEditorFn) (*network.ListSecurityGroupRulesResponse, error)); ok {
+		return rf(ctx, tenant, workspace, params, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *network.ListSecurityGroupRulesParams, ...network.RequestEditorFn) *network.ListSecurityGroupRulesResponse); ok {
+		r0 = rf(ctx, tenant, workspace, params, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*network.ListSecurityGroupRulesResponse)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *network.ListSecurityGroupRulesParams, ...network.RequestEditorFn) error); ok {
+		r1 = rf(ctx, tenant, workspace, params, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListSecurityGroupRulesWithResponse'
+type MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call struct {
+	*mock.Call
+}
+
+// ListSecurityGroupRulesWithResponse is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - params *network.ListSecurityGroupRulesParams
+//   - reqEditors ...network.RequestEditorFn
+func (_e *MockClientWithResponsesInterface_Expecter) ListSecurityGroupRulesWithResponse(ctx interface{}, tenant interface{}, workspace interface{}, params interface{}, reqEditors ...interface{}) *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call {
+	return &MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call{Call: _e.mock.On("ListSecurityGroupRulesWithResponse",
+		append([]interface{}{ctx, tenant, workspace, params}, reqEditors...)...)}
+}
+
+func (_c *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call) Run(run func(ctx context.Context, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params *network.ListSecurityGroupRulesParams, reqEditors ...network.RequestEditorFn)) *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]network.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(network.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(schema.TenantPathParam), args[2].(schema.WorkspacePathParam), args[3].(*network.ListSecurityGroupRulesParams), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call) Return(_a0 *network.ListSecurityGroupRulesResponse, _a1 error) *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call) RunAndReturn(run func(context.Context, schema.TenantPathParam, schema.WorkspacePathParam, *network.ListSecurityGroupRulesParams, ...network.RequestEditorFn) (*network.ListSecurityGroupRulesResponse, error)) *MockClientWithResponsesInterface_ListSecurityGroupRulesWithResponse_Call {
 	_c.Call.Return(run)
 	return _c
 }
