@@ -253,6 +253,44 @@ func (_c *MockServerInterface_CreateOrUpdateSecurityGroup_Call) RunAndReturn(run
 	return _c
 }
 
+// CreateOrUpdateSecurityGroupRule provides a mock function with given fields: w, r, tenant, workspace, name, params
+func (_m *MockServerInterface) CreateOrUpdateSecurityGroupRule(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params network.CreateOrUpdateSecurityGroupRuleParams) {
+	_m.Called(w, r, tenant, workspace, name, params)
+}
+
+// MockServerInterface_CreateOrUpdateSecurityGroupRule_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateOrUpdateSecurityGroupRule'
+type MockServerInterface_CreateOrUpdateSecurityGroupRule_Call struct {
+	*mock.Call
+}
+
+// CreateOrUpdateSecurityGroupRule is a helper method to define mock.On call
+//   - w http.ResponseWriter
+//   - r *http.Request
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - params network.CreateOrUpdateSecurityGroupRuleParams
+func (_e *MockServerInterface_Expecter) CreateOrUpdateSecurityGroupRule(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call {
+	return &MockServerInterface_CreateOrUpdateSecurityGroupRule_Call{Call: _e.mock.On("CreateOrUpdateSecurityGroupRule", w, r, tenant, workspace, name, params)}
+}
+
+func (_c *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params network.CreateOrUpdateSecurityGroupRuleParams)) *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam), args[5].(network.CreateOrUpdateSecurityGroupRuleParams))
+	})
+	return _c
+}
+
+func (_c *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call) Return() *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, network.CreateOrUpdateSecurityGroupRuleParams)) *MockServerInterface_CreateOrUpdateSecurityGroupRule_Call {
+	_c.Run(run)
+	return _c
+}
+
 // CreateOrUpdateSubnet provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
 func (_m *MockServerInterface) CreateOrUpdateSubnet(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, _a4 schema.NetworkPathParam, name schema.ResourcePathParam, params network.CreateOrUpdateSubnetParams) {
 	_m.Called(w, r, tenant, workspace, _a4, name, params)
@@ -521,6 +559,44 @@ func (_c *MockServerInterface_DeleteSecurityGroup_Call) RunAndReturn(run func(ht
 	return _c
 }
 
+// DeleteSecurityGroupRule provides a mock function with given fields: w, r, tenant, workspace, name, params
+func (_m *MockServerInterface) DeleteSecurityGroupRule(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params network.DeleteSecurityGroupRuleParams) {
+	_m.Called(w, r, tenant, workspace, name, params)
+}
+
+// MockServerInterface_DeleteSecurityGroupRule_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteSecurityGroupRule'
+type MockServerInterface_DeleteSecurityGroupRule_Call struct {
+	*mock.Call
+}
+
+// DeleteSecurityGroupRule is a helper method to define mock.On call
+//   - w http.ResponseWriter
+//   - r *http.Request
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+//   - params network.DeleteSecurityGroupRuleParams
+func (_e *MockServerInterface_Expecter) DeleteSecurityGroupRule(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}, params interface{}) *MockServerInterface_DeleteSecurityGroupRule_Call {
+	return &MockServerInterface_DeleteSecurityGroupRule_Call{Call: _e.mock.On("DeleteSecurityGroupRule", w, r, tenant, workspace, name, params)}
+}
+
+func (_c *MockServerInterface_DeleteSecurityGroupRule_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params network.DeleteSecurityGroupRuleParams)) *MockServerInterface_DeleteSecurityGroupRule_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam), args[5].(network.DeleteSecurityGroupRuleParams))
+	})
+	return _c
+}
+
+func (_c *MockServerInterface_DeleteSecurityGroupRule_Call) Return() *MockServerInterface_DeleteSecurityGroupRule_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *MockServerInterface_DeleteSecurityGroupRule_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam, network.DeleteSecurityGroupRuleParams)) *MockServerInterface_DeleteSecurityGroupRule_Call {
+	_c.Run(run)
+	return _c
+}
+
 // DeleteSubnet provides a mock function with given fields: w, r, tenant, workspace, _a4, name, params
 func (_m *MockServerInterface) DeleteSubnet(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, _a4 schema.NetworkPathParam, name schema.ResourcePathParam, params network.DeleteSubnetParams) {
 	_m.Called(w, r, tenant, workspace, _a4, name, params)
@@ -783,6 +859,43 @@ func (_c *MockServerInterface_GetSecurityGroup_Call) RunAndReturn(run func(http.
 	return _c
 }
 
+// GetSecurityGroupRule provides a mock function with given fields: w, r, tenant, workspace, name
+func (_m *MockServerInterface) GetSecurityGroupRule(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
+	_m.Called(w, r, tenant, workspace, name)
+}
+
+// MockServerInterface_GetSecurityGroupRule_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSecurityGroupRule'
+type MockServerInterface_GetSecurityGroupRule_Call struct {
+	*mock.Call
+}
+
+// GetSecurityGroupRule is a helper method to define mock.On call
+//   - w http.ResponseWriter
+//   - r *http.Request
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - name schema.ResourcePathParam
+func (_e *MockServerInterface_Expecter) GetSecurityGroupRule(w interface{}, r interface{}, tenant interface{}, workspace interface{}, name interface{}) *MockServerInterface_GetSecurityGroupRule_Call {
+	return &MockServerInterface_GetSecurityGroupRule_Call{Call: _e.mock.On("GetSecurityGroupRule", w, r, tenant, workspace, name)}
+}
+
+func (_c *MockServerInterface_GetSecurityGroupRule_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam)) *MockServerInterface_GetSecurityGroupRule_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(schema.ResourcePathParam))
+	})
+	return _c
+}
+
+func (_c *MockServerInterface_GetSecurityGroupRule_Call) Return() *MockServerInterface_GetSecurityGroupRule_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *MockServerInterface_GetSecurityGroupRule_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.ResourcePathParam)) *MockServerInterface_GetSecurityGroupRule_Call {
+	_c.Run(run)
+	return _c
+}
+
 // GetSku provides a mock function with given fields: w, r, tenant, name
 func (_m *MockServerInterface) GetSku(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
 	_m.Called(w, r, tenant, name)
@@ -1039,6 +1152,43 @@ func (_c *MockServerInterface_ListRouteTables_Call) Return() *MockServerInterfac
 }
 
 func (_c *MockServerInterface_ListRouteTables_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, schema.NetworkPathParam, network.ListRouteTablesParams)) *MockServerInterface_ListRouteTables_Call {
+	_c.Run(run)
+	return _c
+}
+
+// ListSecurityGroupRules provides a mock function with given fields: w, r, tenant, workspace, params
+func (_m *MockServerInterface) ListSecurityGroupRules(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params network.ListSecurityGroupRulesParams) {
+	_m.Called(w, r, tenant, workspace, params)
+}
+
+// MockServerInterface_ListSecurityGroupRules_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListSecurityGroupRules'
+type MockServerInterface_ListSecurityGroupRules_Call struct {
+	*mock.Call
+}
+
+// ListSecurityGroupRules is a helper method to define mock.On call
+//   - w http.ResponseWriter
+//   - r *http.Request
+//   - tenant schema.TenantPathParam
+//   - workspace schema.WorkspacePathParam
+//   - params network.ListSecurityGroupRulesParams
+func (_e *MockServerInterface_Expecter) ListSecurityGroupRules(w interface{}, r interface{}, tenant interface{}, workspace interface{}, params interface{}) *MockServerInterface_ListSecurityGroupRules_Call {
+	return &MockServerInterface_ListSecurityGroupRules_Call{Call: _e.mock.On("ListSecurityGroupRules", w, r, tenant, workspace, params)}
+}
+
+func (_c *MockServerInterface_ListSecurityGroupRules_Call) Run(run func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, params network.ListSecurityGroupRulesParams)) *MockServerInterface_ListSecurityGroupRules_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(http.ResponseWriter), args[1].(*http.Request), args[2].(schema.TenantPathParam), args[3].(schema.WorkspacePathParam), args[4].(network.ListSecurityGroupRulesParams))
+	})
+	return _c
+}
+
+func (_c *MockServerInterface_ListSecurityGroupRules_Call) Return() *MockServerInterface_ListSecurityGroupRules_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *MockServerInterface_ListSecurityGroupRules_Call) RunAndReturn(run func(http.ResponseWriter, *http.Request, schema.TenantPathParam, schema.WorkspacePathParam, network.ListSecurityGroupRulesParams)) *MockServerInterface_ListSecurityGroupRules_Call {
 	_c.Run(run)
 	return _c
 }
