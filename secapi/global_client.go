@@ -13,6 +13,8 @@ type GlobalConfig struct {
 type GlobalEndpoints struct {
 	RegionV1        string
 	AuthorizationV1 string
+
+	WellknownV1 string
 }
 
 type GlobalClient struct {
@@ -20,6 +22,8 @@ type GlobalClient struct {
 
 	RegionV1        *RegionV1
 	AuthorizationV1 *AuthorizationV1
+
+	WellknownV1 *WellknownV1
 }
 
 func NewGlobalClient(config *GlobalConfig) (*GlobalClient, error) {
@@ -44,6 +48,13 @@ func NewGlobalClient(config *GlobalConfig) (*GlobalClient, error) {
 	// Initializes authorizationV1 API client
 	if config.Endpoints.AuthorizationV1 != "" {
 		if err := initGlobalAPI(client, config.Endpoints.AuthorizationV1, newAuthorizationV1, client.setAuthorizationV1); err != nil {
+			return nil, err
+		}
+	}
+
+	// Initializes wellknownV1 API client
+	if config.Endpoints.WellknownV1 != "" {
+		if err := initGlobalAPI(client, config.Endpoints.WellknownV1, newWellknownV1, client.setWellknownV1); err != nil {
 			return nil, err
 		}
 	}
@@ -83,4 +94,8 @@ func (client *GlobalClient) setRegionV1(region *RegionV1) {
 
 func (client *GlobalClient) setAuthorizationV1(authorization *AuthorizationV1) {
 	client.AuthorizationV1 = authorization
+}
+
+func (client *GlobalClient) setWellknownV1(wellknown *WellknownV1) {
+	client.WellknownV1 = wellknown
 }
