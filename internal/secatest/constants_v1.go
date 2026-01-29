@@ -3,6 +3,8 @@ package secatest
 import "github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 
 const (
+	WellknownV1Endpoint = "/.wellknown/secapi"
+
 	// Providers
 	ProviderRegionV1Endpoint        = providersEndpointPrefix + "/" + constants.RegionProviderV1Name
 	ProviderAuthorizationV1Endpoint = providersEndpointPrefix + "/" + constants.AuthorizationProviderV1Name

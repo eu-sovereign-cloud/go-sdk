@@ -14,6 +14,7 @@ func newTestGlobalClientV1(t *testing.T, server *httptest.Server) *GlobalClient 
 	config := &GlobalConfig{
 		AuthToken: secatest.AuthToken,
 		Endpoints: GlobalEndpoints{
+			WellknownV1:     server.URL + secatest.WellknownV1Endpoint,
 			RegionV1:        server.URL + secatest.ProviderRegionV1Endpoint,
 			AuthorizationV1: server.URL + secatest.ProviderAuthorizationV1Endpoint,
 		},
