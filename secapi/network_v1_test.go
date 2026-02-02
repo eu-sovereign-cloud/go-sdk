@@ -1096,6 +1096,224 @@ func TestDeleteInternetGatewayV1(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+// Security Group Rules
+
+func TestListSecurityGroupRulesV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockListSecurityGroupRulesV1(sim, []schema.SecurityGroupRule{
+		*buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.Len(t, resp, 1)
+
+	assert.Equal(t, secatest.SecurityGroupRule1Name, resp[0].Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Direction))
+
+	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+}
+
+func TestListSecurityGroupRulesV1WithFiltersV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	secatest.MockListSecurityGroupRulesV1(sim, []schema.SecurityGroupRule{
+		{
+			Metadata: &schema.RegionalWorkspaceResourceMetadata{
+				Name:      secatest.SecurityGroupRule1Name,
+				Tenant:    secatest.Tenant1Name,
+				Workspace: secatest.Workspace1Name,
+			},
+			Spec: schema.SecurityGroupRuleSpec{
+				Direction: schema.SecurityGroupRuleDirectionIngress,
+			},
+			Status: &schema.SecurityGroupRuleStatus{
+				State: ptr.To(schema.ResourceStateActive),
+			},
+		},
+	})
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	labelsParams := builders.NewLabelsBuilder().
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
+		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
+		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
+		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
+		Gt(secatest.LabelVersion, 1).
+		Lt(secatest.LabelVersion, 3).
+		Gte(secatest.LabelUptime, 99).
+		Lte(secatest.LabelLoad, 75)
+
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	assert.NoError(t, err)
+
+	resp, err := iter.All(ctx)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+}
+
+func TestGetSecurityGroupRuleV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockGetSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name}
+	resp, err := regionalClient.NetworkV1.GetSecurityGroupRule(ctx, wref)
+	assert.NoError(t, err)
+
+	assert.Equal(t, secatest.SecurityGroupRule1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
+
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockGetSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
+	secatest.MockGetSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	resp, err := regionalClient.NetworkV1.GetSecurityGroupRuleUntilState(ctx, wref, config)
+	assert.NoError(t, err)
+
+	assert.Equal(t, secatest.SecurityGroupRule1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
+
+	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestCreateOrUpdateSecurityGroupRuleV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockCreateOrUpdateSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	group := &schema.SecurityGroupRule{
+		Metadata: &schema.RegionalWorkspaceResourceMetadata{
+			Tenant:    secatest.Tenant1Name,
+			Workspace: secatest.Workspace1Name,
+			Name:      secatest.SecurityGroupRule1Name,
+		},
+		Spec: schema.SecurityGroupRuleSpec{
+
+			Direction: schema.SecurityGroupRuleDirectionIngress,
+			Version:   ptr.To(schema.IPVersionIPv4),
+			Protocol:  ptr.To(schema.SecurityGroupRuleProtocolTCP),
+			Ports: &schema.Ports{
+				From: ptr.To(schema.Port(secatest.SecurityGroup1PortFrom)),
+				To:   ptr.To(schema.Port(secatest.SecurityGroup1PortTo)),
+			},
+		},
+	}
+	resp, err := regionalClient.NetworkV1.CreateOrUpdateSecurityGroupRule(ctx, group)
+	assert.NoError(t, err)
+
+	assert.Equal(t, secatest.SecurityGroupRule1Name, resp.Metadata.Name)
+	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
+	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
+	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
+
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
+
+	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+}
+
+func TestDeleteSecurityGroupRuleV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockGetSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.MockDeleteSecurityGroupRuleV1(sim)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	resp, err := regionalClient.NetworkV1.GetSecurityGroupRule(ctx, WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	err = regionalClient.NetworkV1.DeleteSecurityGroupRule(ctx, resp)
+	assert.NoError(t, err)
+}
+
 // Security Group
 
 func TestListSecurityGroupsV1(t *testing.T) {
@@ -1850,6 +2068,20 @@ func buildResponseInternetGateway(name string, tenant string, workspace string, 
 func buildResponseInternetGatewaySpec(egressOnly bool) *schema.InternetGatewaySpec {
 	return &schema.InternetGatewaySpec{
 		EgressOnly: &egressOnly,
+	}
+}
+
+func buildResponseSecurityGroupRule(name string, tenant string, workspace string, region string, spec *schema.SecurityGroupRuleSpec, state schema.ResourceState) *schema.SecurityGroup {
+	return &schema.SecurityGroupRule{
+		Metadata: secatest.NewRegionalWorkspaceResourceMetadata(name, tenant, workspace, region),
+		Spec:     *spec,
+		Status:   secatest.NewSecurityGroupRuleStatus(state),
+	}
+}
+
+func buildResponseSecurityGroupRuleSpec(ruleDirection schema.SecurityGroupRuleSpecDirection) *schema.SecurityGroupRuleSpec {
+	return &schema.SecurityGroupRuleSpec{
+		Direction: ruleDirection,
 	}
 }
 
