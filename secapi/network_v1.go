@@ -849,12 +849,12 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *sc
 	return api.CreateOrUpdateSecurityGroupWithParams(ctx, group, nil)
 }
 
-func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
-	if err := api.validateRegionalMetadata(route.Metadata); err != nil {
+func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -866,8 +866,8 @@ func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *
 	return nil
 }
 
-func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
-	return api.DeleteSecurityGroupWithParams(ctx, route, nil)
+func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, group *schema.SecurityGroup) error {
+	return api.DeleteSecurityGroupWithParams(ctx, group, nil)
 }
 
 // Nic
