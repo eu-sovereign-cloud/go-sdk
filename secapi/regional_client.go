@@ -1,8 +1,6 @@
 package secapi
 
 import (
-	"fmt"
-
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
@@ -44,9 +42,10 @@ func newRegionalClient(authToken string, region *schema.Region) (*RegionalClient
 }
 
 func initRegionalAPI[T any](client *RegionalClient, name string, region *schema.Region, newFunc func(client *RegionalClient, url string) (*T, error), setFunc func(*T)) error {
-	provider, err := findRegionalProvider(name, region)
-	if err != nil {
-		return err
+	provider := findRegionalProvider(name, region)
+	if provider == nil {
+		// Provider not avaiabled in the region
+		return nil
 	}
 
 	api, err := newFunc(client, provider.Url)
@@ -58,14 +57,14 @@ func initRegionalAPI[T any](client *RegionalClient, name string, region *schema.
 	return nil
 }
 
-func findRegionalProvider(name string, region *schema.Region) (*schema.Provider, error) {
+func findRegionalProvider(name string, region *schema.Region) *schema.Provider {
 	for _, provider := range region.Spec.Providers {
 		if provider.Name == name {
-			return &provider, nil
+			return &provider
 		}
 	}
 
-	return nil, fmt.Errorf("provider %s not found in region", name)
+	return nil
 }
 
 func (client *RegionalClient) setComputeV1(compute *ComputeV1) {
