@@ -8,11 +8,11 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"k8s.io/utils/ptr"
 )
 
@@ -121,10 +121,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	iter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	assert.NoError(t, err)
@@ -170,8 +167,8 @@ func TestListInstancesWithFiltersV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 
-	ref, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
-	require.NoError(t, err)
+	ref := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+
 	secatest.MockListInstancesV1(sim, []schema.Instance{
 		{
 			Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -230,10 +227,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
@@ -267,10 +261,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -304,10 +295,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef, err := BuildReferenceFromURN(secatest.InstanceSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -469,10 +457,7 @@ func buildResponseInstance(name string, tenant string, workspace string, region 
 }
 
 func buildResponseInstanceSpec(t *testing.T, skuRef string, zone string) *schema.InstanceSpec {
-	urnRef, err := BuildReferenceFromURN(skuRef)
-	if err != nil {
-		t.Fatal(err)
-	}
+	urnRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, skuRef, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	return &schema.InstanceSpec{
 		SkuRef: *urnRef,

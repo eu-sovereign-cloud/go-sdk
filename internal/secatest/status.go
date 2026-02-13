@@ -109,6 +109,15 @@ func NewInternetGatewayStatus(state schema.ResourceState) *schema.InternetGatewa
 	})
 }
 
+func NewSecurityGroupRuleStatus(state schema.ResourceState) *schema.SecurityGroupRuleStatus {
+	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.SecurityGroupRuleStatus {
+		return &schema.SecurityGroupRuleStatus{
+			State:      s,
+			Conditions: c,
+		}
+	})
+}
+
 func NewSecurityGroupStatus(state schema.ResourceState) *schema.SecurityGroupStatus {
 	return buildResponseStatus(state, func(s *schema.ResourceState, c []schema.StatusCondition) *schema.SecurityGroupStatus {
 		return &schema.SecurityGroupStatus{

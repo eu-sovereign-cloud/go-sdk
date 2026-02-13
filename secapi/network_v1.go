@@ -604,6 +604,139 @@ func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *schema.Int
 	return api.DeleteInternetGatewayWithParams(ctx, gtw, nil)
 }
 
+// Security Group Rules
+
+func (api *NetworkV1) ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error) {
+	iter := Iterator[schema.SecurityGroupRule]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
+			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
+				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *NetworkV1) ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
+	iter := Iterator[schema.SecurityGroupRule]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
+			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
+				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *NetworkV1) GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode() == http.StatusNotFound {
+		return nil, ErrResourceNotFound
+	} else {
+		return resp.JSON200, nil
+	}
+}
+
+func (api *NetworkV1) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroupRule]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.SecurityGroupRule, error) {
+			resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if resp.StatusCode() == http.StatusNotFound {
+				return "", nil, ErrResourceNotFound
+			} else {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValue)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (api *NetworkV1) CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error) {
+	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
+		return nil, err
+	}
+
+	resp, err := api.network.CreateOrUpdateSecurityGroupRuleWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, *group, api.loadRequestHeaders)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = checkSuccessPutStatusCodes(resp); err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return resp.JSON201, nil
+	}
+}
+
+func (api *NetworkV1) CreateOrUpdateSecurityGroupRule(ctx context.Context, group *schema.SecurityGroupRule) (*schema.SecurityGroupRule, error) {
+	return api.CreateOrUpdateSecurityGroupRuleWithParams(ctx, group, nil)
+}
+
+func (api *NetworkV1) DeleteSecurityGroupRuleWithParams(ctx context.Context, rule *schema.SecurityGroupRule, params *network.DeleteSecurityGroupRuleParams) error {
+	if err := api.validateRegionalMetadata(rule.Metadata); err != nil {
+		return err
+	}
+
+	resp, err := api.network.DeleteSecurityGroupRuleWithResponse(ctx, rule.Metadata.Tenant, rule.Metadata.Workspace, rule.Metadata.Name, params, api.loadRequestHeaders)
+	if err != nil {
+		return err
+	}
+
+	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *NetworkV1) DeleteSecurityGroupRule(ctx context.Context, rule *schema.SecurityGroupRule) error {
+	return api.DeleteSecurityGroupRuleWithParams(ctx, rule, nil)
+}
+
 // Security Group
 
 func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
@@ -716,12 +849,12 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *sc
 	return api.CreateOrUpdateSecurityGroupWithParams(ctx, group, nil)
 }
 
-func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
-	if err := api.validateRegionalMetadata(route.Metadata); err != nil {
+func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -733,8 +866,8 @@ func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *
 	return nil
 }
 
-func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
-	return api.DeleteSecurityGroupWithParams(ctx, route, nil)
+func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, group *schema.SecurityGroup) error {
+	return api.DeleteSecurityGroupWithParams(ctx, group, nil)
 }
 
 // Nic
