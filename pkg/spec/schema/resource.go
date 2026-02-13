@@ -4,10 +4,7 @@
 package schema
 
 import (
-	"encoding/json"
 	"time"
-
-	"github.com/oapi-codegen/runtime"
 )
 
 // Defines values for GlobalResourceMetadataKind.
@@ -251,10 +248,31 @@ type GlobalResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref      *Reference `json:"ref,omitempty"`
-	Resource string     `json:"resource"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref      ReferenceURN `json:"ref"`
+	Resource string       `json:"resource"`
 
 	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
 	ResourceVersion int64  `json:"resourceVersion"`
@@ -287,10 +305,31 @@ type GlobalTenantResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref      *Reference `json:"ref,omitempty"`
-	Resource string     `json:"resource"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref      ReferenceURN `json:"ref"`
+	Resource string       `json:"resource"`
 
 	// ResourceVersion Incremented on every modification of the resource. Used for optimistic concurrency control.
 	ResourceVersion int64 `json:"resourceVersion"`
@@ -344,11 +383,12 @@ type PermissionMetadata struct {
 	Verb     string `json:"verb"`
 }
 
-// Reference Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-// The reference can be used to refer to a resource in other resources.
-type Reference struct {
-	union json.RawMessage
-}
+// Reference A reference to a resource using an object. The object contains the
+// same information as the ReferenceURN, but is represented as a structured object.
+// The advantage of this representation is that it can be used to reference
+// resources in different workspaces or regions without the need to specify
+// the full URN.
+type Reference = ReferenceObject
 
 // ReferenceObject A reference to a resource using an object. The object contains the
 // same information as the ReferenceURN, but is represented as a structured object.
@@ -430,9 +470,30 @@ type RegionalNetworkResourceMetadata struct {
 	Network  string `json:"network"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 
 	// Region Reference to the region where the resource is located
 	Region   string `json:"region"`
@@ -475,9 +536,30 @@ type RegionalResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 
 	// Region Reference to the region where the resource is located
 	Region   string `json:"region"`
@@ -517,9 +599,30 @@ type RegionalWorkspaceResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 
 	// Region Reference to the region where the resource is located
 	Region   string `json:"region"`
@@ -552,9 +655,30 @@ type ResourceMetadata struct {
 	// Each segment follows the same rules.
 	Name string `json:"name"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 }
 
 // ResourceMetadataKind Type of the resource
@@ -593,9 +717,30 @@ type SkuResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 
 	// Region Reference to the region where the resource is located
 	Region   string `json:"region"`
@@ -685,9 +830,30 @@ type TypeMetadata struct {
 	// Kind Type of the resource
 	Kind TypeMetadataKind `json:"kind"`
 
-	// Ref Reference to a resource. The reference is represented as the full URN (Uniform Resource Name) name of the resource.
-	// The reference can be used to refer to a resource in other resources.
-	Ref *Reference `json:"ref,omitempty"`
+	// Ref A unique resource name used to reference this resource in other resources. The reference
+	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	//
+	// ### Automatic Prefix Inference
+	//
+	// In most cases, the prefix of the URN can be automatically derived in the given context.
+	// To simplify usage, only the resource type and name might be specified as a reference
+	// using the `<type>/<name>` notation. The suffix can be made more specific by adding
+	// additional segments separated by slashes.
+	//
+	// The prefix is automatically inferred from the context. For example, if the resource is a
+	// block storage in the same workspace the reference can be specified as
+	// `block-storages/my-block-storage`. If the resource is a block storage in a different workspace, the
+	// reference can be specified as `workspaces/ws-1/block-storages/my-block-storage`.
+	//
+	// For automatic prefix inference, the following rules apply:
+	// - the version is inferred from the current resource version
+	// - the workspace is inferred from the current workspace
+	// - the region is inferred from the current region
+	// - the provider is inferred from the type and context of the usage
+	//
+	// The prefix inference is resolved on admission into the full URN format, which makes it
+	// mostly suitable for human use.
+	Ref ReferenceURN `json:"ref"`
 }
 
 // TypeMetadataKind Type of the resource
@@ -713,66 +879,4 @@ type UserResourceMetadata struct {
 type WorkspaceMetadata struct {
 	// Workspace Workspace identifier
 	Workspace string `json:"workspace"`
-}
-
-// AsReferenceURN returns the union data inside the Reference as a ReferenceURN
-func (t Reference) AsReferenceURN() (ReferenceURN, error) {
-	var body ReferenceURN
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceURN overwrites any union data inside the Reference as the provided ReferenceURN
-func (t *Reference) FromReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceURN performs a merge with any union data inside the Reference, using the provided ReferenceURN
-func (t *Reference) MergeReferenceURN(v ReferenceURN) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsReferenceObject returns the union data inside the Reference as a ReferenceObject
-func (t Reference) AsReferenceObject() (ReferenceObject, error) {
-	var body ReferenceObject
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromReferenceObject overwrites any union data inside the Reference as the provided ReferenceObject
-func (t *Reference) FromReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeReferenceObject performs a merge with any union data inside the Reference, using the provided ReferenceObject
-func (t *Reference) MergeReferenceObject(v ReferenceObject) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t Reference) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *Reference) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
 }

@@ -40,7 +40,7 @@ type PublicIpSpec struct {
 // PublicIpStatus defines model for PublicIpStatus.
 type PublicIpStatus struct {
 	// AttachedTo Reference to the instance the public IP is attached to.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *ReferenceObject  `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// IpAddress The public IP address in case.
@@ -52,7 +52,6 @@ type PublicIpStatus struct {
 	// - active: available for data layer usage
 	// - updating: available for data layer usage
 	// - deleting: maybe still available for data layer user, can fail any moment
-	// - suspended: not available, provider specific behavior (payment issue, user decided to suspend)
 	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
 	State *ResourceState `json:"state,omitempty"`
 }

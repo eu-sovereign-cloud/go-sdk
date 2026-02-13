@@ -8,11 +8,11 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"k8s.io/utils/ptr"
 )
 
@@ -143,10 +143,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	assert.NoError(t, err)
@@ -172,8 +169,7 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	ref, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
-	require.NoError(t, err)
+	ref := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 	secatest.MockListBlockStoragesV1(sim, []schema.BlockStorage{
 		{
 			Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -232,11 +228,7 @@ func TestGetBlockStorageV1(t *testing.T) {
 	defer server.Close()
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	storageSkuRef, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
 	resp, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
@@ -270,10 +262,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -307,10 +296,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef, err := BuildReferenceFromURN(secatest.StorageSku1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	block := &schema.BlockStorage{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -375,10 +361,7 @@ func TestListImagesV1(t *testing.T) {
 
 	secatest.ConfigureRegionV1Handler(t, sm)
 
-	blockStorageRef, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	sim := mockstorage.NewMockServerInterface(t)
 	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
@@ -435,8 +418,7 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 
-	ref, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
-	require.NoError(t, err)
+	ref := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	secatest.MockListStorageImagesV1(sim, []schema.Image{
 		{
@@ -494,10 +476,7 @@ func TestGetImageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
 	resp, err := regionalClient.StorageV1.GetImage(ctx, tref)
@@ -530,10 +509,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -566,10 +542,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef, err := BuildReferenceFromURN(secatest.BlockStorage1Ref)
-	if err != nil {
-		t.Fatal(err)
-	}
+	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	image := &schema.Image{
 		Metadata: secatest.NewRegionalResourceMetadata(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name),
@@ -644,14 +617,11 @@ func buildResponseBlockStorage(name string, tenant string, workspace string, reg
 	}
 }
 
-func buildResponseBlockStorageSpec(t *testing.T, skuRef string, sizeGB int) *schema.BlockStorageSpec {
-	urnRef, err := BuildReferenceFromURN(skuRef)
-	if err != nil {
-		t.Fatal(err)
-	}
+func buildResponseBlockStorageSpec(t *testing.T, skuRefName string, sizeGB int) *schema.BlockStorageSpec {
+	skuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, skuRefName, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	return &schema.BlockStorageSpec{
-		SkuRef: *urnRef,
+		SkuRef: *skuRef,
 		SizeGB: sizeGB,
 	}
 }
@@ -665,12 +635,9 @@ func buildResponseImage(name string, tenant string, region string, spec *schema.
 }
 
 func buildResponseImageSpec(t *testing.T, blockStorageRef string) *schema.ImageSpec {
-	urnRef, err := BuildReferenceFromURN(blockStorageRef)
-	if err != nil {
-		t.Fatal(err)
-	}
+	objRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, blockStorageRef, secatest.Tenant1Name, secatest.Workspace1Name)
 
 	return &schema.ImageSpec{
-		BlockStorageRef: *urnRef,
+		BlockStorageRef: *objRef,
 	}
 }
