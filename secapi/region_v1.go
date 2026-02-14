@@ -10,14 +10,52 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type RegionV1 struct {
+// Interface
+
+type RegionV1 interface {
+	ListRegions(ctx context.Context) (*Iterator[schema.Region], error)
+	ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error)
+
+	GetRegion(ctx context.Context, name string) (*schema.Region, error)
+}
+
+// Dummy
+
+type RegionV1Dummy struct{}
+
+func newRegionV1Dummy() RegionV1 {
+	return &RegionV1Dummy{}
+}
+
+func (api *RegionV1Dummy) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *RegionV1Dummy) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *RegionV1Dummy) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+// Impl
+
+type RegionV1Impl struct {
 	API
 	region region.ClientWithResponsesInterface
 }
 
-// Region
+func newRegionV1Impl(client *GlobalClient, regionsUrl string) (RegionV1, error) {
+	region, err := region.NewClientWithResponses(regionsUrl)
+	if err != nil {
+		return nil, err
+	}
 
-func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return &RegionV1Impl{API: API{authToken: client.authToken}, region: region}, nil
+}
+
+func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
@@ -39,7 +77,7 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 	return &iter, nil
 }
 
-func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+func (api *RegionV1Impl) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
@@ -63,7 +101,7 @@ func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptio
 	return &iter, nil
 }
 
-func (api *RegionV1) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
+func (api *RegionV1Impl) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
 	resp, err := api.region.GetRegionWithResponse(ctx, name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
@@ -74,13 +112,4 @@ func (api *RegionV1) GetRegion(ctx context.Context, name string) (*schema.Region
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
-}
-
-func newRegionV1(client *GlobalClient, regionsUrl string) (*RegionV1, error) {
-	region, err := region.NewClientWithResponses(regionsUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &RegionV1{API: API{authToken: client.authToken}, region: region}, nil
 }

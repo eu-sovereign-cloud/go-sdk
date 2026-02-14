@@ -1,8 +1,12 @@
 package secapi
 
-import "errors"
+import (
+	"errors"
+)
 
 var (
+	ErrProviderNotAvailable = errors.New("provider not available in the region")
+
 	ErrNoMetatada          = errors.New("metadata is empty")
 	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
 	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")

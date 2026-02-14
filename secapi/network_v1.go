@@ -10,14 +10,386 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type NetworkV1 struct {
+// Interface
+
+type NetworkV1 interface {
+	// Network Sku
+	ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error)
+	ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error)
+
+	GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error)
+
+	// Network
+	ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error)
+	ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error)
+
+	GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error)
+	GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error)
+
+	CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error)
+	CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error)
+
+	DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error
+	DeleteNetwork(ctx context.Context, net *schema.Network) error
+
+	// Subnet
+	ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error)
+	ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error)
+
+	GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error)
+	GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error)
+
+	CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error)
+	CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error)
+
+	DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error
+	DeleteSubnet(ctx context.Context, sub *schema.Subnet) error
+
+	// Route Table
+	ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error)
+	ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error)
+
+	GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error)
+	GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error)
+
+	CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error)
+	CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error)
+
+	DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error
+	DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error
+
+	// Internet Gateway
+	ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error)
+	ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error)
+
+	GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error)
+	GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error)
+
+	CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error)
+	CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error)
+
+	DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error
+	DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error
+
+	// Security Group
+	ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error)
+	ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error)
+
+	GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error)
+	GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error)
+
+	CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error)
+	CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error)
+
+	DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error
+	DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error
+
+	// Nic
+	ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error)
+	ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error)
+
+	GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error)
+	GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error)
+
+	CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error)
+	CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error)
+
+	DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error
+	DeleteNic(ctx context.Context, nic *schema.Nic) error
+
+	// Public Ip
+	ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error)
+	ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error)
+
+	GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error)
+	GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error)
+
+	CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error)
+	CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error)
+
+	DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error
+	DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error
+}
+
+// Dummy
+
+type NetworkV1Dummy struct{}
+
+func newNetworkV1Dummy() NetworkV1 {
+	return &NetworkV1Dummy{}
+}
+
+/// Network Sku
+
+func (api *NetworkV1Dummy) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+/// Network
+
+func (api *NetworkV1Dummy) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteNetwork(ctx context.Context, net *schema.Network) error {
+	return ErrProviderNotAvailable
+}
+
+/// Subnet
+
+func (api *NetworkV1Dummy) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteSubnet(ctx context.Context, sub *schema.Subnet) error {
+	return ErrProviderNotAvailable
+}
+
+/// Route Table
+
+func (api *NetworkV1Dummy) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error {
+	return ErrProviderNotAvailable
+}
+
+/// Internet Gateway
+
+func (api *NetworkV1Dummy) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error {
+	return ErrProviderNotAvailable
+}
+
+/// Security Group
+
+func (api *NetworkV1Dummy) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
+	return ErrProviderNotAvailable
+}
+
+/// Nic
+
+func (api *NetworkV1Dummy) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeleteNic(ctx context.Context, nic *schema.Nic) error {
+	return ErrProviderNotAvailable
+}
+
+/// Public Ip
+
+func (api *NetworkV1Dummy) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Dummy) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
+	return ErrProviderNotAvailable
+}
+
+// Impl
+
+type NetworkV1Impl struct {
 	API
 	network network.ClientWithResponsesInterface
 }
 
+func newNetworkV1Impl(client *RegionalClient, networkUrl string) (NetworkV1, error) {
+	network, err := network.NewClientWithResponses(networkUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &NetworkV1Impl{API: API{authToken: client.authToken}, network: network}, nil
+}
+
 // Network Sku
 
-func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
 	iter := Iterator[schema.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
 			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
@@ -35,7 +407,7 @@ func (api *NetworkV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
 	iter := Iterator[schema.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
 			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
@@ -55,7 +427,7 @@ func (api *NetworkV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
+func (api *NetworkV1Impl) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -74,7 +446,7 @@ func (api *NetworkV1) GetSku(ctx context.Context, tref TenantReference) (*schema
 
 // Network
 
-func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Impl) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
 	iter := Iterator[schema.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
 			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
@@ -92,7 +464,7 @@ func (api *NetworkV1) ListNetworks(ctx context.Context, tid TenantID, wid Worksp
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Impl) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
 	iter := Iterator[schema.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
 			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
@@ -112,7 +484,7 @@ func (api *NetworkV1) ListNetworksWithFilters(ctx context.Context, tid TenantID,
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
+func (api *NetworkV1Impl) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -129,7 +501,7 @@ func (api *NetworkV1) GetNetwork(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
-func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -159,7 +531,7 @@ func (api *NetworkV1) GetNetworkUntilState(ctx context.Context, wref WorkspaceRe
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
+func (api *NetworkV1Impl) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
 	if err := api.validateRegionalMetadata(net.Metadata); err != nil {
 		return nil, err
 	}
@@ -178,11 +550,11 @@ func (api *NetworkV1) CreateOrUpdateNetworkWithParams(ctx context.Context, net *
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error) {
+func (api *NetworkV1Impl) CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error) {
 	return api.CreateOrUpdateNetworkWithParams(ctx, net, nil)
 }
 
-func (api *NetworkV1) DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error {
+func (api *NetworkV1Impl) DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error {
 	if err := api.validateRegionalMetadata(net.Metadata); err != nil {
 		return err
 	}
@@ -199,13 +571,13 @@ func (api *NetworkV1) DeleteNetworkWithParams(ctx context.Context, net *schema.N
 	}
 }
 
-func (api *NetworkV1) DeleteNetwork(ctx context.Context, net *schema.Network) error {
+func (api *NetworkV1Impl) DeleteNetwork(ctx context.Context, net *schema.Network) error {
 	return api.DeleteNetworkWithParams(ctx, net, nil)
 }
 
 // Subnet
 
-func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Impl) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
 	iter := Iterator[schema.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
 			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
@@ -223,7 +595,7 @@ func (api *NetworkV1) ListSubnets(ctx context.Context, tid TenantID, wid Workspa
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Impl) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
 	iter := Iterator[schema.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
 			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
@@ -243,7 +615,7 @@ func (api *NetworkV1) ListSubnetsWithFilters(ctx context.Context, tid TenantID, 
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
+func (api *NetworkV1Impl) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -260,7 +632,7 @@ func (api *NetworkV1) GetSubnet(ctx context.Context, nref NetworkReference) (*sc
 	}
 }
 
-func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -290,7 +662,7 @@ func (api *NetworkV1) GetSubnetUntilState(ctx context.Context, nref NetworkRefer
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
+func (api *NetworkV1Impl) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
 	if err := api.validateNetworkMetadata(sub.Metadata); err != nil {
 		return nil, err
 	}
@@ -309,11 +681,11 @@ func (api *NetworkV1) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *s
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error) {
+func (api *NetworkV1Impl) CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error) {
 	return api.CreateOrUpdateSubnetWithParams(ctx, sub, nil)
 }
 
-func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error {
+func (api *NetworkV1Impl) DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error {
 	if err := api.validateNetworkMetadata(sub.Metadata); err != nil {
 		return err
 	}
@@ -330,13 +702,13 @@ func (api *NetworkV1) DeleteSubnetWithParams(ctx context.Context, sub *schema.Su
 	}
 }
 
-func (api *NetworkV1) DeleteSubnet(ctx context.Context, sub *schema.Subnet) error {
+func (api *NetworkV1Impl) DeleteSubnet(ctx context.Context, sub *schema.Subnet) error {
 	return api.DeleteSubnetWithParams(ctx, sub, nil)
 }
 
 // Route Table
 
-func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
 	iter := Iterator[schema.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
 			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
@@ -354,7 +726,7 @@ func (api *NetworkV1) ListRouteTables(ctx context.Context, tid TenantID, wid Wor
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Impl) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
 	iter := Iterator[schema.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
 			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
@@ -374,7 +746,7 @@ func (api *NetworkV1) ListRouteTablesWithFilters(ctx context.Context, tid Tenant
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
+func (api *NetworkV1Impl) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -391,7 +763,7 @@ func (api *NetworkV1) GetRouteTable(ctx context.Context, nref NetworkReference) 
 	}
 }
 
-func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -421,7 +793,7 @@ func (api *NetworkV1) GetRouteTableUntilState(ctx context.Context, nref NetworkR
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
+func (api *NetworkV1Impl) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
 	if err := api.validateNetworkMetadata(route.Metadata); err != nil {
 		return nil, err
 	}
@@ -440,11 +812,11 @@ func (api *NetworkV1) CreateOrUpdateRouteTableWithParams(ctx context.Context, ro
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error) {
+func (api *NetworkV1Impl) CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error) {
 	return api.CreateOrUpdateRouteTableWithParams(ctx, route, nil)
 }
 
-func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error {
+func (api *NetworkV1Impl) DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error {
 	if err := api.validateNetworkMetadata(route.Metadata); err != nil {
 		return err
 	}
@@ -461,13 +833,13 @@ func (api *NetworkV1) DeleteRouteTableWithParams(ctx context.Context, route *sch
 	}
 }
 
-func (api *NetworkV1) DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error {
+func (api *NetworkV1Impl) DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error {
 	return api.DeleteRouteTableWithParams(ctx, route, nil)
 }
 
 // Internet Gateway
 
-func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
 	iter := Iterator[schema.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
 			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
@@ -485,7 +857,7 @@ func (api *NetworkV1) ListInternetGateways(ctx context.Context, tid TenantID, wi
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Impl) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
 	iter := Iterator[schema.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
 			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
@@ -505,7 +877,7 @@ func (api *NetworkV1) ListInternetGatewaysWithFilters(ctx context.Context, tid T
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
+func (api *NetworkV1Impl) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -522,7 +894,7 @@ func (api *NetworkV1) GetInternetGateway(ctx context.Context, wref WorkspaceRefe
 	}
 }
 
-func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -552,7 +924,7 @@ func (api *NetworkV1) GetInternetGatewayUntilState(ctx context.Context, wref Wor
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
+func (api *NetworkV1Impl) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
 	if err := api.validateRegionalMetadata(gtw.Metadata); err != nil {
 		return nil, err
 	}
@@ -571,11 +943,11 @@ func (api *NetworkV1) CreateOrUpdateInternetGatewayWithParams(ctx context.Contex
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error) {
+func (api *NetworkV1Impl) CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error) {
 	return api.CreateOrUpdateInternetGatewayWithParams(ctx, gtw, nil)
 }
 
-func (api *NetworkV1) DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error {
+func (api *NetworkV1Impl) DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error {
 	if err := api.validateRegionalMetadata(gtw.Metadata); err != nil {
 		return err
 	}
@@ -592,13 +964,13 @@ func (api *NetworkV1) DeleteInternetGatewayWithParams(ctx context.Context, gtw *
 	}
 }
 
-func (api *NetworkV1) DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error {
+func (api *NetworkV1Impl) DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error {
 	return api.DeleteInternetGatewayWithParams(ctx, gtw, nil)
 }
 
 // Security Group
 
-func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
 	iter := Iterator[schema.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
 			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
@@ -616,7 +988,7 @@ func (api *NetworkV1) ListSecurityGroups(ctx context.Context, tid TenantID, wid 
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Impl) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
 	iter := Iterator[schema.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
 			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
@@ -636,7 +1008,7 @@ func (api *NetworkV1) ListSecurityGroupsWithFilters(ctx context.Context, tid Ten
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Impl) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -653,7 +1025,7 @@ func (api *NetworkV1) GetSecurityGroup(ctx context.Context, wref WorkspaceRefere
 	}
 }
 
-func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -683,7 +1055,7 @@ func (api *NetworkV1) GetSecurityGroupUntilState(ctx context.Context, wref Works
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
 	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
 		return nil, err
 	}
@@ -702,11 +1074,11 @@ func (api *NetworkV1) CreateOrUpdateSecurityGroupWithParams(ctx context.Context,
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Impl) CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error) {
 	return api.CreateOrUpdateSecurityGroupWithParams(ctx, group, nil)
 }
 
-func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+func (api *NetworkV1Impl) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
 	if err := api.validateRegionalMetadata(route.Metadata); err != nil {
 		return err
 	}
@@ -723,13 +1095,13 @@ func (api *NetworkV1) DeleteSecurityGroupWithParams(ctx context.Context, route *
 	}
 }
 
-func (api *NetworkV1) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
+func (api *NetworkV1Impl) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
 	return api.DeleteSecurityGroupWithParams(ctx, route, nil)
 }
 
 // Nic
 
-func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Impl) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
 	iter := Iterator[schema.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
 			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
@@ -747,27 +1119,7 @@ func (api *NetworkV1) ListNics(ctx context.Context, tid TenantID, wid WorkspaceI
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
-	iter := Iterator[schema.Nic]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
-			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
-				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-		},
-	}
-
-	return &iter, nil
-}
-
-func (api *NetworkV1) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Impl) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
 	iter := Iterator[schema.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
 			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
@@ -787,7 +1139,7 @@ func (api *NetworkV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
+func (api *NetworkV1Impl) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -804,7 +1156,7 @@ func (api *NetworkV1) GetNic(ctx context.Context, wref WorkspaceReference) (*sch
 	}
 }
 
-func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -834,7 +1186,7 @@ func (api *NetworkV1) GetNicUntilState(ctx context.Context, wref WorkspaceRefere
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
+func (api *NetworkV1Impl) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
 	if err := api.validateRegionalMetadata(nic.Metadata); err != nil {
 		return nil, err
 	}
@@ -853,11 +1205,11 @@ func (api *NetworkV1) CreateOrUpdateNicWithParams(ctx context.Context, nic *sche
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error) {
+func (api *NetworkV1Impl) CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error) {
 	return api.CreateOrUpdateNicWithParams(ctx, nic, nil)
 }
 
-func (api *NetworkV1) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error {
+func (api *NetworkV1Impl) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error {
 	if err := api.validateRegionalMetadata(nic.Metadata); err != nil {
 		return err
 	}
@@ -874,13 +1226,13 @@ func (api *NetworkV1) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, 
 	}
 }
 
-func (api *NetworkV1) DeleteNic(ctx context.Context, nic *schema.Nic) error {
+func (api *NetworkV1Impl) DeleteNic(ctx context.Context, nic *schema.Nic) error {
 	return api.DeleteNicWithParams(ctx, nic, nil)
 }
 
 // Public Ip
 
-func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
 	iter := Iterator[schema.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
 			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
@@ -898,7 +1250,7 @@ func (api *NetworkV1) ListPublicIps(ctx context.Context, tid TenantID, wid Works
 	return &iter, nil
 }
 
-func (api *NetworkV1) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Impl) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
 	iter := Iterator[schema.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
 			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
@@ -918,7 +1270,7 @@ func (api *NetworkV1) ListPublicIpsWithFilters(ctx context.Context, tid TenantID
 	return &iter, nil
 }
 
-func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
+func (api *NetworkV1Impl) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -935,7 +1287,7 @@ func (api *NetworkV1) GetPublicIp(ctx context.Context, wref WorkspaceReference) 
 	}
 }
 
-func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -965,7 +1317,7 @@ func (api *NetworkV1) GetPublicIpUntilState(ctx context.Context, wref WorkspaceR
 	return resp, nil
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
+func (api *NetworkV1Impl) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
 	if err := api.validateRegionalMetadata(ip.Metadata); err != nil {
 		return nil, err
 	}
@@ -984,11 +1336,11 @@ func (api *NetworkV1) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *
 	}
 }
 
-func (api *NetworkV1) CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error) {
+func (api *NetworkV1Impl) CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error) {
 	return api.CreateOrUpdatePublicIpWithParams(ctx, ip, nil)
 }
 
-func (api *NetworkV1) DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error {
+func (api *NetworkV1Impl) DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error {
 	if err := api.validateRegionalMetadata(ip.Metadata); err != nil {
 		return err
 	}
@@ -1005,11 +1357,11 @@ func (api *NetworkV1) DeletePublicIpWithParams(ctx context.Context, ip *schema.P
 	}
 }
 
-func (api *NetworkV1) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
+func (api *NetworkV1Impl) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
 	return api.DeletePublicIpWithParams(ctx, ip, nil)
 }
 
-func (api *NetworkV1) validateRegionalMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
+func (api *NetworkV1Impl) validateRegionalMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -1025,7 +1377,7 @@ func (api *NetworkV1) validateRegionalMetadata(metadata *schema.RegionalWorkspac
 	return nil
 }
 
-func (api *NetworkV1) validateNetworkMetadata(metadata *schema.RegionalNetworkResourceMetadata) error {
+func (api *NetworkV1Impl) validateNetworkMetadata(metadata *schema.RegionalNetworkResourceMetadata) error {
 	if metadata == nil {
 		return ErrNoMetatada
 	}
@@ -1043,13 +1395,4 @@ func (api *NetworkV1) validateNetworkMetadata(metadata *schema.RegionalNetworkRe
 	}
 
 	return nil
-}
-
-func newNetworkV1(client *RegionalClient, networkUrl string) (*NetworkV1, error) {
-	network, err := network.NewClientWithResponses(networkUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &NetworkV1{API: API{authToken: client.authToken}, network: network}, nil
 }

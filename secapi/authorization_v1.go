@@ -10,14 +10,131 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type AuthorizationV1 struct {
+// Interface
+
+type AuthorizationV1 interface {
+	// Role
+	ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error)
+	ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error)
+
+	GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error)
+	GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error)
+
+	CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error)
+	CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error)
+
+	DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error
+	DeleteRole(ctx context.Context, role *schema.Role) error
+
+	// Role Assignments
+	ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error)
+	ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error)
+
+	GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error)
+	GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error)
+
+	CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error)
+	CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error)
+
+	DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error
+	DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error
+}
+
+// Dummy
+
+type AuthorizationV1Dummy struct{}
+
+func newAuthorizationV1Dummy() AuthorizationV1 {
+	return &AuthorizationV1Dummy{}
+}
+
+/// Role
+
+func (api *AuthorizationV1Dummy) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) DeleteRole(ctx context.Context, role *schema.Role) error {
+	return ErrProviderNotAvailable
+}
+
+/// Role Assignment
+
+func (api *AuthorizationV1Dummy) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Dummy) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
+	return ErrProviderNotAvailable
+}
+
+// Impl
+
+type AuthorizationV1Impl struct {
 	API
 	authorization authorization.ClientWithResponsesInterface
 }
 
-// Role
+func newAuthorizationV1Impl(client *GlobalClient, authorizationsUrl string) (AuthorizationV1, error) {
+	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
+	if err != nil {
+		return nil, err
+	}
 
-func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
+	return &AuthorizationV1Impl{API: API{authToken: client.authToken}, authorization: authorization}, nil
+}
+
+/// Role
+
+func (api *AuthorizationV1Impl) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
@@ -39,7 +156,7 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
+func (api *AuthorizationV1Impl) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
 			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
@@ -63,7 +180,7 @@ func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid Tenant
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -80,7 +197,7 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 	}
 }
 
-func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -110,7 +227,7 @@ func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantRe
 	return resp, nil
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
 	if err := api.validateGlobalMetadata(role.Metadata); err != nil {
 		return nil, err
 	}
@@ -129,11 +246,11 @@ func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, ro
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error) {
 	return api.CreateOrUpdateRoleWithParams(ctx, role, nil)
 }
 
-func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
+func (api *AuthorizationV1Impl) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
 	if err := api.validateGlobalMetadata(role.Metadata); err != nil {
 		return err
 	}
@@ -150,13 +267,13 @@ func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *sche
 	}
 }
 
-func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *schema.Role) error {
+func (api *AuthorizationV1Impl) DeleteRole(ctx context.Context, role *schema.Role) error {
 	return api.DeleteRoleWithParams(ctx, role, nil)
 }
 
-// Role Assignment
+/// Role Assignment
 
-func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1Impl) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
@@ -178,7 +295,7 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1Impl) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
 			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
@@ -202,7 +319,7 @@ func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, 
 	return &iter, nil
 }
 
-func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -219,7 +336,7 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 	}
 }
 
-func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -249,7 +366,7 @@ func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tre
 	return resp, nil
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
 	if err := api.validateGlobalMetadata(assign.Metadata); err != nil {
 		return nil, err
 	}
@@ -268,11 +385,11 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.C
 	}
 }
 
-func (api *AuthorizationV1) CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error) {
 	return api.CreateOrUpdateRoleAssignmentWithParams(ctx, assign, nil)
 }
 
-func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
+func (api *AuthorizationV1Impl) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
 	if err := api.validateGlobalMetadata(assign.Metadata); err != nil {
 		return err
 	}
@@ -289,15 +406,6 @@ func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, 
 	}
 }
 
-func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
+func (api *AuthorizationV1Impl) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
 	return api.DeleteRoleAssignmentWithParams(ctx, assign, nil)
-}
-
-func newAuthorizationV1(client *GlobalClient, authorizationsUrl string) (*AuthorizationV1, error) {
-	authorization, err := authorization.NewClientWithResponses(authorizationsUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &AuthorizationV1{API: API{authToken: client.authToken}, authorization: authorization}, nil
 }
