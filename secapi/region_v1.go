@@ -28,7 +28,11 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -48,7 +52,11 @@ func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptio
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -61,10 +69,10 @@ func (api *RegionV1) GetRegion(ctx context.Context, name string) (*schema.Region
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 

@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"context"
+	"net/http"
 
 	wellknown "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/extensions.wellknown.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -20,7 +21,11 @@ func (api *WellknownV1) GetWellknown(ctx context.Context) (*schema.Wellknown, er
 		return nil, err
 	}
 
-	return resp.JSON200, nil
+	if resp.StatusCode() == http.StatusOK {
+		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
+	}
 }
 
 func newWellknownV1(client *GlobalClient, wellknownUrl string) (*WellknownV1, error) {

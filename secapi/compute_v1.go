@@ -28,7 +28,11 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -48,7 +52,11 @@ func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -65,10 +73,10 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -85,7 +93,11 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -105,7 +117,11 @@ func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -122,10 +138,10 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -144,10 +160,10 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -169,14 +185,12 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -194,11 +208,11 @@ func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *schema
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
@@ -215,11 +229,11 @@ func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *schema.
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *ComputeV1) StartInstance(ctx context.Context, inst *schema.Instance) error {
@@ -236,11 +250,11 @@ func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *schema.I
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *ComputeV1) StopInstance(ctx context.Context, inst *schema.Instance) error {
@@ -257,11 +271,11 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *schem
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *ComputeV1) RestartInstance(ctx context.Context, inst *schema.Instance) error {

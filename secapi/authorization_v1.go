@@ -28,7 +28,11 @@ func (api *AuthorizationV1) ListRoles(ctx context.Context, tid TenantID) (*Itera
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -48,7 +52,11 @@ func (api *AuthorizationV1) ListRolesWithFilters(ctx context.Context, tid Tenant
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -65,10 +73,10 @@ func (api *AuthorizationV1) GetRole(ctx context.Context, tref TenantReference) (
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -87,10 +95,10 @@ func (api *AuthorizationV1) GetRoleUntilState(ctx context.Context, tref TenantRe
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -112,14 +120,12 @@ func (api *AuthorizationV1) CreateOrUpdateRoleWithParams(ctx context.Context, ro
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -137,11 +143,11 @@ func (api *AuthorizationV1) DeleteRoleWithParams(ctx context.Context, role *sche
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *AuthorizationV1) DeleteRole(ctx context.Context, role *schema.Role) error {
@@ -161,7 +167,11 @@ func (api *AuthorizationV1) ListRoleAssignments(ctx context.Context, tid TenantI
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -181,7 +191,11 @@ func (api *AuthorizationV1) ListRoleAssignmentsWithFilters(ctx context.Context, 
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -198,10 +212,10 @@ func (api *AuthorizationV1) GetRoleAssignment(ctx context.Context, tref TenantRe
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -220,10 +234,10 @@ func (api *AuthorizationV1) GetRoleAssignmentUntilState(ctx context.Context, tre
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -245,14 +259,12 @@ func (api *AuthorizationV1) CreateOrUpdateRoleAssignmentWithParams(ctx context.C
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -270,11 +282,11 @@ func (api *AuthorizationV1) DeleteRoleAssignmentWithParams(ctx context.Context, 
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *AuthorizationV1) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {

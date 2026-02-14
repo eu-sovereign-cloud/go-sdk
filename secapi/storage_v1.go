@@ -28,7 +28,11 @@ func (api *StorageV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -48,7 +52,11 @@ func (api *StorageV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -65,10 +73,10 @@ func (api *StorageV1) GetSku(ctx context.Context, tref TenantReference) (*schema
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -85,7 +93,11 @@ func (api *StorageV1) ListBlockStorages(ctx context.Context, tid TenantID, wid W
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -105,7 +117,11 @@ func (api *StorageV1) ListBlockStoragesWithFilters(ctx context.Context, tid Tena
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -122,10 +138,10 @@ func (api *StorageV1) GetBlockStorage(ctx context.Context, wref WorkspaceReferen
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -144,10 +160,10 @@ func (api *StorageV1) GetBlockStorageUntilState(ctx context.Context, wref Worksp
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -169,14 +185,12 @@ func (api *StorageV1) CreateOrUpdateBlockStorageWithParams(ctx context.Context, 
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -194,11 +208,11 @@ func (api *StorageV1) DeleteBlockStorageWithParams(ctx context.Context, block *s
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *StorageV1) DeleteBlockStorage(ctx context.Context, block *schema.BlockStorage) error {
@@ -218,7 +232,11 @@ func (api *StorageV1) ListImages(ctx context.Context, tid TenantID) (*Iterator[s
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -238,7 +256,11 @@ func (api *StorageV1) ListImagesWithFilters(ctx context.Context, tid TenantID, o
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -255,10 +277,10 @@ func (api *StorageV1) GetImage(ctx context.Context, tref TenantReference) (*sche
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -278,10 +300,10 @@ func (api *StorageV1) GetImageUntilState(ctx context.Context, tref TenantReferen
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -303,14 +325,12 @@ func (api *StorageV1) CreateOrUpdateImageWithParams(ctx context.Context, image *
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
@@ -328,11 +348,11 @@ func (api *StorageV1) DeleteImageWithParams(ctx context.Context, image *schema.I
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
 func (api *StorageV1) DeleteImage(ctx context.Context, image *schema.Image) error {
