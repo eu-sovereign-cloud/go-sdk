@@ -1,16 +1,17 @@
 package secapi
 
 import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
 type RegionalClient struct {
 	authToken string
 
-	ComputeV1   *ComputeV1
-	NetworkV1   *NetworkV1
-	StorageV1   *StorageV1
-	WorkspaceV1 *WorkspaceV1
+	WorkspaceV1 WorkspaceV1
+	ComputeV1   ComputeV1
+	StorageV1   StorageV1
+	NetworkV1   NetworkV1
 }
 
 func newRegionalClient(authToken string, region *schema.Region) (*RegionalClient, error) {
@@ -18,36 +19,50 @@ func newRegionalClient(authToken string, region *schema.Region) (*RegionalClient
 		authToken: authToken,
 	}
 
-	// Initializes computeV1 API client
-	if err := initRegionalAPI(client, "seca.compute", region, newComputeV1, client.setComputeV1); err != nil {
-		return nil, err
+	// Initializes workspaceV1 API client
+	workspaceV1provider := findRegionalProvider(constants.WorkspaceProviderName, constants.ApiVersion1, region)
+	if workspaceV1provider != nil {
+		if err := initRegionalAPIImpl(client, workspaceV1provider, newWorkspaceV1Impl, client.setWorkspaceV1); err != nil {
+			return nil, err
+		}
+	} else {
+		initRegionalAPIDummy(newWorkspaceV1Dummy, client.setWorkspaceV1)
 	}
 
-	// Initializes networkV1 API client
-	if err := initRegionalAPI(client, "seca.network", region, newNetworkV1, client.setNetworkV1); err != nil {
-		return nil, err
+	// Initializes computeV1 API client
+	computeV1provider := findRegionalProvider(constants.ComputeProviderName, constants.ApiVersion1, region)
+	if computeV1provider != nil {
+		if err := initRegionalAPIImpl(client, computeV1provider, newComputeV1Impl, client.setComputeV1); err != nil {
+			return nil, err
+		}
+	} else {
+		initRegionalAPIDummy(newComputeV1Dummy, client.setComputeV1)
 	}
 
 	// Initializes storageV1 API client
-	if err := initRegionalAPI(client, "seca.storage", region, newStorageV1, client.setStorageV1); err != nil {
-		return nil, err
+	storageV1provider := findRegionalProvider(constants.StorageProviderName, constants.ApiVersion1, region)
+	if storageV1provider != nil {
+		if err := initRegionalAPIImpl(client, storageV1provider, newStorageV1Impl, client.setStorageV1); err != nil {
+			return nil, err
+		}
+	} else {
+		initRegionalAPIDummy(newStorageV1Dummy, client.setStorageV1)
 	}
 
-	// Initializes workspaceV1 API client
-	if err := initRegionalAPI(client, "seca.workspace", region, newWorkspaceV1, client.setWorkspaceV1); err != nil {
-		return nil, err
+	// Initializes networkV1 API client
+	networkV1provider := findRegionalProvider(constants.NetworkProviderName, constants.ApiVersion1, region)
+	if networkV1provider != nil {
+		if err := initRegionalAPIImpl(client, networkV1provider, newNetworkV1Impl, client.setNetworkV1); err != nil {
+			return nil, err
+		}
+	} else {
+		initRegionalAPIDummy(newNetworkV1Dummy, client.setNetworkV1)
 	}
 
 	return client, nil
 }
 
-func initRegionalAPI[T any](client *RegionalClient, name string, region *schema.Region, newFunc func(client *RegionalClient, url string) (*T, error), setFunc func(*T)) error {
-	provider := findRegionalProvider(name, region)
-	if provider == nil {
-		// Provider not avaiabled in the region
-		return nil
-	}
-
+func initRegionalAPIImpl[T any](client *RegionalClient, provider *schema.Provider, newFunc func(client *RegionalClient, url string) (T, error), setFunc func(T)) error {
 	api, err := newFunc(client, provider.Url)
 	if err != nil {
 		return err
@@ -57,9 +72,14 @@ func initRegionalAPI[T any](client *RegionalClient, name string, region *schema.
 	return nil
 }
 
-func findRegionalProvider(name string, region *schema.Region) *schema.Provider {
+func initRegionalAPIDummy[T any](newFunc func() T, setFunc func(T)) {
+	api := newFunc()
+	setFunc(api)
+}
+
+func findRegionalProvider(name, version string, region *schema.Region) *schema.Provider {
 	for _, provider := range region.Spec.Providers {
-		if provider.Name == name {
+		if provider.Name == name && provider.Version == version {
 			return &provider
 		}
 	}
@@ -67,18 +87,18 @@ func findRegionalProvider(name string, region *schema.Region) *schema.Provider {
 	return nil
 }
 
-func (client *RegionalClient) setComputeV1(compute *ComputeV1) {
+func (client *RegionalClient) setComputeV1(compute ComputeV1) {
 	client.ComputeV1 = compute
 }
 
-func (client *RegionalClient) setNetworkV1(network *NetworkV1) {
+func (client *RegionalClient) setNetworkV1(network NetworkV1) {
 	client.NetworkV1 = network
 }
 
-func (client *RegionalClient) setStorageV1(storage *StorageV1) {
+func (client *RegionalClient) setStorageV1(storage StorageV1) {
 	client.StorageV1 = storage
 }
 
-func (client *RegionalClient) setWorkspaceV1(workspace *WorkspaceV1) {
+func (client *RegionalClient) setWorkspaceV1(workspace WorkspaceV1) {
 	client.WorkspaceV1 = workspace
 }

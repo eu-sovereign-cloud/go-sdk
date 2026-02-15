@@ -10,14 +10,84 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type WorkspaceV1 struct {
+// Interface
+
+type WorkspaceV1 interface {
+	// Workspace
+	ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error)
+	ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error)
+
+	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
+	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error)
+
+	CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error)
+	CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error)
+
+	DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error
+	DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error
+}
+
+// Dummy
+
+type WorkspaceV1Dummy struct{}
+
+func newWorkspaceV1Dummy() WorkspaceV1 {
+	return &WorkspaceV1Dummy{}
+}
+
+/// Workspace
+
+func (api *WorkspaceV1Dummy) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Dummy) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
+	return ErrProviderNotAvailable
+}
+
+// Impl
+
+type WorkspaceV1Impl struct {
 	API
 	workspace workspace.ClientWithResponsesInterface
 }
 
+func newWorkspaceV1Impl(client *RegionalClient, workspaceUrl string) (WorkspaceV1, error) {
+	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &WorkspaceV1Impl{API: API{authToken: client.authToken}, workspace: workspace}, nil
+}
+
 // Workspace
 
-func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
@@ -28,14 +98,18 @@ func (api *WorkspaceV1) ListWorkspaces(ctx context.Context, tid TenantID) (*Iter
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Impl) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
@@ -48,14 +122,18 @@ func (api *WorkspaceV1) ListWorkspacesWithFilters(ctx context.Context, tid Tenan
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -65,14 +143,14 @@ func (api *WorkspaceV1) GetWorkspace(ctx context.Context, tref TenantReference) 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
-func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -87,10 +165,10 @@ func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantR
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -102,7 +180,7 @@ func (api *WorkspaceV1) GetWorkspaceUntilState(ctx context.Context, tref TenantR
 	return resp, nil
 }
 
-func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
 	if err := api.validateRegionalMetadata(ws.Metadata); err != nil {
 		return nil, err
 	}
@@ -112,22 +190,20 @@ func (api *WorkspaceV1) CreateOrUpdateWorkspaceWithParams(ctx context.Context, w
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
-func (api *WorkspaceV1) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error) {
 	return api.CreateOrUpdateWorkspaceWithParams(ctx, ws, nil)
 }
 
-func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
+func (api *WorkspaceV1Impl) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
 	if err := api.validateRegionalMetadata(ws.Metadata); err != nil {
 		return err
 	}
@@ -137,22 +213,13 @@ func (api *WorkspaceV1) DeleteWorkspaceWithParams(ctx context.Context, ws *schem
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
-func (api *WorkspaceV1) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
+func (api *WorkspaceV1Impl) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
 	return api.DeleteWorkspaceWithParams(ctx, ws, nil)
-}
-
-func newWorkspaceV1(client *RegionalClient, workspaceUrl string) (*WorkspaceV1, error) {
-	workspace, err := workspace.NewClientWithResponses(workspaceUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &WorkspaceV1{API: API{authToken: client.authToken}, workspace: workspace}, nil
 }

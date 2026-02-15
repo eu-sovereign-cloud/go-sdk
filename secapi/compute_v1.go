@@ -10,14 +10,137 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type ComputeV1 struct {
+// Interface
+
+type ComputeV1 interface {
+	// Instance Sku
+	ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error)
+	ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error)
+
+	GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error)
+
+	// Instance
+	ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error)
+	ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error)
+
+	GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error)
+	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error)
+
+	CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error)
+	CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error)
+
+	DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error
+	DeleteInstance(ctx context.Context, inst *schema.Instance) error
+
+	StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error
+	StartInstance(ctx context.Context, inst *schema.Instance) error
+
+	StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error
+	StopInstance(ctx context.Context, inst *schema.Instance) error
+
+	RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error
+	RestartInstance(ctx context.Context, inst *schema.Instance) error
+}
+
+// Dummy
+
+type ComputeV1Dummy struct{}
+
+func newComputeV1Dummy() ComputeV1 {
+	return &ComputeV1Dummy{}
+}
+
+/// Instance Sku
+
+func (api *ComputeV1Dummy) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+/// Instance
+
+func (api *ComputeV1Dummy) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) StartInstance(ctx context.Context, inst *schema.Instance) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) StopInstance(ctx context.Context, inst *schema.Instance) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Dummy) RestartInstance(ctx context.Context, inst *schema.Instance) error {
+	return ErrProviderNotAvailable
+}
+
+// Impl
+
+type ComputeV1Impl struct {
 	API
 	compute compute.ClientWithResponsesInterface
 }
 
+func newComputeV1Impl(client *RegionalClient, computeUrl string) (ComputeV1, error) {
+	compute, err := compute.NewClientWithResponses(computeUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ComputeV1Impl{API: API{authToken: client.authToken}, compute: compute}, nil
+}
+
 // Instance Sku
 
-func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
@@ -28,14 +151,18 @@ func (api *ComputeV1) ListSkus(ctx context.Context, tid TenantID) (*Iterator[sch
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &compute.ListSkusParams{
@@ -48,14 +175,18 @@ func (api *ComputeV1) ListSkusWithFilters(ctx context.Context, tid TenantID, opt
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
+func (api *ComputeV1Impl) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -65,16 +196,16 @@ func (api *ComputeV1) GetSku(ctx context.Context, tref TenantReference) (*schema
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
 // Instance
 
-func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1Impl) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
@@ -85,14 +216,18 @@ func (api *ComputeV1) ListInstances(ctx context.Context, tid TenantID, wid Works
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1Impl) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &compute.ListInstancesParams{
@@ -105,14 +240,18 @@ func (api *ComputeV1) ListInstancesWithFilters(ctx context.Context, tid TenantID
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if resp.StatusCode() == http.StatusOK {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
+func (api *ComputeV1Impl) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -122,14 +261,14 @@ func (api *ComputeV1) GetInstance(ctx context.Context, wref WorkspaceReference) 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
-func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
+func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -144,10 +283,10 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusNotFound {
-				return "", nil, ErrResourceNotFound
-			} else {
+			if resp.StatusCode() == http.StatusOK {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
@@ -159,7 +298,7 @@ func (api *ComputeV1) GetInstanceUntilState(ctx context.Context, wref WorkspaceR
 	return resp, nil
 }
 
-func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
+func (api *ComputeV1Impl) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return nil, err
 	}
@@ -169,22 +308,20 @@ func (api *ComputeV1) CreateOrUpdateInstanceWithParams(ctx context.Context, inst
 		return nil, err
 	}
 
-	if err = checkSuccessPutStatusCodes(resp); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode() == http.StatusOK {
 		return resp.JSON200, nil
-	} else {
+	} else if resp.StatusCode() == http.StatusCreated {
 		return resp.JSON201, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
 }
 
-func (api *ComputeV1) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
+func (api *ComputeV1Impl) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
 	return api.CreateOrUpdateInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
+func (api *ComputeV1Impl) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -194,18 +331,18 @@ func (api *ComputeV1) DeleteInstanceWithParams(ctx context.Context, inst *schema
 		return err
 	}
 
-	if err = checkSuccessDeleteStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
-func (api *ComputeV1) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Impl) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.DeleteInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
+func (api *ComputeV1Impl) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -215,18 +352,18 @@ func (api *ComputeV1) StartInstanceWithParams(ctx context.Context, inst *schema.
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
-func (api *ComputeV1) StartInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Impl) StartInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.StartInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
+func (api *ComputeV1Impl) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -236,18 +373,18 @@ func (api *ComputeV1) StopInstanceWithParams(ctx context.Context, inst *schema.I
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
-func (api *ComputeV1) StopInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Impl) StopInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.StopInstanceWithParams(ctx, inst, nil)
 }
 
-func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
+func (api *ComputeV1Impl) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
 	if err := api.validateWorkspaceMetadata(inst.Metadata); err != nil {
 		return err
 	}
@@ -257,22 +394,13 @@ func (api *ComputeV1) RestartInstanceWithParams(ctx context.Context, inst *schem
 		return err
 	}
 
-	if err = checkSuccessPostStatusCodes(resp); err != nil {
-		return err
+	if resp.StatusCode() == http.StatusAccepted {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
 	}
-
-	return nil
 }
 
-func (api *ComputeV1) RestartInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Impl) RestartInstance(ctx context.Context, inst *schema.Instance) error {
 	return api.RestartInstanceWithParams(ctx, inst, nil)
-}
-
-func newComputeV1(client *RegionalClient, computeUrl string) (*ComputeV1, error) {
-	compute, err := compute.NewClientWithResponses(computeUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ComputeV1{API: API{authToken: client.authToken}, compute: compute}, nil
 }

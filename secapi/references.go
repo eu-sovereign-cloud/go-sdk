@@ -73,7 +73,7 @@ func (nref *NetworkReference) validate() error {
 	}
 
 	if nref.Network == "" {
-		return ErrNoPathMetadata
+		return ErrNoMetatadaNetwork
 	}
 
 	if nref.Name == "" {
