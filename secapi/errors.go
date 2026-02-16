@@ -7,11 +7,11 @@ import (
 var (
 	ErrProviderNotAvailable = errors.New("provider not available in the region")
 
-	ErrNoMetatada          = errors.New("metadata is empty")
-	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
-	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
-	ErrNoMetatadaNetwork   = errors.New("metadata network is empty")
-	ErrNoMetatadaName      = errors.New("metadata name is empty")
+	ErrNoMetadata          = errors.New("metadata is empty")
+	ErrNoMetadataTenant    = errors.New("metadata tenant is empty")
+	ErrNoMetadataWorkspace = errors.New("metadata workspace is empty")
+	ErrNoMetadataNetwork   = errors.New("metadata network is empty")
+	ErrNoMetadataName      = errors.New("metadata name is empty")
 
 	ErrUnauthorizedAccess        = errors.New("unauthorized access")
 	ErrForbiddenAccess           = errors.New("forbidden access")

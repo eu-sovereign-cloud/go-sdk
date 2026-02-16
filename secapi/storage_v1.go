@@ -491,11 +491,11 @@ func (api *StorageV1Impl) DeleteImage(ctx context.Context, image *schema.Image) 
 
 func (api *StorageV1Impl) validateRegionalMetadata(metadata *schema.RegionalResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	return nil
@@ -503,15 +503,15 @@ func (api *StorageV1Impl) validateRegionalMetadata(metadata *schema.RegionalReso
 
 func (api *StorageV1Impl) validateWorkspaceMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if metadata.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	return nil

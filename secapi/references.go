@@ -37,11 +37,11 @@ type NetworkReference struct {
 
 func (tref *TenantReference) validate() error {
 	if tref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if tref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil
@@ -49,15 +49,15 @@ func (tref *TenantReference) validate() error {
 
 func (wref *WorkspaceReference) validate() error {
 	if wref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if wref.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	if wref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil
@@ -65,19 +65,19 @@ func (wref *WorkspaceReference) validate() error {
 
 func (nref *NetworkReference) validate() error {
 	if nref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if nref.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	if nref.Network == "" {
-		return ErrNoMetatadaNetwork
+		return ErrNoMetadataNetwork
 	}
 
 	if nref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil

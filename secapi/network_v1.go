@@ -1348,15 +1348,15 @@ func (api *NetworkV1Impl) DeletePublicIp(ctx context.Context, ip *schema.PublicI
 
 func (api *NetworkV1Impl) validateRegionalMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if metadata.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	return nil
@@ -1364,19 +1364,19 @@ func (api *NetworkV1Impl) validateRegionalMetadata(metadata *schema.RegionalWork
 
 func (api *NetworkV1Impl) validateNetworkMetadata(metadata *schema.RegionalNetworkResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if metadata.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	if metadata.Network == "" {
-		return ErrNoMetatadaNetwork
+		return ErrNoMetadataNetwork
 	}
 
 	return nil
