@@ -40,79 +40,79 @@ type AuthorizationV1 interface {
 	DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error
 }
 
-// Dummy
+// Unavailable
 
-type AuthorizationV1Dummy struct{}
+type AuthorizationV1Unavailable struct{}
 
-func newAuthorizationV1Dummy() AuthorizationV1 {
-	return &AuthorizationV1Dummy{}
+func newAuthorizationV1Unavailable() AuthorizationV1 {
+	return &AuthorizationV1Unavailable{}
 }
 
 /// Role
 
-func (api *AuthorizationV1Dummy) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
+func (api *AuthorizationV1Unavailable) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
+func (api *AuthorizationV1Unavailable) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
+func (api *AuthorizationV1Unavailable) DeleteRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.DeleteRoleParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) DeleteRole(ctx context.Context, role *schema.Role) error {
+func (api *AuthorizationV1Unavailable) DeleteRole(ctx context.Context, role *schema.Role) error {
 	return ErrProviderNotAvailable
 }
 
 /// Role Assignment
 
-func (api *AuthorizationV1Dummy) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1Unavailable) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1Unavailable) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
+func (api *AuthorizationV1Unavailable) DeleteRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.DeleteRoleAssignmentParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Dummy) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
+func (api *AuthorizationV1Unavailable) DeleteRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) error {
 	return ErrProviderNotAvailable
 }
 

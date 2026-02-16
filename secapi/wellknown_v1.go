@@ -14,15 +14,15 @@ type WellknownV1 interface {
 	GetWellknown(ctx context.Context) (*schema.Wellknown, error)
 }
 
-// Dummy
+// Unavailable
 
-type WellknownV1Dummy struct{}
+type WellknownV1Unavailable struct{}
 
-func newWellknownV1Dummy() WellknownV1 {
-	return &WellknownV1Dummy{}
+func newWellknownV1Unavailable() WellknownV1 {
+	return &WellknownV1Unavailable{}
 }
 
-func (api *WellknownV1Dummy) GetWellknown(ctx context.Context) (*schema.Wellknown, error) {
+func (api *WellknownV1Unavailable) GetWellknown(ctx context.Context) (*schema.Wellknown, error) {
 	return nil, ErrProviderNotAvailable
 }
 

@@ -111,263 +111,263 @@ type NetworkV1 interface {
 	DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error
 }
 
-// Dummy
+// Unavailable
 
-type NetworkV1Dummy struct{}
+type NetworkV1Unavailable struct{}
 
-func newNetworkV1Dummy() NetworkV1 {
-	return &NetworkV1Dummy{}
+func newNetworkV1Unavailable() NetworkV1 {
+	return &NetworkV1Unavailable{}
 }
 
 /// Network Sku
 
-func (api *NetworkV1Dummy) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Unavailable) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Unavailable) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
+func (api *NetworkV1Unavailable) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
 	return nil, ErrProviderNotAvailable
 }
 
 /// Network
 
-func (api *NetworkV1Dummy) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Unavailable) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Unavailable) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
+func (api *NetworkV1Unavailable) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+func (api *NetworkV1Unavailable) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error {
+func (api *NetworkV1Unavailable) DeleteNetworkWithParams(ctx context.Context, net *schema.Network, params *network.DeleteNetworkParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteNetwork(ctx context.Context, net *schema.Network) error {
+func (api *NetworkV1Unavailable) DeleteNetwork(ctx context.Context, net *schema.Network) error {
 	return ErrProviderNotAvailable
 }
 
 /// Subnet
 
-func (api *NetworkV1Dummy) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Unavailable) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Unavailable) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
+func (api *NetworkV1Unavailable) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+func (api *NetworkV1Unavailable) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error {
+func (api *NetworkV1Unavailable) DeleteSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.DeleteSubnetParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteSubnet(ctx context.Context, sub *schema.Subnet) error {
+func (api *NetworkV1Unavailable) DeleteSubnet(ctx context.Context, sub *schema.Subnet) error {
 	return ErrProviderNotAvailable
 }
 
 /// Route Table
 
-func (api *NetworkV1Dummy) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Unavailable) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Unavailable) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
+func (api *NetworkV1Unavailable) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+func (api *NetworkV1Unavailable) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error {
+func (api *NetworkV1Unavailable) DeleteRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.DeleteRouteTableParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error {
+func (api *NetworkV1Unavailable) DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error {
 	return ErrProviderNotAvailable
 }
 
 /// Internet Gateway
 
-func (api *NetworkV1Dummy) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Unavailable) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Unavailable) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
+func (api *NetworkV1Unavailable) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+func (api *NetworkV1Unavailable) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error {
+func (api *NetworkV1Unavailable) DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error {
+func (api *NetworkV1Unavailable) DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error {
 	return ErrProviderNotAvailable
 }
 
 /// Security Group
 
-func (api *NetworkV1Dummy) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Unavailable) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Unavailable) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+func (api *NetworkV1Unavailable) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
+func (api *NetworkV1Unavailable) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
 	return ErrProviderNotAvailable
 }
 
 /// Nic
 
-func (api *NetworkV1Dummy) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Unavailable) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Unavailable) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
+func (api *NetworkV1Unavailable) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+func (api *NetworkV1Unavailable) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error {
+func (api *NetworkV1Unavailable) DeleteNicWithParams(ctx context.Context, nic *schema.Nic, params *network.DeleteNicParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeleteNic(ctx context.Context, nic *schema.Nic) error {
+func (api *NetworkV1Unavailable) DeleteNic(ctx context.Context, nic *schema.Nic) error {
 	return ErrProviderNotAvailable
 }
 
 /// Public Ip
 
-func (api *NetworkV1Dummy) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Unavailable) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Unavailable) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
+func (api *NetworkV1Unavailable) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+func (api *NetworkV1Unavailable) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error) {
+func (api *NetworkV1Unavailable) CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error {
+func (api *NetworkV1Unavailable) DeletePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.DeletePublicIpParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Dummy) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
+func (api *NetworkV1Unavailable) DeletePublicIp(ctx context.Context, ip *schema.PublicIp) error {
 	return ErrProviderNotAvailable
 }
 

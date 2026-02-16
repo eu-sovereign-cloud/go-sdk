@@ -42,83 +42,83 @@ type ComputeV1 interface {
 	RestartInstance(ctx context.Context, inst *schema.Instance) error
 }
 
-// Dummy
+// Unavailable
 
-type ComputeV1Dummy struct{}
+type ComputeV1Unavailable struct{}
 
-func newComputeV1Dummy() ComputeV1 {
-	return &ComputeV1Dummy{}
+func newComputeV1Unavailable() ComputeV1 {
+	return &ComputeV1Unavailable{}
 }
 
 /// Instance Sku
 
-func (api *ComputeV1Dummy) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1Unavailable) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.InstanceSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1Unavailable) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.InstanceSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
+func (api *ComputeV1Unavailable) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
 	return nil, ErrProviderNotAvailable
 }
 
 /// Instance
 
-func (api *ComputeV1Dummy) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1Unavailable) ListInstances(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Instance], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1Unavailable) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
+func (api *ComputeV1Unavailable) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
+func (api *ComputeV1Unavailable) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
+func (api *ComputeV1Unavailable) CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
+func (api *ComputeV1Unavailable) CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
+func (api *ComputeV1Unavailable) DeleteInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.DeleteInstanceParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Unavailable) DeleteInstance(ctx context.Context, inst *schema.Instance) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
+func (api *ComputeV1Unavailable) StartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StartInstanceParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) StartInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Unavailable) StartInstance(ctx context.Context, inst *schema.Instance) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
+func (api *ComputeV1Unavailable) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) StopInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Unavailable) StopInstance(ctx context.Context, inst *schema.Instance) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
+func (api *ComputeV1Unavailable) RestartInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.RestartInstanceParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Dummy) RestartInstance(ctx context.Context, inst *schema.Instance) error {
+func (api *ComputeV1Unavailable) RestartInstance(ctx context.Context, inst *schema.Instance) error {
 	return ErrProviderNotAvailable
 }
 

@@ -40,29 +40,29 @@ func NewGlobalClient(config *GlobalConfig) (*GlobalClient, error) {
 
 	// Initializes regionsV1 API client
 	if config.Endpoints.RegionV1 != "" {
-		if err := initGlobalAPIImpl(client, config.Endpoints.RegionV1, newRegionV1Impl, client.setRegionV1); err != nil {
+		if err := initGlobalAPI(client, config.Endpoints.RegionV1, newRegionV1Impl, client.setRegionV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initGlobalAPIDummy(newRegionV1Dummy, client.setRegionV1)
+		setUnavailableGlobalAPI(newRegionV1Unavailable, client.setRegionV1)
 	}
 
 	// Initializes authorizationV1 API client
 	if config.Endpoints.AuthorizationV1 != "" {
-		if err := initGlobalAPIImpl(client, config.Endpoints.AuthorizationV1, newAuthorizationV1Impl, client.setAuthorizationV1); err != nil {
+		if err := initGlobalAPI(client, config.Endpoints.AuthorizationV1, newAuthorizationV1Impl, client.setAuthorizationV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initGlobalAPIDummy(newAuthorizationV1Dummy, client.setAuthorizationV1)
+		setUnavailableGlobalAPI(newAuthorizationV1Unavailable, client.setAuthorizationV1)
 	}
 
 	// Initializes wellknownV1 API client
 	if config.Endpoints.WellknownV1 != "" {
-		if err := initGlobalAPIImpl(client, config.Endpoints.WellknownV1, newWellknownV1Impl, client.setWellknownV1); err != nil {
+		if err := initGlobalAPI(client, config.Endpoints.WellknownV1, newWellknownV1Impl, client.setWellknownV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initGlobalAPIDummy(newWellknownV1Dummy, client.setWellknownV1)
+		setUnavailableGlobalAPI(newWellknownV1Unavailable, client.setWellknownV1)
 	}
 
 	return client, nil
@@ -80,7 +80,7 @@ func (client *GlobalClient) NewRegionalClient(ctx context.Context, name string) 
 	return newRegionalClient(client.authToken, region)
 }
 
-func initGlobalAPIImpl[T any](client *GlobalClient, endpoint string, newFunc func(client *GlobalClient, url string) (T, error), setFunc func(T)) error {
+func initGlobalAPI[T any](client *GlobalClient, endpoint string, newFunc func(client *GlobalClient, url string) (T, error), setFunc func(T)) error {
 	api, err := newFunc(client, endpoint)
 	if err != nil {
 		return err
@@ -90,7 +90,7 @@ func initGlobalAPIImpl[T any](client *GlobalClient, endpoint string, newFunc fun
 	return nil
 }
 
-func initGlobalAPIDummy[T any](newFunc func() T, setFunc func(T)) {
+func setUnavailableGlobalAPI[T any](newFunc func() T, setFunc func(T)) {
 	api := newFunc()
 	setFunc(api)
 }

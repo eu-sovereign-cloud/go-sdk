@@ -27,45 +27,45 @@ type WorkspaceV1 interface {
 	DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error
 }
 
-// Dummy
+// Unavailable
 
-type WorkspaceV1Dummy struct{}
+type WorkspaceV1Unavailable struct{}
 
-func newWorkspaceV1Dummy() WorkspaceV1 {
-	return &WorkspaceV1Dummy{}
+func newWorkspaceV1Unavailable() WorkspaceV1 {
+	return &WorkspaceV1Unavailable{}
 }
 
 /// Workspace
 
-func (api *WorkspaceV1Dummy) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
+func (api *WorkspaceV1Unavailable) DeleteWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.DeleteWorkspaceParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Dummy) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
+func (api *WorkspaceV1Unavailable) DeleteWorkspace(ctx context.Context, ws *schema.Workspace) error {
 	return ErrProviderNotAvailable
 }
 

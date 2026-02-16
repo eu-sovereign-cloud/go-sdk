@@ -19,23 +19,23 @@ type RegionV1 interface {
 	GetRegion(ctx context.Context, name string) (*schema.Region, error)
 }
 
-// Dummy
+// Unavailable
 
-type RegionV1Dummy struct{}
+type RegionV1Unavailable struct{}
 
-func newRegionV1Dummy() RegionV1 {
-	return &RegionV1Dummy{}
+func newRegionV1Unavailable() RegionV1 {
+	return &RegionV1Unavailable{}
 }
 
-func (api *RegionV1Dummy) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+func (api *RegionV1Unavailable) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *RegionV1Dummy) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+func (api *RegionV1Unavailable) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *RegionV1Dummy) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
+func (api *RegionV1Unavailable) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
 	return nil, ErrProviderNotAvailable
 }
 

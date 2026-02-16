@@ -22,47 +22,47 @@ func newRegionalClient(authToken string, region *schema.Region) (*RegionalClient
 	// Initializes workspaceV1 API client
 	workspaceV1provider := findRegionalProvider(constants.WorkspaceProviderName, constants.ApiVersion1, region)
 	if workspaceV1provider != nil {
-		if err := initRegionalAPIImpl(client, workspaceV1provider, newWorkspaceV1Impl, client.setWorkspaceV1); err != nil {
+		if err := initRegionalAPI(client, workspaceV1provider, newWorkspaceV1Impl, client.setWorkspaceV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initRegionalAPIDummy(newWorkspaceV1Dummy, client.setWorkspaceV1)
+		setUnavailableRegionalAPI(newWorkspaceV1Unavailable, client.setWorkspaceV1)
 	}
 
 	// Initializes computeV1 API client
 	computeV1provider := findRegionalProvider(constants.ComputeProviderName, constants.ApiVersion1, region)
 	if computeV1provider != nil {
-		if err := initRegionalAPIImpl(client, computeV1provider, newComputeV1Impl, client.setComputeV1); err != nil {
+		if err := initRegionalAPI(client, computeV1provider, newComputeV1Impl, client.setComputeV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initRegionalAPIDummy(newComputeV1Dummy, client.setComputeV1)
+		setUnavailableRegionalAPI(newComputeV1Unavailable, client.setComputeV1)
 	}
 
 	// Initializes storageV1 API client
 	storageV1provider := findRegionalProvider(constants.StorageProviderName, constants.ApiVersion1, region)
 	if storageV1provider != nil {
-		if err := initRegionalAPIImpl(client, storageV1provider, newStorageV1Impl, client.setStorageV1); err != nil {
+		if err := initRegionalAPI(client, storageV1provider, newStorageV1Impl, client.setStorageV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initRegionalAPIDummy(newStorageV1Dummy, client.setStorageV1)
+		setUnavailableRegionalAPI(newStorageV1Unavailable, client.setStorageV1)
 	}
 
 	// Initializes networkV1 API client
 	networkV1provider := findRegionalProvider(constants.NetworkProviderName, constants.ApiVersion1, region)
 	if networkV1provider != nil {
-		if err := initRegionalAPIImpl(client, networkV1provider, newNetworkV1Impl, client.setNetworkV1); err != nil {
+		if err := initRegionalAPI(client, networkV1provider, newNetworkV1Impl, client.setNetworkV1); err != nil {
 			return nil, err
 		}
 	} else {
-		initRegionalAPIDummy(newNetworkV1Dummy, client.setNetworkV1)
+		setUnavailableRegionalAPI(newNetworkV1Unavailable, client.setNetworkV1)
 	}
 
 	return client, nil
 }
 
-func initRegionalAPIImpl[T any](client *RegionalClient, provider *schema.Provider, newFunc func(client *RegionalClient, url string) (T, error), setFunc func(T)) error {
+func initRegionalAPI[T any](client *RegionalClient, provider *schema.Provider, newFunc func(client *RegionalClient, url string) (T, error), setFunc func(T)) error {
 	api, err := newFunc(client, provider.Url)
 	if err != nil {
 		return err
@@ -72,7 +72,7 @@ func initRegionalAPIImpl[T any](client *RegionalClient, provider *schema.Provide
 	return nil
 }
 
-func initRegionalAPIDummy[T any](newFunc func() T, setFunc func(T)) {
+func setUnavailableRegionalAPI[T any](newFunc func() T, setFunc func(T)) {
 	api := newFunc()
 	setFunc(api)
 }

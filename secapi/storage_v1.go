@@ -45,93 +45,93 @@ type StorageV1 interface {
 	DeleteImage(ctx context.Context, image *schema.Image) error
 }
 
-// Dummy
+// Unavailable
 
-type StorageV1Dummy struct{}
+type StorageV1Unavailable struct{}
 
-func newStorageV1Dummy() StorageV1 {
-	return &StorageV1Dummy{}
+func newStorageV1Unavailable() StorageV1 {
+	return &StorageV1Unavailable{}
 }
 
 /// Storage Sku
 
-func (api *StorageV1Dummy) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error) {
+func (api *StorageV1Unavailable) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
+func (api *StorageV1Unavailable) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) GetSku(ctx context.Context, tref TenantReference) (*schema.StorageSku, error) {
+func (api *StorageV1Unavailable) GetSku(ctx context.Context, tref TenantReference) (*schema.StorageSku, error) {
 	return nil, ErrProviderNotAvailable
 }
 
 /// Block Storage
 
-func (api *StorageV1Dummy) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error) {
+func (api *StorageV1Unavailable) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
+func (api *StorageV1Unavailable) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) CreateOrUpdateBlockStorage(ctx context.Context, block *schema.BlockStorage) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) CreateOrUpdateBlockStorage(ctx context.Context, block *schema.BlockStorage) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) DeleteBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.DeleteBlockStorageParams) error {
+func (api *StorageV1Unavailable) DeleteBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.DeleteBlockStorageParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) DeleteBlockStorage(ctx context.Context, block *schema.BlockStorage) error {
+func (api *StorageV1Unavailable) DeleteBlockStorage(ctx context.Context, block *schema.BlockStorage) error {
 	return ErrProviderNotAvailable
 }
 
 /// Image
 
-func (api *StorageV1Dummy) ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error) {
+func (api *StorageV1Unavailable) ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
+func (api *StorageV1Unavailable) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error) {
+func (api *StorageV1Unavailable) GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error) {
+func (api *StorageV1Unavailable) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {
+func (api *StorageV1Unavailable) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) CreateOrUpdateImage(ctx context.Context, image *schema.Image) (*schema.Image, error) {
+func (api *StorageV1Unavailable) CreateOrUpdateImage(ctx context.Context, image *schema.Image) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) DeleteImageWithParams(ctx context.Context, image *schema.Image, params *storage.DeleteImageParams) error {
+func (api *StorageV1Unavailable) DeleteImageWithParams(ctx context.Context, image *schema.Image, params *storage.DeleteImageParams) error {
 	return ErrProviderNotAvailable
 }
 
-func (api *StorageV1Dummy) DeleteImage(ctx context.Context, image *schema.Image) error {
+func (api *StorageV1Unavailable) DeleteImage(ctx context.Context, image *schema.Image) error {
 	return ErrProviderNotAvailable
 }
 
