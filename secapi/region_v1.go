@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -66,7 +65,7 @@ func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Regi
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -90,7 +89,7 @@ func (api *RegionV1Impl) ListRegionsWithFilters(ctx context.Context, opts *ListO
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -107,7 +106,7 @@ func (api *RegionV1Impl) GetRegion(ctx context.Context, name string) (*schema.Re
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())

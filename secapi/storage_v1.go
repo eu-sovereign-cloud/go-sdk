@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -164,7 +163,7 @@ func (api *StorageV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -188,7 +187,7 @@ func (api *StorageV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID,
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -209,7 +208,7 @@ func (api *StorageV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -229,7 +228,7 @@ func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, tid TenantID, w
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -253,7 +252,7 @@ func (api *StorageV1Impl) ListBlockStoragesWithFilters(ctx context.Context, tid 
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -274,7 +273,7 @@ func (api *StorageV1Impl) GetBlockStorage(ctx context.Context, wref WorkspaceRef
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -296,7 +295,7 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -321,10 +320,8 @@ func (api *StorageV1Impl) CreateOrUpdateBlockStorageWithParams(ctx context.Conte
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -344,7 +341,7 @@ func (api *StorageV1Impl) DeleteBlockStorageWithParams(ctx context.Context, bloc
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -368,7 +365,7 @@ func (api *StorageV1Impl) ListImages(ctx context.Context, tid TenantID) (*Iterat
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -392,7 +389,7 @@ func (api *StorageV1Impl) ListImagesWithFilters(ctx context.Context, tid TenantI
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -413,7 +410,7 @@ func (api *StorageV1Impl) GetImage(ctx context.Context, tref TenantReference) (*
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -435,7 +432,7 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -460,10 +457,8 @@ func (api *StorageV1Impl) CreateOrUpdateImageWithParams(ctx context.Context, ima
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -483,7 +478,7 @@ func (api *StorageV1Impl) DeleteImageWithParams(ctx context.Context, image *sche
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())

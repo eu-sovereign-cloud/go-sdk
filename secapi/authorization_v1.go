@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -145,7 +144,7 @@ func (api *AuthorizationV1Impl) ListRoles(ctx context.Context, tid TenantID) (*I
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -169,7 +168,7 @@ func (api *AuthorizationV1Impl) ListRolesWithFilters(ctx context.Context, tid Te
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -190,7 +189,7 @@ func (api *AuthorizationV1Impl) GetRole(ctx context.Context, tref TenantReferenc
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -212,7 +211,7 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -237,10 +236,8 @@ func (api *AuthorizationV1Impl) CreateOrUpdateRoleWithParams(ctx context.Context
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -260,7 +257,7 @@ func (api *AuthorizationV1Impl) DeleteRoleWithParams(ctx context.Context, role *
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -284,7 +281,7 @@ func (api *AuthorizationV1Impl) ListRoleAssignments(ctx context.Context, tid Ten
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -308,7 +305,7 @@ func (api *AuthorizationV1Impl) ListRoleAssignmentsWithFilters(ctx context.Conte
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -329,7 +326,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignment(ctx context.Context, tref Tena
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -351,7 +348,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -376,10 +373,8 @@ func (api *AuthorizationV1Impl) CreateOrUpdateRoleAssignmentWithParams(ctx conte
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -399,7 +394,7 @@ func (api *AuthorizationV1Impl) DeleteRoleAssignmentWithParams(ctx context.Conte
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())

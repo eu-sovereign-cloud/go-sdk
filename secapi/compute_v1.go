@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -151,7 +150,7 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -175,7 +174,7 @@ func (api *ComputeV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID,
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -196,7 +195,7 @@ func (api *ComputeV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -216,7 +215,7 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, tid TenantID, wid W
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -240,7 +239,7 @@ func (api *ComputeV1Impl) ListInstancesWithFilters(ctx context.Context, tid Tena
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -261,7 +260,7 @@ func (api *ComputeV1Impl) GetInstance(ctx context.Context, wref WorkspaceReferen
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -283,7 +282,7 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -308,10 +307,8 @@ func (api *ComputeV1Impl) CreateOrUpdateInstanceWithParams(ctx context.Context, 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -331,7 +328,7 @@ func (api *ComputeV1Impl) DeleteInstanceWithParams(ctx context.Context, inst *sc
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -352,7 +349,7 @@ func (api *ComputeV1Impl) StartInstanceWithParams(ctx context.Context, inst *sch
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessPostStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -373,7 +370,7 @@ func (api *ComputeV1Impl) StopInstanceWithParams(ctx context.Context, inst *sche
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessPostStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -394,7 +391,7 @@ func (api *ComputeV1Impl) RestartInstanceWithParams(ctx context.Context, inst *s
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessPostStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())

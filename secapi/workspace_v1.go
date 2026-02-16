@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -98,7 +97,7 @@ func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tid TenantID) (*
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -122,7 +121,7 @@ func (api *WorkspaceV1Impl) ListWorkspacesWithFilters(ctx context.Context, tid T
 				return nil, nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
@@ -143,7 +142,7 @@ func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReferen
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -165,7 +164,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -190,10 +189,8 @@ func (api *WorkspaceV1Impl) CreateOrUpdateWorkspaceWithParams(ctx context.Contex
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -213,7 +210,7 @@ func (api *WorkspaceV1Impl) DeleteWorkspaceWithParams(ctx context.Context, ws *s
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())

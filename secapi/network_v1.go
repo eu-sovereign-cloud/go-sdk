@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -437,7 +436,7 @@ func (api *NetworkV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -494,7 +493,7 @@ func (api *NetworkV1Impl) GetNetwork(ctx context.Context, wref WorkspaceReferenc
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -516,7 +515,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -541,10 +540,8 @@ func (api *NetworkV1Impl) CreateOrUpdateNetworkWithParams(ctx context.Context, n
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -564,7 +561,7 @@ func (api *NetworkV1Impl) DeleteNetworkWithParams(ctx context.Context, net *sche
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -625,7 +622,7 @@ func (api *NetworkV1Impl) GetSubnet(ctx context.Context, nref NetworkReference) 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -647,7 +644,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -672,10 +669,8 @@ func (api *NetworkV1Impl) CreateOrUpdateSubnetWithParams(ctx context.Context, su
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -695,7 +690,7 @@ func (api *NetworkV1Impl) DeleteSubnetWithParams(ctx context.Context, sub *schem
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -756,7 +751,7 @@ func (api *NetworkV1Impl) GetRouteTable(ctx context.Context, nref NetworkReferen
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -778,7 +773,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -803,10 +798,8 @@ func (api *NetworkV1Impl) CreateOrUpdateRouteTableWithParams(ctx context.Context
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -826,7 +819,7 @@ func (api *NetworkV1Impl) DeleteRouteTableWithParams(ctx context.Context, route 
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -887,7 +880,7 @@ func (api *NetworkV1Impl) GetInternetGateway(ctx context.Context, wref Workspace
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -909,7 +902,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -934,10 +927,8 @@ func (api *NetworkV1Impl) CreateOrUpdateInternetGatewayWithParams(ctx context.Co
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -957,7 +948,7 @@ func (api *NetworkV1Impl) DeleteInternetGatewayWithParams(ctx context.Context, g
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -1018,7 +1009,7 @@ func (api *NetworkV1Impl) GetSecurityGroup(ctx context.Context, wref WorkspaceRe
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -1040,7 +1031,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -1065,10 +1056,8 @@ func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupWithParams(ctx context.Cont
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -1088,7 +1077,7 @@ func (api *NetworkV1Impl) DeleteSecurityGroupWithParams(ctx context.Context, rou
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -1149,7 +1138,7 @@ func (api *NetworkV1Impl) GetNic(ctx context.Context, wref WorkspaceReference) (
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -1171,7 +1160,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -1196,10 +1185,8 @@ func (api *NetworkV1Impl) CreateOrUpdateNicWithParams(ctx context.Context, nic *
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -1219,7 +1206,7 @@ func (api *NetworkV1Impl) DeleteNicWithParams(ctx context.Context, nic *schema.N
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
@@ -1280,7 +1267,7 @@ func (api *NetworkV1Impl) GetPublicIp(ctx context.Context, wref WorkspaceReferen
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
@@ -1302,7 +1289,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 				return "", nil, err
 			}
 
-			if resp.StatusCode() == http.StatusOK {
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return *resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
@@ -1327,10 +1314,8 @@ func (api *NetworkV1Impl) CreateOrUpdatePublicIpWithParams(ctx context.Context, 
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusOK {
-		return resp.JSON200, nil
-	} else if resp.StatusCode() == http.StatusCreated {
-		return resp.JSON201, nil
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
 	} else {
 		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
@@ -1350,7 +1335,7 @@ func (api *NetworkV1Impl) DeletePublicIpWithParams(ctx context.Context, ip *sche
 		return err
 	}
 
-	if resp.StatusCode() == http.StatusAccepted {
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
 		return nil
 	} else {
 		return mapStatusCodeToError(resp.StatusCode())
