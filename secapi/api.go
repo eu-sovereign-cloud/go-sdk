@@ -27,11 +27,11 @@ func (api *API) loadRequestHeaders(ctx context.Context, req *http.Request) error
 
 func (api *API) validateGlobalMetadata(metadata *schema.GlobalTenantResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	return nil
@@ -39,11 +39,11 @@ func (api *API) validateGlobalMetadata(metadata *schema.GlobalTenantResourceMeta
 
 func (api *API) validateRegionalMetadata(metadata *schema.RegionalResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	return nil
@@ -51,15 +51,15 @@ func (api *API) validateRegionalMetadata(metadata *schema.RegionalResourceMetada
 
 func (api *API) validateWorkspaceMetadata(metadata *schema.RegionalWorkspaceResourceMetadata) error {
 	if metadata == nil {
-		return ErrNoMetatada
+		return ErrNoMetadata
 	}
 
 	if metadata.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if metadata.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	return nil

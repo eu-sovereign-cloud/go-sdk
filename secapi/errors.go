@@ -1,16 +1,26 @@
 package secapi
 
-import "errors"
+import (
+	"errors"
+)
 
 var (
-	ErrNoMetatada          = errors.New("metadata is empty")
-	ErrNoMetatadaTenant    = errors.New("metadata tenant is empty")
-	ErrNoMetatadaWorkspace = errors.New("metadata workspace is empty")
-	ErrNoMetatadaName      = errors.New("metadata name is empty")
+	ErrProviderNotAvailable = errors.New("provider not available in the region")
 
-	ErrNoPathMetadata = errors.New("network path param is empty")
+	ErrNoMetadata          = errors.New("metadata is empty")
+	ErrNoMetadataTenant    = errors.New("metadata tenant is empty")
+	ErrNoMetadataWorkspace = errors.New("metadata workspace is empty")
+	ErrNoMetadataNetwork   = errors.New("metadata network is empty")
+	ErrNoMetadataName      = errors.New("metadata name is empty")
 
-	ErrResourceNotFound = errors.New("resource not found")
+	ErrUnauthorizedAccess        = errors.New("unauthorized access")
+	ErrForbiddenAccess           = errors.New("forbidden access")
+	ErrResourceNotFound          = errors.New("resource not found")
+	ErrInvalidRequest            = errors.New("invalid request")
+	ErrRequestPreconditionFailed = errors.New("request precondition failed")
+	ErrConflictingRequest        = errors.New("conflicting request")
+	ErrInternalError             = errors.New("internal error")
+	ErrUnknowError               = errors.New("unknow error")
 
 	ErrRetryMaxAttemptsReached = errors.New("max retry attempts reached")
 )

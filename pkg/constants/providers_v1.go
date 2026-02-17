@@ -1,7 +1,6 @@
 package constants
 
 const (
-	// Providers
 	AuthorizationProviderV1Name = AuthorizationProviderName + "/" + ApiVersion1
 	RegionProviderV1Name        = RegionProviderName + "/" + ApiVersion1
 	WorkspaceProviderV1Name     = WorkspaceProviderName + "/" + ApiVersion1
