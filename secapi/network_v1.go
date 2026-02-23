@@ -523,7 +523,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -652,7 +652,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -781,7 +781,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -910,7 +910,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -1039,7 +1039,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -1168,7 +1168,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -1297,7 +1297,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}

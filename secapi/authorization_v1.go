@@ -219,7 +219,7 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -356,7 +356,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}

@@ -24,7 +24,7 @@ func TestResourceStateObserverWaitUntil_SingleTry(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.NoError(t, err)
 	assert.Equal(t, 1, attempts)
 
@@ -49,7 +49,7 @@ func TestResourceStateObserverWaitUntil_MultipleTries(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.NoError(t, err)
 	assert.Equal(t, 3, attempts)
 
@@ -69,7 +69,7 @@ func TestResourceStateObserverWaitUntil_MaxAttempts(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.Error(t, err)
 	assert.Equal(t, err, ErrRetryMaxAttemptsReached)
 	assert.Equal(t, 4, attempts)
@@ -87,7 +87,7 @@ func TestResourceStateObserverWaitUntil_FuncError(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.Error(t, err)
 	assert.Equal(t, err, assert.AnError)
 
