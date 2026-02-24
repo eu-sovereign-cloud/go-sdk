@@ -1,9 +1,5 @@
 package secapi
 
-import (
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-)
-
 type Reference interface {
 	TenantReference | WorkspaceReference | NetworkReference
 }
@@ -35,11 +31,11 @@ type NetworkReference struct {
 
 func (tref *TenantReference) validate() error {
 	if tref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if tref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil
@@ -47,15 +43,15 @@ func (tref *TenantReference) validate() error {
 
 func (wref *WorkspaceReference) validate() error {
 	if wref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if wref.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	if wref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil
@@ -63,34 +59,20 @@ func (wref *WorkspaceReference) validate() error {
 
 func (nref *NetworkReference) validate() error {
 	if nref.Tenant == "" {
-		return ErrNoMetatadaTenant
+		return ErrNoMetadataTenant
 	}
 
 	if nref.Workspace == "" {
-		return ErrNoMetatadaWorkspace
+		return ErrNoMetadataWorkspace
 	}
 
 	if nref.Network == "" {
-		return ErrNoPathMetadata
+		return ErrNoMetadataNetwork
 	}
 
 	if nref.Name == "" {
-		return ErrNoMetatadaName
+		return ErrNoMetadataName
 	}
 
 	return nil
-}
-
-// Converters
-
-func BuildReferenceObj(provider, region, resourceName, tenant, workspace string) *schema.Reference {
-	ref := &schema.Reference{
-		Provider:  &provider,
-		Region:    &region,
-		Resource:  resourceName,
-		Tenant:    &tenant,
-		Workspace: &workspace,
-	}
-
-	return ref
 }

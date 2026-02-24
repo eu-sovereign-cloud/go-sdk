@@ -2,7 +2,6 @@ package secapi
 
 import (
 	"context"
-	"net/http"
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
@@ -10,14 +9,52 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-type RegionV1 struct {
+// Interface
+
+type RegionV1 interface {
+	ListRegions(ctx context.Context) (*Iterator[schema.Region], error)
+	ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error)
+
+	GetRegion(ctx context.Context, name string) (*schema.Region, error)
+}
+
+// Unavailable
+
+type RegionV1Unavailable struct{}
+
+func newRegionV1Unavailable() RegionV1 {
+	return &RegionV1Unavailable{}
+}
+
+func (api *RegionV1Unavailable) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *RegionV1Unavailable) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *RegionV1Unavailable) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+// Impl
+
+type RegionV1Impl struct {
 	API
 	region region.ClientWithResponsesInterface
 }
 
-// Region
+func newRegionV1Impl(client *GlobalClient, regionsUrl string) (RegionV1, error) {
+	region, err := region.NewClientWithResponses(regionsUrl)
+	if err != nil {
+		return nil, err
+	}
 
-func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return &RegionV1Impl{API: API{authToken: client.authToken}, region: region}, nil
+}
+
+func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
@@ -28,14 +65,18 @@ func (api *RegionV1) ListRegions(ctx context.Context) (*Iterator[schema.Region],
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+func (api *RegionV1Impl) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
@@ -48,31 +89,26 @@ func (api *RegionV1) ListRegionsWithFilters(ctx context.Context, opts *ListOptio
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
 	return &iter, nil
 }
 
-func (api *RegionV1) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
+func (api *RegionV1Impl) GetRegion(ctx context.Context, name string) (*schema.Region, error) {
 	resp, err := api.region.GetRegionWithResponse(ctx, name, api.loadRequestHeaders)
 	if err != nil {
 		return nil, err
 	}
 
-	if resp.StatusCode() == http.StatusNotFound {
-		return nil, ErrResourceNotFound
-	} else {
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
 		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
 	}
-}
-
-func newRegionV1(client *GlobalClient, regionsUrl string) (*RegionV1, error) {
-	region, err := region.NewClientWithResponses(regionsUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	return &RegionV1{API: API{authToken: client.authToken}, region: region}, nil
 }

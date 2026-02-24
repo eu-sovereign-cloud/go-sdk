@@ -8,7 +8,6 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
@@ -110,7 +109,7 @@ func TestListInstancesV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockListInstancesV1(sim, []schema.Instance{
 		*buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
@@ -121,7 +120,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	iter, err := regionalClient.ComputeV1.ListInstances(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	assert.NoError(t, err)
@@ -167,7 +166,7 @@ func TestListInstancesWithFiltersV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 
-	ref := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	skuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	secatest.MockListInstancesV1(sim, []schema.Instance{
 		{
@@ -177,7 +176,7 @@ func TestListInstancesWithFiltersV1(t *testing.T) {
 				Workspace: secatest.Workspace1Name,
 			},
 			Spec: schema.InstanceSpec{
-				SkuRef: *ref,
+				SkuRef: *skuRef,
 			},
 			Status: &schema.InstanceStatus{
 				State: ptr.To(schema.ResourceStateActive),
@@ -218,7 +217,7 @@ func TestGetInstanceV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -227,7 +226,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
 	resp, err := regionalClient.ComputeV1.GetInstance(ctx, wref)
@@ -251,7 +250,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
 	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
@@ -261,7 +260,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -286,7 +285,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockCreateOrUpdateInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
 	secatest.ConfigureComputeHandler(sim, sm)
 
@@ -295,7 +294,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	instanceSkuRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, secatest.InstanceSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	inst := &schema.Instance{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -407,7 +406,7 @@ func TestDeleteInstanceV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockcompute.NewMockServerInterface(t)
-	spec := buildResponseInstanceSpec(t, secatest.InstanceSku1Ref, secatest.ZoneA)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
 	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 
 	secatest.MockDeleteInstanceV1(sim)
@@ -456,11 +455,10 @@ func buildResponseInstance(name string, tenant string, workspace string, region 
 	}
 }
 
-func buildResponseInstanceSpec(t *testing.T, skuRef string, zone string) *schema.InstanceSpec {
-	urnRef := BuildReferenceObj(constants.ComputeProviderV1Name, secatest.Region1Name, skuRef, secatest.Tenant1Name, secatest.Workspace1Name)
-
+func buildResponseInstanceSpec(skuRef string, zone string) *schema.InstanceSpec {
+	ref := &schema.Reference{Resource: skuRef}
 	return &schema.InstanceSpec{
-		SkuRef: *urnRef,
+		SkuRef: *ref,
 		Zone:   zone,
 	}
 }

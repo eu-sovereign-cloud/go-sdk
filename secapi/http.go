@@ -1,41 +1,60 @@
 package secapi
 
 import (
-	"fmt"
 	"net/http"
 )
 
-type httpResponse interface {
-	StatusCode() int
-}
-
-func checkStatusCode(resp httpResponse, alloweds ...int) error {
-	code := resp.StatusCode()
+func checkStatusCode(code int, alloweds ...int) bool {
 	for _, allowed := range alloweds {
 		if code == allowed {
-			return nil
+			return true
 		}
 	}
-	return fmt.Errorf("unexpected status code %d", code)
+	return false
 }
 
-func checkSuccessPutStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, http.StatusOK, http.StatusCreated); err != nil {
-		return err
-	}
-	return nil
+func checkSuccessGetStatusCode(code int) bool {
+	return checkStatusCode(code, http.StatusOK)
 }
 
-func checkSuccessPostStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, http.StatusAccepted); err != nil {
-		return err
-	}
-	return nil
+func checkSuccessPostStatusCode(code int) bool {
+	return checkStatusCode(code, http.StatusAccepted)
 }
 
-func checkSuccessDeleteStatusCodes(resp httpResponse) error {
-	if err := checkStatusCode(resp, http.StatusAccepted, http.StatusNotFound); err != nil {
-		return err
+func checkSuccessDeleteStatusCode(code int) bool {
+	return checkStatusCode(code, http.StatusAccepted, http.StatusNotFound)
+}
+
+func checkSuccessPutStatusCode[T any](code int, createJSON, updateJSON *T) (bool, *T) {
+	switch code {
+	case http.StatusCreated:
+		return true, createJSON
+	case http.StatusOK:
+		return true, updateJSON
+	default:
+		return false, nil
 	}
-	return nil
+}
+
+func mapStatusCodeToError(status int) error {
+	switch status {
+	case http.StatusOK:
+		return nil
+	case http.StatusUnauthorized:
+		return ErrUnauthorizedAccess
+	case http.StatusForbidden:
+		return ErrForbiddenAccess
+	case http.StatusNotFound:
+		return ErrResourceNotFound
+	case http.StatusBadRequest:
+		return ErrInvalidRequest
+	case http.StatusPreconditionFailed:
+		return ErrRequestPreconditionFailed
+	case http.StatusConflict:
+		return ErrConflictingRequest
+	case http.StatusInternalServerError:
+		return ErrInternalError
+	default:
+		return ErrUnknowError
+	}
 }

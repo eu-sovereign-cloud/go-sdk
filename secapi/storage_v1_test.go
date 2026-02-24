@@ -8,7 +8,6 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockstorage "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.storage.v1"
-	"github.com/eu-sovereign-cloud/go-sdk/pkg/constants"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
@@ -132,7 +131,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseBlockStorageSpec(t, secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
 	secatest.MockListBlockStoragesV1(sim, []schema.BlockStorage{
 		*buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
@@ -143,7 +142,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
 	assert.NoError(t, err)
@@ -169,7 +168,9 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	ref := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+
+	skuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
+
 	secatest.MockListBlockStoragesV1(sim, []schema.BlockStorage{
 		{
 			Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -178,7 +179,7 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 				Workspace: secatest.Workspace1Name,
 			},
 			Spec: schema.BlockStorageSpec{
-				SkuRef: *ref,
+				SkuRef: *skuRef,
 			},
 			Status: &schema.BlockStorageStatus{
 				State: ptr.To(schema.ResourceStateActive),
@@ -220,7 +221,7 @@ func TestGetBlockStorageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseBlockStorageSpec(t, secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
 	secatest.MockGetBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -228,7 +229,8 @@ func TestGetBlockStorageV1(t *testing.T) {
 	defer server.Close()
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
-	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+
+	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
 	resp, err := regionalClient.StorageV1.GetBlockStorage(ctx, wref)
@@ -252,7 +254,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseBlockStorageSpec(t, secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
 	secatest.MockGetBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
 	secatest.MockGetBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
@@ -262,7 +264,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -287,7 +289,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseBlockStorageSpec(t, secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
 	secatest.MockCreateOrUpdateBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -296,7 +298,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	storageSkuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.StorageSku1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	block := &schema.BlockStorage{
 		Metadata: &schema.RegionalWorkspaceResourceMetadata{
@@ -330,7 +332,7 @@ func TestDeleteBlockStorageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseBlockStorageSpec(t, secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
 	secatest.MockGetBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.MockDeleteBlockStorageV1(sim)
 	secatest.ConfigureStorageHandler(sim, sm)
@@ -361,10 +363,10 @@ func TestListImagesV1(t *testing.T) {
 
 	secatest.ConfigureRegionV1Handler(t, sm)
 
-	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
 	secatest.MockListStorageImagesV1(sim, []schema.Image{
 		*buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
@@ -418,7 +420,7 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 
-	ref := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	secatest.MockListStorageImagesV1(sim, []schema.Image{
 		{
@@ -427,7 +429,7 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 				Tenant: secatest.Tenant1Name,
 			},
 			Spec: schema.ImageSpec{
-				BlockStorageRef: *ref,
+				BlockStorageRef: *blockStorageRef,
 			},
 			Status: &schema.ImageStatus{
 				State: ptr.To(schema.ResourceStateActive),
@@ -467,7 +469,7 @@ func TestGetImageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
 	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -476,7 +478,7 @@ func TestGetImageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
 	resp, err := regionalClient.StorageV1.GetImage(ctx, tref)
@@ -499,7 +501,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
 	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
 	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
@@ -509,7 +511,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
 	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -533,7 +535,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
 	secatest.MockCreateOrUpdateImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
 	secatest.ConfigureStorageHandler(sim, sm)
 
@@ -542,7 +544,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	blockStorageRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, secatest.BlockStorage1Ref, secatest.Tenant1Name, secatest.Workspace1Name)
+	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	image := &schema.Image{
 		Metadata: secatest.NewRegionalResourceMetadata(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name),
@@ -571,7 +573,7 @@ func TestDeleteImageV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mockstorage.NewMockServerInterface(t)
-	spec := buildResponseImageSpec(t, secatest.BlockStorage1Ref)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
 	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.MockDeleteImageV1(sim)
 	secatest.ConfigureStorageHandler(sim, sm)
@@ -617,11 +619,11 @@ func buildResponseBlockStorage(name string, tenant string, workspace string, reg
 	}
 }
 
-func buildResponseBlockStorageSpec(t *testing.T, skuRefName string, sizeGB int) *schema.BlockStorageSpec {
-	skuRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, skuRefName, secatest.Tenant1Name, secatest.Workspace1Name)
+func buildResponseBlockStorageSpec(skuRefName string, sizeGB int) *schema.BlockStorageSpec {
+	ref := &schema.Reference{Resource: skuRefName}
 
 	return &schema.BlockStorageSpec{
-		SkuRef: *skuRef,
+		SkuRef: *ref,
 		SizeGB: sizeGB,
 	}
 }
@@ -634,10 +636,10 @@ func buildResponseImage(name string, tenant string, region string, spec *schema.
 	}
 }
 
-func buildResponseImageSpec(t *testing.T, blockStorageRef string) *schema.ImageSpec {
-	objRef := BuildReferenceObj(constants.StorageProviderV1Name, secatest.Region1Name, blockStorageRef, secatest.Tenant1Name, secatest.Workspace1Name)
+func buildResponseImageSpec(blockStorageRef string) *schema.ImageSpec {
+	ref := &schema.Reference{Resource: blockStorageRef}
 
 	return &schema.ImageSpec{
-		BlockStorageRef: *objRef,
+		BlockStorageRef: *ref,
 	}
 }
