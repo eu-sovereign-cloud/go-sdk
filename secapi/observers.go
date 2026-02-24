@@ -2,6 +2,7 @@ package secapi
 
 import (
 	"errors"
+	"slices"
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
@@ -16,7 +17,7 @@ type resourceStateObserver[V comparable, R any] struct {
 	actFunc     func() (V, *R, error)
 }
 
-func (retry *resourceStateObserver[V, R]) WaitUntil(expectedValue V) (*R, error) {
+func (retry *resourceStateObserver[V, R]) WaitUntil(expectedValues []V) (*R, error) {
 	be := backoff.NewExponentialBackOff()
 	be.InitialInterval = retry.interval
 	be.Multiplier = RETRY_MULTIPLIER
@@ -31,7 +32,7 @@ func (retry *resourceStateObserver[V, R]) WaitUntil(expectedValue V) (*R, error)
 			return nil, backoff.Permanent(err)
 		}
 
-		if value == expectedValue {
+		if slices.Contains(expectedValues, value) {
 			// Stop to try and returns the response
 			return resp, nil
 		}

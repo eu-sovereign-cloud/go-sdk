@@ -277,7 +277,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetNetworkUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -510,7 +510,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.Subnet1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSubnetUntilState(ctx, nref, config)
 	assert.NoError(t, err)
 
@@ -752,7 +752,7 @@ func TestGetRouteTableUntilStateV1(t *testing.T) {
 	targetRef := &schema.Reference{Resource: secatest.Instance1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.RouteTable1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetRouteTableUntilState(ctx, nref, config)
 	assert.NoError(t, err)
 
@@ -980,7 +980,7 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetInternetGatewayUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1188,7 +1188,7 @@ func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSecurityGroupRuleUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1409,7 +1409,7 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSecurityGroupUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1638,7 +1638,7 @@ func TestGetNicUntilStateV1(t *testing.T) {
 	subnetRef := &schema.Reference{Resource: secatest.Subnet1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetNicUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1848,7 +1848,7 @@ func TestGetPublicIpUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetPublicIpUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 

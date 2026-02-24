@@ -267,7 +267,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetBlockStorageUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -514,7 +514,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetImageUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

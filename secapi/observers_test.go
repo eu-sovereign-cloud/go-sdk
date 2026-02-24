@@ -1,6 +1,7 @@
 package secapi
 
 import (
+	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,7 +25,7 @@ func TestResourceStateObserverWaitUntil_SingleTry(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.NoError(t, err)
 	assert.Equal(t, 1, attempts)
 
@@ -49,12 +50,35 @@ func TestResourceStateObserverWaitUntil_MultipleTries(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.NoError(t, err)
 	assert.Equal(t, 3, attempts)
 
 	assert.NotNil(t, resp)
 	assert.Equal(t, resp.state, schema.ResourceStateActive)
+}
+
+func TestResourceStateObserverWaitUntil_MultipleExpectedValues(t *testing.T) {
+	attempts := 0
+	observer := resourceStateObserver[schema.ResourceState, dummyResource]{
+		delay:       0,
+		interval:    0,
+		maxAttempts: 1,
+		actFunc: func() (schema.ResourceState, *dummyResource, error) {
+			attempts++
+
+			states := []schema.ResourceState{schema.ResourceStatePending, schema.ResourceStateActive}
+			randomState := states[rand.Intn(len(states))]
+			return schema.ResourceStateActive, &dummyResource{state: randomState}, nil
+		},
+	}
+
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStatePending, schema.ResourceStateActive})
+	assert.NoError(t, err)
+	assert.Equal(t, 1, attempts)
+
+	assert.NotNil(t, resp)
+	assert.Contains(t, []schema.ResourceState{schema.ResourceStatePending, schema.ResourceStateActive}, resp.state)
 }
 
 func TestResourceStateObserverWaitUntil_MaxAttempts(t *testing.T) {
@@ -69,7 +93,7 @@ func TestResourceStateObserverWaitUntil_MaxAttempts(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.Error(t, err)
 	assert.Equal(t, err, ErrRetryMaxAttemptsReached)
 	assert.Equal(t, 4, attempts)
@@ -87,7 +111,7 @@ func TestResourceStateObserverWaitUntil_FuncError(t *testing.T) {
 		},
 	}
 
-	resp, err := observer.WaitUntil(schema.ResourceStateActive)
+	resp, err := observer.WaitUntil([]schema.ResourceState{schema.ResourceStateActive})
 	assert.Error(t, err)
 	assert.Equal(t, err, assert.AnError)
 

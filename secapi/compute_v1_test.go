@@ -263,7 +263,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValue: schema.ResourceStateActive, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
