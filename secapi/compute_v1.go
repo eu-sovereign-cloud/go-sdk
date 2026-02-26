@@ -140,7 +140,6 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
-
 			var params *compute.ListSkusParams
 			if filter.Options == nil {
 				params = &compute.ListSkusParams{
@@ -198,7 +197,6 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFil
 
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
-
 			var params *compute.ListInstancesParams
 			if filter.Options == nil {
 				params = &compute.ListInstancesParams{

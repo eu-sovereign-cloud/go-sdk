@@ -37,8 +37,6 @@ type FilterOptions struct {
 	Labels *builders.LabelsBuilder
 }
 
-const defaultFilterLimit = 1000
-
 func NewFilterOptions() *FilterOptions {
 	limit := defaultLimit
 	return &FilterOptions{
@@ -74,22 +72,6 @@ func (wref *WorkspaceFilter) validate() error {
 
 	if wref.Workspace == "" {
 		return ErrNoMetadataWorkspace
-	}
-
-	return nil
-}
-
-func (nref *NetworkFilter) validate() error {
-	if nref.Tenant == "" {
-		return ErrNoMetadataTenant
-	}
-
-	if nref.Workspace == "" {
-		return ErrNoMetadataWorkspace
-	}
-
-	if nref.Network == "" {
-		return ErrNoMetadataNetwork
 	}
 
 	return nil
