@@ -70,6 +70,20 @@ type NetworkV1 interface {
 	DeleteInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.DeleteInternetGatewayParams) error
 	DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error
 
+	// Security Group Rule
+
+	ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error)
+	ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error)
+
+	GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error)
+	GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error)
+
+	CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error)
+	CreateOrUpdateSecurityGroupRule(ctx context.Context, group *schema.SecurityGroupRule) (*schema.SecurityGroupRule, error)
+
+	DeleteSecurityGroupRuleWithParams(ctx context.Context, rule *schema.SecurityGroupRule, params *network.DeleteSecurityGroupRuleParams) error
+	DeleteSecurityGroupRule(ctx context.Context, rule *schema.SecurityGroupRule) error
+
 	// Security Group
 	ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error)
 	ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error)
@@ -268,6 +282,40 @@ func (api *NetworkV1Unavailable) DeleteInternetGateway(ctx context.Context, gtw 
 	return ErrProviderNotAvailable
 }
 
+/// Security Group Rule
+
+func (api *NetworkV1Unavailable) ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroupRule(ctx context.Context, group *schema.SecurityGroupRule) (*schema.SecurityGroupRule, error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) DeleteSecurityGroupRuleWithParams(ctx context.Context, rule *schema.SecurityGroupRule, params *network.DeleteSecurityGroupRuleParams) error {
+	return ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) DeleteSecurityGroupRule(ctx context.Context, rule *schema.SecurityGroupRule) error {
+	return ErrProviderNotAvailable
+}
+
 /// Security Group
 
 func (api *NetworkV1Unavailable) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
@@ -399,7 +447,11 @@ func (api *NetworkV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -419,7 +471,11 @@ func (api *NetworkV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID,
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -456,7 +512,11 @@ func (api *NetworkV1Impl) ListNetworks(ctx context.Context, tid TenantID, wid Wo
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -476,7 +536,11 @@ func (api *NetworkV1Impl) ListNetworksWithFilters(ctx context.Context, tid Tenan
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -523,7 +587,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +649,11 @@ func (api *NetworkV1Impl) ListSubnets(ctx context.Context, tid TenantID, wid Wor
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -605,7 +673,11 @@ func (api *NetworkV1Impl) ListSubnetsWithFilters(ctx context.Context, tid Tenant
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -652,7 +724,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -714,7 +786,11 @@ func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, tid TenantID, wid
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -734,7 +810,11 @@ func (api *NetworkV1Impl) ListRouteTablesWithFilters(ctx context.Context, tid Te
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -781,7 +861,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -843,7 +923,11 @@ func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, tid TenantID
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -863,7 +947,11 @@ func (api *NetworkV1Impl) ListInternetGatewaysWithFilters(ctx context.Context, t
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -910,7 +998,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -959,6 +1047,143 @@ func (api *NetworkV1Impl) DeleteInternetGateway(ctx context.Context, gtw *schema
 	return api.DeleteInternetGatewayWithParams(ctx, gtw, nil)
 }
 
+// Security Group Rules
+
+func (api *NetworkV1Impl) ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error) {
+	iter := Iterator[schema.SecurityGroupRule]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
+			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
+				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *NetworkV1Impl) ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
+	iter := Iterator[schema.SecurityGroupRule]{
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
+			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
+				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+				Labels:    opts.Labels.BuildPtr(),
+				Limit:     opts.Limit,
+				SkipToken: skipToken,
+			}, api.loadRequestHeaders)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	return &iter, nil
+}
+
+func (api *NetworkV1Impl) GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+	if err != nil {
+		return nil, err
+	}
+
+	if checkSuccessGetStatusCode(resp.StatusCode()) {
+		return resp.JSON200, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
+	}
+}
+
+func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroupRule]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		actFunc: func() (schema.ResourceState, *schema.SecurityGroupRule, error) {
+			resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return *resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntil(config.ExpectedValues)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error) {
+	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
+		return nil, err
+	}
+
+	resp, err := api.network.CreateOrUpdateSecurityGroupRuleWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, *group, api.loadRequestHeaders)
+	if err != nil {
+		return nil, err
+	}
+
+	if valid, json := checkSuccessPutStatusCode(resp.StatusCode(), resp.JSON201, resp.JSON200); valid {
+		return json, nil
+	} else {
+		return nil, mapStatusCodeToError(resp.StatusCode())
+	}
+}
+
+func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupRule(ctx context.Context, group *schema.SecurityGroupRule) (*schema.SecurityGroupRule, error) {
+	return api.CreateOrUpdateSecurityGroupRuleWithParams(ctx, group, nil)
+}
+
+func (api *NetworkV1Impl) DeleteSecurityGroupRuleWithParams(ctx context.Context, rule *schema.SecurityGroupRule, params *network.DeleteSecurityGroupRuleParams) error {
+	if err := api.validateRegionalMetadata(rule.Metadata); err != nil {
+		return err
+	}
+
+	resp, err := api.network.DeleteSecurityGroupRuleWithResponse(ctx, rule.Metadata.Tenant, rule.Metadata.Workspace, rule.Metadata.Name, params, api.loadRequestHeaders)
+	if err != nil {
+		return err
+	}
+
+	if checkSuccessDeleteStatusCode(resp.StatusCode()) {
+		return nil
+	} else {
+		return mapStatusCodeToError(resp.StatusCode())
+	}
+}
+
+func (api *NetworkV1Impl) DeleteSecurityGroupRule(ctx context.Context, rule *schema.SecurityGroupRule) error {
+	return api.DeleteSecurityGroupRuleWithParams(ctx, rule, nil)
+}
+
 // Security Group
 
 func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
@@ -972,7 +1197,11 @@ func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, tid TenantID, 
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -992,7 +1221,11 @@ func (api *NetworkV1Impl) ListSecurityGroupsWithFilters(ctx context.Context, tid
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -1039,7 +1272,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -1067,12 +1300,12 @@ func (api *NetworkV1Impl) CreateOrUpdateSecurityGroup(ctx context.Context, group
 	return api.CreateOrUpdateSecurityGroupWithParams(ctx, group, nil)
 }
 
-func (api *NetworkV1Impl) DeleteSecurityGroupWithParams(ctx context.Context, route *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
-	if err := api.validateRegionalMetadata(route.Metadata); err != nil {
+func (api *NetworkV1Impl) DeleteSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.DeleteSecurityGroupParams) error {
+	if err := api.validateRegionalMetadata(group.Metadata); err != nil {
 		return err
 	}
 
-	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, route.Metadata.Tenant, route.Metadata.Workspace, route.Metadata.Name, params, api.loadRequestHeaders)
+	resp, err := api.network.DeleteSecurityGroupWithResponse(ctx, group.Metadata.Tenant, group.Metadata.Workspace, group.Metadata.Name, params, api.loadRequestHeaders)
 	if err != nil {
 		return err
 	}
@@ -1084,8 +1317,8 @@ func (api *NetworkV1Impl) DeleteSecurityGroupWithParams(ctx context.Context, rou
 	}
 }
 
-func (api *NetworkV1Impl) DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error {
-	return api.DeleteSecurityGroupWithParams(ctx, route, nil)
+func (api *NetworkV1Impl) DeleteSecurityGroup(ctx context.Context, group *schema.SecurityGroup) error {
+	return api.DeleteSecurityGroupWithParams(ctx, group, nil)
 }
 
 // Nic
@@ -1101,7 +1334,11 @@ func (api *NetworkV1Impl) ListNics(ctx context.Context, tid TenantID, wid Worksp
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -1121,7 +1358,11 @@ func (api *NetworkV1Impl) ListNicsWithFilters(ctx context.Context, tid TenantID,
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -1168,7 +1409,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -1230,7 +1471,11 @@ func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, tid TenantID, wid W
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -1250,7 +1495,11 @@ func (api *NetworkV1Impl) ListPublicIpsWithFilters(ctx context.Context, tid Tena
 				return nil, nil, err
 			}
 
-			return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+			} else {
+				return nil, nil, mapStatusCodeToError(resp.StatusCode())
+			}
 		},
 	}
 
@@ -1297,7 +1546,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}

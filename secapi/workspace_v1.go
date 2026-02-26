@@ -172,7 +172,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}

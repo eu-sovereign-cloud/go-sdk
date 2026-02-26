@@ -40,7 +40,7 @@ type SecurityGroupSpec struct {
 	// Rule Evaluation:
 	// - Default behavior is to deny all traffic not explicitly allowed
 	// - Rules provide granular control over allowed traffic types, sources, and destinations
-	Rules []SecurityGroupRuleSpec `json:"rules"`
+	Rules *[]SecurityGroupRuleSpec `json:"rules,omitempty"`
 }
 
 // SecurityGroupStatus defines model for SecurityGroupStatus.

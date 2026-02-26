@@ -46,6 +46,7 @@ const (
 
 	InternetGateway1Name = "internet-gateway-1"
 
+	SecurityGroupRule1Name = "security-group-rule-1"
 	SecurityGroup1Name     = "security-group-1"
 	SecurityGroup1PortFrom = 80
 	SecurityGroup1PortTo   = 80

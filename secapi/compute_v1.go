@@ -290,7 +290,7 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
