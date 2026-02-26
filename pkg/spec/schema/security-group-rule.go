@@ -66,6 +66,9 @@ type SecurityGroupRule struct {
 	// The number of labels is eventually limited by the CSP.
 	Labels Labels `json:"labels,omitempty"`
 
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
+
 	// Spec Specification of a security group rule defining network access permissions.
 	// If no version is specified, any IP version will be allowed.
 	// If no protocol is specified, any network protocol will be allowed.

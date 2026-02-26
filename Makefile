@@ -68,7 +68,7 @@ lint:
 .PHONY: clean
 clean:
 	@echo "Cleaning..."
-	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock
+	rm -rf $(SCHEMAS_FINAL) $(SPEC_DIST) mock pkg/spec
 
 .PHONY: generate
 generate: clean spec schemas mock

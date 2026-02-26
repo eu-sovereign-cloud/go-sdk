@@ -1,6 +1,6 @@
 package secapi
 
-type GetReference interface {
+type Reference interface {
 	TenantReference | WorkspaceReference | NetworkReference
 }
 

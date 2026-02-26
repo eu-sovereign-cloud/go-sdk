@@ -303,7 +303,7 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}
@@ -440,7 +440,7 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValue)
+	resp, err := observer.WaitUntil(config.ExpectedValues)
 	if err != nil {
 		return nil, err
 	}

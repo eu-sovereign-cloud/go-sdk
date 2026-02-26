@@ -50,7 +50,7 @@ type BlockStorageSpec struct {
 // BlockStorageStatus defines model for BlockStorageStatus.
 type BlockStorageStatus struct {
 	// AttachedTo Reference to the instance the block storage is attached to.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *ReferenceObject  `json:"attachedTo,omitempty"`
 	Conditions []StatusCondition `json:"conditions"`
 
 	// SizeGB Size of the block storage in GB.

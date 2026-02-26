@@ -174,6 +174,42 @@ func MockDeleteInternetGatewayV1(sim *mocknetwork.MockServerInterface) {
 		})
 }
 
+// Security Group Rules
+func MockListSecurityGroupRulesV1(sim *mocknetwork.MockServerInterface, resp []schema.SecurityGroupRule) {
+	sim.EXPECT().ListSecurityGroupRules(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, params network.ListSecurityGroupRulesParams) {
+			iter := &network.SecurityGroupRuleIterator{Items: resp}
+			if err := configGetHttpResponse(w, iter); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		})
+}
+
+func MockGetSecurityGroupRuleV1(sim *mocknetwork.MockServerInterface, resp *schema.SecurityGroupRule, times int) {
+	sim.EXPECT().GetSecurityGroupRule(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string) {
+			if err := configGetHttpResponse(w, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}).Times(times)
+}
+
+func MockCreateOrUpdateSecurityGroupRuleV1(sim *mocknetwork.MockServerInterface, resp *schema.SecurityGroupRule) {
+	sim.EXPECT().CreateOrUpdateSecurityGroupRule(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.CreateOrUpdateSecurityGroupRuleParams) {
+			if err := configPutHttpResponse(w, resp); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		})
+}
+
+func MockDeleteSecurityGroupRuleV1(sim *mocknetwork.MockServerInterface) {
+	sim.EXPECT().DeleteSecurityGroupRule(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, workspace string, name string, params network.DeleteSecurityGroupRuleParams) {
+			configDeleteHttpResponse(w)
+		})
+}
+
 // Security Group
 func MockListSecurityGroupsV1(sim *mocknetwork.MockServerInterface, resp []schema.SecurityGroup) {
 	sim.EXPECT().ListSecurityGroups(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
