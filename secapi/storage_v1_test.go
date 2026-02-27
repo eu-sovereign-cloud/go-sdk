@@ -267,7 +267,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
-	config := ResourceObserverValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetBlockStorageUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -282,7 +282,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
-func TestGetBlockStorageUntilNotFoundV1(t *testing.T) {
+func TestWatchBlockStorageUntilDeletedV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -300,8 +300,8 @@ func TestGetBlockStorageUntilNotFoundV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
-	config := ResourceObserverNotFoundConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
-	err := regionalClient.StorageV1.GetBlockStorageUntilNotFound(ctx, wref, config)
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.StorageV1.WatchBlockStorageUntilDeleted(ctx, wref, config)
 	assert.NoError(t, err)
 }
 
@@ -537,7 +537,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
-	config := ResourceObserverValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetImageUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -551,7 +551,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
-func TestGetImageUntilNotFoundV1(t *testing.T) {
+func TestWatchImageUntilDeletedV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -569,8 +569,8 @@ func TestGetImageUntilNotFoundV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
-	config := ResourceObserverNotFoundConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
-	err := regionalClient.StorageV1.GetImageUntilNotFound(ctx, tref, config)
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.StorageV1.WatchImageUntilDeleted(ctx, tref, config)
 	assert.NoError(t, err)
 }
 

@@ -147,7 +147,7 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
-	config := ResourceObserverValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -162,7 +162,7 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
-func TestGetRoleUntilNotFoundV1(t *testing.T) {
+func TestWatchRoleUntilDeletedV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -178,8 +178,8 @@ func TestGetRoleUntilNotFoundV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
-	config := ResourceObserverNotFoundConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
-	err := client.AuthorizationV1.GetRoleUntilNotFound(ctx, tref, config)
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := client.AuthorizationV1.WatchRoleUntilDeleted(ctx, tref, config)
 	assert.NoError(t, err)
 }
 
@@ -383,7 +383,7 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
-	config := ResourceObserverValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleAssignmentUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -397,7 +397,7 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
-func TestGetRoleAssignmentUntilNotFoundV1(t *testing.T) {
+func TestWatchRoleAssignmentUntilDeletedV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -413,8 +413,8 @@ func TestGetRoleAssignmentUntilNotFoundV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
-	config := ResourceObserverNotFoundConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
-	err := client.AuthorizationV1.GetRoleAssignmentUntilNotFound(ctx, tref, config)
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := client.AuthorizationV1.WatchRoleAssignmentUntilDeleted(ctx, tref, config)
 	assert.NoError(t, err)
 }
 

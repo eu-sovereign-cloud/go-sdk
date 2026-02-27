@@ -23,8 +23,9 @@ type ComputeV1 interface {
 	ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error)
 
 	GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error)
-	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Instance, error)
-	GetInstanceUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error
+	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Instance, error)
+
+	WatchInstanceUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.CreateOrUpdateInstanceParams) (*schema.Instance, error)
 	CreateOrUpdateInstance(ctx context.Context, inst *schema.Instance) (*schema.Instance, error)
@@ -78,11 +79,11 @@ func (api *ComputeV1Unavailable) GetInstance(ctx context.Context, wref Workspace
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Unavailable) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Instance, error) {
+func (api *ComputeV1Unavailable) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Unavailable) GetInstanceUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+func (api *ComputeV1Unavailable) WatchInstanceUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
 	return ErrProviderNotAvailable
 }
 
@@ -272,7 +273,7 @@ func (api *ComputeV1Impl) GetInstance(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Instance, error) {
+func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Instance, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -303,7 +304,7 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 	}
 }
 
-func (api *ComputeV1Impl) GetInstanceUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+func (api *ComputeV1Impl) WatchInstanceUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
 	if err := wref.validate(); err != nil {
 		return err
 	}

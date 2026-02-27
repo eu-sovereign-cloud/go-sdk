@@ -17,8 +17,9 @@ type WorkspaceV1 interface {
 	ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error)
 
 	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
-	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Workspace, error)
-	GetWorkspaceUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error
+	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error)
+
+	WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error)
 	CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error)
@@ -49,11 +50,11 @@ func (api *WorkspaceV1Unavailable) GetWorkspace(ctx context.Context, tref Tenant
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Unavailable) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Unavailable) GetWorkspaceUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+func (api *WorkspaceV1Unavailable) WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
 	return ErrProviderNotAvailable
 }
 
@@ -154,7 +155,7 @@ func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReferen
 	}
 }
 
-func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -185,7 +186,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 	}
 }
 
-func (api *WorkspaceV1Impl) GetWorkspaceUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+func (api *WorkspaceV1Impl) WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
 	if err := tref.validate(); err != nil {
 		return err
 	}

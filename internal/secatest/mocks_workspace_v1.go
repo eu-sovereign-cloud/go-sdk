@@ -33,7 +33,9 @@ func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Wor
 func MockNotFoundWorkspaceV1(sim *mockworkspace.MockServerInterface, times int) {
 	sim.EXPECT().GetWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
-			configNotFoundHttpResponse(w)
+			if err := configNotFoundHttpResponse(w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		}).Times(times)
 }
 

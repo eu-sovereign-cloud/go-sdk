@@ -22,8 +22,9 @@ type StorageV1 interface {
 	ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error)
 
 	GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error)
-	GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error)
-	GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error
+	GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.BlockStorage, error)
+
+	WatchBlockStorageUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error)
 	CreateOrUpdateBlockStorage(ctx context.Context, block *schema.BlockStorage) (*schema.BlockStorage, error)
@@ -36,8 +37,9 @@ type StorageV1 interface {
 	ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error)
 
 	GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error)
-	GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error)
-	GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error
+	GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Image, error)
+
+	WatchImageUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error)
 	CreateOrUpdateImage(ctx context.Context, image *schema.Image) (*schema.Image, error)
@@ -82,11 +84,11 @@ func (api *StorageV1Unavailable) GetBlockStorage(ctx context.Context, wref Works
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+func (api *StorageV1Unavailable) WatchBlockStorageUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
 	return ErrProviderNotAvailable
 }
 
@@ -120,11 +122,11 @@ func (api *StorageV1Unavailable) GetImage(ctx context.Context, tref TenantRefere
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error) {
+func (api *StorageV1Unavailable) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+func (api *StorageV1Unavailable) WatchImageUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
 	return ErrProviderNotAvailable
 }
 
@@ -290,7 +292,7 @@ func (api *StorageV1Impl) GetBlockStorage(ctx context.Context, wref WorkspaceRef
 	}
 }
 
-func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
+func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -321,7 +323,7 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 	}
 }
 
-func (api *StorageV1Impl) GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+func (api *StorageV1Impl) WatchBlockStorageUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
 	if err := wref.validate(); err != nil {
 		return err
 	}
@@ -459,7 +461,7 @@ func (api *StorageV1Impl) GetImage(ctx context.Context, tref TenantReference) (*
 	}
 }
 
-func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error) {
+func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Image, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -490,7 +492,7 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 	}
 }
 
-func (api *StorageV1Impl) GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+func (api *StorageV1Impl) WatchImageUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
 	if err := tref.validate(); err != nil {
 		return err
 	}

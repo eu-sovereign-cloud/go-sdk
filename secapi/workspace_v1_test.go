@@ -134,7 +134,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
-	config := ResourceObserverValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.WorkspaceV1.GetWorkspaceUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -146,7 +146,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
 }
 
-func TestGetWorkspaceUntilNotFoundV1(t *testing.T) {
+func TestWatchWorkspaceUntilDeletedV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -163,8 +163,8 @@ func TestGetWorkspaceUntilNotFoundV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
-	config := ResourceObserverNotFoundConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
-	err := regionalClient.WorkspaceV1.GetWorkspaceUntilNotFound(ctx, tref, config)
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.WorkspaceV1.WatchWorkspaceUntilDeleted(ctx, tref, config)
 	assert.NoError(t, err)
 }
 

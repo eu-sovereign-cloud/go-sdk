@@ -53,7 +53,9 @@ func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.Bl
 func MockNotFoundBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.BlockStorage, times int) {
 	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
-			configNotFoundHttpResponse(w)
+			if err := configNotFoundHttpResponse(w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		}).Times(times)
 }
 
@@ -96,7 +98,9 @@ func MockGetImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image, ti
 func MockNotFoundImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image, times int) {
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
-			configNotFoundHttpResponse(w)
+			if err := configNotFoundHttpResponse(w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		}).Times(times)
 }
 
