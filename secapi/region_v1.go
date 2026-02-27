@@ -79,7 +79,6 @@ func (api *RegionV1Impl) ListRegions(ctx context.Context, filter *GlobalFilter) 
 			}
 		},
 	}
-
 	return &iter, nil
 }
 

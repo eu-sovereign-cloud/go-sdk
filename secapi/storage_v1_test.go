@@ -36,7 +36,7 @@ func TestListStorageSkusV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -78,7 +78,7 @@ func TestListStorageSkusWithFiltersV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -144,7 +144,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
-	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -204,9 +204,9 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -377,7 +377,7 @@ func TestListImagesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -402,9 +402,9 @@ func TestListImagesV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err = regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -452,9 +452,9 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err := regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)

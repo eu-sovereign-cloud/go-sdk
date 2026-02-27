@@ -14,12 +14,10 @@ import (
 type ComputeV1 interface {
 	// Instance Sku
 	ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.InstanceSku], error)
-
 	GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error)
 
 	// Instance
 	ListInstances(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Instance], error)
-
 	GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error)
 	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Instance, error)
 
@@ -167,7 +165,6 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 			}
 		},
 	}
-
 	return &iter, nil
 }
 
@@ -224,7 +221,6 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFil
 			}
 		},
 	}
-
 	return &iter, nil
 }
 
