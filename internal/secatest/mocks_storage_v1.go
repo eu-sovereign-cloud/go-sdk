@@ -50,6 +50,13 @@ func MockGetBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.Bl
 		}).Times(times)
 }
 
+func MockNotFoundBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.BlockStorage, times int) {
+	sim.EXPECT().GetBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
+			configNotFoundHttpResponse(w)
+		}).Times(times)
+}
+
 func MockCreateOrUpdateBlockStorageV1(sim *mockstorage.MockServerInterface, resp *schema.BlockStorage) {
 	sim.EXPECT().CreateOrUpdateBlockStorage(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam, params storage.CreateOrUpdateBlockStorageParams) {
@@ -67,7 +74,7 @@ func MockDeleteBlockStorageV1(sim *mockstorage.MockServerInterface) {
 }
 
 // Image
-func MockListStorageImagesV1(sim *mockstorage.MockServerInterface, resp []schema.Image) {
+func MockListImagesV1(sim *mockstorage.MockServerInterface, resp []schema.Image) {
 	sim.EXPECT().ListImages(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, params storage.ListImagesParams) {
 			iter := storage.ImageIterator{Items: resp}
@@ -77,12 +84,19 @@ func MockListStorageImagesV1(sim *mockstorage.MockServerInterface, resp []schema
 		})
 }
 
-func MockGetStorageImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image, times int) {
+func MockGetImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image, times int) {
 	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
 			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
+		}).Times(times)
+}
+
+func MockNotFoundImageV1(sim *mockstorage.MockServerInterface, resp *schema.Image, times int) {
+	sim.EXPECT().GetImage(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, name schema.ResourcePathParam) {
+			configNotFoundHttpResponse(w)
 		}).Times(times)
 }
 

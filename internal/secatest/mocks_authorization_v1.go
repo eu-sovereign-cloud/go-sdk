@@ -30,6 +30,13 @@ func MockGetRoleV1(sim *mockauthorization.MockServerInterface, resp *schema.Role
 		}).Times(times)
 }
 
+func MockNotFoundRoleV1(sim *mockauthorization.MockServerInterface, resp *schema.Role, times int) {
+	sim.EXPECT().GetRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
+			configNotFoundHttpResponse(w)
+		}).Times(times)
+}
+
 func MockCreateOrUpdateRoleV1(sim *mockauthorization.MockServerInterface, resp *schema.Role) {
 	sim.EXPECT().CreateOrUpdateRole(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params authorization.CreateOrUpdateRoleParams) {
@@ -63,6 +70,13 @@ func MockGetRoleAssignmentV1(sim *mockauthorization.MockServerInterface, resp *s
 			if err := configGetHttpResponse(w, resp); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
+		}).Times(times)
+}
+
+func MockNotFoundRoleAssignmentV1(sim *mockauthorization.MockServerInterface, resp *schema.RoleAssignment, times int) {
+	sim.EXPECT().GetRoleAssignment(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
+			configNotFoundHttpResponse(w)
 		}).Times(times)
 }
 

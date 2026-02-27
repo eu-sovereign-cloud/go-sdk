@@ -12,11 +12,17 @@ type API struct {
 	authToken string
 }
 
-type ResourceObserverConfig[T any] struct {
+type ResourceObserverValueConfig[T any] struct {
 	ExpectedValues []T
 	Delay          time.Duration
 	Interval       time.Duration
 	MaxAttempts    int
+}
+
+type ResourceObserverNotFoundConfig struct {
+	Delay       time.Duration
+	Interval    time.Duration
+	MaxAttempts int
 }
 
 func (api *API) loadRequestHeaders(ctx context.Context, req *http.Request) error {

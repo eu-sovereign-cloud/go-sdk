@@ -22,7 +22,8 @@ type StorageV1 interface {
 	ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error)
 
 	GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error)
-	GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error)
+	GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error)
+	GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error
 
 	CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error)
 	CreateOrUpdateBlockStorage(ctx context.Context, block *schema.BlockStorage) (*schema.BlockStorage, error)
@@ -35,7 +36,8 @@ type StorageV1 interface {
 	ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error)
 
 	GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error)
-	GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error)
+	GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error)
+	GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error
 
 	CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error)
 	CreateOrUpdateImage(ctx context.Context, image *schema.Image) (*schema.Image, error)
@@ -80,8 +82,12 @@ func (api *StorageV1Unavailable) GetBlockStorage(ctx context.Context, wref Works
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
+func (api *StorageV1Unavailable) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *StorageV1Unavailable) GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *StorageV1Unavailable) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
@@ -114,8 +120,12 @@ func (api *StorageV1Unavailable) GetImage(ctx context.Context, tref TenantRefere
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *StorageV1Unavailable) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error) {
+func (api *StorageV1Unavailable) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *StorageV1Unavailable) GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *StorageV1Unavailable) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {
@@ -280,7 +290,7 @@ func (api *StorageV1Impl) GetBlockStorage(ctx context.Context, wref WorkspaceRef
 	}
 }
 
-func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
+func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.BlockStorage, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -289,7 +299,7 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.BlockStorage, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.BlockStorage, error) {
 			resp, err := api.storage.GetBlockStorageWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -303,11 +313,43 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *StorageV1Impl) GetBlockStorageUntilNotFound(ctx context.Context, wref WorkspaceReference, config ResourceObserverNotFoundConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.BlockStorage]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.storage.GetBlockStorageWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *StorageV1Impl) CreateOrUpdateBlockStorageWithParams(ctx context.Context, block *schema.BlockStorage, params *storage.CreateOrUpdateBlockStorageParams) (*schema.BlockStorage, error) {
@@ -417,7 +459,7 @@ func (api *StorageV1Impl) GetImage(ctx context.Context, tref TenantReference) (*
 	}
 }
 
-func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Image, error) {
+func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Image, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -426,7 +468,7 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Image, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Image, error) {
 			resp, err := api.storage.GetImageWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -440,11 +482,43 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *StorageV1Impl) GetImageUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Image]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.storage.GetImageWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *StorageV1Impl) CreateOrUpdateImageWithParams(ctx context.Context, image *schema.Image, params *storage.CreateOrUpdateImageParams) (*schema.Image, error) {

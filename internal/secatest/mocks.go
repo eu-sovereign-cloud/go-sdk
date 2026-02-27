@@ -10,6 +10,8 @@ const (
 	headerContentTypeJSON = "application/json"
 )
 
+type emptyBody struct{}
+
 func encodeResponseBody(w http.ResponseWriter, data any) error {
 	encoder := json.NewEncoder(w)
 	if err := encoder.Encode(data); err != nil {
@@ -27,6 +29,16 @@ func configGetHttpResponse(w http.ResponseWriter, data any) error {
 	configHttpResponse(w, http.StatusOK)
 
 	if err := encodeResponseBody(w, data); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func configNotFoundHttpResponse(w http.ResponseWriter) error {
+	configHttpResponse(w, http.StatusNotFound)
+
+	if err := encodeResponseBody(w, emptyBody{}); err != nil {
 		return err
 	}
 

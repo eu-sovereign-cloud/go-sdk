@@ -17,7 +17,8 @@ type AuthorizationV1 interface {
 	ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error)
 
 	GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error)
-	GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error)
+	GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Role, error)
+	GetRoleUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error
 
 	CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error)
 	CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error)
@@ -30,7 +31,8 @@ type AuthorizationV1 interface {
 	ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error)
 
 	GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error)
-	GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error)
+	GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error)
+	GetRoleAssignmentUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error
 
 	CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error)
 	CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error)
@@ -61,8 +63,12 @@ func (api *AuthorizationV1Unavailable) GetRole(ctx context.Context, tref TenantR
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Unavailable) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Unavailable) GetRoleUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
@@ -95,8 +101,12 @@ func (api *AuthorizationV1Unavailable) GetRoleAssignment(ctx context.Context, tr
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
@@ -196,7 +206,7 @@ func (api *AuthorizationV1Impl) GetRole(ctx context.Context, tref TenantReferenc
 	}
 }
 
-func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.Role, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -205,7 +215,7 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Role, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Role, error) {
 			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -219,11 +229,43 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *AuthorizationV1Impl) GetRoleUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Role]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *AuthorizationV1Impl) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
@@ -333,7 +375,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignment(ctx context.Context, tref Tena
 	}
 }
 
-func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -342,7 +384,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
 			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -356,11 +398,43 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *AuthorizationV1Impl) GetRoleAssignmentUntilNotFound(ctx context.Context, tref TenantReference, config ResourceObserverNotFoundConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.RoleAssignment]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *AuthorizationV1Impl) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
