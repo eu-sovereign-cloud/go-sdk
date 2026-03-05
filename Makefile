@@ -82,3 +82,9 @@ tag:
 	@echo "Tagging $(VERSION)..."
 	git tag $(VERSION)
 	git push origin $(VERSION)
+
+.PHONY: libraries
+libraries:
+	@echo "Updating libraries..."
+	go mod tidy
+	go mod vendor
