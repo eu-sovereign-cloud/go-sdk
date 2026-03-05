@@ -1,7 +1,7 @@
 GO := go
 OPENAPI_GENERATOR := github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
 TOOLS_GOMOD := -modfile=./tools/go.mod
-GO_TOOL := $(GO) run $(TOOLS_GOMOD)
+GO_TOOL := $(GO) run $(TOOLS_GOMOD) -mod=mod
 
 PKG := pkg/spec
 SPEC_SRC := spec/spec
@@ -82,3 +82,9 @@ tag:
 	@echo "Tagging $(VERSION)..."
 	git tag $(VERSION)
 	git push origin $(VERSION)
+
+.PHONY: libraries
+libraries:
+	@echo "Updating libraries..."
+	go mod tidy
+	go mod vendor
