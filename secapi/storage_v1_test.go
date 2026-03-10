@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Storage Sku
@@ -115,7 +114,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListBlockStoragesWithOptionsV1(t *testing.T) {
@@ -139,7 +138,7 @@ func TestListBlockStoragesWithOptionsV1(t *testing.T) {
 				SkuRef: *skuRef,
 			},
 			Status: &schema.BlockStorageStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -201,7 +200,7 @@ func TestGetBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetBlockStorageUntilStateV1(t *testing.T) {
@@ -236,7 +235,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
@@ -279,7 +278,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteBlockStorageV1(t *testing.T) {
@@ -347,7 +346,7 @@ func TestListImagesV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -389,7 +388,7 @@ func TestListImagesWithOptionsV1(t *testing.T) {
 				BlockStorageRef: *blockStorageRef,
 			},
 			Status: &schema.ImageStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -448,7 +447,7 @@ func TestGetImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetImageUntilStateV1(t *testing.T) {
@@ -482,7 +481,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateImageV1(t *testing.T) {
@@ -520,7 +519,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteImageV1(t *testing.T) {

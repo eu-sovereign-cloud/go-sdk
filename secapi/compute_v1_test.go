@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Instance Sku
@@ -136,7 +135,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 
 	iter, err = regionalClient.ComputeV1.ListInstances(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
@@ -167,7 +166,7 @@ func TestListInstancesWithOptionsV1(t *testing.T) {
 				SkuRef: *skuRef,
 			},
 			Status: &schema.InstanceStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -228,7 +227,7 @@ func TestGetInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetInstanceUntilStateV1(t *testing.T) {
@@ -263,7 +262,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateInstanceV1(t *testing.T) {
@@ -306,7 +305,7 @@ func TestCreateOrUpdateInstanceV1(t *testing.T) {
 
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestStartInstanaceV1(t *testing.T) {

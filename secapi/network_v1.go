@@ -5,8 +5,6 @@ import (
 
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -400,12 +398,12 @@ func (api *NetworkV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 			var params *network.ListSkusParams
 			if filter.Options == nil {
 				params = &network.ListSkusParams{
-					Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSkusParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListSkusParams{
-					Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSkusParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -457,12 +455,12 @@ func (api *NetworkV1Impl) ListNetworks(ctx context.Context, filter WorkspaceFilt
 			var params *network.ListNetworksParams
 			if filter.Options == nil {
 				params = &network.ListNetworksParams{
-					Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListNetworksParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListNetworksParams{
-					Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListNetworksParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -518,7 +516,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -586,12 +584,12 @@ func (api *NetworkV1Impl) ListSubnets(ctx context.Context, filter NetworkFilter)
 			var params *network.ListSubnetsParams
 			if filter.Options == nil {
 				params = &network.ListSubnetsParams{
-					Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSubnetsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListSubnetsParams{
-					Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSubnetsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -647,7 +645,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -715,12 +713,12 @@ func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, filter NetworkFil
 			var params *network.ListRouteTablesParams
 			if filter.Options == nil {
 				params = &network.ListRouteTablesParams{
-					Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListRouteTablesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListRouteTablesParams{
-					Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListRouteTablesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -776,7 +774,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -844,12 +842,12 @@ func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, filter Works
 			var params *network.ListInternetGatewaysParams
 			if filter.Options == nil {
 				params = &network.ListInternetGatewaysParams{
-					Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListInternetGatewaysParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListInternetGatewaysParams{
-					Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListInternetGatewaysParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -905,7 +903,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -973,12 +971,12 @@ func (api *NetworkV1Impl) ListSecurityGroupRules(ctx context.Context, filter Wor
 			var params *network.ListSecurityGroupRulesParams
 			if filter.Options == nil {
 				params = &network.ListSecurityGroupRulesParams{
-					Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupRulesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListSecurityGroupRulesParams{
-					Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupRulesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -1034,7 +1032,7 @@ func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wr
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1102,12 +1100,12 @@ func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, filter Workspa
 			var params *network.ListSecurityGroupsParams
 			if filter.Options == nil {
 				params = &network.ListSecurityGroupsParams{
-					Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListSecurityGroupsParams{
-					Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -1163,7 +1161,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1231,12 +1229,12 @@ func (api *NetworkV1Impl) ListNics(ctx context.Context, filter WorkspaceFilter) 
 			var params *network.ListNicsParams
 			if filter.Options == nil {
 				params = &network.ListNicsParams{
-					Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListNicsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListNicsParams{
-					Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListNicsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -1292,7 +1290,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1360,12 +1358,12 @@ func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, filter WorkspaceFil
 			var params *network.ListPublicIpsParams
 			if filter.Options == nil {
 				params = &network.ListPublicIpsParams{
-					Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListPublicIpsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &network.ListPublicIpsParams{
-					Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[network.ListPublicIpsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -1421,7 +1419,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

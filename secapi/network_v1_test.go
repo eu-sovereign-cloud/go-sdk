@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Network Sku
@@ -117,7 +116,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListNetworksWithOptionsV1(t *testing.T) {
@@ -140,7 +139,7 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 				RouteTableRef: *routeTableRef,
 			},
 			Status: &schema.NetworkStatus{
-				State: ptr.To(schema.ResourceStateCreating),
+				State: schema.ResourceStateCreating,
 			},
 		},
 	})
@@ -173,7 +172,7 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp[0].Status.State)
 }
 
 func TestGetNetworkV1(t *testing.T) {
@@ -205,7 +204,7 @@ func TestGetNetworkV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetNetworkUntilStateV1(t *testing.T) {
@@ -239,7 +238,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
@@ -269,7 +268,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 			Name:      secatest.Network1Name,
 		},
 		Spec: schema.NetworkSpec{
-			Cidr:          schema.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
+			Cidr:          schema.Cidr{Ipv4: secatest.CidrIpv4},
 			RouteTableRef: *routeTableRef,
 			SkuRef:        *networkSkuRef,
 		},
@@ -284,7 +283,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteNetworkV1(t *testing.T) {
@@ -353,7 +352,7 @@ func TestListSubnetsV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListSubnetsWithOptionsV1(t *testing.T) {
@@ -377,7 +376,7 @@ func TestListSubnetsWithOptionsV1(t *testing.T) {
 				SkuRef: skuRef,
 			},
 			Status: &schema.SubnetStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -438,7 +437,7 @@ func TestGetSubnetV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetSubnetUntilStateV1(t *testing.T) {
@@ -473,7 +472,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateSubnetV1(t *testing.T) {
@@ -502,7 +501,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 			Name:      secatest.Subnet1Name,
 		},
 		Spec: schema.SubnetSpec{
-			Cidr: schema.Cidr{Ipv4: ptr.To(secatest.CidrIpv4)},
+			Cidr: schema.Cidr{Ipv4: secatest.CidrIpv4},
 			Zone: schema.Zone(secatest.ZoneA),
 		},
 	}
@@ -517,7 +516,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteSubnetV1(t *testing.T) {
@@ -586,7 +585,7 @@ func TestListRouteTablesV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, resp[0].Spec.Routes[0].DestinationCidrBlock)
 	assert.Equal(t, *targetRef, resp[0].Spec.Routes[0].TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListRouteTablesWithOptionsV1(t *testing.T) {
@@ -615,7 +614,7 @@ func TestListRouteTablesWithOptionsV1(t *testing.T) {
 				},
 			},
 			Status: &schema.RouteTableStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -680,7 +679,7 @@ func TestGetRouteTableV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, route.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, route.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetRouteTableUntilStateV1(t *testing.T) {
@@ -719,7 +718,7 @@ func TestGetRouteTableUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, route.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, route.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateRouteTableV1(t *testing.T) {
@@ -771,7 +770,7 @@ func TestCreateOrUpdateRouteTableV1(t *testing.T) {
 	assert.Equal(t, secatest.CidrIpv4, respRoute.DestinationCidrBlock)
 	assert.Equal(t, *targetRef, respRoute.TargetRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteRouteTableV1(t *testing.T) {
@@ -833,7 +832,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp[0].Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListInternetGatewaysWithOptionsV1(t *testing.T) {
@@ -852,7 +851,7 @@ func TestListInternetGatewaysWithOptionsV1(t *testing.T) {
 			},
 			Spec: schema.InternetGatewaySpec{},
 			Status: &schema.Status{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -910,7 +909,7 @@ func TestGetInternetGatewayV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetInternetGatewayUntilStateV1(t *testing.T) {
@@ -942,7 +941,7 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
@@ -978,7 +977,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteInternetGatewayV1(t *testing.T) {
@@ -1040,7 +1039,7 @@ func TestListSecurityGroupRulesV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp[0].Spec.Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListSecurityGroupRulesWithOptionsV1(t *testing.T) {
@@ -1061,7 +1060,7 @@ func TestListSecurityGroupRulesWithOptionsV1(t *testing.T) {
 				Direction: schema.SecurityGroupRuleDirectionIngress,
 			},
 			Status: &schema.SecurityGroupRuleStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -1118,7 +1117,7 @@ func TestGetSecurityGroupRuleV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
@@ -1150,7 +1149,7 @@ func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateSecurityGroupRuleV1(t *testing.T) {
@@ -1177,11 +1176,11 @@ func TestCreateOrUpdateSecurityGroupRuleV1(t *testing.T) {
 		},
 		Spec: schema.SecurityGroupRuleSpec{
 			Direction: schema.SecurityGroupRuleDirectionIngress,
-			Version:   ptr.To(schema.IPVersionIPv4),
-			Protocol:  ptr.To(schema.SecurityGroupRuleProtocolTCP),
+			Version:   schema.IPVersionIPv4,
+			Protocol:  schema.SecurityGroupRuleProtocolTCP,
 			Ports: &schema.Ports{
-				From: ptr.To(schema.Port(secatest.SecurityGroup1PortFrom)),
-				To:   ptr.To(schema.Port(secatest.SecurityGroup1PortTo)),
+				From: schema.Port(secatest.SecurityGroup1PortFrom),
+				To:   schema.Port(secatest.SecurityGroup1PortTo),
 			},
 		},
 	}
@@ -1195,7 +1194,7 @@ func TestCreateOrUpdateSecurityGroupRuleV1(t *testing.T) {
 
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteSecurityGroupRuleV1(t *testing.T) {
@@ -1255,9 +1254,9 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string((*resp[0].Spec.Rules)[0].Direction))
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp[0].Spec.Rules[0].Direction)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListSecurityGroupsWithOptionsV1(t *testing.T) {
@@ -1275,14 +1274,14 @@ func TestListSecurityGroupsWithOptionsV1(t *testing.T) {
 				Workspace: secatest.Workspace1Name,
 			},
 			Spec: schema.SecurityGroupSpec{
-				Rules: &[]schema.SecurityGroupRuleSpec{
+				Rules: []schema.SecurityGroupRuleSpec{
 					{
 						Direction: schema.SecurityGroupRuleDirectionIngress,
 					},
 				},
 			},
 			Status: &schema.SecurityGroupStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -1337,9 +1336,9 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string((*resp.Spec.Rules)[0].Direction))
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetSecurityGroupUntilStateV1(t *testing.T) {
@@ -1369,9 +1368,9 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string((*resp.Spec.Rules)[0].Direction))
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
@@ -1397,14 +1396,14 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 			Name:      secatest.SecurityGroup1Name,
 		},
 		Spec: schema.SecurityGroupSpec{
-			Rules: &[]schema.SecurityGroupRuleSpec{
+			Rules: []schema.SecurityGroupRuleSpec{
 				{
 					Direction: schema.SecurityGroupRuleDirectionIngress,
-					Version:   ptr.To(schema.IPVersionIPv4),
-					Protocol:  ptr.To(schema.SecurityGroupRuleProtocolTCP),
+					Version:   schema.IPVersionIPv4,
+					Protocol:  schema.SecurityGroupRuleProtocolTCP,
 					Ports: &schema.Ports{
-						From: ptr.To(schema.Port(secatest.SecurityGroup1PortFrom)),
-						To:   ptr.To(schema.Port(secatest.SecurityGroup1PortTo)),
+						From: schema.Port(secatest.SecurityGroup1PortFrom),
+						To:   schema.Port(secatest.SecurityGroup1PortTo),
 					},
 				},
 			},
@@ -1418,9 +1417,9 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string((*resp.Spec.Rules)[0].Direction))
+	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteSecurityGroupV1(t *testing.T) {
@@ -1484,7 +1483,7 @@ func TestListNicsV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp[0].Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListNicsWithOptionsV1(t *testing.T) {
@@ -1507,7 +1506,7 @@ func TestListNicsWithOptionsV1(t *testing.T) {
 				SubnetRef: *subnetRef,
 			},
 			Status: &schema.NicStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -1567,7 +1566,7 @@ func TestGetNicV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetNicUntilStateV1(t *testing.T) {
@@ -1600,7 +1599,7 @@ func TestGetNicUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateNicV1(t *testing.T) {
@@ -1637,7 +1636,7 @@ func TestCreateOrUpdateNicV1(t *testing.T) {
 
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteNicV1(t *testing.T) {
@@ -1697,9 +1696,9 @@ func TestListPublicIpsV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, secatest.Address1, *resp[0].Spec.Address)
+	assert.Equal(t, secatest.Address1, resp[0].Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListPublicIpsWithOptionsV1(t *testing.T) {
@@ -1717,10 +1716,10 @@ func TestListPublicIpsWithOptionsV1(t *testing.T) {
 				Workspace: secatest.Workspace1Name,
 			},
 			Spec: schema.PublicIpSpec{
-				Address: ptr.To(secatest.Address1),
+				Address: secatest.Address1,
 			},
 			Status: &schema.PublicIpStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -1776,9 +1775,9 @@ func TestGetPublicIpV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
+	assert.Equal(t, secatest.Address1, resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetPublicIpUntilStateV1(t *testing.T) {
@@ -1808,9 +1807,9 @@ func TestGetPublicIpUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
+	assert.Equal(t, secatest.Address1, resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdatePublicIpV1(t *testing.T) {
@@ -1844,9 +1843,9 @@ func TestCreateOrUpdatePublicIpV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
+	assert.Equal(t, secatest.Address1, resp.Spec.Address)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeletePublicIpV1(t *testing.T) {
@@ -1982,7 +1981,7 @@ func buildResponseSecurityGroup(name string, tenant string, workspace string, re
 
 func buildResponseSecurityGroupSpec(ruleDirection schema.SecurityGroupRuleSpecDirection) *schema.SecurityGroupSpec {
 	return &schema.SecurityGroupSpec{
-		Rules: &[]schema.SecurityGroupRuleSpec{
+		Rules: []schema.SecurityGroupRuleSpec{
 			{
 				Direction: ruleDirection,
 			},
@@ -2016,6 +2015,6 @@ func buildResponsePublicIp(name string, tenant string, workspace string, region 
 
 func buildResponsePublicIpSpec(address string) *schema.PublicIpSpec {
 	return &schema.PublicIpSpec{
-		Address: &address,
+		Address: address,
 	}
 }

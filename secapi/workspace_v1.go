@@ -5,8 +5,6 @@ import (
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -91,12 +89,12 @@ func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, filter TenantFil
 			var params *workspace.ListWorkspacesParams
 			if filter.Options == nil {
 				params = &workspace.ListWorkspacesParams{
-					Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &workspace.ListWorkspacesParams{
-					Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -152,7 +150,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

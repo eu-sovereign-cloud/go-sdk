@@ -5,8 +5,6 @@ import (
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -55,14 +53,14 @@ func (api *RegionV1Impl) ListRegions(ctx context.Context, filter *GlobalFilter) 
 			var params *region.ListRegionsParams
 			if filter != nil && filter.Options != nil {
 				params = &region.ListRegionsParams{
-					Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[region.ListRegionsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &region.ListRegionsParams{
-					Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[region.ListRegionsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			}

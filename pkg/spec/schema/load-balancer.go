@@ -39,7 +39,7 @@ type LoadBalancerHealthCheck struct {
 
 	// Type Specifies the type of health check. A `connect` health check attempts
 	// to establish a connection to the specified port to determine its health.
-	Type *LoadBalancerHealthCheckType `json:"type,omitempty"`
+	Type LoadBalancerHealthCheckType `json:"type,omitempty"`
 }
 
 // LoadBalancerHealthCheckType Specifies the type of health check. A `connect` health check attempts
@@ -49,7 +49,7 @@ type LoadBalancerHealthCheckType string
 // LoadBalancerTarget The target of the LoadBalancer. It can be a set of instances nics. The port can be different from the frontend port, if omitted it will be the same. If no health check is specified, the LoadBalancer will not check the health of the backend instances.
 type LoadBalancerTarget struct {
 	// Algorithm LoadBalancer algorithm to take a backend instance
-	Algorithm *LoadBalancerTargetAlgorithm `json:"algorithm,omitempty"`
+	Algorithm LoadBalancerTargetAlgorithm `json:"algorithm,omitempty"`
 
 	// HealthCheck Optional port health check. It probes the port with protocol.
 	HealthCheck *LoadBalancerHealthCheck `json:"healthCheck,omitempty"`
@@ -63,7 +63,7 @@ type LoadBalancerTarget struct {
 	// ProxyProtocol Specifies the proxy protocol version. The proxy protocol is used to
 	// pass client connection information to the backend instances.
 	// If not specified, the default is `none`.
-	ProxyProtocol *LoadBalancerTargetProxyProtocol `json:"proxyProtocol,omitempty"`
+	ProxyProtocol LoadBalancerTargetProxyProtocol `json:"proxyProtocol,omitempty"`
 }
 
 // LoadBalancerTargetAlgorithm LoadBalancer algorithm to take a backend instance
@@ -147,14 +147,6 @@ type NetworkLoadBalancerStatus struct {
 	Conditions []StatusCondition `json:"conditions"`
 
 	// HealthyMembers List of healthy members
-	HealthyMembers *[]Reference `json:"healthyMembers,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	HealthyMembers []Reference   `json:"healthyMembers,omitempty"`
+	State          ResourceState `json:"state,omitempty"`
 }

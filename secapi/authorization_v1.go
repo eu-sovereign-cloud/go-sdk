@@ -5,8 +5,6 @@ import (
 
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -133,12 +131,12 @@ func (api *AuthorizationV1Impl) ListRoles(ctx context.Context, filter TenantFilt
 			var params *authorization.ListRolesParams
 			if filter.Options == nil {
 				params = &authorization.ListRolesParams{
-					Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[authorization.ListRolesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &authorization.ListRolesParams{
-					Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[authorization.ListRolesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -194,7 +192,7 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -262,12 +260,12 @@ func (api *AuthorizationV1Impl) ListRoleAssignments(ctx context.Context, filter 
 			var params *authorization.ListRoleAssignmentsParams
 			if filter.Options == nil {
 				params = &authorization.ListRoleAssignmentsParams{
-					Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[authorization.ListRoleAssignmentsParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &authorization.ListRoleAssignmentsParams{
-					Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[authorization.ListRoleAssignmentsParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -323,7 +321,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

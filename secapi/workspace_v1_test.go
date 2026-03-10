@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Workspace
@@ -45,7 +44,7 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
 func TestListWorkspacesWithOptionsV1(t *testing.T) {
@@ -61,7 +60,7 @@ func TestListWorkspacesWithOptionsV1(t *testing.T) {
 				Name:   secatest.Workspace1Name,
 				Tenant: secatest.Tenant1Name,
 			},
-			Status: &schema.WorkspaceStatus{State: ptr.To(schema.ResourceStateActive)},
+			Status: &schema.WorkspaceStatus{State: schema.ResourceStateActive},
 		},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
@@ -114,7 +113,7 @@ func TestGetWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetWorkspaceUntilStateV1(t *testing.T) {
@@ -143,7 +142,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
@@ -175,7 +174,7 @@ func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteWorkspaceV1(t *testing.T) {

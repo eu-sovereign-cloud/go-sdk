@@ -5,8 +5,6 @@ import (
 
 	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -137,12 +135,12 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 			var params *compute.ListSkusParams
 			if filter.Options == nil {
 				params = &compute.ListSkusParams{
-					Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[compute.ListSkusParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &compute.ListSkusParams{
-					Accept:    ptr.To(compute.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[compute.ListSkusParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -193,12 +191,12 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFil
 			var params *compute.ListInstancesParams
 			if filter.Options == nil {
 				params = &compute.ListInstancesParams{
-					Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[compute.ListInstancesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &compute.ListInstancesParams{
-					Accept:    ptr.To(compute.ListInstancesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[compute.ListInstancesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -253,7 +251,7 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

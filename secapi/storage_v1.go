@@ -5,8 +5,6 @@ import (
 
 	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
@@ -145,12 +143,12 @@ func (api *StorageV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 			var params *storage.ListSkusParams
 			if filter.Options == nil {
 				params = &storage.ListSkusParams{
-					Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListSkusParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &storage.ListSkusParams{
-					Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListSkusParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -202,12 +200,12 @@ func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, filter Workspac
 			var params *storage.ListBlockStoragesParams
 			if filter.Options == nil {
 				params = &storage.ListBlockStoragesParams{
-					Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListBlockStoragesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &storage.ListBlockStoragesParams{
-					Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListBlockStoragesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -262,7 +260,7 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -330,12 +328,12 @@ func (api *StorageV1Impl) ListImages(ctx context.Context, filter TenantFilter) (
 			var params *storage.ListImagesParams
 			if filter.Options == nil {
 				params = &storage.ListImagesParams{
-					Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListImagesParamsAccept](),
 					SkipToken: skipToken,
 				}
 			} else {
 				params = &storage.ListImagesParams{
-					Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+					Accept:    AcceptHeaderJson[storage.ListImagesParamsAccept](),
 					Labels:    filter.Options.Labels.BuildPtr(),
 					Limit:     filter.Options.Limit,
 					SkipToken: skipToken,
@@ -390,7 +388,7 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
