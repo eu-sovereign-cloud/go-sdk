@@ -13,8 +13,7 @@ import (
 
 type WorkspaceV1 interface {
 	// Workspace
-	ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error)
-	ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error)
+	ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error)
 
 	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
 	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error)
@@ -36,11 +35,7 @@ func newWorkspaceV1Unavailable() WorkspaceV1 {
 
 /// Workspace
 
-func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *WorkspaceV1Unavailable) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -86,37 +81,29 @@ func newWorkspaceV1Impl(client *RegionalClient, workspaceUrl string) (WorkspaceV
 
 // Workspace
 
-func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
-	iter := Iterator[schema.Workspace]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
-				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
+func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
 	}
 
-	return &iter, nil
-}
-
-func (api *WorkspaceV1Impl) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
-				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *workspace.ListWorkspacesParams
+			if filter.Options == nil {
+				params = &workspace.ListWorkspacesParams{
+					Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &workspace.ListWorkspacesParams{
+					Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}

@@ -50,49 +50,6 @@ func TestListStorageSkusV1(t *testing.T) {
 	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
 }
 
-func TestListStorageSkusWithFiltersV1(t *testing.T) {
-	ctx := context.Background()
-	sm := http.NewServeMux()
-
-	secatest.ConfigureRegionV1Handler(t, sm)
-
-	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockListStorageSkusV1(sim, []schema.StorageSku{
-		{
-			Metadata: &schema.SkuResourceMetadata{
-				Name: secatest.StorageSku1Name,
-			},
-			Labels: schema.Labels{
-				secatest.LabelKeyTier: secatest.StorageSku1Tier,
-			},
-			Spec: &schema.StorageSkuSpec{
-				Iops: secatest.StorageSku1Iops,
-				Type: secatest.StorageSku1Tier,
-			},
-		},
-	})
-	secatest.ConfigureStorageHandler(sim, sm)
-
-	server := httptest.NewServer(sm)
-	defer server.Close()
-
-	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	iter, err := regionalClient.StorageV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
-	assert.NoError(t, err)
-
-	resp, err := iter.All(ctx)
-	assert.NoError(t, err)
-
-	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
-
-	labels := resp[0].Labels
-	assert.Len(t, labels, 1)
-	assert.Equal(t, secatest.StorageSku1Tier, labels[secatest.LabelKeyTier])
-
-	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
-}
-
 func TestGetStorageSkuV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -161,7 +118,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListBlockStoragesWithFiltersV1(t *testing.T) {
+func TestListBlockStoragesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -412,7 +369,7 @@ func TestListImagesV1(t *testing.T) {
 	assert.NotEmpty(t, resp)
 }
 
-func TestListImagesWithFiltersV1(t *testing.T) {
+func TestListImagesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 

@@ -136,6 +136,10 @@ func newStorageV1Impl(client *RegionalClient, storageUrl string) (StorageV1, err
 // Storage Sku
 
 func (api *StorageV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.StorageSku], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.StorageSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
 			var params *storage.ListSkusParams
@@ -189,6 +193,10 @@ func (api *StorageV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 // Block Storage
 
 func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.BlockStorage], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
 			var params *storage.ListBlockStoragesParams
@@ -313,6 +321,10 @@ func (api *StorageV1Impl) DeleteBlockStorage(ctx context.Context, block *schema.
 // Image
 
 func (api *StorageV1Impl) ListImages(ctx context.Context, filter TenantFilter) (*Iterator[schema.Image], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Image]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
 			var params *storage.ListImagesParams
@@ -342,30 +354,6 @@ func (api *StorageV1Impl) ListImages(ctx context.Context, filter TenantFilter) (
 			}
 		},
 	}
-	return &iter, nil
-}
-
-func (api *StorageV1Impl) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
-	iter := Iterator[schema.Image]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
-			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
-				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
 	return &iter, nil
 }
 

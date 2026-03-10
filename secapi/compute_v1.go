@@ -61,10 +61,6 @@ func (api *ComputeV1Unavailable) ListInstances(ctx context.Context, filter Works
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *ComputeV1Unavailable) ListInstancesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Instance], error) {
-	return nil, ErrProviderNotAvailable
-}
-
 func (api *ComputeV1Unavailable) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {
 	return nil, ErrProviderNotAvailable
 }

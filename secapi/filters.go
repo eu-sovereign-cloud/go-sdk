@@ -32,6 +32,8 @@ type NetworkFilter struct {
 
 // Options
 
+const defaultLimit = 1000
+
 type FilterOptions struct {
 	Limit  *int
 	Labels *builders.LabelsBuilder
@@ -72,6 +74,22 @@ func (wref *WorkspaceFilter) validate() error {
 
 	if wref.Workspace == "" {
 		return ErrNoMetadataWorkspace
+	}
+
+	return nil
+}
+
+func (nref *NetworkFilter) validate() error {
+	if nref.Tenant == "" {
+		return ErrNoMetadataTenant
+	}
+
+	if nref.Workspace == "" {
+		return ErrNoMetadataWorkspace
+	}
+
+	if nref.Network == "" {
+		return ErrNoMetadataNetwork
 	}
 
 	return nil

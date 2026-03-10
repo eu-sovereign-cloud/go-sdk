@@ -33,7 +33,7 @@ func TestListRolesV1(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	iter, err := client.AuthorizationV1.ListRoles(ctx, secatest.Tenant1Name)
+	iter, err := client.AuthorizationV1.ListRoles(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -50,7 +50,7 @@ func TestListRolesV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListRolesWithFiltersV1(t *testing.T) {
+func TestListRolesWithOptionssV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -92,9 +92,9 @@ func TestListRolesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := client.AuthorizationV1.ListRolesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err := client.AuthorizationV1.ListRoles(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -247,7 +247,7 @@ func TestListRoleAssignmentsV1(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, secatest.Tenant1Name)
+	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 	assert.NotNil(t, iter)
 
@@ -264,7 +264,7 @@ func TestListRoleAssignmentsV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListRoleAssignmentsWithFiltersV1(t *testing.T) {
+func TestListRoleAssignmentsWithOptionssV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -299,9 +299,9 @@ func TestListRoleAssignmentsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := client.AuthorizationV1.ListRoleAssignmentsWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 	assert.NotNil(t, iter)
 

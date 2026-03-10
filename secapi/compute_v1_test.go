@@ -71,48 +71,6 @@ func TestListInstancesSkuV1(t *testing.T) {
 	assert.NotEmpty(t, resp)
 }
 
-func TestListInstancesSkuWithOptionsV1(t *testing.T) {
-	ctx := context.Background()
-	sm := http.NewServeMux()
-
-	secatest.ConfigureRegionV1Handler(t, sm)
-
-	sim := mockcompute.NewMockServerInterface(t)
-	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
-	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
-	secatest.MockListInstanceSkusV1(sim, []schema.InstanceSku{
-		*buildResponseInstanceSku(secatest.InstanceSku1Name, secatest.Tenant1Name, labels, spec),
-	})
-	secatest.ConfigureComputeHandler(sim, sm)
-
-	server := httptest.NewServer(sm)
-	defer server.Close()
-
-	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	iter, err := regionalClient.ComputeV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
-	assert.NoError(t, err)
-
-	resp, err := iter.All(ctx)
-	assert.NoError(t, err)
-
-	assert.Equal(t, secatest.InstanceSku1Name, resp[0].Metadata.Name)
-
-	respLabels := resp[0].Labels
-	assert.Len(t, respLabels, 1)
-	assert.Equal(t, secatest.InstanceSku1Tier, respLabels[secatest.LabelKeyTier])
-
-	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
-	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
-
-	iter, err = regionalClient.ComputeV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
-	assert.NoError(t, err)
-
-	resp, err = iter.All(ctx)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp)
-}
-
 func TestGetInstanceSkUV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
