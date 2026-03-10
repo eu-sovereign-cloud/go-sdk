@@ -1254,7 +1254,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp[0].Spec.Rules[0].Direction)
+	assert.Equal(t, schema.SecurityGroupRuleDirectionIngress, resp[0].Spec.Rules[0].Direction)
 
 	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
@@ -1336,7 +1336,7 @@ func TestGetSecurityGroupV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
+	assert.Equal(t, schema.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -1368,7 +1368,7 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
+	assert.Equal(t, schema.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -1417,7 +1417,7 @@ func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
+	assert.Equal(t, schema.SecurityGroupRuleDirectionIngress, resp.Spec.Rules[0].Direction)
 
 	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }

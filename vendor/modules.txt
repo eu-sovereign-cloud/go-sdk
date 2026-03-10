@@ -35,6 +35,3 @@ github.com/stretchr/testify/require
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# k8s.io/utils v0.0.0-20241210054802-24370beab758
-## explicit; go 1.18
-k8s.io/utils/ptr
