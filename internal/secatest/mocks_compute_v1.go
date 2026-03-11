@@ -50,6 +50,15 @@ func MockGetInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instan
 		}).Times(times)
 }
 
+func MockNotFoundInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance, times int) {
+	sim.EXPECT().GetInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.ResourcePathParam) {
+			if err := configNotFoundHttpResponse(w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}).Times(times)
+}
+
 func MockCreateOrUpdateInstanceV1(sim *mockcompute.MockServerInterface, resp *schema.Instance) {
 	sim.EXPECT().CreateOrUpdateInstance(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant schema.TenantPathParam, workspace schema.WorkspacePathParam, name schema.TenantPathParam, lwp compute.CreateOrUpdateInstanceParams) {

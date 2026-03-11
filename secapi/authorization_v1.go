@@ -5,19 +5,18 @@ import (
 
 	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
 
 type AuthorizationV1 interface {
 	// Role
-	ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error)
-	ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error)
+	ListRoles(ctx context.Context, filter TenantFilter) (*Iterator[schema.Role], error)
 
 	GetRole(ctx context.Context, tref TenantReference) (*schema.Role, error)
-	GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error)
+	GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Role, error)
+
+	WatchRoleUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error)
 	CreateOrUpdateRole(ctx context.Context, role *schema.Role) (*schema.Role, error)
@@ -26,11 +25,12 @@ type AuthorizationV1 interface {
 	DeleteRole(ctx context.Context, role *schema.Role) error
 
 	// Role Assignments
-	ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error)
-	ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error)
+	ListRoleAssignments(ctx context.Context, filter TenantFilter) (*Iterator[schema.RoleAssignment], error)
 
 	GetRoleAssignment(ctx context.Context, tref TenantReference) (*schema.RoleAssignment, error)
-	GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error)
+	GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error)
+
+	WatchRoleAssignmentUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error)
 	CreateOrUpdateRoleAssignment(ctx context.Context, assign *schema.RoleAssignment) (*schema.RoleAssignment, error)
@@ -49,11 +49,7 @@ func newAuthorizationV1Unavailable() AuthorizationV1 {
 
 /// Role
 
-func (api *AuthorizationV1Unavailable) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *AuthorizationV1Unavailable) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
+func (api *AuthorizationV1Unavailable) ListRoles(ctx context.Context, filter TenantFilter) (*Iterator[schema.Role], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -61,8 +57,12 @@ func (api *AuthorizationV1Unavailable) GetRole(ctx context.Context, tref TenantR
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Unavailable) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Unavailable) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Role, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Unavailable) WatchRoleUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
@@ -83,11 +83,7 @@ func (api *AuthorizationV1Unavailable) DeleteRole(ctx context.Context, role *sch
 
 /// Role Assignment
 
-func (api *AuthorizationV1Unavailable) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *AuthorizationV1Unavailable) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
+func (api *AuthorizationV1Unavailable) ListRoleAssignments(ctx context.Context, filter TenantFilter) (*Iterator[schema.RoleAssignment], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -95,8 +91,12 @@ func (api *AuthorizationV1Unavailable) GetRoleAssignment(ctx context.Context, tr
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Unavailable) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *AuthorizationV1Unavailable) WatchRoleAssignmentUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *AuthorizationV1Unavailable) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {
@@ -133,37 +133,29 @@ func newAuthorizationV1Impl(client *GlobalClient, authorizationsUrl string) (Aut
 
 /// Role
 
-func (api *AuthorizationV1Impl) ListRoles(ctx context.Context, tid TenantID) (*Iterator[schema.Role], error) {
-	iter := Iterator[schema.Role]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
-			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
-				Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
+func (api *AuthorizationV1Impl) ListRoles(ctx context.Context, filter TenantFilter) (*Iterator[schema.Role], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
 	}
 
-	return &iter, nil
-}
-
-func (api *AuthorizationV1Impl) ListRolesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Role], error) {
 	iter := Iterator[schema.Role]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Role, *string, error) {
-			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRolesParams{
-				Accept:    ptr.To(authorization.ListRolesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *authorization.ListRolesParams
+			if filter.Options == nil {
+				params = &authorization.ListRolesParams{
+					Accept:    AcceptHeaderJson[authorization.ListRolesParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &authorization.ListRolesParams{
+					Accept:    AcceptHeaderJson[authorization.ListRolesParamsAccept](),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.authorization.ListRolesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -196,7 +188,7 @@ func (api *AuthorizationV1Impl) GetRole(ctx context.Context, tref TenantReferenc
 	}
 }
 
-func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Role, error) {
+func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Role, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -205,25 +197,57 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Role, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Role, error) {
 			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *AuthorizationV1Impl) WatchRoleUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Role]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.authorization.GetRoleWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *AuthorizationV1Impl) CreateOrUpdateRoleWithParams(ctx context.Context, role *schema.Role, params *authorization.CreateOrUpdateRoleParams) (*schema.Role, error) {
@@ -270,37 +294,29 @@ func (api *AuthorizationV1Impl) DeleteRole(ctx context.Context, role *schema.Rol
 
 /// Role Assignment
 
-func (api *AuthorizationV1Impl) ListRoleAssignments(ctx context.Context, tid TenantID) (*Iterator[schema.RoleAssignment], error) {
-	iter := Iterator[schema.RoleAssignment]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
-			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
-				Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
+func (api *AuthorizationV1Impl) ListRoleAssignments(ctx context.Context, filter TenantFilter) (*Iterator[schema.RoleAssignment], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
 	}
 
-	return &iter, nil
-}
-
-func (api *AuthorizationV1Impl) ListRoleAssignmentsWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.RoleAssignment], error) {
 	iter := Iterator[schema.RoleAssignment]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RoleAssignment, *string, error) {
-			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(tid), &authorization.ListRoleAssignmentsParams{
-				Accept:    ptr.To(authorization.ListRoleAssignmentsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *authorization.ListRoleAssignmentsParams
+			if filter.Options == nil {
+				params = &authorization.ListRoleAssignmentsParams{
+					Accept:    AcceptHeaderJson[authorization.ListRoleAssignmentsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &authorization.ListRoleAssignmentsParams{
+					Accept:    AcceptHeaderJson[authorization.ListRoleAssignmentsParamsAccept](),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.authorization.ListRoleAssignmentsWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -333,7 +349,7 @@ func (api *AuthorizationV1Impl) GetRoleAssignment(ctx context.Context, tref Tena
 	}
 }
 
-func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
+func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RoleAssignment, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -342,25 +358,57 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.RoleAssignment, error) {
 			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *AuthorizationV1Impl) WatchRoleAssignmentUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.RoleAssignment]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.authorization.GetRoleAssignmentWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *AuthorizationV1Impl) CreateOrUpdateRoleAssignmentWithParams(ctx context.Context, assign *schema.RoleAssignment, params *authorization.CreateOrUpdateRoleAssignmentParams) (*schema.RoleAssignment, error) {

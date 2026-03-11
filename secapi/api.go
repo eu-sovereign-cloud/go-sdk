@@ -12,7 +12,13 @@ type API struct {
 	authToken string
 }
 
-type ResourceObserverConfig[T any] struct {
+type ResourceObserverConfig struct {
+	Delay       time.Duration
+	Interval    time.Duration
+	MaxAttempts int
+}
+
+type ResourceObserverUntilValueConfig[T any] struct {
 	ExpectedValues []T
 	Delay          time.Duration
 	Interval       time.Duration

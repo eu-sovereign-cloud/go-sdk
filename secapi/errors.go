@@ -22,5 +22,7 @@ var (
 	ErrInternalError             = errors.New("internal error")
 	ErrUnknowError               = errors.New("unknow error")
 
-	ErrRetryMaxAttemptsReached = errors.New("max retry attempts reached")
+	ErrRetryMaxAttemptsReached    = errors.New("max retry attempts reached")
+	ErrRetryNotFoundExpectedValue = errors.New("not found the expected value")
+	ErrRetryNotFoundExpectedError = errors.New("not found the expected error")
 )

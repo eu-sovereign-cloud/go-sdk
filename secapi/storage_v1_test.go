@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Storage Sku
@@ -36,7 +35,7 @@ func TestListStorageSkusV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -44,49 +43,6 @@ func TestListStorageSkusV1(t *testing.T) {
 
 	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
 
-	assert.Len(t, labels, 1)
-	assert.Equal(t, secatest.StorageSku1Tier, labels[secatest.LabelKeyTier])
-
-	assert.Equal(t, secatest.StorageSku1Iops, resp[0].Spec.Iops)
-}
-
-func TestListStorageSkusWithFiltersV1(t *testing.T) {
-	ctx := context.Background()
-	sm := http.NewServeMux()
-
-	secatest.ConfigureRegionV1Handler(t, sm)
-
-	sim := mockstorage.NewMockServerInterface(t)
-	secatest.MockListStorageSkusV1(sim, []schema.StorageSku{
-		{
-			Metadata: &schema.SkuResourceMetadata{
-				Name: secatest.StorageSku1Name,
-			},
-			Labels: schema.Labels{
-				secatest.LabelKeyTier: secatest.StorageSku1Tier,
-			},
-			Spec: &schema.StorageSkuSpec{
-				Iops: secatest.StorageSku1Iops,
-				Type: secatest.StorageSku1Tier,
-			},
-		},
-	})
-	secatest.ConfigureStorageHandler(sim, sm)
-
-	server := httptest.NewServer(sm)
-	defer server.Close()
-
-	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	iter, err := regionalClient.StorageV1.ListSkus(ctx, secatest.Tenant1Name)
-	assert.NoError(t, err)
-
-	resp, err := iter.All(ctx)
-	assert.NoError(t, err)
-
-	assert.Equal(t, secatest.StorageSku1Name, resp[0].Metadata.Name)
-
-	labels := resp[0].Labels
 	assert.Len(t, labels, 1)
 	assert.Equal(t, secatest.StorageSku1Tier, labels[secatest.LabelKeyTier])
 
@@ -144,7 +100,7 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
-	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -158,10 +114,10 @@ func TestListBlockStoragesV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp[0].Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
-func TestListBlockStoragesWithFiltersV1(t *testing.T) {
+func TestListBlockStoragesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -182,7 +138,7 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 				SkuRef: *skuRef,
 			},
 			Status: &schema.BlockStorageStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -204,9 +160,9 @@ func TestListBlockStoragesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.StorageV1.ListBlockStoragesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	iter, err := regionalClient.StorageV1.ListBlockStorages(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -244,7 +200,7 @@ func TestGetBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetBlockStorageUntilStateV1(t *testing.T) {
@@ -267,7 +223,7 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 	storageSkuRef := &schema.Reference{Resource: secatest.StorageSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetBlockStorageUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -279,7 +235,30 @@ func TestGetBlockStorageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
+}
+
+func TestWatchBlockStorageUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockstorage.NewMockServerInterface(t)
+	spec := buildResponseBlockStorageSpec(secatest.StorageSku1Ref, secatest.BlockStorage1SizeGB)
+	secatest.MockGetBlockStorageV1(sim, buildResponseBlockStorage(secatest.BlockStorage1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundBlockStorageV1(sim, nil, 1)
+	secatest.ConfigureStorageHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.BlockStorage1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.StorageV1.WatchBlockStorageUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
@@ -322,7 +301,7 @@ func TestCreateOrUpdateBlockStorageV1(t *testing.T) {
 
 	assert.Equal(t, *storageSkuRef, resp.Spec.SkuRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteBlockStorageV1(t *testing.T) {
@@ -367,7 +346,7 @@ func TestListImagesV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
-	secatest.MockListStorageImagesV1(sim, []schema.Image{
+	secatest.MockListImagesV1(sim, []schema.Image{
 		*buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
 	secatest.ConfigureStorageHandler(sim, sm)
@@ -377,7 +356,7 @@ func TestListImagesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.StorageV1.ListImages(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -390,7 +369,7 @@ func TestListImagesV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp[0].Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -402,9 +381,9 @@ func TestListImagesV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err = regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err = regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -412,7 +391,7 @@ func TestListImagesV1(t *testing.T) {
 	assert.NotEmpty(t, resp)
 }
 
-func TestListImagesWithFiltersV1(t *testing.T) {
+func TestListImagesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -422,7 +401,7 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 
 	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
-	secatest.MockListStorageImagesV1(sim, []schema.Image{
+	secatest.MockListImagesV1(sim, []schema.Image{
 		{
 			Metadata: &schema.RegionalResourceMetadata{
 				Name:   secatest.Image1Name,
@@ -432,7 +411,7 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 				BlockStorageRef: *blockStorageRef,
 			},
 			Status: &schema.ImageStatus{
-				State: ptr.To(schema.ResourceStateActive),
+				State: schema.ResourceStateActive,
 			},
 		},
 	})
@@ -452,9 +431,9 @@ func TestListImagesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.StorageV1.ListImagesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	iter, err := regionalClient.StorageV1.ListImages(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -470,7 +449,7 @@ func TestGetImageV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
-	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.MockGetImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -491,7 +470,7 @@ func TestGetImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetImageUntilStateV1(t *testing.T) {
@@ -502,8 +481,8 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
-	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
-	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.MockGetImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
+	secatest.MockGetImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureStorageHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -514,7 +493,7 @@ func TestGetImageUntilStateV1(t *testing.T) {
 	blockStorageRef := &schema.Reference{Resource: secatest.BlockStorage1Ref}
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.StorageV1.GetImageUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -525,7 +504,30 @@ func TestGetImageUntilStateV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
+}
+
+func TestWatchImageUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockstorage.NewMockServerInterface(t)
+	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
+	secatest.MockGetImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundImageV1(sim, nil, 1)
+	secatest.ConfigureStorageHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Image1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.StorageV1.WatchImageUntilDeleted(ctx, tref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateImageV1(t *testing.T) {
@@ -563,7 +565,7 @@ func TestCreateOrUpdateImageV1(t *testing.T) {
 
 	assert.Equal(t, *blockStorageRef, resp.Spec.BlockStorageRef)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteImageV1(t *testing.T) {
@@ -574,7 +576,7 @@ func TestDeleteImageV1(t *testing.T) {
 
 	sim := mockstorage.NewMockServerInterface(t)
 	spec := buildResponseImageSpec(secatest.BlockStorage1Ref)
-	secatest.MockGetStorageImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
+	secatest.MockGetImageV1(sim, buildResponseImage(secatest.Image1Name, secatest.Tenant1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.MockDeleteImageV1(sim)
 	secatest.ConfigureStorageHandler(sim, sm)
 

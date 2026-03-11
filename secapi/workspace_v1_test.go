@@ -12,7 +12,6 @@ import (
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 // Workspace
@@ -34,7 +33,7 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -45,10 +44,10 @@ func TestListWorkspacesV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp[0].Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
 
-func TestListWorkspacesWithFiltersV1(t *testing.T) {
+func TestListWorkspacesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -61,7 +60,7 @@ func TestListWorkspacesWithFiltersV1(t *testing.T) {
 				Name:   secatest.Workspace1Name,
 				Tenant: secatest.Tenant1Name,
 			},
-			Status: &schema.WorkspaceStatus{State: ptr.To(schema.ResourceStateActive)},
+			Status: &schema.WorkspaceStatus{State: schema.ResourceStateActive},
 		},
 	})
 	secatest.ConfigureWorkspaceHandler(sim, sm)
@@ -81,8 +80,8 @@ func TestListWorkspacesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.WorkspaceV1.ListWorkspacesWithFilters(ctx, secatest.Tenant1Name, listOptions)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -114,7 +113,7 @@ func TestGetWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
 func TestGetWorkspaceUntilStateV1(t *testing.T) {
@@ -134,7 +133,7 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.WorkspaceV1.GetWorkspaceUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -143,7 +142,29 @@ func TestGetWorkspaceUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
+}
+
+func TestWatchWorkspaceUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockworkspace.NewMockServerInterface(t)
+	secatest.MockGetWorkspaceV1(sim, buildResponseWorkspace(secatest.Workspace1Name, secatest.Tenant1Name, secatest.Region1Name, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundWorkspaceV1(sim, 1)
+	secatest.ConfigureWorkspaceHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Workspace1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.WorkspaceV1.WatchWorkspaceUntilDeleted(ctx, tref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
@@ -175,7 +196,7 @@ func TestCreateOrUpdateWorkspaceV1(t *testing.T) {
 	assert.Equal(t, secatest.Tenant1Name, resp.Metadata.Tenant)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, schema.ResourceStateCreating, *resp.Status.State)
+	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
 
 func TestDeleteWorkspaceV1(t *testing.T) {

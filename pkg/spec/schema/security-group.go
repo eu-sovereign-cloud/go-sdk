@@ -33,27 +33,19 @@ type SecurityGroup struct {
 type SecurityGroupSpec struct {
 	// RuleRefs References to shared SecurityGroupRule resources.
 	// These rules are applied in addition to the inline rules.
-	RuleRefs *[]Reference `json:"ruleRefs,omitempty"`
+	RuleRefs []Reference `json:"ruleRefs,omitempty"`
 
 	// Rules Network access rules defining communication between security groups and external networks.
 	//
 	// Rule Evaluation:
 	// - Default behavior is to deny all traffic not explicitly allowed
 	// - Rules provide granular control over allowed traffic types, sources, and destinations
-	Rules *[]SecurityGroupRuleSpec `json:"rules,omitempty"`
+	Rules []SecurityGroupRuleSpec `json:"rules,omitempty"`
 }
 
 // SecurityGroupStatus defines model for SecurityGroupStatus.
 type SecurityGroupStatus struct {
-	Conditions []StatusCondition          `json:"conditions"`
-	Rules      *[]SecurityGroupRuleStatus `json:"rules,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	Conditions []StatusCondition         `json:"conditions"`
+	Rules      []SecurityGroupRuleStatus `json:"rules,omitempty"`
+	State      ResourceState             `json:"state,omitempty"`
 }

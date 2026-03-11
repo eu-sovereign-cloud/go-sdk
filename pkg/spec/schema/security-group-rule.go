@@ -41,14 +41,9 @@ type Port = int
 //
 // The final result is a comprehensive list of ports and/or port ranges.
 type Ports struct {
-	// From A valid network port number.
-	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
-	From *Port   `json:"from,omitempty"`
-	List *[]Port `json:"list,omitempty"`
-
-	// To A valid network port number.
-	// The port number is a 16-bit unsigned integer ranging from 1 to 65535.
-	To *Port `json:"to,omitempty"`
+	From Port   `json:"from,omitempty"`
+	List []Port `json:"list,omitempty"`
+	To   Port   `json:"to,omitempty"`
 }
 
 // SecurityGroupRule defines model for SecurityGroupRule.
@@ -107,15 +102,13 @@ type SecurityGroupRuleSpec struct {
 	Ports *Ports `json:"ports,omitempty"`
 
 	// Protocol Network protocol for the rule
-	Protocol *SecurityGroupRuleSpecProtocol `json:"protocol,omitempty"`
+	Protocol SecurityGroupRuleSpecProtocol `json:"protocol,omitempty"`
 
 	// SourceRef Reference to a CIDR block, IP address, gateway, instance or security group that is allowed to communicate
 	// with the security group. If a security group is specified, all instances in that group are allowed.
 	// If no sourceRef is specified, all traffic is allowed.
-	SourceRef *[]Reference `json:"sourceRef,omitempty"`
-
-	// Version IP version of the address
-	Version *IPVersion `json:"version,omitempty"`
+	SourceRef []Reference `json:"sourceRef,omitempty"`
+	Version   IPVersion   `json:"version,omitempty"`
 }
 
 // SecurityGroupRuleSpecDirection Direction of the traffic flow:
