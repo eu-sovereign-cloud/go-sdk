@@ -263,7 +263,7 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -276,6 +276,29 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchInstanceUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundInstanceV1(sim, nil, 1)
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.ComputeV1.WatchInstanceUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateInstanceV1(t *testing.T) {

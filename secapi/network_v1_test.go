@@ -277,7 +277,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetNetworkUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -289,6 +289,29 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchNetworkUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundNetworkV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchNetworkUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
@@ -510,7 +533,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.Subnet1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSubnetUntilState(ctx, nref, config)
 	assert.NoError(t, err)
 
@@ -523,6 +546,29 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchSubnetUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundSubnetV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.Subnet1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchSubnetUntilDeleted(ctx, nref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateSubnetV1(t *testing.T) {
@@ -752,7 +798,7 @@ func TestGetRouteTableUntilStateV1(t *testing.T) {
 	targetRef := &schema.Reference{Resource: secatest.Instance1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.RouteTable1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetRouteTableUntilState(ctx, nref, config)
 	assert.NoError(t, err)
 
@@ -769,6 +815,29 @@ func TestGetRouteTableUntilStateV1(t *testing.T) {
 	assert.Equal(t, *targetRef, route.TargetRef)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchRouteTableUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseRouteTableSpec(secatest.CidrIpv4, secatest.Instance1Ref)
+	secatest.MockGetRouteTableV1(sim, buildResponseRouteTable(secatest.RouteTable1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundRouteTableV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.RouteTable1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchRouteTableUntilDeleted(ctx, nref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateRouteTableV1(t *testing.T) {
@@ -980,7 +1049,7 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetInternetGatewayUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -992,6 +1061,29 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 	assert.Equal(t, false, *resp.Spec.EgressOnly)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchInternetGatewayUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseInternetGatewaySpec(false)
+	secatest.MockGetInternetGatewayV1(sim, buildResponseInternetGateway(secatest.InternetGateway1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundInternetGatewayV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.InternetGateway1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchInternetGatewayUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
@@ -1188,7 +1280,7 @@ func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSecurityGroupRuleUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1200,6 +1292,29 @@ func TestGetSecurityGroupRuleUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string(resp.Spec.Direction))
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchSecurityGroupRuleUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupRuleSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockGetSecurityGroupRuleV1(sim, buildResponseSecurityGroupRule(secatest.SecurityGroupRule1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundSecurityGroupRuleV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroupRule1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchSecurityGroupRuleUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateSecurityGroupRuleV1(t *testing.T) {
@@ -1409,7 +1524,7 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetSecurityGroupUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1421,6 +1536,29 @@ func TestGetSecurityGroupUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.SecurityGroupRuleDirectionIngress, string((*resp.Spec.Rules)[0].Direction))
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchSecurityGroupUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseSecurityGroupSpec(secatest.SecurityGroupRuleDirectionIngress)
+	secatest.MockGetSecurityGroupV1(sim, buildResponseSecurityGroup(secatest.SecurityGroup1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundSecurityGroupV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.SecurityGroup1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchSecurityGroupUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateSecurityGroupV1(t *testing.T) {
@@ -1638,7 +1776,7 @@ func TestGetNicUntilStateV1(t *testing.T) {
 	subnetRef := &schema.Reference{Resource: secatest.Subnet1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetNicUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1650,6 +1788,29 @@ func TestGetNicUntilStateV1(t *testing.T) {
 	assert.Equal(t, *subnetRef, resp.Spec.SubnetRef)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchNicUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponseNicSpec(secatest.Subnet1Ref)
+	secatest.MockGetNicV1(sim, buildResponseNic(secatest.Nic1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundNicV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Nic1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchNicUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateNicV1(t *testing.T) {
@@ -1848,7 +2009,7 @@ func TestGetPublicIpUntilStateV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := regionalClient.NetworkV1.GetPublicIpUntilState(ctx, wref, config)
 	assert.NoError(t, err)
 
@@ -1860,6 +2021,29 @@ func TestGetPublicIpUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Address1, *resp.Spec.Address)
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchPublicIpUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mocknetwork.NewMockServerInterface(t)
+	spec := buildResponsePublicIpSpec(secatest.Address1)
+	secatest.MockGetPublicIpV1(sim, buildResponsePublicIp(secatest.PublicIp1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundPublicIpV1(sim, nil, 1)
+	secatest.ConfigureNetworkHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.PublicIp1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := regionalClient.NetworkV1.WatchPublicIpUntilDeleted(ctx, wref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdatePublicIpV1(t *testing.T) {

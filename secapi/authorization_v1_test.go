@@ -147,7 +147,7 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -160,6 +160,27 @@ func TestGetRoleUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Role1PermissionVerb, resp.Spec.Permissions[0].Verb[0])
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchRoleUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
+	secatest.MockGetRoleV1(sim, buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundRoleV1(sim, nil, 1)
+	secatest.ConfigureAuthorizationHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client := newTestGlobalClientV1(t, server)
+
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.Role1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := client.AuthorizationV1.WatchRoleUntilDeleted(ctx, tref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateRoleV1(t *testing.T) {
@@ -362,7 +383,7 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	client := newTestGlobalClientV1(t, server)
 
 	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
-	config := ResourceObserverConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
 	resp, err := client.AuthorizationV1.GetRoleAssignmentUntilState(ctx, tref, config)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -374,6 +395,27 @@ func TestGetRoleAssignmentUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.RoleAssignment1Subject, resp.Spec.Subs[0])
 
 	assert.Equal(t, schema.ResourceStateActive, *resp.Status.State)
+}
+
+func TestWatchRoleAssignmentUntilDeletedV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	sim := mockauthorization.NewMockServerInterface(t)
+	spec := buildResponseRoleAssignmentSpec([]string{secatest.Role1Name}, []string{secatest.RoleAssignment1Subject})
+	secatest.MockGetRoleAssignmentV1(sim, buildResponseRoleAssignment(secatest.RoleAssignment1Name, secatest.Tenant1Name, spec, schema.ResourceStateDeleting), 2)
+	secatest.MockNotFoundRoleAssignmentV1(sim, nil, 1)
+	secatest.ConfigureAuthorizationHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	client := newTestGlobalClientV1(t, server)
+
+	tref := TenantReference{Tenant: secatest.Tenant1Name, Name: secatest.RoleAssignment1Name}
+	config := ResourceObserverConfig{Delay: 0, Interval: 0, MaxAttempts: 5}
+	err := client.AuthorizationV1.WatchRoleAssignmentUntilDeleted(ctx, tref, config)
+	assert.NoError(t, err)
 }
 
 func TestCreateOrUpdateRoleAssignmentV1(t *testing.T) {
