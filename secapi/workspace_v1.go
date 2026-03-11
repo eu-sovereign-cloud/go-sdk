@@ -14,7 +14,9 @@ type WorkspaceV1 interface {
 	ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error)
 
 	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
-	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error)
+	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error)
+
+	WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error)
 	CreateOrUpdateWorkspace(ctx context.Context, ws *schema.Workspace) (*schema.Workspace, error)
@@ -41,8 +43,12 @@ func (api *WorkspaceV1Unavailable) GetWorkspace(ctx context.Context, tref Tenant
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Unavailable) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Unavailable) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Unavailable) WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *WorkspaceV1Unavailable) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {
@@ -134,7 +140,7 @@ func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReferen
 	}
 }
 
-func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Workspace, error) {
+func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error) {
 	if err := tref.validate(); err != nil {
 		return nil, err
 	}
@@ -143,7 +149,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Workspace, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Workspace, error) {
 			resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -157,11 +163,43 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *WorkspaceV1Impl) WatchWorkspaceUntilDeleted(ctx context.Context, tref TenantReference, config ResourceObserverConfig) error {
+	if err := tref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Workspace]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.workspace.GetWorkspaceWithResponse(ctx, schema.TenantPathParam(tref.Tenant), tref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *WorkspaceV1Impl) CreateOrUpdateWorkspaceWithParams(ctx context.Context, ws *schema.Workspace, params *workspace.CreateOrUpdateWorkspaceParams) (*schema.Workspace, error) {

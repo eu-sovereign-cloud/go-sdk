@@ -30,6 +30,15 @@ func MockGetWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Wor
 		}).Times(times)
 }
 
+func MockNotFoundWorkspaceV1(sim *mockworkspace.MockServerInterface, times int) {
+	sim.EXPECT().GetWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string) {
+			if err := configNotFoundHttpResponse(w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}).Times(times)
+}
+
 func MockCreateOrUpdateWorkspaceV1(sim *mockworkspace.MockServerInterface, resp *schema.Workspace) {
 	sim.EXPECT().CreateOrUpdateWorkspace(mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, name string, params workspace.CreateOrUpdateWorkspaceParams) {

@@ -19,7 +19,9 @@ type NetworkV1 interface {
 	ListNetworks(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Network], error)
 
 	GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error)
-	GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error)
+	GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Network, error)
+
+	WatchNetworkUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error)
 	CreateOrUpdateNetwork(ctx context.Context, net *schema.Network) (*schema.Network, error)
@@ -31,7 +33,9 @@ type NetworkV1 interface {
 	ListSubnets(ctx context.Context, filter NetworkFilter) (*Iterator[schema.Subnet], error)
 
 	GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error)
-	GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error)
+	GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Subnet, error)
+
+	WatchSubnetUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error)
 	CreateOrUpdateSubnet(ctx context.Context, sub *schema.Subnet) (*schema.Subnet, error)
@@ -43,7 +47,9 @@ type NetworkV1 interface {
 	ListRouteTables(ctx context.Context, filter NetworkFilter) (*Iterator[schema.RouteTable], error)
 
 	GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error)
-	GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error)
+	GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RouteTable, error)
+
+	WatchRouteTableUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error)
 	CreateOrUpdateRouteTable(ctx context.Context, route *schema.RouteTable) (*schema.RouteTable, error)
@@ -55,7 +61,9 @@ type NetworkV1 interface {
 	ListInternetGateways(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.InternetGateway], error)
 
 	GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error)
-	GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error)
+	GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.InternetGateway, error)
+
+	WatchInternetGatewayUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error)
 	CreateOrUpdateInternetGateway(ctx context.Context, gtw *schema.InternetGateway) (*schema.InternetGateway, error)
@@ -67,7 +75,9 @@ type NetworkV1 interface {
 	ListSecurityGroupRules(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.SecurityGroupRule], error)
 
 	GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error)
-	GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error)
+	GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error)
+
+	WatchSecurityGroupRuleUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error)
 	CreateOrUpdateSecurityGroupRule(ctx context.Context, group *schema.SecurityGroupRule) (*schema.SecurityGroupRule, error)
@@ -79,7 +89,9 @@ type NetworkV1 interface {
 	ListSecurityGroups(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.SecurityGroup], error)
 
 	GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error)
-	GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error)
+	GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroup, error)
+
+	WatchSecurityGroupUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error)
 	CreateOrUpdateSecurityGroup(ctx context.Context, group *schema.SecurityGroup) (*schema.SecurityGroup, error)
@@ -91,7 +103,9 @@ type NetworkV1 interface {
 	ListNics(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Nic], error)
 
 	GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error)
-	GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error)
+	GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Nic, error)
+
+	WatchNicUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error)
 	CreateOrUpdateNic(ctx context.Context, nic *schema.Nic) (*schema.Nic, error)
@@ -103,7 +117,9 @@ type NetworkV1 interface {
 	ListPublicIps(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.PublicIp], error)
 
 	GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error)
-	GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error)
+	GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.PublicIp, error)
+
+	WatchPublicIpUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
 	CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error)
 	CreateOrUpdatePublicIp(ctx context.Context, ip *schema.PublicIp) (*schema.PublicIp, error)
@@ -140,8 +156,12 @@ func (api *NetworkV1Unavailable) GetNetwork(ctx context.Context, wref WorkspaceR
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+func (api *NetworkV1Unavailable) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Network, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchNetworkUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
@@ -170,8 +190,12 @@ func (api *NetworkV1Unavailable) GetSubnet(ctx context.Context, nref NetworkRefe
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+func (api *NetworkV1Unavailable) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Subnet, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchSubnetUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
@@ -200,8 +224,12 @@ func (api *NetworkV1Unavailable) GetRouteTable(ctx context.Context, nref Network
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+func (api *NetworkV1Unavailable) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RouteTable, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchRouteTableUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
@@ -230,8 +258,12 @@ func (api *NetworkV1Unavailable) GetInternetGateway(ctx context.Context, wref Wo
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+func (api *NetworkV1Unavailable) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchInternetGatewayUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
@@ -260,8 +292,12 @@ func (api *NetworkV1Unavailable) GetSecurityGroupRule(ctx context.Context, wref 
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
+func (api *NetworkV1Unavailable) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchSecurityGroupRuleUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error) {
@@ -290,8 +326,12 @@ func (api *NetworkV1Unavailable) GetSecurityGroup(ctx context.Context, wref Work
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Unavailable) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchSecurityGroupUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
@@ -320,8 +360,12 @@ func (api *NetworkV1Unavailable) GetNic(ctx context.Context, wref WorkspaceRefer
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+func (api *NetworkV1Unavailable) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Nic, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchNicUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
@@ -350,8 +394,12 @@ func (api *NetworkV1Unavailable) GetPublicIp(ctx context.Context, wref Workspace
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+func (api *NetworkV1Unavailable) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.PublicIp, error) {
 	return nil, ErrProviderNotAvailable
+}
+
+func (api *NetworkV1Unavailable) WatchPublicIpUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	return ErrProviderNotAvailable
 }
 
 func (api *NetworkV1Unavailable) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
@@ -500,7 +548,7 @@ func (api *NetworkV1Impl) GetNetwork(ctx context.Context, wref WorkspaceReferenc
 	}
 }
 
-func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Network, error) {
+func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Network, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -509,7 +557,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Network, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Network, error) {
 			resp, err := api.network.GetNetworkWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -523,11 +571,43 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchNetworkUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Network]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetNetworkWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateNetworkWithParams(ctx context.Context, net *schema.Network, params *network.CreateOrUpdateNetworkParams) (*schema.Network, error) {
@@ -629,7 +709,7 @@ func (api *NetworkV1Impl) GetSubnet(ctx context.Context, nref NetworkReference) 
 	}
 }
 
-func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Subnet, error) {
+func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Subnet, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -638,7 +718,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Subnet, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Subnet, error) {
 			resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -652,11 +732,43 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchSubnetUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error {
+	if err := nref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Subnet]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetSubnetWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateSubnetWithParams(ctx context.Context, sub *schema.Subnet, params *network.CreateOrUpdateSubnetParams) (*schema.Subnet, error) {
@@ -758,7 +870,7 @@ func (api *NetworkV1Impl) GetRouteTable(ctx context.Context, nref NetworkReferen
 	}
 }
 
-func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.RouteTable, error) {
+func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RouteTable, error) {
 	if err := nref.validate(); err != nil {
 		return nil, err
 	}
@@ -767,7 +879,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.RouteTable, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.RouteTable, error) {
 			resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -781,11 +893,43 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchRouteTableUntilDeleted(ctx context.Context, nref NetworkReference, config ResourceObserverConfig) error {
+	if err := nref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.RouteTable]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetRouteTableWithResponse(ctx, schema.TenantPathParam(nref.Tenant), schema.WorkspacePathParam(nref.Workspace), schema.NetworkPathParam(nref.Network), nref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateRouteTableWithParams(ctx context.Context, route *schema.RouteTable, params *network.CreateOrUpdateRouteTableParams) (*schema.RouteTable, error) {
@@ -887,7 +1031,7 @@ func (api *NetworkV1Impl) GetInternetGateway(ctx context.Context, wref Workspace
 	}
 }
 
-func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
+func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.InternetGateway, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -896,7 +1040,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.InternetGateway, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.InternetGateway, error) {
 			resp, err := api.network.GetInternetGatewayWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -910,11 +1054,43 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchInternetGatewayUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.InternetGateway]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetInternetGatewayWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateInternetGatewayWithParams(ctx context.Context, gtw *schema.InternetGateway, params *network.CreateOrUpdateInternetGatewayParams) (*schema.InternetGateway, error) {
@@ -1016,7 +1192,7 @@ func (api *NetworkV1Impl) GetSecurityGroupRule(ctx context.Context, wref Workspa
 	}
 }
 
-func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
+func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -1025,7 +1201,7 @@ func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wr
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.SecurityGroupRule, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.SecurityGroupRule, error) {
 			resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -1039,11 +1215,43 @@ func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wr
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchSecurityGroupRuleUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroupRule]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetSecurityGroupRuleWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupRuleWithParams(ctx context.Context, group *schema.SecurityGroupRule, params *network.CreateOrUpdateSecurityGroupRuleParams) (*schema.SecurityGroupRule, error) {
@@ -1145,7 +1353,7 @@ func (api *NetworkV1Impl) GetSecurityGroup(ctx context.Context, wref WorkspaceRe
 	}
 }
 
-func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
+func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroup, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -1154,7 +1362,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.SecurityGroup, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.SecurityGroup, error) {
 			resp, err := api.network.GetSecurityGroupWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -1168,11 +1376,43 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchSecurityGroupUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.SecurityGroup]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetSecurityGroupWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateSecurityGroupWithParams(ctx context.Context, group *schema.SecurityGroup, params *network.CreateOrUpdateSecurityGroupParams) (*schema.SecurityGroup, error) {
@@ -1274,7 +1514,7 @@ func (api *NetworkV1Impl) GetNic(ctx context.Context, wref WorkspaceReference) (
 	}
 }
 
-func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.Nic, error) {
+func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Nic, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -1283,7 +1523,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.Nic, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.Nic, error) {
 			resp, err := api.network.GetNicWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -1297,11 +1537,43 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchNicUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.Nic]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetNicWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdateNicWithParams(ctx context.Context, nic *schema.Nic, params *network.CreateOrUpdateNicParams) (*schema.Nic, error) {
@@ -1403,7 +1675,7 @@ func (api *NetworkV1Impl) GetPublicIp(ctx context.Context, wref WorkspaceReferen
 	}
 }
 
-func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig[schema.ResourceState]) (*schema.PublicIp, error) {
+func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.PublicIp, error) {
 	if err := wref.validate(); err != nil {
 		return nil, err
 	}
@@ -1412,7 +1684,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 		delay:       config.Delay,
 		interval:    config.Interval,
 		maxAttempts: config.MaxAttempts,
-		actFunc: func() (schema.ResourceState, *schema.PublicIp, error) {
+		getValueFunc: func() (schema.ResourceState, *schema.PublicIp, error) {
 			resp, err := api.network.GetPublicIpWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
 			if err != nil {
 				return "", nil, err
@@ -1426,11 +1698,43 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 		},
 	}
 
-	resp, err := observer.WaitUntil(config.ExpectedValues)
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
 	if err != nil {
 		return nil, err
+	} else {
+		return resp, nil
 	}
-	return resp, nil
+}
+
+func (api *NetworkV1Impl) WatchPublicIpUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error {
+	if err := wref.validate(); err != nil {
+		return err
+	}
+
+	observer := resourceStateObserver[schema.ResourceState, schema.PublicIp]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getErrorFunc: func() error {
+			resp, err := api.network.GetPublicIpWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return nil
+			} else {
+				return mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	_, err := observer.WaitUntilError(ErrResourceNotFound)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
 
 func (api *NetworkV1Impl) CreateOrUpdatePublicIpWithParams(ctx context.Context, ip *schema.PublicIp, params *network.CreateOrUpdatePublicIpParams) (*schema.PublicIp, error) {
