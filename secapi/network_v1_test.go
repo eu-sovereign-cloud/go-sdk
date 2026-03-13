@@ -36,7 +36,7 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSkus(ctx, secatest.Tenant1Name)
+	iter, err := regionalClient.NetworkV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -50,55 +50,6 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	assert.Equal(t, secatest.NetworkSku1Bandwidth, resp[0].Spec.Bandwidth)
 	assert.Equal(t, secatest.NetworkSku1Packets, resp[0].Spec.Packets)
-}
-
-func TestListNetworkSkusWithFiltersV1(t *testing.T) {
-	ctx := context.Background()
-	sm := http.NewServeMux()
-
-	secatest.ConfigureRegionV1Handler(t, sm)
-
-	sim := mocknetwork.NewMockServerInterface(t)
-	secatest.MockListNetworkSkusV1(sim, []schema.NetworkSku{
-		{
-			Metadata: &schema.SkuResourceMetadata{
-				Tenant: secatest.Tenant1Name,
-				Name:   secatest.NetworkSku1Name,
-			},
-			Labels: schema.Labels{
-				secatest.LabelKeyTier: secatest.NetworkSku1Tier,
-			},
-			Spec: &schema.NetworkSkuSpec{
-				Bandwidth: secatest.NetworkSku1Bandwidth,
-				Packets:   secatest.NetworkSku1Packets,
-			},
-		},
-	})
-	secatest.ConfigureNetworkHandler(sim, sm)
-
-	server := httptest.NewServer(sm)
-	defer server.Close()
-
-	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	labelsParams := builders.NewLabelsBuilder().
-		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
-		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue+"*").
-		NsEquals(secatest.LabelMonitoringValue, secatest.LabelAlertLevelValue, secatest.LabelHightValue).
-		Neq(secatest.LabelTierKey, secatest.LabelTierValue).
-		Gt(secatest.LabelVersion, 1).
-		Lt(secatest.LabelVersion, 3).
-		Gte(secatest.LabelUptime, 99).
-		Lte(secatest.LabelLoad, 75)
-
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-
-	iter, err := regionalClient.NetworkV1.ListSkusWithFilters(ctx, secatest.Tenant1Name, listOptions)
-	assert.NoError(t, err)
-
-	resp, err := iter.All(ctx)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp)
 }
 
 func TestGetNetworkSkuV1(t *testing.T) {
@@ -152,7 +103,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -169,7 +120,7 @@ func TestListNetworksV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListNetworksWithFiltersV1(t *testing.T) {
+func TestListNetworksWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -210,8 +161,8 @@ func TestListNetworksWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListNetworksWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -410,7 +361,7 @@ func TestListSubnetsV1(t *testing.T) {
 
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name)
+	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -428,7 +379,7 @@ func TestListSubnetsV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListSubnetsWithFiltersV1(t *testing.T) {
+func TestListSubnetsWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -470,9 +421,9 @@ func TestListSubnetsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListSubnetsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
+	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -662,7 +613,7 @@ func TestListRouteTablesV1(t *testing.T) {
 
 	targetRef := &schema.Reference{Resource: secatest.Instance1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name)
+	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -684,7 +635,7 @@ func TestListRouteTablesV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListRouteTablesWithFiltersV1(t *testing.T) {
+func TestListRouteTablesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -731,9 +682,9 @@ func TestListRouteTablesWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListRouteTablesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, listOptions)
+	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -937,7 +888,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -954,7 +905,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListInternetGatewaysWithFiltersV1(t *testing.T) {
+func TestListInternetGatewaysWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -991,9 +942,9 @@ func TestListInternetGatewaysWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListInternetGatewaysWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1167,7 +1118,7 @@ func TestListSecurityGroupRulesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1184,7 +1135,7 @@ func TestListSecurityGroupRulesV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListSecurityGroupRulesV1WithFiltersV1(t *testing.T) {
+func TestListSecurityGroupRulesWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -1223,8 +1174,8 @@ func TestListSecurityGroupRulesV1WithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListSecurityGroupRulesWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1407,7 +1358,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1424,7 +1375,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListSecurityGroupsWithFiltersV1(t *testing.T) {
+func TestListSecurityGroupsWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -1467,8 +1418,8 @@ func TestListSecurityGroupsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListSecurityGroupsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1657,7 +1608,7 @@ func TestListNicsV1(t *testing.T) {
 
 	subnetRef := &schema.Reference{Resource: secatest.Subnet1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListNics(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListNics(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1674,7 +1625,7 @@ func TestListNicsV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListNicsWithFiltersV1(t *testing.T) {
+func TestListNicsWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -1715,9 +1666,9 @@ func TestListNicsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListNicsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	iter, err := regionalClient.NetworkV1.ListNics(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1895,7 +1846,7 @@ func TestListPublicIpsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, secatest.Tenant1Name, secatest.Workspace1Name)
+	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1912,7 +1863,7 @@ func TestListPublicIpsV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, *resp[0].Status.State)
 }
 
-func TestListPublicIpsWithFiltersV1(t *testing.T) {
+func TestListPublicIpsWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -1951,9 +1902,9 @@ func TestListPublicIpsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListPublicIpsWithFilters(ctx, secatest.Tenant1Name, secatest.Workspace1Name, listOptions)
+	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)

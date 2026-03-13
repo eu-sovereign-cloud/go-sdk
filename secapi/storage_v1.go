@@ -13,14 +13,11 @@ import (
 
 type StorageV1 interface {
 	// Storage Sku
-	ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error)
-	ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error)
+	ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.StorageSku], error)
 	GetSku(ctx context.Context, tref TenantReference) (*schema.StorageSku, error)
 
 	// Block Storage
-	ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error)
-	ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error)
-
+	ListBlockStorages(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.BlockStorage], error)
 	GetBlockStorage(ctx context.Context, wref WorkspaceReference) (*schema.BlockStorage, error)
 	GetBlockStorageUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.BlockStorage, error)
 
@@ -33,9 +30,7 @@ type StorageV1 interface {
 	DeleteBlockStorage(ctx context.Context, block *schema.BlockStorage) error
 
 	// Image
-	ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error)
-	ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error)
-
+	ListImages(ctx context.Context, filter TenantFilter) (*Iterator[schema.Image], error)
 	GetImage(ctx context.Context, tref TenantReference) (*schema.Image, error)
 	GetImageUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Image, error)
 
@@ -58,11 +53,7 @@ func newStorageV1Unavailable() StorageV1 {
 
 /// Storage Sku
 
-func (api *StorageV1Unavailable) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *StorageV1Unavailable) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
+func (api *StorageV1Unavailable) ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.StorageSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -72,11 +63,7 @@ func (api *StorageV1Unavailable) GetSku(ctx context.Context, tref TenantReferenc
 
 /// Block Storage
 
-func (api *StorageV1Unavailable) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *StorageV1Unavailable) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
+func (api *StorageV1Unavailable) ListBlockStorages(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.BlockStorage], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -110,11 +97,7 @@ func (api *StorageV1Unavailable) DeleteBlockStorage(ctx context.Context, block *
 
 /// Image
 
-func (api *StorageV1Unavailable) ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error) {
-	return nil, ErrProviderNotAvailable
-}
-
-func (api *StorageV1Unavailable) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
+func (api *StorageV1Unavailable) ListImages(ctx context.Context, filter TenantFilter) (*Iterator[schema.Image], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -164,37 +147,29 @@ func newStorageV1Impl(client *RegionalClient, storageUrl string) (StorageV1, err
 
 // Storage Sku
 
-func (api *StorageV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.StorageSku], error) {
-	iter := Iterator[schema.StorageSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
-			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
-				Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
+func (api *StorageV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.StorageSku], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
 	}
 
-	return &iter, nil
-}
-
-func (api *StorageV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.StorageSku], error) {
 	iter := Iterator[schema.StorageSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.StorageSku, *string, error) {
-			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListSkusParams{
-				Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *storage.ListSkusParams
+			if filter.Options == nil {
+				params = &storage.ListSkusParams{
+					Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &storage.ListSkusParams{
+					Accept:    ptr.To(storage.ListSkusParamsAccept(schema.AcceptHeaderJson)),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.storage.ListSkusWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -229,13 +204,29 @@ func (api *StorageV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 
 // Block Storage
 
-func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.BlockStorage], error) {
+func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.BlockStorage], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.BlockStorage]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
-			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
-				Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *storage.ListBlockStoragesParams
+			if filter.Options == nil {
+				params = &storage.ListBlockStoragesParams{
+					Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &storage.ListBlockStoragesParams{
+					Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), schema.WorkspacePathParam(filter.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -247,31 +238,6 @@ func (api *StorageV1Impl) ListBlockStorages(ctx context.Context, tid TenantID, w
 			}
 		},
 	}
-
-	return &iter, nil
-}
-
-func (api *StorageV1Impl) ListBlockStoragesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.BlockStorage], error) {
-	iter := Iterator[schema.BlockStorage]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.BlockStorage, *string, error) {
-			resp, err := api.storage.ListBlockStoragesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &storage.ListBlockStoragesParams{
-				Accept:    ptr.To(storage.ListBlockStoragesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
 	return &iter, nil
 }
 
@@ -398,13 +364,29 @@ func (api *StorageV1Impl) DeleteBlockStorage(ctx context.Context, block *schema.
 
 // Image
 
-func (api *StorageV1Impl) ListImages(ctx context.Context, tid TenantID) (*Iterator[schema.Image], error) {
+func (api *StorageV1Impl) ListImages(ctx context.Context, filter TenantFilter) (*Iterator[schema.Image], error) {
+	if err := filter.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Image]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
-			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
-				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *storage.ListImagesParams
+			if filter.Options == nil {
+				params = &storage.ListImagesParams{
+					Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &storage.ListImagesParams{
+					Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
+					Labels:    filter.Options.Labels.BuildPtr(),
+					Limit:     filter.Options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -416,31 +398,6 @@ func (api *StorageV1Impl) ListImages(ctx context.Context, tid TenantID) (*Iterat
 			}
 		},
 	}
-
-	return &iter, nil
-}
-
-func (api *StorageV1Impl) ListImagesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Image], error) {
-	iter := Iterator[schema.Image]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Image, *string, error) {
-			resp, err := api.storage.ListImagesWithResponse(ctx, schema.TenantPathParam(tid), &storage.ListImagesParams{
-				Accept:    ptr.To(storage.ListImagesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
 	return &iter, nil
 }
 

@@ -4,11 +4,6 @@ type Reference interface {
 	TenantReference | WorkspaceReference | NetworkReference
 }
 
-type ReferencedResource[Ref Reference, Data any] struct {
-	Ref  Ref
-	Data Data
-}
-
 type TenantReference struct {
 	Tenant TenantID
 	Name   string
