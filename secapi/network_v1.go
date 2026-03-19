@@ -486,7 +486,6 @@ func (api *NetworkV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantP
 		return nil, err
 	}
 
-
 	iter := Iterator[schema.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
 			var params *network.ListSkusParams
