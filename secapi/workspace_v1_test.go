@@ -33,7 +33,7 @@ func TestListWorkspacesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
+	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, TenantPath{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -80,8 +80,8 @@ func TestListWorkspacesWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.WorkspaceV1.ListWorkspaces(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.WorkspaceV1.ListWorkspacesWithOptions(ctx, TenantPath{Tenant: secatest.Tenant1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)

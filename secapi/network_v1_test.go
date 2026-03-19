@@ -35,7 +35,7 @@ func TestListNetworkSkusV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
+	iter, err := regionalClient.NetworkV1.ListSkus(ctx, TenantPath{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -102,7 +102,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -160,8 +160,8 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListNetworksWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -360,7 +360,7 @@ func TestListSubnetsV1(t *testing.T) {
 
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
+	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkPath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -420,9 +420,9 @@ func TestListSubnetsWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Options: filterOptions})
+	iter, err := regionalClient.NetworkV1.ListSubnetsWithOptions(ctx, NetworkPath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -612,7 +612,7 @@ func TestListRouteTablesV1(t *testing.T) {
 
 	targetRef := &schema.Reference{Resource: secatest.Instance1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
+	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, NetworkPath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -681,9 +681,9 @@ func TestListRouteTablesWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListRouteTables(ctx, NetworkFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Options: filterOptions})
+	iter, err := regionalClient.NetworkV1.ListRouteTablesWithOptions(ctx, NetworkPath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -887,7 +887,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -899,7 +899,7 @@ func TestListInternetGatewaysV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, false, *resp[0].Spec.EgressOnly)
+	assert.Equal(t, false, resp[0].Spec.EgressOnly)
 
 	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
@@ -941,9 +941,9 @@ func TestListInternetGatewaysWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListInternetGateways(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	iter, err := regionalClient.NetworkV1.ListInternetGatewaysWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -976,7 +976,7 @@ func TestGetInternetGatewayV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, false, *resp.Spec.EgressOnly)
+	assert.Equal(t, false, resp.Spec.EgressOnly)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -1008,7 +1008,7 @@ func TestGetInternetGatewayUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, false, *resp.Spec.EgressOnly)
+	assert.Equal(t, false, resp.Spec.EgressOnly)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -1067,7 +1067,7 @@ func TestCreateOrUpdateInternetGatewayV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, false, *resp.Spec.EgressOnly)
+	assert.Equal(t, false, resp.Spec.EgressOnly)
 
 	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
@@ -1117,7 +1117,7 @@ func TestListSecurityGroupRulesV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1173,8 +1173,8 @@ func TestListSecurityGroupRulesWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListSecurityGroupRules(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupRulesWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1357,7 +1357,7 @@ func TestListSecurityGroupsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1417,8 +1417,8 @@ func TestListSecurityGroupsWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := regionalClient.NetworkV1.ListSecurityGroups(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+	iter, err := regionalClient.NetworkV1.ListSecurityGroupsWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1607,7 +1607,7 @@ func TestListNicsV1(t *testing.T) {
 
 	subnetRef := &schema.Reference{Resource: secatest.Subnet1Ref}
 
-	iter, err := regionalClient.NetworkV1.ListNics(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListNics(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1665,9 +1665,9 @@ func TestListNicsWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListNics(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	iter, err := regionalClient.NetworkV1.ListNicsWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1845,7 +1845,7 @@ func TestListPublicIpsV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -1901,9 +1901,9 @@ func TestListPublicIpsWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.NetworkV1.ListPublicIps(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: filterOptions})
+	iter, err := regionalClient.NetworkV1.ListPublicIpsWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -2137,7 +2137,7 @@ func buildResponseInternetGateway(name string, tenant string, workspace string, 
 
 func buildResponseInternetGatewaySpec(egressOnly bool) *schema.InternetGatewaySpec {
 	return &schema.InternetGatewaySpec{
-		EgressOnly: &egressOnly,
+		EgressOnly: egressOnly,
 	}
 }
 

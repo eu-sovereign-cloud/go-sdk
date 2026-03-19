@@ -11,7 +11,8 @@ import (
 
 type WorkspaceV1 interface {
 	// Workspace
-	ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error)
+	ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error)
+	ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error)
 
 	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
 	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error)
@@ -35,7 +36,11 @@ func newWorkspaceV1Unavailable() WorkspaceV1 {
 
 /// Workspace
 
-func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -85,15 +90,15 @@ func newWorkspaceV1Impl(client *RegionalClient, workspaceUrl string) (WorkspaceV
 
 // Workspace
 
-func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, filter TenantFilter) (*Iterator[schema.Workspace], error) {
-	if err := filter.validate(); err != nil {
+func (api *WorkspaceV1Impl) ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error) {
+	if err := tpath.validate(); err != nil {
 		return nil, err
 	}
 
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
 			var params *workspace.ListWorkspacesParams
-			if filter.Options == nil {
+			if options == nil {
 				params = &workspace.ListWorkspacesParams{
 					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
 					SkipToken: skipToken,
@@ -101,13 +106,13 @@ func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, filter TenantFil
 			} else {
 				params = &workspace.ListWorkspacesParams{
 					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
-					Labels:    filter.Options.Labels.BuildPtr(),
-					Limit:     filter.Options.Limit,
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
 					SkipToken: skipToken,
 				}
 			}
 
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tpath.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -121,6 +126,10 @@ func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, filter TenantFil
 	}
 
 	return &iter, nil
+}
+
+func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error) {
+	return api.ListWorkspacesWithOptions(ctx, tpath, nil)
 }
 
 func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {

@@ -11,11 +11,13 @@ import (
 
 type ComputeV1 interface {
 	// Instance Sku
-	ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.InstanceSku], error)
+	ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.InstanceSku], error)
+	ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.InstanceSku], error)
 	GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error)
 
 	// Instance
-	ListInstances(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Instance], error)
+	ListInstancesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Instance], error)
+	ListInstances(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Instance], error)
 	GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error)
 	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Instance, error)
 
@@ -47,7 +49,11 @@ func newComputeV1Unavailable() ComputeV1 {
 
 /// Instance Sku
 
-func (api *ComputeV1Unavailable) ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.InstanceSku], error) {
+func (api *ComputeV1Unavailable) ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.InstanceSku], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Unavailable) ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.InstanceSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -57,7 +63,11 @@ func (api *ComputeV1Unavailable) GetSku(ctx context.Context, tref TenantReferenc
 
 /// Instance
 
-func (api *ComputeV1Unavailable) ListInstances(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Instance], error) {
+func (api *ComputeV1Unavailable) ListInstancesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Instance], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Unavailable) ListInstances(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Instance], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -131,15 +141,15 @@ func newComputeV1Impl(client *RegionalClient, computeUrl string) (ComputeV1, err
 
 // Instance Sku
 
-func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*Iterator[schema.InstanceSku], error) {
-	if err := filter.validate(); err != nil {
+func (api *ComputeV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.InstanceSku], error) {
+	if err := tpath.validate(); err != nil {
 		return nil, err
 	}
 
 	iter := Iterator[schema.InstanceSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
 			var params *compute.ListSkusParams
-			if filter.Options == nil {
+			if options == nil {
 				params = &compute.ListSkusParams{
 					Accept:    AcceptHeaderJson[compute.ListSkusParamsAccept](),
 					SkipToken: skipToken,
@@ -147,13 +157,13 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 			} else {
 				params = &compute.ListSkusParams{
 					Accept:    AcceptHeaderJson[compute.ListSkusParamsAccept](),
-					Labels:    filter.Options.Labels.BuildPtr(),
-					Limit:     filter.Options.Limit,
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
 					SkipToken: skipToken,
 				}
 			}
 
-			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(filter.Tenant), params, api.loadRequestHeaders)
+			resp, err := api.compute.ListSkusWithResponse(ctx, schema.TenantPathParam(tpath.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -166,6 +176,10 @@ func (api *ComputeV1Impl) ListSkus(ctx context.Context, filter TenantFilter) (*I
 		},
 	}
 	return &iter, nil
+}
+
+func (api *ComputeV1Impl) ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.InstanceSku], error) {
+	return api.ListSkusWithOptions(ctx, tpath, nil)
 }
 
 func (api *ComputeV1Impl) GetSku(ctx context.Context, tref TenantReference) (*schema.InstanceSku, error) {
@@ -187,15 +201,15 @@ func (api *ComputeV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 
 // Instance
 
-func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFilter) (*Iterator[schema.Instance], error) {
-	if err := filter.validate(); err != nil {
+func (api *ComputeV1Impl) ListInstancesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Instance], error) {
+	if err := wpath.validate(); err != nil {
 		return nil, err
 	}
 
 	iter := Iterator[schema.Instance]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
 			var params *compute.ListInstancesParams
-			if filter.Options == nil {
+			if options == nil {
 				params = &compute.ListInstancesParams{
 					Accept:    AcceptHeaderJson[compute.ListInstancesParamsAccept](),
 					SkipToken: skipToken,
@@ -203,13 +217,13 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFil
 			} else {
 				params = &compute.ListInstancesParams{
 					Accept:    AcceptHeaderJson[compute.ListInstancesParamsAccept](),
-					Labels:    filter.Options.Labels.BuildPtr(),
-					Limit:     filter.Options.Limit,
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
 					SkipToken: skipToken,
 				}
 			}
 
-			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(filter.Tenant), schema.WorkspacePathParam(filter.Workspace), params, api.loadRequestHeaders)
+			resp, err := api.compute.ListInstancesWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -222,6 +236,10 @@ func (api *ComputeV1Impl) ListInstances(ctx context.Context, filter WorkspaceFil
 		},
 	}
 	return &iter, nil
+}
+
+func (api *ComputeV1Impl) ListInstances(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Instance], error) {
+	return api.ListInstancesWithOptions(ctx, wpath, nil)
 }
 
 func (api *ComputeV1Impl) GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error) {

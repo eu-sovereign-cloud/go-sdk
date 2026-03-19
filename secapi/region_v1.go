@@ -10,7 +10,8 @@ import (
 // Interface
 
 type RegionV1 interface {
-	ListRegions(ctx context.Context, filter *GlobalFilter) (*Iterator[schema.Region], error)
+	ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error)
+	ListRegions(ctx context.Context) (*Iterator[schema.Region], error)
 
 	GetRegion(ctx context.Context, name string) (*schema.Region, error)
 }
@@ -23,7 +24,11 @@ func newRegionV1Unavailable() RegionV1 {
 	return &RegionV1Unavailable{}
 }
 
-func (api *RegionV1Unavailable) ListRegions(ctx context.Context, filter *GlobalFilter) (*Iterator[schema.Region], error) {
+func (api *RegionV1Unavailable) ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error) {
+	return nil, ErrProviderNotAvailable
+}
+
+func (api *RegionV1Unavailable) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -47,15 +52,15 @@ func newRegionV1Impl(client *GlobalClient, regionsUrl string) (RegionV1, error) 
 	return &RegionV1Impl{API: API{authToken: client.authToken}, region: region}, nil
 }
 
-func (api *RegionV1Impl) ListRegions(ctx context.Context, filter *GlobalFilter) (*Iterator[schema.Region], error) {
+func (api *RegionV1Impl) ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
 			var params *region.ListRegionsParams
-			if filter != nil && filter.Options != nil {
+			if options != nil {
 				params = &region.ListRegionsParams{
 					Accept:    AcceptHeaderJson[region.ListRegionsParamsAccept](),
-					Labels:    filter.Options.Labels.BuildPtr(),
-					Limit:     filter.Options.Limit,
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
 					SkipToken: skipToken,
 				}
 			} else {
@@ -78,6 +83,10 @@ func (api *RegionV1Impl) ListRegions(ctx context.Context, filter *GlobalFilter) 
 		},
 	}
 	return &iter, nil
+}
+
+func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return api.ListRegionsWithOptions(ctx, nil)
 }
 
 func (api *RegionV1Impl) GetRegion(ctx context.Context, name string) (*schema.Region, error) {

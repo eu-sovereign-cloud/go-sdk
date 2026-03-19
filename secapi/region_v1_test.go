@@ -33,7 +33,7 @@ func TestListRegionsV1(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	iter, err := client.RegionV1.ListRegions(ctx, nil)
+	iter, err := client.RegionV1.ListRegions(ctx)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -99,9 +99,9 @@ func TestListRegionsWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	options := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	options := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := client.RegionV1.ListRegions(ctx, &GlobalFilter{Options: options})
+	iter, err := client.RegionV1.ListRegionsWithOptions(ctx, options)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)

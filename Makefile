@@ -12,7 +12,10 @@ SPEC_SCHEMAS_SOURCES := $(shell ls $(SPEC_SCHEMAS_SRC)/*.yaml)
 GEN_TARGETS := $(SPEC_SCHEMAS_SOURCES:$(SPEC_SCHEMAS_SRC)/%.yaml=$(PKG)/schema/%.go)
 GEN_TARGETS += $(SPEC_SOURCES:$(SPEC_SRC)/%.yaml=$(PKG)/%/api.go)
 
-.PHONY: update	
+.PHONY: all
+all: update clean spec generate mock
+
+.PHONY: update
 update:
 	@echo "Updating submodules..."
 	git pull --recurse-submodules

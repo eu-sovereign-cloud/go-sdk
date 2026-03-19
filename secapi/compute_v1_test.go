@@ -35,7 +35,7 @@ func TestListInstancesSkuV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	iter, err := regionalClient.ComputeV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
+	iter, err := regionalClient.ComputeV1.ListSkus(ctx, TenantPath{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -49,6 +49,26 @@ func TestListInstancesSkuV1(t *testing.T) {
 
 	assert.Equal(t, secatest.InstanceSku1VCPU, resp[0].Spec.VCPU)
 	assert.Equal(t, secatest.InstanceSku1RAM, resp[0].Spec.Ram)
+}
+
+func TestListInstancesSkuWithOptionsV1(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+	labels := schema.Labels{secatest.LabelKeyTier: secatest.InstanceSku1Tier}
+	spec := buildResponseInstanceSkuSpec(secatest.InstanceSku1VCPU, secatest.InstanceSku1RAM)
+	secatest.MockListInstanceSkusV1(sim, []schema.InstanceSku{
+		*buildResponseInstanceSku(secatest.InstanceSku1Name, secatest.Tenant1Name, labels, spec),
+	})
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	labelsParams := builders.NewLabelsBuilder().
 		Equals(secatest.LabelEnvKey, secatest.LabelEnvValue).
@@ -60,12 +80,12 @@ func TestListInstancesSkuV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	options := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	options := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err = regionalClient.ComputeV1.ListSkus(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: options})
+	iter, err := regionalClient.ComputeV1.ListSkusWithOptions(ctx, TenantPath{Tenant: secatest.Tenant1Name}, options)
 	assert.NoError(t, err)
 
-	resp, err = iter.All(ctx)
+	resp, err := iter.All(ctx)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, resp)
 }
@@ -121,7 +141,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	instanceSkuRef := &schema.Reference{Resource: secatest.InstanceSku1Ref}
 
-	iter, err := regionalClient.ComputeV1.ListInstances(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err := regionalClient.ComputeV1.ListInstances(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -137,7 +157,7 @@ func TestListInstancesV1(t *testing.T) {
 
 	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 
-	iter, err = regionalClient.ComputeV1.ListInstances(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
+	iter, err = regionalClient.ComputeV1.ListInstances(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
 
 	resp, err = iter.All(ctx)
@@ -187,9 +207,9 @@ func TestListInstancesWithOptionsV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	options := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	options := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := regionalClient.ComputeV1.ListInstances(ctx, WorkspaceFilter{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Options: options})
+	iter, err := regionalClient.ComputeV1.ListInstancesWithOptions(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name}, options)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)

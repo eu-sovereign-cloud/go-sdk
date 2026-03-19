@@ -32,7 +32,7 @@ func TestListRolesV1(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	iter, err := client.AuthorizationV1.ListRoles(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
+	iter, err := client.AuthorizationV1.ListRoles(ctx, TenantPath{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -91,9 +91,9 @@ func TestListRolesWithOptionssV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := client.AuthorizationV1.ListRoles(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
+	iter, err := client.AuthorizationV1.ListRolesWithOptions(ctx, TenantPath{Tenant: secatest.Tenant1Name}, listOptions)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
@@ -267,7 +267,7 @@ func TestListRoleAssignmentsV1(t *testing.T) {
 
 	client := newTestGlobalClientV1(t, server)
 
-	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, TenantFilter{Tenant: secatest.Tenant1Name})
+	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, TenantPath{Tenant: secatest.Tenant1Name})
 	assert.NoError(t, err)
 	assert.NotNil(t, iter)
 
@@ -319,9 +319,9 @@ func TestListRoleAssignmentsWithOptionssV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	filterOptions := NewFilterOptions().WithLimit(10).WithLabels(labelsParams)
+	listOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
 
-	iter, err := client.AuthorizationV1.ListRoleAssignments(ctx, TenantFilter{Tenant: secatest.Tenant1Name, Options: filterOptions})
+	iter, err := client.AuthorizationV1.ListRoleAssignmentsWithOptions(ctx, TenantPath{Tenant: secatest.Tenant1Name}, listOptions)
 	assert.NoError(t, err)
 	assert.NotNil(t, iter)
 
