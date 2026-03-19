@@ -19,15 +19,7 @@ type RouteSpec struct {
 // RouteStatus defines model for RouteStatus.
 type RouteStatus struct {
 	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	State      ResourceState     `json:"state,omitempty"`
 }
 
 // RouteTable defines model for RouteTable.
@@ -65,14 +57,6 @@ type RouteTableSpec struct {
 // RouteTableStatus defines model for RouteTableStatus.
 type RouteTableStatus struct {
 	Conditions []StatusCondition `json:"conditions"`
-	Routes     *[]RouteStatus    `json:"routes,omitempty"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	Routes     []RouteStatus     `json:"routes,omitempty"`
+	State      ResourceState     `json:"state,omitempty"`
 }

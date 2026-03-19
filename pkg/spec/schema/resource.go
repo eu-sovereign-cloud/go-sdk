@@ -397,20 +397,20 @@ type Reference = ReferenceObject
 // the full URN.
 type ReferenceObject struct {
 	// Provider Provider of the resource. If not set, the provider is inferred from the context.
-	Provider *string `json:"provider,omitempty"`
+	Provider string `json:"provider,omitempty"`
 
 	// Region Region of the resource. If not set, the region is inferred from the context.
-	Region *string `json:"region,omitempty"`
+	Region string `json:"region,omitempty"`
 
 	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
 	// The type is the resource type, and the name is the resource name.
 	Resource string `json:"resource"`
 
 	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
-	Tenant *string `json:"tenant,omitempty"`
+	Tenant string `json:"tenant,omitempty"`
 
 	// Workspace Workspace of the resource. If not set, the workspace is inferred from the context.
-	Workspace *string `json:"workspace,omitempty"`
+	Workspace string `json:"workspace,omitempty"`
 }
 
 // ReferenceURN A unique resource name used to reference this resource in other resources. The reference
@@ -757,15 +757,7 @@ type SkuResourceMetadataKind string
 // Status Current status of the resource
 type Status struct {
 	Conditions []StatusCondition `json:"conditions"`
-
-	// State Current phase of the resource:
-	// - pending: not available, waiting for other resources
-	// - creating: not available, creation started
-	// - active: available for data layer usage
-	// - updating: available for data layer usage
-	// - deleting: maybe still available for data layer user, can fail any moment
-	// - error: failed to fulfill the request; would be related to provider issue or customer related input.
-	State *ResourceState `json:"state,omitempty"`
+	State      ResourceState     `json:"state,omitempty"`
 }
 
 // StatusCondition StatusCondition describes the state of a resource at a certain point.
@@ -779,12 +771,12 @@ type StatusCondition struct {
 	LastTransitionAt time.Time `json:"lastTransitionAt"`
 
 	// Message A human-readable message indicating details about the transition.
-	Message *string `json:"message,omitempty"`
+	Message string `json:"message,omitempty"`
 
 	// Reason The reason for the condition's last transition in CamelCase.
 	// The specific set of reason values is provider-specific and should be
 	// documented by the provider.
-	Reason *string `json:"reason,omitempty"`
+	Reason string `json:"reason,omitempty"`
 
 	// State Current phase of the resource:
 	// - pending: not available, waiting for other resources
@@ -797,7 +789,7 @@ type StatusCondition struct {
 
 	// Type Type of condition. The condition type is provider-specific and should
 	// reflect the specific states relevant to your resource.
-	Type *string `json:"type,omitempty"`
+	Type string `json:"type,omitempty"`
 }
 
 // SystemResourceMetadata Metadata for user-defined resource properties

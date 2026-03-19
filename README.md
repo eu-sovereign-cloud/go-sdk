@@ -2,6 +2,15 @@
 
 Go SDK for the SECA API specification. This SDK is currently mostly handwritten but will be replaced using code generators for the majority of the code in the future. The client HTTP code is already generated using a code generator.
 
+## Requirements
+
+- POSIX compatible environment;
+- Make Build Tool;
+- Git SCM;
+- [Go](https://go.dev/doc/install) 1.24 or higher;
+- [gotemplate](https://docs.gomplate.ca/installing/)
+- [Node.js](https://nodejs.org/)
+
 ## Getting Started
 
 To get started with the project, follow these steps:

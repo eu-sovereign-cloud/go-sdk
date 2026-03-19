@@ -5,16 +5,14 @@ import (
 
 	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
 
 type WorkspaceV1 interface {
 	// Workspace
-	ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error)
-	ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error)
+	ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error)
+	ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error)
 
 	GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error)
 	GetWorkspaceUntilState(ctx context.Context, tref TenantReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Workspace, error)
@@ -38,11 +36,11 @@ func newWorkspaceV1Unavailable() WorkspaceV1 {
 
 /// Workspace
 
-func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *WorkspaceV1Unavailable) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Unavailable) ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -92,13 +90,29 @@ func newWorkspaceV1Impl(client *RegionalClient, workspaceUrl string) (WorkspaceV
 
 // Workspace
 
-func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tid TenantID) (*Iterator[schema.Workspace], error) {
+func (api *WorkspaceV1Impl) ListWorkspacesWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.Workspace], error) {
+	if err := tpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Workspace]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
-				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *workspace.ListWorkspacesParams
+			if options == nil {
+				params = &workspace.ListWorkspacesParams{
+					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &workspace.ListWorkspacesParams{
+					Accept:    AcceptHeaderJson[workspace.ListWorkspacesParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tpath.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -114,28 +128,8 @@ func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tid TenantID) (*
 	return &iter, nil
 }
 
-func (api *WorkspaceV1Impl) ListWorkspacesWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.Workspace], error) {
-	iter := Iterator[schema.Workspace]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
-			resp, err := api.workspace.ListWorkspacesWithResponse(ctx, schema.TenantPathParam(tid), &workspace.ListWorkspacesParams{
-				Accept:    ptr.To(workspace.ListWorkspacesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *WorkspaceV1Impl) ListWorkspaces(ctx context.Context, tpath TenantPath) (*Iterator[schema.Workspace], error) {
+	return api.ListWorkspacesWithOptions(ctx, tpath, nil)
 }
 
 func (api *WorkspaceV1Impl) GetWorkspace(ctx context.Context, tref TenantReference) (*schema.Workspace, error) {
@@ -171,7 +165,7 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

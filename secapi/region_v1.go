@@ -5,15 +5,13 @@ import (
 
 	region "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.region.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
 
 type RegionV1 interface {
+	ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error)
 	ListRegions(ctx context.Context) (*Iterator[schema.Region], error)
-	ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error)
 
 	GetRegion(ctx context.Context, name string) (*schema.Region, error)
 }
@@ -26,11 +24,11 @@ func newRegionV1Unavailable() RegionV1 {
 	return &RegionV1Unavailable{}
 }
 
-func (api *RegionV1Unavailable) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+func (api *RegionV1Unavailable) ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *RegionV1Unavailable) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
+func (api *RegionV1Unavailable) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -54,13 +52,25 @@ func newRegionV1Impl(client *GlobalClient, regionsUrl string) (RegionV1, error) 
 	return &RegionV1Impl{API: API{authToken: client.authToken}, region: region}, nil
 }
 
-func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+func (api *RegionV1Impl) ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
-			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
-				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *region.ListRegionsParams
+			if options != nil {
+				params = &region.ListRegionsParams{
+					Accept:    AcceptHeaderJson[region.ListRegionsParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &region.ListRegionsParams{
+					Accept:    AcceptHeaderJson[region.ListRegionsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.region.ListRegionsWithResponse(ctx, params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -72,32 +82,11 @@ func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Regi
 			}
 		},
 	}
-
 	return &iter, nil
 }
 
-func (api *RegionV1Impl) ListRegionsWithFilters(ctx context.Context, opts *ListOptions) (*Iterator[schema.Region], error) {
-	iter := Iterator[schema.Region]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
-			resp, err := api.region.ListRegionsWithResponse(ctx, &region.ListRegionsParams{
-				Accept:    ptr.To(region.ListRegionsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *RegionV1Impl) ListRegions(ctx context.Context) (*Iterator[schema.Region], error) {
+	return api.ListRegionsWithOptions(ctx, nil)
 }
 
 func (api *RegionV1Impl) GetRegion(ctx context.Context, name string) (*schema.Region, error) {

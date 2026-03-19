@@ -5,22 +5,20 @@ import (
 
 	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
-
-	"k8s.io/utils/ptr"
 )
 
 // Interface
 
 type NetworkV1 interface {
 	// Network Sku
-	ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error)
-	ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error)
+	ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.NetworkSku], error)
+	ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.NetworkSku], error)
 
 	GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error)
 
 	// Network
-	ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error)
-	ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error)
+	ListNetworksWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Network], error)
+	ListNetworks(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Network], error)
 
 	GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error)
 	GetNetworkUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Network, error)
@@ -34,8 +32,8 @@ type NetworkV1 interface {
 	DeleteNetwork(ctx context.Context, net *schema.Network) error
 
 	// Subnet
-	ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error)
-	ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error)
+	ListSubnetsWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.Subnet], error)
+	ListSubnets(ctx context.Context, npath NetworkPath) (*Iterator[schema.Subnet], error)
 
 	GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error)
 	GetSubnetUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Subnet, error)
@@ -49,8 +47,8 @@ type NetworkV1 interface {
 	DeleteSubnet(ctx context.Context, sub *schema.Subnet) error
 
 	// Route Table
-	ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error)
-	ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error)
+	ListRouteTablesWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.RouteTable], error)
+	ListRouteTables(ctx context.Context, npath NetworkPath) (*Iterator[schema.RouteTable], error)
 
 	GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error)
 	GetRouteTableUntilState(ctx context.Context, nref NetworkReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.RouteTable, error)
@@ -64,8 +62,8 @@ type NetworkV1 interface {
 	DeleteRouteTable(ctx context.Context, route *schema.RouteTable) error
 
 	// Internet Gateway
-	ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error)
-	ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error)
+	ListInternetGatewaysWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.InternetGateway], error)
+	ListInternetGateways(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.InternetGateway], error)
 
 	GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error)
 	GetInternetGatewayUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.InternetGateway, error)
@@ -79,9 +77,8 @@ type NetworkV1 interface {
 	DeleteInternetGateway(ctx context.Context, gtw *schema.InternetGateway) error
 
 	// Security Group Rule
-
-	ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error)
-	ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error)
+	ListSecurityGroupRulesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroupRule], error)
+	ListSecurityGroupRules(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroupRule], error)
 
 	GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error)
 	GetSecurityGroupRuleUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroupRule, error)
@@ -95,8 +92,8 @@ type NetworkV1 interface {
 	DeleteSecurityGroupRule(ctx context.Context, rule *schema.SecurityGroupRule) error
 
 	// Security Group
-	ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error)
-	ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error)
+	ListSecurityGroupsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroup], error)
+	ListSecurityGroups(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroup], error)
 
 	GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error)
 	GetSecurityGroupUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.SecurityGroup, error)
@@ -110,8 +107,8 @@ type NetworkV1 interface {
 	DeleteSecurityGroup(ctx context.Context, route *schema.SecurityGroup) error
 
 	// Nic
-	ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error)
-	ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error)
+	ListNicsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Nic], error)
+	ListNics(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Nic], error)
 
 	GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error)
 	GetNicUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Nic, error)
@@ -125,8 +122,8 @@ type NetworkV1 interface {
 	DeleteNic(ctx context.Context, nic *schema.Nic) error
 
 	// Public Ip
-	ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error)
-	ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error)
+	ListPublicIpsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.PublicIp], error)
+	ListPublicIps(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.PublicIp], error)
 
 	GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error)
 	GetPublicIpUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.PublicIp, error)
@@ -150,11 +147,11 @@ func newNetworkV1Unavailable() NetworkV1 {
 
 /// Network Sku
 
-func (api *NetworkV1Unavailable) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Unavailable) ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.NetworkSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Unavailable) ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.NetworkSku], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -164,11 +161,11 @@ func (api *NetworkV1Unavailable) GetSku(ctx context.Context, tref TenantReferenc
 
 /// Network
 
-func (api *NetworkV1Unavailable) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Unavailable) ListNetworksWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Network], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Unavailable) ListNetworks(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Network], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -202,11 +199,11 @@ func (api *NetworkV1Unavailable) DeleteNetwork(ctx context.Context, net *schema.
 
 /// Subnet
 
-func (api *NetworkV1Unavailable) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Unavailable) ListSubnetsWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.Subnet], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Unavailable) ListSubnets(ctx context.Context, npath NetworkPath) (*Iterator[schema.Subnet], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -240,11 +237,11 @@ func (api *NetworkV1Unavailable) DeleteSubnet(ctx context.Context, sub *schema.S
 
 /// Route Table
 
-func (api *NetworkV1Unavailable) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Unavailable) ListRouteTablesWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.RouteTable], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Unavailable) ListRouteTables(ctx context.Context, npath NetworkPath) (*Iterator[schema.RouteTable], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -278,11 +275,11 @@ func (api *NetworkV1Unavailable) DeleteRouteTable(ctx context.Context, route *sc
 
 /// Internet Gateway
 
-func (api *NetworkV1Unavailable) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Unavailable) ListInternetGatewaysWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.InternetGateway], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Unavailable) ListInternetGateways(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.InternetGateway], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -316,11 +313,11 @@ func (api *NetworkV1Unavailable) DeleteInternetGateway(ctx context.Context, gtw 
 
 /// Security Group Rule
 
-func (api *NetworkV1Unavailable) ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroupRulesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroupRules(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroupRule], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -354,11 +351,11 @@ func (api *NetworkV1Unavailable) DeleteSecurityGroupRule(ctx context.Context, ru
 
 /// Security Group
 
-func (api *NetworkV1Unavailable) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroupsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroup], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Unavailable) ListSecurityGroups(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroup], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -392,11 +389,11 @@ func (api *NetworkV1Unavailable) DeleteSecurityGroup(ctx context.Context, route 
 
 /// Nic
 
-func (api *NetworkV1Unavailable) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Unavailable) ListNicsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Nic], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Unavailable) ListNics(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Nic], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -430,11 +427,11 @@ func (api *NetworkV1Unavailable) DeleteNic(ctx context.Context, nic *schema.Nic)
 
 /// Public Ip
 
-func (api *NetworkV1Unavailable) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Unavailable) ListPublicIpsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.PublicIp], error) {
 	return nil, ErrProviderNotAvailable
 }
 
-func (api *NetworkV1Unavailable) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Unavailable) ListPublicIps(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.PublicIp], error) {
 	return nil, ErrProviderNotAvailable
 }
 
@@ -484,13 +481,29 @@ func newNetworkV1Impl(client *RegionalClient, networkUrl string) (NetworkV1, err
 
 // Network Sku
 
-func (api *NetworkV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator[schema.NetworkSku], error) {
+func (api *NetworkV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.NetworkSku], error) {
+	if err := tpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.NetworkSku]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
-			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
-				Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListSkusParams
+			if options == nil {
+				params = &network.ListSkusParams{
+					Accept:    AcceptHeaderJson[network.ListSkusParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListSkusParams{
+					Accept:    AcceptHeaderJson[network.ListSkusParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tpath.Tenant), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -506,28 +519,8 @@ func (api *NetworkV1Impl) ListSkus(ctx context.Context, tid TenantID) (*Iterator
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListSkusWithFilters(ctx context.Context, tid TenantID, opts *ListOptions) (*Iterator[schema.NetworkSku], error) {
-	iter := Iterator[schema.NetworkSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
-			resp, err := api.network.ListSkusWithResponse(ctx, schema.TenantPathParam(tid), &network.ListSkusParams{
-				Accept:    ptr.To(network.ListSkusParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListSkus(ctx context.Context, tpath TenantPath) (*Iterator[schema.NetworkSku], error) {
+	return api.ListSkusWithOptions(ctx, tpath, nil)
 }
 
 func (api *NetworkV1Impl) GetSku(ctx context.Context, tref TenantReference) (*schema.NetworkSku, error) {
@@ -549,13 +542,29 @@ func (api *NetworkV1Impl) GetSku(ctx context.Context, tref TenantReference) (*sc
 
 // Network
 
-func (api *NetworkV1Impl) ListNetworks(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Network], error) {
+func (api *NetworkV1Impl) ListNetworksWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Network], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Network]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
-			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
-				Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListNetworksParams
+			if options == nil {
+				params = &network.ListNetworksParams{
+					Accept:    AcceptHeaderJson[network.ListNetworksParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListNetworksParams{
+					Accept:    AcceptHeaderJson[network.ListNetworksParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -571,28 +580,8 @@ func (api *NetworkV1Impl) ListNetworks(ctx context.Context, tid TenantID, wid Wo
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListNetworksWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Network], error) {
-	iter := Iterator[schema.Network]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
-			resp, err := api.network.ListNetworksWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNetworksParams{
-				Accept:    ptr.To(network.ListNetworksParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListNetworks(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Network], error) {
+	return api.ListNetworksWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetNetwork(ctx context.Context, wref WorkspaceReference) (*schema.Network, error) {
@@ -628,7 +617,7 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -718,13 +707,29 @@ func (api *NetworkV1Impl) DeleteNetwork(ctx context.Context, net *schema.Network
 
 // Subnet
 
-func (api *NetworkV1Impl) ListSubnets(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.Subnet], error) {
+func (api *NetworkV1Impl) ListSubnetsWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.Subnet], error) {
+	if err := npath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Subnet]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
-			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
-				Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListSubnetsParams
+			if options == nil {
+				params = &network.ListSubnetsParams{
+					Accept:    AcceptHeaderJson[network.ListSubnetsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListSubnetsParams{
+					Accept:    AcceptHeaderJson[network.ListSubnetsParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(npath.Tenant), schema.WorkspacePathParam(npath.Workspace), schema.NetworkPathParam(npath.Network), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -740,28 +745,8 @@ func (api *NetworkV1Impl) ListSubnets(ctx context.Context, tid TenantID, wid Wor
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListSubnetsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.Subnet], error) {
-	iter := Iterator[schema.Subnet]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
-			resp, err := api.network.ListSubnetsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListSubnetsParams{
-				Accept:    ptr.To(network.ListSubnetsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListSubnets(ctx context.Context, npath NetworkPath) (*Iterator[schema.Subnet], error) {
+	return api.ListSubnetsWithOptions(ctx, npath, nil)
 }
 
 func (api *NetworkV1Impl) GetSubnet(ctx context.Context, nref NetworkReference) (*schema.Subnet, error) {
@@ -797,7 +782,7 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -887,13 +872,29 @@ func (api *NetworkV1Impl) DeleteSubnet(ctx context.Context, sub *schema.Subnet) 
 
 // Route Table
 
-func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID) (*Iterator[schema.RouteTable], error) {
+func (api *NetworkV1Impl) ListRouteTablesWithOptions(ctx context.Context, npath NetworkPath, options *ListOptions) (*Iterator[schema.RouteTable], error) {
+	if err := npath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.RouteTable]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
-			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
-				Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListRouteTablesParams
+			if options == nil {
+				params = &network.ListRouteTablesParams{
+					Accept:    AcceptHeaderJson[network.ListRouteTablesParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListRouteTablesParams{
+					Accept:    AcceptHeaderJson[network.ListRouteTablesParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(npath.Tenant), schema.WorkspacePathParam(npath.Workspace), schema.NetworkPathParam(npath.Network), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -909,28 +910,8 @@ func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, tid TenantID, wid
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListRouteTablesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, nid NetworkID, opts *ListOptions) (*Iterator[schema.RouteTable], error) {
-	iter := Iterator[schema.RouteTable]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
-			resp, err := api.network.ListRouteTablesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), schema.NetworkPathParam(nid), &network.ListRouteTablesParams{
-				Accept:    ptr.To(network.ListRouteTablesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListRouteTables(ctx context.Context, npath NetworkPath) (*Iterator[schema.RouteTable], error) {
+	return api.ListRouteTablesWithOptions(ctx, npath, nil)
 }
 
 func (api *NetworkV1Impl) GetRouteTable(ctx context.Context, nref NetworkReference) (*schema.RouteTable, error) {
@@ -966,7 +947,7 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1056,13 +1037,29 @@ func (api *NetworkV1Impl) DeleteRouteTable(ctx context.Context, route *schema.Ro
 
 // Internet Gateway
 
-func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.InternetGateway], error) {
+func (api *NetworkV1Impl) ListInternetGatewaysWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.InternetGateway], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.InternetGateway]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
-			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
-				Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListInternetGatewaysParams
+			if options == nil {
+				params = &network.ListInternetGatewaysParams{
+					Accept:    AcceptHeaderJson[network.ListInternetGatewaysParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListInternetGatewaysParams{
+					Accept:    AcceptHeaderJson[network.ListInternetGatewaysParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -1078,28 +1075,8 @@ func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, tid TenantID
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListInternetGatewaysWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.InternetGateway], error) {
-	iter := Iterator[schema.InternetGateway]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
-			resp, err := api.network.ListInternetGatewaysWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListInternetGatewaysParams{
-				Accept:    ptr.To(network.ListInternetGatewaysParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListInternetGateways(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.InternetGateway], error) {
+	return api.ListInternetGatewaysWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetInternetGateway(ctx context.Context, wref WorkspaceReference) (*schema.InternetGateway, error) {
@@ -1135,7 +1112,7 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1225,13 +1202,29 @@ func (api *NetworkV1Impl) DeleteInternetGateway(ctx context.Context, gtw *schema
 
 // Security Group Rules
 
-func (api *NetworkV1Impl) ListSecurityGroupRules(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroupRule], error) {
+func (api *NetworkV1Impl) ListSecurityGroupRulesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.SecurityGroupRule]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
-			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
-				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListSecurityGroupRulesParams
+			if options == nil {
+				params = &network.ListSecurityGroupRulesParams{
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupRulesParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListSecurityGroupRulesParams{
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupRulesParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -1247,28 +1240,8 @@ func (api *NetworkV1Impl) ListSecurityGroupRules(ctx context.Context, tid Tenant
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListSecurityGroupRulesWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroupRule], error) {
-	iter := Iterator[schema.SecurityGroupRule]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
-			resp, err := api.network.ListSecurityGroupRulesWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupRulesParams{
-				Accept:    ptr.To(network.ListSecurityGroupRulesParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListSecurityGroupRules(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroupRule], error) {
+	return api.ListSecurityGroupRulesWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetSecurityGroupRule(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroupRule, error) {
@@ -1304,7 +1277,7 @@ func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wr
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1394,13 +1367,29 @@ func (api *NetworkV1Impl) DeleteSecurityGroupRule(ctx context.Context, rule *sch
 
 // Security Group
 
-func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.SecurityGroup], error) {
+func (api *NetworkV1Impl) ListSecurityGroupsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.SecurityGroup], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.SecurityGroup]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
-			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
-				Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListSecurityGroupsParams
+			if options == nil {
+				params = &network.ListSecurityGroupsParams{
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListSecurityGroupsParams{
+					Accept:    AcceptHeaderJson[network.ListSecurityGroupsParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -1416,28 +1405,8 @@ func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, tid TenantID, 
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListSecurityGroupsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.SecurityGroup], error) {
-	iter := Iterator[schema.SecurityGroup]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
-			resp, err := api.network.ListSecurityGroupsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListSecurityGroupsParams{
-				Accept:    ptr.To(network.ListSecurityGroupsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListSecurityGroups(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.SecurityGroup], error) {
+	return api.ListSecurityGroupsWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetSecurityGroup(ctx context.Context, wref WorkspaceReference) (*schema.SecurityGroup, error) {
@@ -1473,7 +1442,7 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1563,13 +1532,29 @@ func (api *NetworkV1Impl) DeleteSecurityGroup(ctx context.Context, group *schema
 
 // Nic
 
-func (api *NetworkV1Impl) ListNics(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.Nic], error) {
+func (api *NetworkV1Impl) ListNicsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Nic], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.Nic]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
-			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
-				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListNicsParams
+			if options == nil {
+				params = &network.ListNicsParams{
+					Accept:    AcceptHeaderJson[network.ListNicsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListNicsParams{
+					Accept:    AcceptHeaderJson[network.ListNicsParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -1585,28 +1570,8 @@ func (api *NetworkV1Impl) ListNics(ctx context.Context, tid TenantID, wid Worksp
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListNicsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.Nic], error) {
-	iter := Iterator[schema.Nic]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
-			resp, err := api.network.ListNicsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListNicsParams{
-				Accept:    ptr.To(network.ListNicsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListNics(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Nic], error) {
+	return api.ListNicsWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetNic(ctx context.Context, wref WorkspaceReference) (*schema.Nic, error) {
@@ -1642,7 +1607,7 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1732,13 +1697,29 @@ func (api *NetworkV1Impl) DeleteNic(ctx context.Context, nic *schema.Nic) error 
 
 // Public Ip
 
-func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, tid TenantID, wid WorkspaceID) (*Iterator[schema.PublicIp], error) {
+func (api *NetworkV1Impl) ListPublicIpsWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.PublicIp], error) {
+	if err := wpath.validate(); err != nil {
+		return nil, err
+	}
+
 	iter := Iterator[schema.PublicIp]{
 		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
-			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
-				Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
+			var params *network.ListPublicIpsParams
+			if options == nil {
+				params = &network.ListPublicIpsParams{
+					Accept:    AcceptHeaderJson[network.ListPublicIpsParamsAccept](),
+					SkipToken: skipToken,
+				}
+			} else {
+				params = &network.ListPublicIpsParams{
+					Accept:    AcceptHeaderJson[network.ListPublicIpsParamsAccept](),
+					Labels:    options.Labels.BuildPtr(),
+					Limit:     options.Limit,
+					SkipToken: skipToken,
+				}
+			}
+
+			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(wpath.Tenant), schema.WorkspacePathParam(wpath.Workspace), params, api.loadRequestHeaders)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -1754,28 +1735,8 @@ func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, tid TenantID, wid W
 	return &iter, nil
 }
 
-func (api *NetworkV1Impl) ListPublicIpsWithFilters(ctx context.Context, tid TenantID, wid WorkspaceID, opts *ListOptions) (*Iterator[schema.PublicIp], error) {
-	iter := Iterator[schema.PublicIp]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
-			resp, err := api.network.ListPublicIpsWithResponse(ctx, schema.TenantPathParam(tid), schema.WorkspacePathParam(wid), &network.ListPublicIpsParams{
-				Accept:    ptr.To(network.ListPublicIpsParamsAccept(schema.AcceptHeaderJson)),
-				Labels:    opts.Labels.BuildPtr(),
-				Limit:     opts.Limit,
-				SkipToken: skipToken,
-			}, api.loadRequestHeaders)
-			if err != nil {
-				return nil, nil, err
-			}
-
-			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
-			} else {
-				return nil, nil, mapStatusCodeToError(resp.StatusCode())
-			}
-		},
-	}
-
-	return &iter, nil
+func (api *NetworkV1Impl) ListPublicIps(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.PublicIp], error) {
+	return api.ListPublicIpsWithOptions(ctx, wpath, nil)
 }
 
 func (api *NetworkV1Impl) GetPublicIp(ctx context.Context, wref WorkspaceReference) (*schema.PublicIp, error) {
@@ -1811,7 +1772,7 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return *resp.JSON200.Status.State, resp.JSON200, nil
+				return resp.JSON200.Status.State, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}

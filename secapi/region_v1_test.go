@@ -48,7 +48,7 @@ func TestListRegionsV1(t *testing.T) {
 	assert.Equal(t, constants.ApiVersion1, resp[0].Spec.Providers[0].Version)
 }
 
-func TestListRegionsWithFiltersV1(t *testing.T) {
+func TestListRegionsWithOptionsV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
 
@@ -99,8 +99,9 @@ func TestListRegionsWithFiltersV1(t *testing.T) {
 		Gte(secatest.LabelUptime, 99).
 		Lte(secatest.LabelLoad, 75)
 
-	ListOptions := NewListOptions().WithLimit(10).WithLabels(labelsParams)
-	iter, err := client.RegionV1.ListRegionsWithFilters(ctx, ListOptions)
+	options := NewListOptions().WithLimit(10).WithLabels(labelsParams)
+
+	iter, err := client.RegionV1.ListRegionsWithOptions(ctx, options)
 	assert.NoError(t, err)
 
 	resp, err := iter.All(ctx)
