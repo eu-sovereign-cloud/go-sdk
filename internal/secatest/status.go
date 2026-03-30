@@ -50,6 +50,16 @@ func NewInstanceStatus(state schema.ResourceState) *schema.InstanceStatus {
 	})
 }
 
+func NewInstanceStatusWithPowerState(state schema.ResourceState, powerState schema.InstanceStatusPowerState) *schema.InstanceStatus {
+	return buildResponseStatus(state, func(s schema.ResourceState, c []schema.StatusCondition) *schema.InstanceStatus {
+		return &schema.InstanceStatus{
+			State:      s,
+			PowerState: powerState,
+			Conditions: c,
+		}
+	})
+}
+
 // Storage
 
 func NewBlockStorageStatus(state schema.ResourceState) *schema.BlockStorageStatus {
