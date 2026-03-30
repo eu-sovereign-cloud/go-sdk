@@ -317,8 +317,6 @@ func TestGetInstanceUntilPowerStateV1(t *testing.T) {
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.InstanceStatusPowerStateOn, resp.Status.PowerState)
-
-
 }
 
 func TestWatchInstanceUntilDeletedV1(t *testing.T) {
