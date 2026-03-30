@@ -248,8 +248,20 @@ type GlobalResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -305,8 +317,20 @@ type GlobalTenantResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -402,8 +426,13 @@ type ReferenceObject struct {
 	// Region Region of the resource. If not set, the region is inferred from the context.
 	Region string `json:"region,omitempty"`
 
-	// Resource Name and type of the resource. Must be in the format `<type>/<name>`.
-	// The type is the resource type, and the name is the resource name.
+	// Resource Resource-specific path identifying the resource within its workspace context.
+	// This is the segment of the full URN after the provider, version, tenant, and
+	// workspace parts. For a flat resource it is `<type>/<name>`, and for hierarchical
+	// (nested) resources it includes the parent path segments:
+	//   `networks/<network-name>/route-tables/<rt-name>`
+	// The provider, tenant, and workspace can be specified as separate fields in this
+	// object; they do not need to be repeated here.
 	Resource string `json:"resource"`
 
 	// Tenant Tenant of the resource. If not set, the tenant is inferred from the context.
@@ -413,8 +442,22 @@ type ReferenceObject struct {
 	Workspace string `json:"workspace,omitempty"`
 }
 
-// ReferenceURN A unique resource name used to reference this resource in other resources. The reference
-// is represented as the full URN (Uniform Resource Name) name of the resource.
+// ReferenceURN A unique resource name (URN) used to identify and reference this resource.
+//
+// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+// that SDK configuration context. This separation keeps the URN portable across
+// environments and CSP deployments.
+//
+// The full URN format is:
+//
+//	`{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+//
+// For hierarchical (nested) resources, additional parent path segments are included:
+//
+//	`seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 //
 // ### Automatic Prefix Inference
 //
@@ -470,8 +513,20 @@ type RegionalNetworkResourceMetadata struct {
 	Network  string `json:"network"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -536,8 +591,20 @@ type RegionalResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -599,8 +666,20 @@ type RegionalWorkspaceResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -655,8 +734,20 @@ type ResourceMetadata struct {
 	// Each segment follows the same rules.
 	Name string `json:"name"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -717,8 +808,20 @@ type SkuResourceMetadata struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
@@ -822,8 +925,20 @@ type TypeMetadata struct {
 	// Kind Type of the resource
 	Kind TypeMetadataKind `json:"kind"`
 
-	// Ref A unique resource name used to reference this resource in other resources. The reference
-	// is represented as the full URN (Uniform Resource Name) name of the resource.
+	// Ref A unique resource name (URN) used to identify and reference this resource.
+	//
+	// The URN is NOT a URL — it does not contain a protocol scheme (http/https), a host,
+	// or any endpoint-specific prefix. It is a portable, transport-agnostic identifier.
+	// A configured SDK client — which knows the provider's base URL and endpoint mapping —
+	// can derive a URL from a URN, but the URN alone cannot be turned into a URL without
+	// that SDK configuration context. This separation keeps the URN portable across
+	// environments and CSP deployments.
+	//
+	// The full URN format is:
+	//   `{provider}/{version}/tenants/{tenant}/workspaces/{workspace}/{type}/{name}`
+	//
+	// For hierarchical (nested) resources, additional parent path segments are included:
+	//   `seca.network/v1/tenants/tn-1/workspaces/ws-1/networks/my-net/route-tables/my-rt`
 	//
 	// ### Automatic Prefix Inference
 	//
