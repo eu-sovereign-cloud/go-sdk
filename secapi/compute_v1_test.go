@@ -293,6 +293,8 @@ func TestGetInstanceUntilPowerStateV1(t *testing.T) {
 
 	sim := mockcompute.NewMockServerInterface(t)
 	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.NewInstanceStatusWithPowerState(schema.ResourceStateActive, schema.InstanceStatusPowerStateOff)), 1)
+
 	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, secatest.NewInstanceStatusWithPowerState(schema.ResourceStateActive, schema.InstanceStatusPowerStateOn)), 1)
 	secatest.ConfigureComputeHandler(sim, sm)
 
