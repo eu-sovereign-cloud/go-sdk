@@ -20,6 +20,7 @@ type ComputeV1 interface {
 	ListInstances(ctx context.Context, wpath WorkspacePath) (*Iterator[schema.Instance], error)
 	GetInstance(ctx context.Context, wref WorkspaceReference) (*schema.Instance, error)
 	GetInstanceUntilState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.ResourceState]) (*schema.Instance, error)
+	GetInstanceUntilPowerState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.InstanceStatusPowerState]) (*schema.Instance, error)
 
 	WatchInstanceUntilDeleted(ctx context.Context, wref WorkspaceReference, config ResourceObserverConfig) error
 
@@ -105,6 +106,10 @@ func (api *ComputeV1Unavailable) StartInstanceWithParams(ctx context.Context, in
 
 func (api *ComputeV1Unavailable) StartInstance(ctx context.Context, inst *schema.Instance) error {
 	return ErrProviderNotAvailable
+}
+
+func (api *ComputeV1Unavailable) GetInstanceUntilPowerState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.InstanceStatusPowerState]) (*schema.Instance, error) {
+	return nil, ErrProviderNotAvailable
 }
 
 func (api *ComputeV1Unavailable) StopInstanceWithParams(ctx context.Context, inst *schema.Instance, params *compute.StopInstanceParams) error {
@@ -276,6 +281,37 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Status.State, resp.JSON200, nil
+			} else {
+				return "", nil, mapStatusCodeToError(resp.StatusCode())
+			}
+		},
+	}
+
+	resp, err := observer.WaitUntilValue(config.ExpectedValues)
+	if err != nil {
+		return nil, err
+	} else {
+		return resp, nil
+	}
+}
+
+func (api *ComputeV1Impl) GetInstanceUntilPowerState(ctx context.Context, wref WorkspaceReference, config ResourceObserverUntilValueConfig[schema.InstanceStatusPowerState]) (*schema.Instance, error) {
+	if err := wref.validate(); err != nil {
+		return nil, err
+	}
+
+	observer := resourceStateObserver[schema.InstanceStatusPowerState, schema.Instance]{
+		delay:       config.Delay,
+		interval:    config.Interval,
+		maxAttempts: config.MaxAttempts,
+		getValueFunc: func() (schema.InstanceStatusPowerState, *schema.Instance, error) {
+			resp, err := api.compute.GetInstanceWithResponse(ctx, schema.TenantPathParam(wref.Tenant), schema.WorkspacePathParam(wref.Workspace), wref.Name, api.loadRequestHeaders)
+			if err != nil {
+				return "", nil, err
+			}
+
+			if checkSuccessGetStatusCode(resp.StatusCode()) {
+				return resp.JSON200.Status.PowerState, resp.JSON200, nil
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
