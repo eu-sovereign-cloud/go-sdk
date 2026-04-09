@@ -54,7 +54,7 @@ func newRegionV1Impl(client *GlobalClient, regionsUrl string) (RegionV1, error) 
 
 func (api *RegionV1Impl) ListRegionsWithOptions(ctx context.Context, options *ListOptions) (*Iterator[schema.Region], error) {
 	iter := Iterator[schema.Region]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Region, *schema.ResponseMetadata, error) {
 			var params *region.ListRegionsParams
 			if options != nil {
 				params = &region.ListRegionsParams{
@@ -76,7 +76,7 @@ func (api *RegionV1Impl) ListRegionsWithOptions(ctx context.Context, options *Li
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}

@@ -152,7 +152,7 @@ func (api *ComputeV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantP
 	}
 
 	iter := Iterator[schema.InstanceSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.InstanceSku, *schema.ResponseMetadata, error) {
 			var params *compute.ListSkusParams
 			if options == nil {
 				params = &compute.ListSkusParams{
@@ -174,7 +174,7 @@ func (api *ComputeV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantP
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -212,7 +212,7 @@ func (api *ComputeV1Impl) ListInstancesWithOptions(ctx context.Context, wpath Wo
 	}
 
 	iter := Iterator[schema.Instance]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Instance, *schema.ResponseMetadata, error) {
 			var params *compute.ListInstancesParams
 			if options == nil {
 				params = &compute.ListInstancesParams{
@@ -234,7 +234,7 @@ func (api *ComputeV1Impl) ListInstancesWithOptions(ctx context.Context, wpath Wo
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}

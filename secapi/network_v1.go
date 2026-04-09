@@ -487,7 +487,7 @@ func (api *NetworkV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantP
 	}
 
 	iter := Iterator[schema.NetworkSku]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.NetworkSku, *schema.ResponseMetadata, error) {
 			var params *network.ListSkusParams
 			if options == nil {
 				params = &network.ListSkusParams{
@@ -509,7 +509,7 @@ func (api *NetworkV1Impl) ListSkusWithOptions(ctx context.Context, tpath TenantP
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -548,7 +548,7 @@ func (api *NetworkV1Impl) ListNetworksWithOptions(ctx context.Context, wpath Wor
 	}
 
 	iter := Iterator[schema.Network]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Network, *schema.ResponseMetadata, error) {
 			var params *network.ListNetworksParams
 			if options == nil {
 				params = &network.ListNetworksParams{
@@ -570,7 +570,7 @@ func (api *NetworkV1Impl) ListNetworksWithOptions(ctx context.Context, wpath Wor
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -713,7 +713,7 @@ func (api *NetworkV1Impl) ListSubnetsWithOptions(ctx context.Context, npath Netw
 	}
 
 	iter := Iterator[schema.Subnet]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Subnet, *schema.ResponseMetadata, error) {
 			var params *network.ListSubnetsParams
 			if options == nil {
 				params = &network.ListSubnetsParams{
@@ -735,7 +735,7 @@ func (api *NetworkV1Impl) ListSubnetsWithOptions(ctx context.Context, npath Netw
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -878,7 +878,7 @@ func (api *NetworkV1Impl) ListRouteTablesWithOptions(ctx context.Context, npath 
 	}
 
 	iter := Iterator[schema.RouteTable]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.RouteTable, *schema.ResponseMetadata, error) {
 			var params *network.ListRouteTablesParams
 			if options == nil {
 				params = &network.ListRouteTablesParams{
@@ -900,7 +900,7 @@ func (api *NetworkV1Impl) ListRouteTablesWithOptions(ctx context.Context, npath 
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1043,7 +1043,7 @@ func (api *NetworkV1Impl) ListInternetGatewaysWithOptions(ctx context.Context, w
 	}
 
 	iter := Iterator[schema.InternetGateway]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.InternetGateway, *schema.ResponseMetadata, error) {
 			var params *network.ListInternetGatewaysParams
 			if options == nil {
 				params = &network.ListInternetGatewaysParams{
@@ -1065,7 +1065,7 @@ func (api *NetworkV1Impl) ListInternetGatewaysWithOptions(ctx context.Context, w
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1208,7 +1208,7 @@ func (api *NetworkV1Impl) ListSecurityGroupRulesWithOptions(ctx context.Context,
 	}
 
 	iter := Iterator[schema.SecurityGroupRule]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroupRule, *schema.ResponseMetadata, error) {
 			var params *network.ListSecurityGroupRulesParams
 			if options == nil {
 				params = &network.ListSecurityGroupRulesParams{
@@ -1230,7 +1230,7 @@ func (api *NetworkV1Impl) ListSecurityGroupRulesWithOptions(ctx context.Context,
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1373,7 +1373,7 @@ func (api *NetworkV1Impl) ListSecurityGroupsWithOptions(ctx context.Context, wpa
 	}
 
 	iter := Iterator[schema.SecurityGroup]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.SecurityGroup, *schema.ResponseMetadata, error) {
 			var params *network.ListSecurityGroupsParams
 			if options == nil {
 				params = &network.ListSecurityGroupsParams{
@@ -1395,7 +1395,7 @@ func (api *NetworkV1Impl) ListSecurityGroupsWithOptions(ctx context.Context, wpa
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1538,7 +1538,7 @@ func (api *NetworkV1Impl) ListNicsWithOptions(ctx context.Context, wpath Workspa
 	}
 
 	iter := Iterator[schema.Nic]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Nic, *schema.ResponseMetadata, error) {
 			var params *network.ListNicsParams
 			if options == nil {
 				params = &network.ListNicsParams{
@@ -1560,7 +1560,7 @@ func (api *NetworkV1Impl) ListNicsWithOptions(ctx context.Context, wpath Workspa
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
@@ -1703,7 +1703,7 @@ func (api *NetworkV1Impl) ListPublicIpsWithOptions(ctx context.Context, wpath Wo
 	}
 
 	iter := Iterator[schema.PublicIp]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.PublicIp, *schema.ResponseMetadata, error) {
 			var params *network.ListPublicIpsParams
 			if options == nil {
 				params = &network.ListPublicIpsParams{
@@ -1725,7 +1725,7 @@ func (api *NetworkV1Impl) ListPublicIpsWithOptions(ctx context.Context, wpath Wo
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}

@@ -96,7 +96,7 @@ func (api *WorkspaceV1Impl) ListWorkspacesWithOptions(ctx context.Context, tpath
 	}
 
 	iter := Iterator[schema.Workspace]{
-		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *string, error) {
+		fn: func(ctx context.Context, skipToken *string) ([]schema.Workspace, *schema.ResponseMetadata, error) {
 			var params *workspace.ListWorkspacesParams
 			if options == nil {
 				params = &workspace.ListWorkspacesParams{
@@ -118,7 +118,7 @@ func (api *WorkspaceV1Impl) ListWorkspacesWithOptions(ctx context.Context, tpath
 			}
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
-				return resp.JSON200.Items, resp.JSON200.Metadata.SkipToken, nil
+				return resp.JSON200.Items, &resp.JSON200.Metadata, nil
 			} else {
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
