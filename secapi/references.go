@@ -22,6 +22,10 @@ type NetworkReference struct {
 	Name      string
 }
 
+type ReferenceType interface {
+	TenantReference | WorkspaceReference | NetworkReference
+}
+
 // Validators
 
 func (tref *TenantReference) validate() error {

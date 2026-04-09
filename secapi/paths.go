@@ -15,6 +15,10 @@ type NetworkPath struct {
 	Network   NetworkID
 }
 
+type PathType interface {
+	TenantPath | WorkspacePath | NetworkPath
+}
+
 // Validators
 
 func (path *TenantPath) validate() error {

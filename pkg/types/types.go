@@ -1,6 +1,8 @@
 package types
 
-import "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+import (
+	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
+)
 
 type ResourceType interface {
 	schema.Region |
