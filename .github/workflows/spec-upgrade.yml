@@ -1,0 +1,63 @@
+name: Spec Upgrade
+
+on:
+  repository_dispatch:
+    types: [spec-upgrade]
+
+jobs:
+  spec-upgrade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create branch
+        id: branch
+        run: |
+          BRANCH="spec-upgrade/${{ github.event.client_payload.tag }}"
+          git checkout -b "$BRANCH"
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Update spec submodule tag
+        run: |
+          TAG="${{ github.event.client_payload.tag }}"
+          git -C spec fetch --tags
+          git -C spec checkout "$TAG"
+          git submodule set-branch --branch "$TAG" spec || true
+          sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
+
+      - name: Run make
+        run: make
+
+      - name: Commit and push
+        run: |
+          git add -A
+          git commit -m "chore: upgrade spec to ${{ github.event.client_payload.tag }}"
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.name }}" \
+            --title "chore: upgrade spec to ${{ github.event.client_payload.tag }}" \
+            --body "Automated spec upgrade to \`${{ github.event.client_payload.tag }}\` triggered by repository dispatch." \
+            --reviewer "eu-sovereign-cloud/review"
