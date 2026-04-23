@@ -1,9 +1,8 @@
-name: Spec Upgrade
-
 on:
   repository_dispatch:
     types: [spec-upgrade]
 
+name: Spec Upgrade
 jobs:
   spec-upgrade:
     runs-on: ubuntu-latest
@@ -45,7 +44,7 @@ jobs:
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
 
       - name: Run make
-        run: make
+        run: make spec generate mock
 
       - name: Commit and push
         run: |
