@@ -38,8 +38,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ github.event.client_payload.tag }}"
+          git -C spec fetch --tags
+          git -C spec checkout "$TAG"
+          git submodule set-branch --branch "$TAG" spec
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
-          make update
 
       - name: Generate code
         run: |
