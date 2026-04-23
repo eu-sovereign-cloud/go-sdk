@@ -16,7 +16,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Set up Go
+      - name: Setup go
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
@@ -33,18 +33,18 @@ jobs:
           git checkout -b "$BRANCH"
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
 
-      - name: Update spec submodule tag
+      - name: Update submodule
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ github.event.client_payload.tag }}"
-          git -C spec fetch --tags
-          git -C spec checkout "$TAG"
-          git submodule set-branch --branch "$TAG" spec || true
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
+          make update
 
-      - name: Run make
-        run: make spec generate mock
+      - name: Generate code
+        run: |
+          go install github.com/hairyhenderson/gomplate/v4/cmd/gomplate@latest
+          make spec schemas mock
 
       - name: Commit and push
         run: |
