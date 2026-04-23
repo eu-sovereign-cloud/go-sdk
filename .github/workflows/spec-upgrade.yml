@@ -35,6 +35,8 @@ jobs:
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
 
       - name: Update spec submodule tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ github.event.client_payload.tag }}"
           git -C spec fetch --tags
