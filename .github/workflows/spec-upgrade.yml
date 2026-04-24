@@ -33,9 +33,17 @@ jobs:
           git checkout -b "$BRANCH"
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
       - name: Update submodule
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           TAG="${{ github.event.client_payload.tag }}"
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
@@ -54,7 +62,7 @@ jobs:
 
       - name: Open pull request
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           gh pr create \
             --base main \
