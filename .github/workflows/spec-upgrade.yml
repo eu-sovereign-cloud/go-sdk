@@ -39,7 +39,6 @@ jobs:
         run: |
           TAG="${{ github.event.client_payload.tag }}"
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
-          git pull --recurse-submodules
           git submodule update --remote --recursive
 
       - name: Generate spec, schemas and mocks
