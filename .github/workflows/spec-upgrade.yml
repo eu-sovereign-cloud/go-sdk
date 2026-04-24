@@ -24,12 +24,12 @@ jobs:
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "github-actions@secapi.cloud"
 
       - name: Create branch
         id: branch
         run: |
-          BRANCH="spec-upgrade/${{ github.event.client_payload.tag }}"
+          BRANCH="spec-${{ github.event.client_payload.tag }}-upgrade"
           git checkout -b "$BRANCH"
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
 
@@ -38,12 +38,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ github.event.client_payload.tag }}"
-          git -C spec fetch --tags
-          git -C spec checkout "$TAG"
-          git submodule set-branch --branch "$TAG" spec
           sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
 
-      - name: Generate code
+      - name: Generate spec, schemas and mocks
         run: |
           go install github.com/hairyhenderson/gomplate/v4/cmd/gomplate@latest
           make spec schemas mock
@@ -51,7 +50,7 @@ jobs:
       - name: Commit and push
         run: |
           git add -A
-          git commit -m "chore: upgrade spec to ${{ github.event.client_payload.tag }}"
+          git commit -m "Upgrade to spec ${{ github.event.client_payload.tag }}"
           git push origin "${{ steps.branch.outputs.name }}"
 
       - name: Open pull request
@@ -61,6 +60,5 @@ jobs:
           gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
-            --title "chore: upgrade spec to ${{ github.event.client_payload.tag }}" \
-            --body "Automated spec upgrade to \`${{ github.event.client_payload.tag }}\` triggered by repository dispatch." \
-            --reviewer "eu-sovereign-cloud/review"
+            --title "Upgrade to spec ${{ github.event.client_payload.tag }}" \
+            --reviewer "eu-sovereign-cloud/ionos,eu-sovereign-cloud/aruba"
