@@ -60,5 +60,5 @@ jobs:
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
             --title "Upgrade to spec ${{ github.event.client_payload.tag }}" \
-            --body "Automated upgrade to spec ${{ github.event.client_payload.tag }} triggered by a new spec release" \
-            --reviewer "eu-sovereign-cloud/ionos,eu-sovereign-cloud/aruba"
+            --body "Automated upgrade to spec ${{ github.event.client_payload.tag }}, triggered by a new spec release" \
+            --reviewer eu-sovereign-cloud/sdk-review
