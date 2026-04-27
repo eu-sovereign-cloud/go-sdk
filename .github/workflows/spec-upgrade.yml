@@ -1,0 +1,71 @@
+on:
+  repository_dispatch:
+    types: [spec-upgrade]
+
+name: Spec Upgrade
+jobs:
+  spec-upgrade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Configure git
+        run: |
+          git config user.name "seca-ci-bot[bot]"
+          git config user.email "seca-ci-bot@secapi.cloud"
+
+      - name: Create branch
+        id: branch
+        run: |
+          BRANCH="spec-${{ github.event.client_payload.tag }}-upgrade"
+          git checkout -b "$BRANCH"
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Update submodule
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          TAG="${{ github.event.client_payload.tag }}"
+          sed -i "s/^\(\s*tag = \).*/\1$TAG/" .gitmodules
+          git submodule update --remote --recursive
+
+      - name: Generate spec, schemas and mocks
+        run: |
+          go install github.com/hairyhenderson/gomplate/v4/cmd/gomplate@latest
+          make spec schemas mock
+
+      - name: Commit and push
+        run: |
+          git add -A
+          git commit -m "Upgrade to spec ${{ github.event.client_payload.tag }}"
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.name }}" \
+            --title "Upgrade to spec ${{ github.event.client_payload.tag }}" \
+            --body "Automated upgrade to spec ${{ github.event.client_payload.tag }}, triggered by a new spec release"
