@@ -37,9 +37,7 @@ type InternetNatGatewayInstanceSpec struct {
 
 	// SecurityGroupRef Reference to the security group associated with the NAT gateway.
 	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Zone             Zone       `json:"zone" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
 }
 
 // InternetNatGatewayInstanceStatus Current status of the resource

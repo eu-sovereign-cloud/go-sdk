@@ -34,13 +34,13 @@ type ObjectStorageAccountSpec = map[string]interface{}
 // ObjectStorageAccountStatus defines model for ObjectStorageAccountStatus.
 type ObjectStorageAccountStatus struct {
 	// AccessKey Access key for the object storage account
-	AccessKey string `json:"accessKey,omitempty"`
+	AccessKey string `json:"accessKey,omitempty" x-kubebuilder-validation-max-length:"128"`
 
 	// CanonicalUserId Canonical user ID for the object storage account
-	CanonicalUserId string            `json:"canonicalUserId,omitempty"`
-	Conditions      []StatusCondition `json:"conditions"`
+	CanonicalUserId string            `json:"canonicalUserId,omitempty" x-kubebuilder-validation-max-length:"64"`
+	Conditions      []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SecretKey Secret key for the object storage account
-	SecretKey string        `json:"secretKey,omitempty"`
+	SecretKey string        `json:"secretKey,omitempty" x-kubebuilder-validation-max-length:"128"`
 	State     ResourceState `json:"state,omitempty"`
 }

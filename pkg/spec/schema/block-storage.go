@@ -38,10 +38,11 @@ type BlockStorage struct {
 // If a reference to the source image is used as the base for creating this block storage.
 type BlockStorageSpec struct {
 	// SizeGB Size of the block storage in GB.
-	SizeGB int `json:"sizeGB" x-cel-message-0:"spec.sizeGB cannot be decreased" x-cel-message-1:"spec.sizeGB must be greater than 0" x-cel-rule-0:"!oldSelf.hasValue() || self >= oldSelf.value()" x-cel-rule-1:"self > 0"`
+	SizeGB int `json:"sizeGB" x-cel-message-0:"spec.sizeGB cannot be decreased" x-cel-rule-0:"self >= oldSelf" x-kubebuilder-validation-maximum:"1000000" x-kubebuilder-validation-minimum:"1"`
 
-	// SkuRef Reference to the SKU of the block storage.
-	SkuRef Reference `json:"skuRef"`
+	// SkuRef Reference to the SKU of the block storage. The SKU is immutable after creation.
+	// If you want to change the SKU, you need to create a new block storage and migrate the data.
+	SkuRef Reference `json:"skuRef" x-cel-message-0:"spec.skuRef is immutable" x-cel-rule-0:"self == oldSelf"`
 
 	// SourceImageRef Reference to the source image used as the base for creating the block storage.
 	SourceImageRef *Reference `json:"sourceImageRef,omitempty"`
@@ -50,11 +51,11 @@ type BlockStorageSpec struct {
 // BlockStorageStatus defines model for BlockStorageStatus.
 type BlockStorageStatus struct {
 	// AttachedTo Reference to the instance the block storage is attached to.
-	AttachedTo *ReferenceObject  `json:"attachedTo,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
+	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SizeGB Size of the block storage in GB.
-	SizeGB int           `json:"sizeGB"`
+	SizeGB int           `json:"sizeGB" x-kubebuilder-validation-maximum:"1000000" x-kubebuilder-validation-minimum:"1"`
 	State  ResourceState `json:"state,omitempty"`
 }
 
@@ -64,7 +65,7 @@ type VolumeReference struct {
 	DeviceRef Reference `json:"deviceRef"`
 
 	// Type The connection type depends on the type of device and type of block storage.
-	Type VolumeReferenceType `json:"type,omitempty"`
+	Type VolumeReferenceType `json:"type,omitempty" x-kubebuilder-default:"virtio" x-kubebuilder-validation-enum:"virtio" x-kubebuilder-validation-max-length:"7"`
 }
 
 // VolumeReferenceType The connection type depends on the type of device and type of block storage.
