@@ -27,6 +27,18 @@ func NewIterator[T types.ResourceType](fn IteratorFunc[T]) *Iterator[T] {
 	}
 }
 
+// prefetch fetches the first page of items, populating data and meta immediately.
+// This makes Metadata() available before any Next()/All() call.
+func (i *Iterator[T]) prefetch(ctx context.Context) error {
+	newData, newMeta, err := i.fn(ctx, nil)
+	if err != nil {
+		return err
+	}
+	i.data = newData
+	i.meta = *newMeta
+	return nil
+}
+
 // Next returns the next item in the iterator. If there are no more items, it returns io.EOF.
 func (i *Iterator[T]) Next(ctx context.Context) (*T, error) {
 	// If we have items in the buffer, return the next one

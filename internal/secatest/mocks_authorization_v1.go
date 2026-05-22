@@ -11,10 +11,10 @@ import (
 )
 
 // Role
-func MockListRolesV1(sim *mockauthorization.MockServerInterface, resp []schema.Role) {
+func MockListRolesV1(sim *mockauthorization.MockServerInterface, resp authorization.RoleIterator) {
 	sim.EXPECT().ListRoles(mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		RunAndReturn(func(w http.ResponseWriter, r *http.Request, tenant string, params authorization.ListRolesParams) {
-			iter := &authorization.RoleIterator{Items: resp}
+			iter := &resp
 			if err := configGetHttpResponse(w, iter); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}

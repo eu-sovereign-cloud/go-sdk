@@ -8,6 +8,7 @@ import (
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockauthorization "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.authorization.v1"
+	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 	"github.com/eu-sovereign-cloud/go-sdk/secapi/builders"
 
@@ -21,10 +22,34 @@ func TestListRolesV1(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	spec := buildResponseRoleSpec(secatest.Role1PermissionProvider, []string{secatest.Role1PermissionResource}, []string{secatest.Role1PermissionVerb})
-	secatest.MockListRolesV1(sim, []schema.Role{
-		*buildResponseRole(secatest.Role1Name, secatest.Tenant1Name, spec, schema.ResourceStateActive),
-	})
+	autIter := authorization.RoleIterator{
+		Metadata: schema.ResponseMetadata{
+			Provider: secatest.Role1PermissionProvider,
+			Resource: secatest.Role1PermissionResource,
+			Verb:     secatest.Role1PermissionVerb,
+		},
+		Items: []schema.Role{
+			{
+				Metadata: &schema.GlobalTenantResourceMetadata{
+					Name:   secatest.Role1Name,
+					Tenant: secatest.Tenant1Name,
+				},
+				Spec: schema.RoleSpec{
+					Permissions: []schema.Permission{
+						{
+							Provider:  secatest.Role1PermissionProvider,
+							Resources: []string{secatest.Role1PermissionResource},
+							Verb:      []string{secatest.Role1PermissionVerb},
+						},
+					},
+				},
+				Status: &schema.Status{
+					State: schema.ResourceStateActive,
+				},
+			},
+		},
+	}
+	secatest.MockListRolesV1(sim, autIter)
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)
@@ -54,26 +79,34 @@ func TestListRolesWithOptionssV1(t *testing.T) {
 	sm := http.NewServeMux()
 
 	sim := mockauthorization.NewMockServerInterface(t)
-	secatest.MockListRolesV1(sim, []schema.Role{
-		{
-			Metadata: &schema.GlobalTenantResourceMetadata{
-				Name:   secatest.Role1Name,
-				Tenant: secatest.Tenant1Name,
-			},
-			Spec: schema.RoleSpec{
-				Permissions: []schema.Permission{
-					{
-						Provider:  secatest.Role1PermissionProvider,
-						Resources: []string{secatest.Role1PermissionResource},
-						Verb:      []string{secatest.Role1PermissionVerb},
+	autIter := authorization.RoleIterator{
+		Metadata: schema.ResponseMetadata{
+			Provider: secatest.Role1PermissionProvider,
+			Resource: secatest.Role1PermissionResource,
+			Verb:     secatest.Role1PermissionVerb,
+		},
+		Items: []schema.Role{
+			{
+				Metadata: &schema.GlobalTenantResourceMetadata{
+					Name:   secatest.Role1Name,
+					Tenant: secatest.Tenant1Name,
+				},
+				Spec: schema.RoleSpec{
+					Permissions: []schema.Permission{
+						{
+							Provider:  secatest.Role1PermissionProvider,
+							Resources: []string{secatest.Role1PermissionResource},
+							Verb:      []string{secatest.Role1PermissionVerb},
+						},
 					},
 				},
-			},
-			Status: &schema.Status{
-				State: schema.ResourceStateActive,
+				Status: &schema.Status{
+					State: schema.ResourceStateActive,
+				},
 			},
 		},
-	})
+	}
+	secatest.MockListRolesV1(sim, autIter)
 	secatest.ConfigureAuthorizationHandler(sim, sm)
 
 	server := httptest.NewServer(sm)

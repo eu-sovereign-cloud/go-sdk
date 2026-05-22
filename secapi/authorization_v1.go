@@ -178,6 +178,10 @@ func (api *AuthorizationV1Impl) ListRolesWithOptions(ctx context.Context, tpath 
 		},
 	}
 
+	if err := iter.prefetch(ctx); err != nil {
+		return nil, err
+	}
+
 	return &iter, nil
 }
 
@@ -341,6 +345,10 @@ func (api *AuthorizationV1Impl) ListRoleAssignmentsWithOptions(ctx context.Conte
 				return nil, nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+	}
+
+	if err := iter.prefetch(ctx); err != nil {
+		return nil, err
 	}
 
 	return &iter, nil
