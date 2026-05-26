@@ -1,6 +1,11 @@
 package types
 
 import (
+	authorization "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.authorization.v1"
+	compute "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.compute.v1"
+	network "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.network.v1"
+	storage "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.storage.v1"
+	workspace "github.com/eu-sovereign-cloud/go-sdk/pkg/spec/foundation.workspace.v1"
 	"github.com/eu-sovereign-cloud/go-sdk/pkg/spec/schema"
 )
 
@@ -67,6 +72,23 @@ type StatusType interface {
 		schema.NicStatus |
 		schema.PublicIpStatus |
 		schema.SecurityGroupStatus
+}
+
+type IteratorType interface {
+	authorization.RoleIterator |
+		authorization.RoleAssignmentIterator |
+		workspace.WorkspaceIterator |
+		storage.BlockStorageIterator |
+		storage.ImageIterator |
+		compute.InstanceIterator |
+		network.NetworkIterator |
+		network.InternetGatewayIterator |
+		network.RouteTableIterator |
+		network.SubnetIterator |
+		network.PublicIpIterator |
+		network.NicIterator |
+		network.SecurityGroupRuleIterator |
+		network.SecurityGroupIterator
 }
 
 func GetStatusState[S StatusType](status *S) schema.ResourceState {
