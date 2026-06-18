@@ -1,4 +1,12 @@
-.vscode/
-.idea/
+# IDE
+.vscode
+.idea
 
+## Dependencies
+vendor/
+
+# Debug
+**/__debug_bin*
+
+## Tests
 coverage.*
