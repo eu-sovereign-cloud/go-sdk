@@ -7,20 +7,20 @@ package schema
 // Permissions are used to define access control policies for user accounts.
 type Permission struct {
 	// Provider The provider for which the resource and verbs are defined.
-	Provider string `json:"provider"`
+	Provider string `json:"provider" x-kubebuilder-validation-max-length:"64" x-kubebuilder-validation-min-length:"1"`
 
 	// Resources The resources are the specific resources that the permission applies to.
 	// The resource can be a wildcard `*` to represent all resources or a
 	// specific resource type. For example, `images/my-image` or
 	// `images/*`.
-	Resources []string `json:"resources"`
+	Resources []string `json:"resources" x-kubebuilder-validation-items-max-length:"256" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"256" x-kubebuilder-validation-min-items:"1"`
 
 	// Verb The verb is a string that represents the action to be performed on a resource.
 	// The standard operations are defined as `get`, `put`, `list`, `delete`. If the
 	// resource has additional actions they can to be permitted individually as
 	// verb and action in the form `<verb>:<action>`. For example, `post.start`,
 	// `post.stop`, `post.restart` or with a wildcard for all actions `post`.
-	Verb []string `json:"verb"`
+	Verb []string `json:"verb" x-kubebuilder-validation-items-max-length:"7" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"16" x-kubebuilder-validation-min-items:"1"`
 }
 
 // Role defines model for Role.
@@ -80,29 +80,29 @@ type RoleAssignmentScope struct {
 	// Regions Optionally, a restriction can be applied to the region
 	// where the role assignment is valid. If not specified,
 	// the role assignment is valid for all regions.
-	Regions []string `json:"regions,omitempty"`
+	Regions []string `json:"regions,omitempty" x-kubebuilder-validation-items-max-length:"64" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"64"`
 
 	// Tenants Optionally, can be opened to all tenants or restricted to a specific tenant.
 	// If not specified, the role assignment is valid for the current tenant.
-	Tenants []string `json:"tenants,omitempty"`
+	Tenants []string `json:"tenants,omitempty" x-kubebuilder-validation-items-max-length:"64" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"64"`
 
 	// Workspaces Optionally, a restriction can be applied to the workspace
 	// where the role assignment is valid. If not specified,
 	// the role assignment is valid for all workspaces.
-	Workspaces []string `json:"workspaces,omitempty"`
+	Workspaces []string `json:"workspaces,omitempty" x-kubebuilder-validation-items-max-length:"64" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"256"`
 }
 
 // RoleAssignmentSpec Role assignment for a user account. The role is assigned to the user account in the context of the specified scopes.
 type RoleAssignmentSpec struct {
 	// Roles List of assigned role names
-	Roles []string `json:"roles"`
+	Roles []string `json:"roles" x-kubebuilder-validation-items-max-length:"64" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"32" x-kubebuilder-validation-min-items:"1"`
 
 	// Scopes List of scopes (e.g., tenant, workspace) for the role assignment
-	Scopes []RoleAssignmentScope `json:"scopes"`
+	Scopes []RoleAssignmentScope `json:"scopes" x-kubebuilder-validation-max-items:"256" x-kubebuilder-validation-min-items:"1"`
 
 	// Subs List of subject IDs (from JWT) to whom the roles are assigned,
 	// A wildcard `*` can be used to represent all users of the tenant scopes
-	Subs []string `json:"subs"`
+	Subs []string `json:"subs" x-kubebuilder-validation-items-max-length:"128" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"256" x-kubebuilder-validation-min-items:"1"`
 }
 
 // RoleAssignmentStatus Current status of the resource
@@ -113,7 +113,7 @@ type RoleAssignmentStatus = Status
 // a user account using a role assignment.
 type RoleSpec struct {
 	// Permissions List of permissions granted by this role
-	Permissions []Permission `json:"permissions"`
+	Permissions []Permission `json:"permissions" x-kubebuilder-validation-max-items:"256" x-kubebuilder-validation-min-items:"1"`
 }
 
 // RoleStatus Current status of the resource

@@ -52,24 +52,25 @@ type KubernetesClusterSpec struct {
 	// This is a security feature to limit access to the cluster. If not specified,
 	// the Kubernetes API is accessible from any IP address. Nodes that are
 	// part of the cluster are always allowed to access the Kubernetes API.
-	RestrictKubernetesApi []string `json:"restrictKubernetesApi,omitempty"`
+	RestrictKubernetesApi []string `json:"restrictKubernetesApi,omitempty" x-kubebuilder-validation-items-max-length:"45" x-kubebuilder-validation-max-items:"100"`
 
 	// ServiceCidr CIDR range for the service network. This is used to allocate IP addresses
 	// for services in the cluster. The CIDR must be a valid IPv4 or IPv6 CIDR.
 	// If not specified, a default provider CIDR will be used.
 	ServiceCidr string `json:"serviceCidr,omitempty"`
 
-	// SkuRef Reference to the SKU of the Kubernetes cluster.
-	SkuRef Reference `json:"skuRef"`
+	// SkuRef Reference to the SKU of the Kubernetes cluster. The SKU is immutable after the cluster is created.
+	// To change the SKU, the cluster must be deleted and recreated with the new SKU reference.
+	SkuRef Reference `json:"skuRef" x-cel-message-0:"spec.skuRef is immutable" x-cel-rule-0:"self == oldSelf"`
 }
 
 // KubernetesClusterStatus defines model for KubernetesClusterStatus.
 type KubernetesClusterStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// KubeConfig The kube config file for the cluster. This file is used to configure
 	// access to the cluster using kubectl or other Kubernetes clients.
-	KubeConfig string        `json:"kubeConfig,omitempty"`
+	KubeConfig string        `json:"kubeConfig,omitempty" x-kubebuilder-validation-max-length:"65536"`
 	State      ResourceState `json:"state,omitempty"`
 }
 
@@ -108,7 +109,7 @@ type KubernetesNodePool struct {
 type KubernetesNodePoolSpec struct {
 	// Instances The number of instances in the node pool. This field is required to
 	// specify the number of nodes in the node pool.
-	Instances int `json:"instances"`
+	Instances int `json:"instances" x-kubebuilder-validation-maximum:"5000" x-kubebuilder-validation-minimum:"1"`
 
 	// NodeTemplate Template for creating nodes in the node pool. The template includes
 	// the instance SKU, subnet, and zone in which the nodes will be created.
@@ -118,16 +119,16 @@ type KubernetesNodePoolSpec struct {
 	// Taints List of taints to apply to the nodes in the node pool. Taints are used
 	// to mark nodes as unsuitable for certain workloads, allowing for more
 	// fine-grained control over scheduling.
-	Taints []KubernetesNodeTaint `json:"taints,omitempty"`
+	Taints []KubernetesNodeTaint `json:"taints,omitempty" x-kubebuilder-validation-max-items:"50"`
 }
 
 // KubernetesNodePoolStatus defines model for KubernetesNodePoolStatus.
 type KubernetesNodePoolStatus struct {
-	Conditions []StatusCondition `json:"conditions"`
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// Nodes List of nodes in the Node Pool. Each node is represented by its
 	// reference to a compute instance.
-	Nodes []Reference   `json:"nodes,omitempty"`
+	Nodes []Reference   `json:"nodes,omitempty" x-kubebuilder-validation-max-items:"1000"`
 	State ResourceState `json:"state,omitempty"`
 }
 
@@ -137,10 +138,12 @@ type KubernetesNodePoolStatus struct {
 // The SKU must be one of the available block storage SKUs in the region.
 type KubernetesNodeRootVolume struct {
 	// SizeGB Size of the root volume in GB. The size is recommended to be at least 100GB.
-	SizeGB int `json:"sizeGB"`
+	SizeGB int `json:"sizeGB" x-kubebuilder-validation-minimum:"20"`
 
 	// SkuRef Reference to the SKU of the block storage created to store the root volume.
-	SkuRef Reference `json:"skuRef"`
+	// The SKU is immutable after the node pool is created. To change the SKU,
+	// the node pool must be deleted and recreated with the new SKU reference.
+	SkuRef Reference `json:"skuRef" x-cel-message-0:"rootVolume.skuRef is immutable" x-cel-rule-0:"self == oldSelf"`
 }
 
 // KubernetesNodeTaint Represents a taint applied to the nodes in the node pool. Taints are used
@@ -150,15 +153,15 @@ type KubernetesNodeTaint struct {
 	// Effect The effect of the taint. The effect determines how the taint is applied to
 	// the nodes in the node pool. For details on the effects, see the
 	// (kubernetes documentation on taints and tolerations)[https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/].
-	Effect KubernetesNodeTaintEffect `json:"effect"`
+	Effect KubernetesNodeTaintEffect `json:"effect" x-kubebuilder-validation-enum:"NoSchedule;PreferNoSchedule;NoExecute"`
 
 	// Key The key of the taint. The key is used to identify the taint and is used
 	// in conjunction with the value and effect.
-	Key string `json:"key"`
+	Key string `json:"key" x-kubebuilder-validation-max-length:"63" x-kubebuilder-validation-min-length:"1"`
 
 	// Value The value of the taint. The value is used to identify the taint and is used
 	// in conjunction with the key and effect.
-	Value string `json:"value"`
+	Value string `json:"value" x-kubebuilder-validation-max-length:"63" x-kubebuilder-validation-min-length:"1"`
 }
 
 // KubernetesNodeTaintEffect The effect of the taint. The effect determines how the taint is applied to
@@ -179,12 +182,14 @@ type KubernetesNodeTemplate struct {
 	// SecurityGroupRef Reference to the security group associated with the node instances.
 	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
 
-	// SkuRef Reference to the SKU of the node instances.
-	SkuRef Reference `json:"skuRef"`
+	// SkuRef Reference to the SKU of the node instances. The SKU is immutable after the node pool is created.
+	// To change the SKU, the node pool must be deleted and recreated with the new SKU reference.
+	SkuRef Reference `json:"skuRef" x-cel-message-0:"nodeTemplate.skuRef is immutable" x-cel-rule-0:"self == oldSelf"`
 
 	// SubnetRef Reference to the NIC attached to the node instances.
 	SubnetRef Reference `json:"subnetRef"`
 
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	// Zone The zone in which the node instances will be created. The zone is immutable after the node pool is created.
+	// To change the zone, the node pool must be deleted and recreated with the new zone.
+	Zone Zone `json:"zone" x-cel-message-0:"nodeTemplate.zone is immutable" x-cel-rule-0:"self == oldSelf" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
 }
