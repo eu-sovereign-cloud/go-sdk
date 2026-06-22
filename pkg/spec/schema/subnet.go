@@ -55,16 +55,13 @@ type SubnetSpec struct {
 	// * IPv4 and IPv6 (Dual Stack)
 	Cidr Cidr `json:"cidr"`
 
-	// RouteTableRef Reference to the route table used by default for all NICs in this Subnet.
-	// If not provided, the routeTableRef associated with the network of the subnet will be used.
-	RouteTableRef *Reference `json:"routeTableRef,omitempty"`
+	// RouteTableRef Reference to the route table used for all NICs in this Subnet.
+	RouteTableRef Reference `json:"routeTableRef"`
 
 	// SkuRef Reference to the SKU used by default for all NICs in this Network.
 	// Can be overridden by the NIC
 	SkuRef *Reference `json:"skuRef,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Zone   Zone       `json:"zone" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
 }
 
 // SubnetStatus defines model for SubnetStatus.
@@ -77,7 +74,7 @@ type SubnetStatus struct {
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
 	Cidr       *Cidr             `json:"cidr,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// RouteTableRef The route table used by this subnet.
 	RouteTableRef *Reference    `json:"routeTableRef,omitempty"`
