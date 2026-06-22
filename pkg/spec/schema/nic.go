@@ -48,19 +48,20 @@ type NicIp = string
 type NicSpec struct {
 	// Addresses List of IP addresses for the NIC. A specific IP address needs to be in the
 	// CIDR range of the subnet and not used by any other NIC in the subnet. Multiple
-	// IP addresses can be assigned to a NIC. The number of IP addresses is might be
+	// IP addresses can be assigned to a NIC. The number of IP addresses might be
 	// limited by the CSP or the subnet size.
-	Addresses []NicIp `json:"addresses"`
+	Addresses []NicIp `json:"addresses" x-cel-message-0:"all IP addresses must be valid IPv4 or IPv6 addresses" x-cel-rule-0:"self.all(x, isIP(x))" x-kubebuilder-validation-items-max-length:"39" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"32" x-kubebuilder-validation-min-items:"1"`
 
 	// PublicIpRefs References to public IP addresses associated with this NIC. The IP may be external
 	// and not directly visible on the server/NIC itself.
-	PublicIpRefs []Reference `json:"publicIpRefs,omitempty"`
+	PublicIpRefs []Reference `json:"publicIpRefs,omitempty" x-kubebuilder-validation-max-items:"16"`
 
 	// SecurityGroupRefs References to the security groups associated with this NIC.
-	SecurityGroupRefs []Reference `json:"securityGroupRefs,omitempty"`
+	SecurityGroupRefs []Reference `json:"securityGroupRefs,omitempty" x-kubebuilder-validation-max-items:"16"`
 
-	// SkuRef Reference to the SKU of the NIC.
-	SkuRef *Reference `json:"skuRef,omitempty"`
+	// SkuRef Reference to the SKU of the NIC. The SKU is immutable after the NIC is created.
+	// To change the SKU, the NIC must be deleted and recreated with the new SKU reference.
+	SkuRef *Reference `json:"skuRef,omitempty" x-cel-message-0:"spec.skuRef is immutable" x-cel-rule-0:"!oldSelf.hasValue() || self == oldSelf.value()"`
 
 	// SubnetRef Reference to the subnet used by the NIC connections.
 	SubnetRef Reference `json:"subnetRef"`
@@ -68,13 +69,13 @@ type NicSpec struct {
 
 // NicStatus defines model for NicStatus.
 type NicStatus struct {
-	Addresses  []NicIp           `json:"addresses,omitempty"`
-	Conditions []StatusCondition `json:"conditions"`
+	Addresses  []NicIp           `json:"addresses,omitempty" x-kubebuilder-validation-items-max-length:"39" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"32"`
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// MacAddress MAC address of the NIC.
-	MacAddress string `json:"macAddress,omitempty"`
+	MacAddress string `json:"macAddress,omitempty" x-kubebuilder-validation-max-length:"17"`
 
 	// PublicIpRefs Array of public IP addresses associated with this NIC.
-	PublicIpRefs []Reference   `json:"publicIpRefs,omitempty"`
+	PublicIpRefs []Reference   `json:"publicIpRefs,omitempty" x-kubebuilder-validation-max-items:"16"`
 	State        ResourceState `json:"state,omitempty"`
 }

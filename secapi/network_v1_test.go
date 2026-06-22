@@ -89,7 +89,7 @@ func TestListNetworksV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockListNetworksV1(sim, []schema.Network{
 		*buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
@@ -100,7 +100,7 @@ func TestListNetworksV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
+	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	iter, err := regionalClient.NetworkV1.ListNetworks(ctx, WorkspacePath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name})
 	assert.NoError(t, err)
@@ -114,7 +114,7 @@ func TestListNetworksV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp[0].Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
-	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
+	assert.Equal(t, *networkSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
 }
@@ -126,7 +126,7 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
+	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	secatest.MockListNetworksV1(sim, []schema.Network{
 		{
@@ -136,7 +136,7 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 				Workspace: secatest.Workspace1Name,
 			},
 			Spec: schema.NetworkSpec{
-				RouteTableRef: *routeTableRef,
+				SkuRef: *networkSkuRef,
 			},
 			Status: &schema.NetworkStatus{
 				State: schema.ResourceStateCreating,
@@ -170,7 +170,7 @@ func TestListNetworksWithOptionsV1(t *testing.T) {
 
 	assert.Equal(t, secatest.Network1Name, resp[0].Metadata.Name)
 
-	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
+	assert.Equal(t, *networkSkuRef, resp[0].Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateCreating, resp[0].Status.State)
 }
@@ -182,7 +182,7 @@ func TestGetNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -191,7 +191,7 @@ func TestGetNetworkV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
+	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name}
 	resp, err := regionalClient.NetworkV1.GetNetwork(ctx, wref)
@@ -202,7 +202,7 @@ func TestGetNetworkV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
+	assert.Equal(t, *networkSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -214,7 +214,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
 	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -224,7 +224,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
-	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
+	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Network1Name}
 	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
@@ -236,7 +236,7 @@ func TestGetNetworkUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
+	assert.Equal(t, *networkSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
@@ -248,7 +248,7 @@ func TestWatchNetworkUntilDeletedV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
 	secatest.MockNotFoundNetworkV1(sim, nil, 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -271,7 +271,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockCreateOrUpdateNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -279,8 +279,6 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	defer server.Close()
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
-
-	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
@@ -291,9 +289,8 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 			Name:      secatest.Network1Name,
 		},
 		Spec: schema.NetworkSpec{
-			Cidr:          schema.Cidr{Ipv4: secatest.CidrIpv4},
-			RouteTableRef: *routeTableRef,
-			SkuRef:        *networkSkuRef,
+			Cidr:   schema.Cidr{Ipv4: secatest.CidrIpv4},
+			SkuRef: *networkSkuRef,
 		},
 	}
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateNetwork(ctx, net)
@@ -304,7 +301,7 @@ func TestCreateOrUpdateOrUpdateNetworkV1(t *testing.T) {
 	assert.Equal(t, secatest.Workspace1Name, resp.Metadata.Workspace)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
-	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
+	assert.Equal(t, *networkSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateCreating, resp.Status.State)
 }
@@ -316,7 +313,7 @@ func TestDeleteNetworkV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseNetworkSpec(secatest.RouteTable1Ref)
+	spec := buildResponseNetworkSpec(secatest.NetworkSku1Ref)
 	secatest.MockGetNetworkV1(sim, buildResponseNetwork(secatest.Network1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.MockDeleteNetworkV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -347,7 +344,7 @@ func TestListSubnetsV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockListSubnetsV1(sim, []schema.Subnet{
 		*buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateActive),
 	})
@@ -359,6 +356,7 @@ func TestListSubnetsV1(t *testing.T) {
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
+	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 
 	iter, err := regionalClient.NetworkV1.ListSubnets(ctx, NetworkPath{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name})
 	assert.NoError(t, err)
@@ -373,6 +371,7 @@ func TestListSubnetsV1(t *testing.T) {
 	assert.Equal(t, secatest.Network1Name, resp[0].Metadata.Network)
 	assert.Equal(t, secatest.Region1Name, resp[0].Metadata.Region)
 
+	assert.Equal(t, *routeTableRef, resp[0].Spec.RouteTableRef)
 	assert.Equal(t, *networkSkuRef, *resp[0].Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp[0].Status.State)
@@ -386,7 +385,9 @@ func TestListSubnetsWithOptionsV1(t *testing.T) {
 
 	sim := mocknetwork.NewMockServerInterface(t)
 
+	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 	skuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
+
 	secatest.MockListSubnetsV1(sim, []schema.Subnet{
 		{
 			Metadata: &schema.RegionalNetworkResourceMetadata{
@@ -396,7 +397,8 @@ func TestListSubnetsWithOptionsV1(t *testing.T) {
 				Network:   secatest.Network1Name,
 			},
 			Spec: schema.SubnetSpec{
-				SkuRef: skuRef,
+				RouteTableRef: *routeTableRef,
+				SkuRef:        skuRef,
 			},
 			Status: &schema.SubnetStatus{
 				State: schema.ResourceStateActive,
@@ -437,7 +439,7 @@ func TestGetSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -446,6 +448,7 @@ func TestGetSubnetV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.Subnet1Name}
@@ -458,6 +461,7 @@ func TestGetSubnetV1(t *testing.T) {
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Network)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
+	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
@@ -470,7 +474,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateCreating), 2)
 	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -480,6 +484,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	nref := NetworkReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Network: secatest.Network1Name, Name: secatest.Subnet1Name}
@@ -493,6 +498,7 @@ func TestGetSubnetUntilStateV1(t *testing.T) {
 	assert.Equal(t, secatest.Network1Name, resp.Metadata.Network)
 	assert.Equal(t, secatest.Region1Name, resp.Metadata.Region)
 
+	assert.Equal(t, *routeTableRef, resp.Spec.RouteTableRef)
 	assert.Equal(t, *networkSkuRef, *resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
@@ -505,7 +511,7 @@ func TestWatchSubnetUntilDeletedV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateDeleting), 2)
 	secatest.MockNotFoundSubnetV1(sim, nil, 1)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -528,7 +534,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockCreateOrUpdateSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateCreating))
 	secatest.ConfigureNetworkHandler(sim, sm)
 
@@ -537,6 +543,7 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 
 	regionalClient := newTestRegionalClientV1(t, ctx, server)
 
+	routeTableRef := &schema.Reference{Resource: secatest.RouteTable1Ref}
 	networkSkuRef := &schema.Reference{Resource: secatest.NetworkSku1Ref}
 
 	sub := &schema.Subnet{
@@ -547,8 +554,10 @@ func TestCreateOrUpdateSubnetV1(t *testing.T) {
 			Name:      secatest.Subnet1Name,
 		},
 		Spec: schema.SubnetSpec{
-			Cidr: schema.Cidr{Ipv4: secatest.CidrIpv4},
-			Zone: schema.Zone(secatest.ZoneA),
+			RouteTableRef: *routeTableRef,
+			SkuRef:        networkSkuRef,
+			Cidr:          schema.Cidr{Ipv4: secatest.CidrIpv4},
+			Zone:          schema.Zone(secatest.ZoneA),
 		},
 	}
 	resp, err := regionalClient.NetworkV1.CreateOrUpdateSubnet(ctx, sub)
@@ -572,7 +581,7 @@ func TestDeleteSubnetV1(t *testing.T) {
 	secatest.ConfigureRegionV1Handler(t, sm)
 
 	sim := mocknetwork.NewMockServerInterface(t)
-	spec := buildResponseSubnetSpec(secatest.NetworkSku1Ref)
+	spec := buildResponseSubnetSpec(secatest.RouteTable1Ref, secatest.NetworkSku1Ref)
 	secatest.MockGetSubnetV1(sim, buildResponseSubnet(secatest.Subnet1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Network1Name, secatest.Region1Name, spec, schema.ResourceStateActive), 1)
 	secatest.MockDeleteSubnetV1(sim)
 	secatest.ConfigureNetworkHandler(sim, sm)
@@ -2082,11 +2091,11 @@ func buildResponseNetwork(name string, tenant string, workspace string, region s
 	}
 }
 
-func buildResponseNetworkSpec(routeTableRef string) *schema.NetworkSpec {
-	ref := &schema.Reference{Resource: routeTableRef}
+func buildResponseNetworkSpec(skuRef string) *schema.NetworkSpec {
+	ref := &schema.Reference{Resource: skuRef}
 
 	return &schema.NetworkSpec{
-		RouteTableRef: *ref,
+		SkuRef: *ref,
 	}
 }
 
@@ -2098,11 +2107,10 @@ func buildResponseSubnet(name string, tenant string, workspace string, network s
 	}
 }
 
-func buildResponseSubnetSpec(skuRef string) *schema.SubnetSpec {
-	ref := &schema.Reference{Resource: skuRef}
-
+func buildResponseSubnetSpec(routeTableRef string, skuRef string) *schema.SubnetSpec {
 	return &schema.SubnetSpec{
-		SkuRef: ref,
+		RouteTableRef: schema.Reference{Resource: routeTableRef},
+		SkuRef:        &schema.Reference{Resource: skuRef},
 	}
 }
 

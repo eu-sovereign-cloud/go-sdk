@@ -36,10 +36,10 @@ type StorageSku struct {
 type StorageSkuSpec struct {
 	// Iops The number of IOPS (Input/Output Operations Per Second) guaranteed for
 	// the storage SKU.
-	Iops int `json:"iops"`
+	Iops int `json:"iops" x-kubebuilder-validation-maximum:"45000" x-kubebuilder-validation-minimum:"1"`
 
 	// MinVolumeSize Minimum volume size for guaranteed performance, in GB.
-	MinVolumeSize int `json:"minVolumeSize"`
+	MinVolumeSize int `json:"minVolumeSize" x-kubebuilder-validation-minimum:"1"`
 
 	// Type Type of storage SKU. Can be one of the following:
 	//
@@ -77,7 +77,7 @@ type StorageSkuSpec struct {
 	//   attached to multiple instances simultaneously.
 	//   Example use-cases include file storage or replicated databases
 	//   using asynchronous replication.
-	Type StorageSkuSpecType `json:"type"`
+	Type StorageSkuSpecType `json:"type" x-kubebuilder-validation-enum:"local-ephemeral;local-durable;remote-durable"`
 }
 
 // StorageSkuSpecType Type of storage SKU. Can be one of the following:

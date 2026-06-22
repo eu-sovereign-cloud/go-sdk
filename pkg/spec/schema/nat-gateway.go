@@ -17,6 +17,23 @@ type InternetNatGatewayInstance struct {
 	// organize and categorize resources. They can be used to filter resources.
 	// The number of labels is eventually limited by the CSP.
 	Labels Labels `json:"labels,omitempty"`
+
+	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
+	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
+
+	// Spec The internet gateway will allocate a public IPv4 address.
+	// The NAT Gateway instance will be created in the specified zone using
+	// the specified public IP address and network interface. This implies
+	// the NAT Gateway instance will inherit the availability of the zone
+	// and not scale beyond the capability of a compute instance.
+	//
+	// The NIC needs to be in the same zone as the NAT Gateway instance.
+	// If the NIC has a public IP address, the NAT Gateway instance will
+	// report this as an error.
+	Spec InternetNatGatewayInstanceSpec `json:"spec"`
+
+	// Status Current status of the resource
+	Status *InternetNatGatewayInstanceStatus `json:"status,omitempty"`
 }
 
 // InternetNatGatewayInstanceSpec The internet gateway will allocate a public IPv4 address.
@@ -37,9 +54,7 @@ type InternetNatGatewayInstanceSpec struct {
 
 	// SecurityGroupRef Reference to the security group associated with the NAT gateway.
 	SecurityGroupRef *Reference `json:"securityGroupRef,omitempty"`
-
-	// Zone Reference to a specific zone within a region
-	Zone Zone `json:"zone"`
+	Zone             Zone       `json:"zone" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
 }
 
 // InternetNatGatewayInstanceStatus Current status of the resource
