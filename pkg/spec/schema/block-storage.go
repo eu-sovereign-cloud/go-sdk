@@ -55,7 +55,7 @@ type BlockStorageStatus struct {
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SizeGB Size of the block storage in GB.
-	SizeGB int           `json:"sizeGB" x-kubebuilder-validation-maximum:"1000000" x-kubebuilder-validation-minimum:"1"`
+	SizeGB int           `json:"sizeGB" x-kubebuilder-validation-maximum:"1000000"`
 	State  ResourceState `json:"state,omitempty"`
 }
 
