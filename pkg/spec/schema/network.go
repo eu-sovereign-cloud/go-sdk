@@ -101,18 +101,10 @@ type NetworkSpec struct {
 
 // NetworkStatus defines model for NetworkStatus.
 type NetworkStatus struct {
-	AdditionalCidrs []Cidr `json:"additionalCidrs,omitempty" x-kubebuilder-validation-max-items:"32"`
-
-	// Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
-	// configuration, either the IPv4 or IPv6 range can be omitted. So the following
-	// combinations are possible:
-	//
-	// * IPv4 only
-	// * IPv6 only
-	// * IPv4 and IPv6 (Dual Stack)
-	Cidr       Cidr              `json:"cidr"`
-	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
-	State      ResourceState     `json:"state,omitempty"`
+	AdditionalCidrs []Cidr            `json:"additionalCidrs,omitempty" x-kubebuilder-validation-max-items:"32"`
+	Cidr            Cidr              `json:"cidr" x-kubebuilder-default:"{ipv4: "0.0.0.0/0", ipv6: "::/0"}"`
+	Conditions      []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
+	State           ResourceState     `json:"state,omitempty"`
 }
 
 // Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network
