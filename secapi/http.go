@@ -2,15 +2,11 @@ package secapi
 
 import (
 	"net/http"
+	"slices"
 )
 
-func checkStatusCode(code int, alloweds ...int) bool {
-	for _, allowed := range alloweds {
-		if code == allowed {
-			return true
-		}
-	}
-	return false
+func checkStatusCode(code int, allowedCodes ...int) bool {
+	return slices.Contains(allowedCodes, code)
 }
 
 func checkSuccessGetStatusCode(code int) bool {
@@ -48,6 +44,8 @@ func mapStatusCodeToError(status int) error {
 		return ErrResourceNotFound
 	case http.StatusBadRequest:
 		return ErrInvalidRequest
+	case http.StatusUnprocessableEntity:
+		return ErrValidationError
 	case http.StatusPreconditionFailed:
 		return ErrRequestPreconditionFailed
 	case http.StatusConflict:

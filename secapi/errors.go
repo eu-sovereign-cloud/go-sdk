@@ -17,10 +17,11 @@ var (
 	ErrForbiddenAccess           = errors.New("forbidden access")
 	ErrResourceNotFound          = errors.New("resource not found")
 	ErrInvalidRequest            = errors.New("invalid request")
+	ErrValidationError           = errors.New("validation error")
 	ErrRequestPreconditionFailed = errors.New("request precondition failed")
 	ErrConflictingRequest        = errors.New("conflicting request")
 	ErrInternalError             = errors.New("internal error")
-	ErrUnknowError               = errors.New("unknow error")
+	ErrUnknowError               = errors.New("unknown error")
 
 	ErrRetryMaxAttemptsReached    = errors.New("max retry attempts reached")
 	ErrRetryNotFoundExpectedValue = errors.New("not found the expected value")

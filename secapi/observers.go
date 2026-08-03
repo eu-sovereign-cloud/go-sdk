@@ -7,8 +7,6 @@ import (
 	"github.com/cenkalti/backoff/v4"
 )
 
-const RETRY_MULTIPLIER = 0.5
-
 type resourceStateObserver[V comparable, R any] struct {
 	delay        time.Duration
 	interval     time.Duration
@@ -20,7 +18,6 @@ type resourceStateObserver[V comparable, R any] struct {
 func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R, error) {
 	be := backoff.NewExponentialBackOff()
 	be.InitialInterval = retry.interval
-	be.Multiplier = RETRY_MULTIPLIER
 
 	attempt := 0
 	operation := func() (*R, error) {
@@ -59,7 +56,6 @@ func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R
 func (retry *resourceStateObserver[V, R]) WaitUntilError(expectedError error) (error, error) {
 	be := backoff.NewExponentialBackOff()
 	be.InitialInterval = retry.interval
-	be.Multiplier = RETRY_MULTIPLIER
 
 	attempt := 0
 	operation := func() (error, error) {

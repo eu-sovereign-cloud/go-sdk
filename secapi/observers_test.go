@@ -3,6 +3,7 @@ package secapi
 import (
 	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -101,6 +102,31 @@ func TestResourceStateObserverWaitUntilValue_MaxAttempts(t *testing.T) {
 	assert.Equal(t, 4, attempts)
 
 	assert.Nil(t, resp)
+}
+
+// A shrinking backoff (multiplier < 1) converges to a fixed total wait (~2x the initial
+// interval) no matter how many attempts are allowed, because each retry waits less than the
+// last. That bug made a caller's configured max_attempts/timeout stop meaningfully controlling
+// how long WaitUntilValue actually polls — e.g. `terraform destroy` on a slow-to-delete resource
+// gave up after ~1 minute even with the delete timeout set to 30 minutes. A real (growing)
+// exponential backoff over several retries at 100ms must take well over 2x the initial interval.
+func TestResourceStateObserverWaitUntilValue_BackoffGrowsAcrossAttempts(t *testing.T) {
+	observer := resourceStateObserver[schema.ResourceState, dummyResource]{
+		delay:       0,
+		interval:    100 * time.Millisecond,
+		maxAttempts: 7,
+		getValueFunc: func() (schema.ResourceState, *dummyResource, error) {
+			return schema.ResourceStateCreating, &dummyResource{state: schema.ResourceStateCreating}, nil
+		},
+	}
+
+	start := time.Now()
+	resp, err := observer.WaitUntilValue([]schema.ResourceState{schema.ResourceStateActive})
+	elapsed := time.Since(start)
+
+	assert.ErrorIs(t, err, ErrRetryMaxAttemptsReached)
+	assert.Nil(t, resp)
+	assert.Greater(t, elapsed, 600*time.Millisecond)
 }
 
 func TestResourceStateObserverWaitUntilValue_Error(t *testing.T) {
