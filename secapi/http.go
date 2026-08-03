@@ -53,6 +53,6 @@ func mapStatusCodeToError(status int) error {
 	case http.StatusInternalServerError:
 		return ErrInternalError
 	default:
-		return ErrUnknowError
+		return ErrUnknownError
 	}
 }

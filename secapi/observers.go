@@ -18,6 +18,7 @@ type resourceStateObserver[V comparable, R any] struct {
 func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R, error) {
 	be := backoff.NewExponentialBackOff()
 	be.InitialInterval = retry.interval
+	be.MaxElapsedTime = 0
 
 	attempt := 0
 	operation := func() (*R, error) {
@@ -56,6 +57,7 @@ func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R
 func (retry *resourceStateObserver[V, R]) WaitUntilError(expectedError error) (error, error) {
 	be := backoff.NewExponentialBackOff()
 	be.InitialInterval = retry.interval
+	be.MaxElapsedTime = 0
 
 	attempt := 0
 	operation := func() (error, error) {

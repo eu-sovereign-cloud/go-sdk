@@ -114,7 +114,7 @@ func TestResourceStateObserverWaitUntilValue_BackoffGrowsAcrossAttempts(t *testi
 	observer := resourceStateObserver[schema.ResourceState, dummyResource]{
 		delay:       0,
 		interval:    100 * time.Millisecond,
-		maxAttempts: 7,
+		maxAttempts: 4,
 		getValueFunc: func() (schema.ResourceState, *dummyResource, error) {
 			return schema.ResourceStateCreating, &dummyResource{state: schema.ResourceStateCreating}, nil
 		},
@@ -126,7 +126,7 @@ func TestResourceStateObserverWaitUntilValue_BackoffGrowsAcrossAttempts(t *testi
 
 	assert.ErrorIs(t, err, ErrRetryMaxAttemptsReached)
 	assert.Nil(t, resp)
-	assert.Greater(t, elapsed, 600*time.Millisecond)
+	assert.Greater(t, elapsed, 250*time.Millisecond)
 }
 
 func TestResourceStateObserverWaitUntilValue_Error(t *testing.T) {

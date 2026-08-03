@@ -21,7 +21,7 @@ var (
 	ErrRequestPreconditionFailed = errors.New("request precondition failed")
 	ErrConflictingRequest        = errors.New("conflicting request")
 	ErrInternalError             = errors.New("internal error")
-	ErrUnknowError               = errors.New("unknown error")
+	ErrUnknownError              = errors.New("unknown error")
 
 	ErrRetryMaxAttemptsReached    = errors.New("max retry attempts reached")
 	ErrRetryNotFoundExpectedValue = errors.New("not found the expected value")
