@@ -40,7 +40,10 @@ type PublicIpSpec struct {
 // PublicIpStatus defines model for PublicIpStatus.
 type PublicIpStatus struct {
 	// AttachedTo Reference to the instance the public IP is attached to.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *Reference `json:"attachedTo,omitempty"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// IpAddress The public IP address in case of BYOIP.

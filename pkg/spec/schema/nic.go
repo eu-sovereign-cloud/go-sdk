@@ -69,7 +69,10 @@ type NicSpec struct {
 
 // NicStatus defines model for NicStatus.
 type NicStatus struct {
-	Addresses  []NicIp           `json:"addresses,omitempty" x-kubebuilder-validation-items-max-length:"39" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"32"`
+	Addresses []NicIp `json:"addresses,omitempty" x-kubebuilder-validation-items-max-length:"39" x-kubebuilder-validation-items-min-length:"1" x-kubebuilder-validation-max-items:"32"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// MacAddress MAC address of the NIC.

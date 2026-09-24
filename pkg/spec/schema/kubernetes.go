@@ -66,6 +66,8 @@ type KubernetesClusterSpec struct {
 
 // KubernetesClusterStatus defines model for KubernetesClusterStatus.
 type KubernetesClusterStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// KubeConfig The kube config file for the cluster. This file is used to configure
@@ -124,6 +126,8 @@ type KubernetesNodePoolSpec struct {
 
 // KubernetesNodePoolStatus defines model for KubernetesNodePoolStatus.
 type KubernetesNodePoolStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// Nodes List of nodes in the Node Pool. Each node is represented by its
