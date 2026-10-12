@@ -285,6 +285,9 @@ func (api *ComputeV1Impl) GetInstanceUntilState(ctx context.Context, wref Worksp
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(inst *schema.Instance) error {
+			return errorFromResourceState(inst.Status.State, inst.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)

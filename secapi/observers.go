@@ -13,6 +13,12 @@ type resourceStateObserver[V comparable, R any] struct {
 	maxAttempts  int
 	getValueFunc func() (V, *R, error)
 	getErrorFunc func() error
+
+	// checkValueFunc, when set, inspects a response that did not match the expected values and
+	// returns a non-nil error if the resource will never reach them (e.g. it is in an error
+	// state). WaitUntilValue then stops immediately with that error, instead of retrying until
+	// maxAttempts is exhausted and masking the real failure behind ErrRetryMaxAttemptsReached.
+	checkValueFunc func(*R) error
 }
 
 func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R, error) {
@@ -33,6 +39,12 @@ func (retry *resourceStateObserver[V, R]) WaitUntilValue(expectedValues []V) (*R
 		if slices.Contains(expectedValues, value) {
 			// Stop to try and returns the response
 			return resp, nil
+		}
+
+		if retry.checkValueFunc != nil {
+			if err := retry.checkValueFunc(resp); err != nil {
+				return nil, backoff.Permanent(err)
+			}
 		}
 
 		if attempt >= retry.maxAttempts {

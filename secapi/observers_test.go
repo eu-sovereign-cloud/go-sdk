@@ -129,6 +129,34 @@ func TestResourceStateObserverWaitUntilValue_BackoffGrowsAcrossAttempts(t *testi
 	assert.Greater(t, elapsed, 250*time.Millisecond)
 }
 
+// When checkValueFunc reports that the resource will never reach the expected values (e.g. it
+// is in the error state because the CSP's underlying API call failed with a 401), WaitUntilValue
+// must stop immediately with that error instead of retrying until maxAttempts and masking the
+// real failure behind ErrRetryMaxAttemptsReached.
+func TestResourceStateObserverWaitUntilValue_CheckValueError(t *testing.T) {
+	attempts := 0
+	observer := resourceStateObserver[schema.ResourceState, dummyResource]{
+		delay:       0,
+		interval:    0,
+		maxAttempts: 5,
+		getValueFunc: func() (schema.ResourceState, *dummyResource, error) {
+			attempts++
+			return schema.ResourceStateError, &dummyResource{state: schema.ResourceStateError}, nil
+		},
+		checkValueFunc: func(r *dummyResource) error {
+			return errorFromResourceState(r.state, []schema.StatusCondition{{State: schema.ResourceStateError, Message: "401 Unauthorized"}})
+		},
+	}
+
+	resp, err := observer.WaitUntilValue([]schema.ResourceState{schema.ResourceStateActive})
+	assert.Error(t, err)
+	assert.ErrorIs(t, err, ErrResourceInErrorState)
+	assert.ErrorContains(t, err, "401 Unauthorized")
+	assert.Equal(t, 1, attempts)
+
+	assert.Nil(t, resp)
+}
+
 func TestResourceStateObserverWaitUntilValue_Error(t *testing.T) {
 	observer := resourceStateObserver[schema.ResourceState, dummyResource]{
 		delay:       0,
