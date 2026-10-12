@@ -26,4 +26,5 @@ var (
 	ErrRetryMaxAttemptsReached    = errors.New("max retry attempts reached")
 	ErrRetryNotFoundExpectedValue = errors.New("not found the expected value")
 	ErrRetryNotFoundExpectedError = errors.New("not found the expected error")
+	ErrResourceInErrorState       = errors.New("resource entered error state")
 )

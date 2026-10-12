@@ -223,6 +223,9 @@ func (api *AuthorizationV1Impl) GetRoleUntilState(ctx context.Context, tref Tena
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(r *schema.Role) error {
+			return errorFromResourceState(r.Status.State, r.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -387,6 +390,9 @@ func (api *AuthorizationV1Impl) GetRoleAssignmentUntilState(ctx context.Context,
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(ra *schema.RoleAssignment) error {
+			return errorFromResourceState(ra.Status.State, ra.Status.Conditions)
 		},
 	}
 

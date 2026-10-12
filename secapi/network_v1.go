@@ -622,6 +622,9 @@ func (api *NetworkV1Impl) GetNetworkUntilState(ctx context.Context, wref Workspa
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(n *schema.Network) error {
+			return errorFromResourceState(n.Status.State, n.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -786,6 +789,9 @@ func (api *NetworkV1Impl) GetSubnetUntilState(ctx context.Context, nref NetworkR
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(s *schema.Subnet) error {
+			return errorFromResourceState(s.Status.State, s.Status.Conditions)
 		},
 	}
 
@@ -952,6 +958,9 @@ func (api *NetworkV1Impl) GetRouteTableUntilState(ctx context.Context, nref Netw
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(rt *schema.RouteTable) error {
+			return errorFromResourceState(rt.Status.State, rt.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -1116,6 +1125,9 @@ func (api *NetworkV1Impl) GetInternetGatewayUntilState(ctx context.Context, wref
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(ig *schema.InternetGateway) error {
+			return errorFromResourceState(ig.Status.State, ig.Status.Conditions)
 		},
 	}
 
@@ -1282,6 +1294,9 @@ func (api *NetworkV1Impl) GetSecurityGroupRuleUntilState(ctx context.Context, wr
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(sgr *schema.SecurityGroupRule) error {
+			return errorFromResourceState(sgr.Status.State, sgr.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -1446,6 +1461,9 @@ func (api *NetworkV1Impl) GetSecurityGroupUntilState(ctx context.Context, wref W
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(sg *schema.SecurityGroup) error {
+			return errorFromResourceState(sg.Status.State, sg.Status.Conditions)
 		},
 	}
 
@@ -1612,6 +1630,9 @@ func (api *NetworkV1Impl) GetNicUntilState(ctx context.Context, wref WorkspaceRe
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(nic *schema.Nic) error {
+			return errorFromResourceState(nic.Status.State, nic.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -1776,6 +1797,9 @@ func (api *NetworkV1Impl) GetPublicIpUntilState(ctx context.Context, wref Worksp
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(pip *schema.PublicIp) error {
+			return errorFromResourceState(pip.Status.State, pip.Status.Conditions)
 		},
 	}
 

@@ -170,6 +170,9 @@ func (api *WorkspaceV1Impl) GetWorkspaceUntilState(ctx context.Context, tref Ten
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(ws *schema.Workspace) error {
+			return errorFromResourceState(ws.Status.State, ws.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)

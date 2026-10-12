@@ -300,6 +300,9 @@ func (api *StorageV1Impl) GetBlockStorageUntilState(ctx context.Context, wref Wo
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
 		},
+		checkValueFunc: func(bs *schema.BlockStorage) error {
+			return errorFromResourceState(bs.Status.State, bs.Status.Conditions)
+		},
 	}
 
 	resp, err := observer.WaitUntilValue(config.ExpectedValues)
@@ -463,6 +466,9 @@ func (api *StorageV1Impl) GetImageUntilState(ctx context.Context, tref TenantRef
 			} else {
 				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+		},
+		checkValueFunc: func(img *schema.Image) error {
+			return errorFromResourceState(img.Status.State, img.Status.Conditions)
 		},
 	}
 

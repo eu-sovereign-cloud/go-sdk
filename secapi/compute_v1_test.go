@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/eu-sovereign-cloud/go-sdk/internal/secatest"
 	mockcompute "github.com/eu-sovereign-cloud/go-sdk/mock/spec/foundation.compute.v1"
@@ -285,6 +286,41 @@ func TestGetInstanceUntilStateV1(t *testing.T) {
 	assert.Equal(t, schema.ResourceStateActive, resp.Status.State)
 }
 
+// A resource that lands in the error state must fail fast with ErrResourceInErrorState and the
+// reason from its error condition, instead of polling until MaxAttempts.
+func TestGetInstanceUntilStateV1_ErrorState(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
+	status := &schema.InstanceStatus{
+		State: schema.ResourceStateError,
+		Conditions: []schema.StatusCondition{{
+			State:            schema.ResourceStateError,
+			Reason:           "ProviderError",
+			Message:          "401 Unauthorized",
+			LastTransitionAt: time.Now(),
+		}},
+	}
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, status), 1)
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
+	config := ResourceObserverUntilValueConfig[schema.ResourceState]{ExpectedValues: []schema.ResourceState{schema.ResourceStateActive}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	resp, err := regionalClient.ComputeV1.GetInstanceUntilState(ctx, wref, config)
+	assert.ErrorIs(t, err, ErrResourceInErrorState)
+	assert.ErrorContains(t, err, "ProviderError: 401 Unauthorized")
+	assert.Nil(t, resp)
+}
+
 func TestGetInstanceUntilPowerStateV1(t *testing.T) {
 	ctx := context.Background()
 	sm := http.NewServeMux()
@@ -319,6 +355,42 @@ func TestGetInstanceUntilPowerStateV1(t *testing.T) {
 	assert.Equal(t, *instanceSkuRef, resp.Spec.SkuRef)
 
 	assert.Equal(t, schema.InstanceStatusPowerStateOn, resp.Status.PowerState)
+}
+
+// The power state of an instance in the error state will never change, so waiting for one must
+// also fail fast with the error condition rather than polling until MaxAttempts.
+func TestGetInstanceUntilPowerStateV1_ErrorState(t *testing.T) {
+	ctx := context.Background()
+	sm := http.NewServeMux()
+
+	secatest.ConfigureRegionV1Handler(t, sm)
+
+	sim := mockcompute.NewMockServerInterface(t)
+	spec := buildResponseInstanceSpec(secatest.InstanceSku1Ref, secatest.ZoneA)
+	status := &schema.InstanceStatus{
+		State:      schema.ResourceStateError,
+		PowerState: schema.InstanceStatusPowerStateOff,
+		Conditions: []schema.StatusCondition{{
+			State:            schema.ResourceStateError,
+			Reason:           "ProviderError",
+			Message:          "401 Unauthorized",
+			LastTransitionAt: time.Now(),
+		}},
+	}
+	secatest.MockGetInstanceV1(sim, buildResponseInstance(secatest.Instance1Name, secatest.Tenant1Name, secatest.Workspace1Name, secatest.Region1Name, spec, status), 1)
+	secatest.ConfigureComputeHandler(sim, sm)
+
+	server := httptest.NewServer(sm)
+	defer server.Close()
+
+	regionalClient := newTestRegionalClientV1(t, ctx, server)
+
+	wref := WorkspaceReference{Tenant: secatest.Tenant1Name, Workspace: secatest.Workspace1Name, Name: secatest.Instance1Name}
+	config := ResourceObserverUntilValueConfig[schema.InstanceStatusPowerState]{ExpectedValues: []schema.InstanceStatusPowerState{schema.InstanceStatusPowerStateOn}, Delay: 0, Interval: 0, MaxAttempts: 5}
+	resp, err := regionalClient.ComputeV1.GetInstanceUntilPowerState(ctx, wref, config)
+	assert.ErrorIs(t, err, ErrResourceInErrorState)
+	assert.ErrorContains(t, err, "ProviderError: 401 Unauthorized")
+	assert.Nil(t, resp)
 }
 
 func TestWatchInstanceUntilDeletedV1(t *testing.T) {
