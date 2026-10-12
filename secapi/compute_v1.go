@@ -48,7 +48,7 @@ func newComputeV1Unavailable() ComputeV1 {
 	return &ComputeV1Unavailable{}
 }
 
-/// Instance Sku
+// / Instance Sku
 
 func (api *ComputeV1Unavailable) ListSkusWithOptions(ctx context.Context, tpath TenantPath, options *ListOptions) (*Iterator[schema.InstanceSku], error) {
 	return nil, ErrProviderNotAvailable
@@ -62,7 +62,7 @@ func (api *ComputeV1Unavailable) GetSku(ctx context.Context, tref TenantReferenc
 	return nil, ErrProviderNotAvailable
 }
 
-/// Instance
+// / Instance
 
 func (api *ComputeV1Unavailable) ListInstancesWithOptions(ctx context.Context, wpath WorkspacePath, options *ListOptions) (*Iterator[schema.Instance], error) {
 	return nil, ErrProviderNotAvailable
@@ -136,12 +136,12 @@ type ComputeV1Impl struct {
 }
 
 func newComputeV1Impl(client *RegionalClient, computeUrl string) (ComputeV1, error) {
-	compute, err := compute.NewClientWithResponses(computeUrl)
+	responses, err := compute.NewClientWithResponses(computeUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ComputeV1Impl{API: API{authToken: client.authToken}, compute: compute}, nil
+	return &ComputeV1Impl{API: API{authToken: client.authToken}, compute: responses}, nil
 }
 
 // Instance Sku
@@ -315,9 +315,12 @@ func (api *ComputeV1Impl) GetInstanceUntilPowerState(ctx context.Context, wref W
 
 			if checkSuccessGetStatusCode(resp.StatusCode()) {
 				return resp.JSON200.Status.PowerState, resp.JSON200, nil
-			} else {
-				return "", nil, mapStatusCodeToError(resp.StatusCode())
 			}
+
+			return "", nil, mapStatusCodeToError(resp.StatusCode())
+		},
+		checkValueFunc: func(inst *schema.Instance) error {
+			return errorFromResourceState(inst.Status.State, inst.Status.Conditions)
 		},
 	}
 
