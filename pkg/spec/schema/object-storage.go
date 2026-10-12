@@ -37,8 +37,11 @@ type ObjectStorageAccountStatus struct {
 	AccessKey string `json:"accessKey,omitempty" x-kubebuilder-validation-max-length:"128"`
 
 	// CanonicalUserId Canonical user ID for the object storage account
-	CanonicalUserId string            `json:"canonicalUserId,omitempty" x-kubebuilder-validation-max-length:"64"`
-	Conditions      []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
+	CanonicalUserId string `json:"canonicalUserId,omitempty" x-kubebuilder-validation-max-length:"64"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SecretKey Secret key for the object storage account
 	SecretKey string        `json:"secretKey,omitempty" x-kubebuilder-validation-max-length:"128"`

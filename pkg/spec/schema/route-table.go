@@ -18,6 +18,8 @@ type RouteSpec struct {
 
 // RouteStatus defines model for RouteStatus.
 type RouteStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 	State      ResourceState     `json:"state,omitempty"`
 }
@@ -56,6 +58,8 @@ type RouteTableSpec struct {
 
 // RouteTableStatus defines model for RouteTableStatus.
 type RouteTableStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 	Routes     []RouteStatus     `json:"routes,omitempty" x-kubebuilder-validation-max-items:"1000"`
 	State      ResourceState     `json:"state,omitempty"`

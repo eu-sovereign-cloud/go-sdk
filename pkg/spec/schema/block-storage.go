@@ -51,7 +51,10 @@ type BlockStorageSpec struct {
 // BlockStorageStatus defines model for BlockStorageStatus.
 type BlockStorageStatus struct {
 	// AttachedTo Reference to the instance the block storage is attached to.
-	AttachedTo *Reference        `json:"attachedTo,omitempty"`
+	AttachedTo *Reference `json:"attachedTo,omitempty"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SizeGB Size of the block storage in GB.

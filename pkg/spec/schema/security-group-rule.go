@@ -63,11 +63,7 @@ type SecurityGroupRule struct {
 
 	// Metadata Metadata for regional resources with name, permission, modification, type, tenant and workspace and region information.
 	Metadata *RegionalWorkspaceResourceMetadata `json:"metadata,omitempty"`
-
-	// Spec Specification of a security group rule defining network access permissions.
-	// If no version is specified, any IP version will be allowed.
-	// If no protocol is specified, any network protocol will be allowed.
-	Spec SecurityGroupRuleSpec `json:"spec"`
+	Spec     SecurityGroupRuleSpec              `json:"spec" x-cel-message-0:"spec.icmp is only allowed when spec.protocol is icmp" x-cel-message-1:"spec.ports is not allowed when spec.protocol is icmp" x-cel-rule-0:"!has(self.icmp) || !has(self.protocol) || self.protocol == 'icmp'" x-cel-rule-1:"!has(self.ports) || !has(self.protocol) || self.protocol != 'icmp'"`
 
 	// Status Current status of the resource
 	Status *SecurityGroupRuleStatus `json:"status,omitempty"`
@@ -87,19 +83,8 @@ type SecurityGroupRuleSpec struct {
 	Direction SecurityGroupRuleSpecDirection `json:"direction" x-kubebuilder-validation-enum:"ingress;egress" x-kubebuilder-validation-max-length:"7"`
 
 	// Icmp ICMP specific rule configuration
-	Icmp *IcmpConfig `json:"icmp,omitempty"`
-
-	// Ports Defines a specific port list or port range for the rule.
-	// The configuration allows specifying individual ports, ranges, or a combination of both.
-	//
-	// Behavior:
-	// - If only `from` is specified, the range is interpreted as a single port: `from` to `from`.
-	// - If only `to` is specified, the range is interpreted as a single port: `to` to `to`.
-	// - If both `from` and `to` are specified, the range spans from `from` to `to`.
-	// - The `list` property can be used to explicitly define additional individual ports.
-	//
-	// The final result is a comprehensive list of ports and/or port ranges.
-	Ports *Ports `json:"ports,omitempty"`
+	Icmp  *IcmpConfig `json:"icmp,omitempty"`
+	Ports *Ports      `json:"ports,omitempty" x-cel-message-0:"ports.to must be greater than or equal to ports.from" x-cel-rule-0:"!has(self.from) || !has(self.to) || self.to >= self.from"`
 
 	// Protocol Network protocol for the rule
 	Protocol SecurityGroupRuleSpecProtocol `json:"protocol,omitempty" x-kubebuilder-validation-enum:"tcp;udp;tcp+udp;icmp" x-kubebuilder-validation-max-length:"7"`

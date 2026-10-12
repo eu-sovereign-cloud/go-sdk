@@ -852,6 +852,8 @@ type SkuResourceMetadataKind string
 
 // Status Current status of the resource
 type Status struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 	State      ResourceState     `json:"state,omitempty"`
 }

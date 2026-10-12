@@ -13,6 +13,7 @@ const (
 const (
 	ImageSpecCpuArchitectureAmd64 ImageSpecCpuArchitecture = "amd64"
 	ImageSpecCpuArchitectureArm64 ImageSpecCpuArchitecture = "arm64"
+	ImageSpecCpuArchitectureRiscv ImageSpecCpuArchitecture = "riscv"
 )
 
 // Defines values for ImageSpecInitializer.
@@ -63,7 +64,7 @@ type ImageSpec struct {
 	Boot ImageSpecBoot `json:"boot,omitempty" x-kubebuilder-default:"UEFI" x-kubebuilder-validation-enum:"UEFI;BIOS"`
 
 	// CpuArchitecture CPU architecture for the Image
-	CpuArchitecture ImageSpecCpuArchitecture `json:"cpuArchitecture" x-kubebuilder-validation-enum:"amd64;arm64"`
+	CpuArchitecture ImageSpecCpuArchitecture `json:"cpuArchitecture" x-kubebuilder-validation-enum:"amd64;arm64;riscv"`
 
 	// Initializer Initializer for the Image
 	Initializer ImageSpecInitializer `json:"initializer,omitempty" x-kubebuilder-default:"none" x-kubebuilder-validation-enum:"none;cloudinit-22"`
@@ -80,6 +81,8 @@ type ImageSpecInitializer string
 
 // ImageStatus defines model for ImageStatus.
 type ImageStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// SizeMB Size of the Image in MB

@@ -101,10 +101,13 @@ type NetworkSpec struct {
 
 // NetworkStatus defines model for NetworkStatus.
 type NetworkStatus struct {
-	AdditionalCidrs []Cidr            `json:"additionalCidrs,omitempty" x-kubebuilder-validation-max-items:"32"`
-	Cidr            Cidr              `json:"cidr" x-kubebuilder-default:"{ipv4: '0.0.0.0/0', ipv6: '::/0'}"`
-	Conditions      []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
-	State           ResourceState     `json:"state,omitempty"`
+	AdditionalCidrs []Cidr `json:"additionalCidrs,omitempty" x-kubebuilder-validation-max-items:"32"`
+	Cidr            Cidr   `json:"cidr" x-kubebuilder-default:"{ipv4: '0.0.0.0/0', ipv6: '::/0'}"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
+	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
+	State      ResourceState     `json:"state,omitempty"`
 }
 
 // Cidr Combined IPv4 and IPv6 CIDR block for a subnet. Depending on the network

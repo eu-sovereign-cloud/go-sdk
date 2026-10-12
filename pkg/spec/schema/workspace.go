@@ -33,6 +33,8 @@ type WorkspaceSpec = map[string]interface{}
 
 // WorkspaceStatus defines model for WorkspaceStatus.
 type WorkspaceStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// ResourceCount Number of resources currently in the workspace

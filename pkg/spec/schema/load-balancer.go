@@ -144,6 +144,8 @@ type NetworkLoadBalancerSpec struct {
 
 // NetworkLoadBalancerStatus defines model for NetworkLoadBalancerStatus.
 type NetworkLoadBalancerStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// HealthyMembers List of healthy members

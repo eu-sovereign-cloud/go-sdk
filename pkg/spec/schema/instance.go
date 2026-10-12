@@ -78,6 +78,8 @@ type InstanceSpec struct {
 
 // InstanceStatus defines model for InstanceStatus.
 type InstanceStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// PowerState Current power state of the instance.

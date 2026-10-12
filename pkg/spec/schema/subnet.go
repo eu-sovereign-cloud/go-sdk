@@ -59,9 +59,11 @@ type SubnetSpec struct {
 	RouteTableRef Reference `json:"routeTableRef"`
 
 	// SkuRef Reference to the SKU used by default for all NICs in this Network.
-	// Can be overridden by the NIC
-	SkuRef *Reference `json:"skuRef,omitempty"`
-	Zone   Zone       `json:"zone" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
+	// Can be overridden by the NIC. The SKU is immutable after the subnet is created.
+	SkuRef *Reference `json:"skuRef,omitempty" x-cel-message-0:"spec.skuRef is immutable" x-cel-rule-0:"!oldSelf.hasValue() || self == oldSelf.value()"`
+
+	// Zone The zone in which the subnet is deployed. The zone is immutable after the subnet is created.
+	Zone Zone `json:"zone" x-cel-message-0:"spec.zone is immutable" x-cel-rule-0:"self == oldSelf" x-kubebuilder-validation-max-length:"32" x-kubebuilder-validation-min-length:"1"`
 }
 
 // SubnetStatus defines model for SubnetStatus.
@@ -73,7 +75,10 @@ type SubnetStatus struct {
 	// * IPv4 only
 	// * IPv6 only
 	// * IPv4 and IPv6 (Dual Stack)
-	Cidr       *Cidr             `json:"cidr,omitempty"`
+	Cidr *Cidr `json:"cidr,omitempty"`
+
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 
 	// RouteTableRef The route table used by this subnet.

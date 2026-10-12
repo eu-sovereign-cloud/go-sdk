@@ -40,11 +40,13 @@ type SecurityGroupSpec struct {
 	// Rule Evaluation:
 	// - Default behavior is to deny all traffic not explicitly allowed
 	// - Rules provide granular control over allowed traffic types, sources, and destinations
-	Rules []SecurityGroupRuleSpec `json:"rules,omitempty" x-kubebuilder-validation-max-items:"500"`
+	Rules []SecurityGroupRuleSpec `json:"rules,omitempty" x-cel-message-0:"icmp is only allowed when protocol is icmp" x-cel-message-1:"ports is not allowed when protocol is icmp" x-cel-rule-0:"self.all(x, !has(x.icmp) || !has(x.protocol) || x.protocol == 'icmp')" x-cel-rule-1:"self.all(x, !has(x.ports) || !has(x.protocol) || x.protocol != 'icmp')" x-kubebuilder-validation-max-items:"500"`
 }
 
 // SecurityGroupStatus defines model for SecurityGroupStatus.
 type SecurityGroupStatus struct {
+	// Conditions History of state transitions, ordered newest-first, complementing the
+	// current snapshot in `state`.
 	Conditions []StatusCondition         `json:"conditions" x-kubebuilder-validation-max-items:"32"`
 	Rules      []SecurityGroupRuleStatus `json:"rules,omitempty" x-kubebuilder-validation-max-items:"500"`
 	State      ResourceState             `json:"state,omitempty"`
