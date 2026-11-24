@@ -1,10 +1,10 @@
 module github.com/eu-sovereign-cloud/go-sdk
 
-go 1.24.0
+go 1.26.0
 
 require (
 	github.com/cenkalti/backoff/v4 v4.3.0
-	github.com/oapi-codegen/runtime v1.7.0
+	github.com/oapi-codegen/runtime v1.9.1
 	github.com/stretchr/testify v1.12.1
 )
 
